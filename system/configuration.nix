@@ -44,14 +44,19 @@ in
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Set your time zone.
-  time.timeZone = "Europe/Warsaw";
+  time.timeZone = "America/New_York";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    firejail
-    vim
+    alacritty
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    git
+    brave
+    git-crypt
+    gnupg
+    firejail
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -86,7 +91,7 @@ in
     };
   };
 
-  users.extraGroups.vboxusers.members = [ "gvolpe" ];
+  users.extraGroups.vboxusers.members = [ "onyx" ];
 
   # Enable sound.
   sound = {
@@ -100,10 +105,10 @@ in
   };
 
   # Scanner backend
-  hardware.sane = {
-    enable = true;
-    extraBackends = [ pkgs.epkowa pkgs.sane-airscan ];
-  };
+  #hardware.sane = {
+  #  enable = true;
+  #extraBackends = [ pkgs.epkowa pkgs.sane-airscan ];
+  #};
 
   services = {
     # Mount MTP devices
@@ -123,10 +128,10 @@ in
     sshd.enable = true;
 
     # Enable CUPS to print documents.
-    printing = {
-      enable = true;
-      drivers = [ pkgs.epson-escpr ];
-    };
+    #printing = {
+    #  enable = true;
+    #  drivers = [ pkgs.epson-escpr ];
+    #};
   };
 
   # Making fonts accessible to applications.
@@ -140,11 +145,17 @@ in
   programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.gvolpe = {
-    isNormalUser = true;
-    extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" ]; # wheel for ‘sudo’.
-    shell        = pkgs.fish;
+  users.users.onyx = {
+      isNormalUser = true;
+      home = "/home/onyx";
+      uid = 1000;
+      description = "onyx-tower";
+      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" ];
+      shell = pkgs.fish;
+      # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };
+
+  users.groups.plugdev = {}
 
   security = {
     # Yubikey login & sudo
@@ -181,15 +192,27 @@ in
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "gvolpe" ];
+      trusted-users = [ "root" "harryprayiv" "onyx" ];
       
       experimental-features = ["nix-command" "flakes"];
       
       # Avoid unwanted garbage collection when using nix-direnv
       keep-outputs          = true;
       keep-derivations      = true;
+
+      substituters = [
+      "https://cache.nixos.org/"
+      "https://hydra.iohk.io"
+      ];
+      trusted-public-keys = [
+      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
     };
   };
+
+  system.copySystemConfiguration = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -197,6 +220,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.03"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 
 }
