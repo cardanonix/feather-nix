@@ -115,7 +115,7 @@ Beware that the `hardware-configuration.nix` file is the result of the hardware 
 A fresh install requires the creation of certain directories so this has not been automated yet (see `build` script file). However, if you omit those steps, the entire HM configuration can also be built as any other flake.
 
 ```console
-$ nix build github:gvolpe/nix-config#homeConfigurations.gvolpe-hdmi.activationPackage
+$ nix build github:gvolpe/nix-config#homeConfigurations.onyx-hdmi.activationPackage
 $ result/activate
 ```
 
@@ -141,6 +141,6 @@ sudo result/bin/switch-to-configuration switch
 Or for Home Manager.
 
 ```console
-$ nix build .#homeConfigurations.gvolpe-hdmi.activationPackage
+$ nix build .#homeConfigurations.onyx-hdmi.activationPackage
 $ result/activate
 ```

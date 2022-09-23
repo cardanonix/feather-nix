@@ -10,12 +10,12 @@ activateHM() {
 }
 
 rebuild_home_edp() {
-  nix build .#homeConfigurations.gvolpe-edp.activationPackage
+  nix build .#homeConfigurations.onyx-edp.activationPackage
   activateHM
 }
 
 rebuild_home_hdmi() {
-  nix build .#homeConfigurations.gvolpe-hdmi.activationPackage
+  nix build .#homeConfigurations.onyx-hdmi.activationPackage
   activateHM
 }
 
