@@ -18,7 +18,7 @@ let
     };
 in
 {
-  meta.maintainers = [ hm.maintainers.gvolpe ];
+  meta.maintainers = [ hm.maintainers.onyx ];
 
   options.programs.megasync = {
     enable = mkEnableOption "Syncing tool for Mega.nz";
