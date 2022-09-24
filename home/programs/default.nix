@@ -6,7 +6,7 @@
   ./git
   ./fish
   ./neovim-ide
-  ./nheko
+  #./nheko
   ./orage
   ./rofi
   ./signal
