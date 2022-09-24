@@ -105,9 +105,16 @@ let
 
   scripts = pkgs.callPackage ./scripts/default.nix { inherit config pkgs; };
 
-  yubiPkgs = with pkgs; [
-    yubikey-manager  # yubikey manager cli
-    yubioath-desktop # yubikey OTP manager (gui)
+  securityPkgs = with pkgs; [
+    yubikey-manager          # yubikey manager cli
+    yubioath-desktop         # yubikey OTP manager (gui)
+    keepass
+    gnupg                    # Security ##
+    ledger-live-desktop      # Ledger Nano X Support for NixOS
+  ];
+
+  cardanoGuildPkgs = with pkgs; [
+    bc        # required for gLiveView
   ];
 
   xmonadPkgs = with pkgs; [
@@ -133,10 +140,9 @@ in
 
   home = {
     inherit username homeDirectory;
-    stateVersion = "21.03";
+    stateVersion = "21.11";
 
-    packages = defaultPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs ++ polybarPkgs ++ scripts ++ xmonadPkgs ++ yubiPkgs;
-
+    packages = defaultPkgs ++ cardanoGuildPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs ++ polybarPkgs ++ scripts ++ xmonadPkgs ++ securityPkgs;
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
