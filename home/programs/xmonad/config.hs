@@ -391,6 +391,7 @@ pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc"
+vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
 
 myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
@@ -416,7 +417,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , pavuctrl
             , scr
             ]                                  -?> doCenterFloat
-    , match [ btm, evince, spotify, vlc, yad ] -?> doFullFloat
+    , match [ btm, evince, spotify, vlc, yad, vscodium ] -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
     , anyOf [ isBrowserDialog
@@ -468,20 +469,20 @@ projects :: [Project]
 projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ spawn "firefox -P 'default'"
+            , projectStartHook = Just $ spawn "brave"
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/workspace/nix-config"
-            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
+            , projectStartHook = Just . replicateM_ 2 $ spawn myTerminal
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/workspace/trading"
-            , projectStartHook = Just . replicateM_ 8 $ spawn myTerminal
+            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn "telegram-desktop"
-                                           spawn "signal-desktop"
+                                           spawn "discord"
             }
   , Project { projectName      = wrkWs
             , projectDirectory = "~/"
