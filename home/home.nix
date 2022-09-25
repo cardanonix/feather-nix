@@ -15,9 +15,11 @@ let
     audacious            # simple music player
     bitwarden-cli        # command-line client for the password manager
     bottom               # alternative to htop & ytop
+    #brave                # web browsing  
     cachix               # nix caching
     calibre              # e-book reader
     cobang               # qr-code scanner
+    discord
     dconf2nix            # dconf (gnome) files to nix converter
     dmenu                # application launcher
     docker-compose       # docker manager
@@ -64,6 +66,7 @@ let
     tldr                 # summary of a man page
     tree                 # display files in a tree view
     vlc                  # media player
+    vscodium
     xsel                 # clipboard support (also for neovim)
     yad                  # yet another dialog - fork of zenity
 
@@ -194,6 +197,10 @@ in
     };
 
     ssh.enable = true;
+
+    #vscodium = {
+    #  enable = true;
+    #};
 
     zoxide = {
       enable = true;
