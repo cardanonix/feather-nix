@@ -1,7 +1,7 @@
 { config, pkgs, specialArgs, ... }:
 
 let
-  browser = "${pkgs.firefox-beta-bin}/bin/firefox";
+  browser = "${pkgs.brave}/bin/brave";
 
   openCalendar = "${pkgs.xfce.orage}/bin/orage";
 
