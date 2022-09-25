@@ -11,4 +11,6 @@
     { device = "/dev/disk/by-uuid/E190-B72F";
       fsType = "vfat";
     };
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

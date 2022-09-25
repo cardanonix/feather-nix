@@ -21,8 +21,6 @@
       };
     };
 
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
   networking = {
     hostName = "kimchi"; # Define your hostname.
     interfaces.eno1.useDHCP = true;
