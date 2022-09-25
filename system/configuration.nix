@@ -155,7 +155,7 @@ in
       # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };
 
-  users.groups.plugdev = {}
+  users.groups.plugdev = {};
 
   security = {
     # Yubikey login & sudo
