@@ -20,12 +20,11 @@ let
     ${pkgs.pasystray}/bin/pasystray &
     ${pkgs.blueman}/bin/blueman-applet &
     ${pkgs.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator &
-    megasync &
   '';
 in
 {
   xresources.properties = {
-    "Xft.dpi" = 180;
+    "Xft.dpi" = 120;
     "Xft.autohint" = 0;
     "Xft.hintstyle" = "hintfull";
     "Xft.hinting" = 1;
