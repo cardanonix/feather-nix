@@ -27,7 +27,7 @@ in
       ../system/machine/dell-xps
       ../system/configuration.nix
     ];
-  };j
+  };
   tongfang-amd = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
