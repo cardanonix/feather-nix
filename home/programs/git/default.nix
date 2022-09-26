@@ -57,10 +57,10 @@ in
       "*.jvmopts"      # should be local to every project
     ];
     signing = {
-      key = "121D4302A64B2261";
+      key = "0xDA020C61661DEDC7";
       signByDefault = true;
     };
-    userEmail = "volpegabriel@gmail.com";
-    userName = "Gabriel Volpe";
+    userEmail = "harryprayiv@gmail.com";
+    userName = "Harry Pray IV";
   };
 }
