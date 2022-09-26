@@ -44,6 +44,7 @@ let
     ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
     nyancat              # the famous rainbow cat!
+    mr                   # mass github actions
     md-toc               # generate ToC in markdown files
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences

@@ -33,7 +33,7 @@ let
     ; Text Fonts
     font-0 = Iosevka Nerd Font:style=Medium:size=${toString font0};3
     ; Icons Fonts
-    font-1 = icomoon\-feather:style=Medium:size=${toString font1};3
+    font-1 = icomoon\\-feather:style=Medium:size=${toString font1};3
     ; Powerline Glyphs
     font-2 = Iosevka Nerd Font:style=Medium:size=${toString font2};3
     ; Larger font size for bar fill icons

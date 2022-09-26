@@ -22,7 +22,7 @@ rebuild_home_hdmi() {
 rebuild_system() {
   # nix build .#nixosConfigurations.tongfang-amd.config.system.build.toplevel
   # sudo result/bin/switch-to-configuration switch
-  sudo nixos-rebuild switch --flake .#onyxTower
+  sudo nixos-rebuild switch --flake .#onyxTower --impure
 }
 
 rebuild_vm() {

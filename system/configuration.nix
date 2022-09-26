@@ -140,6 +140,7 @@ in
     font-awesome
     myfonts.flags-world-color
     myfonts.icomoon-feather
+    hasklig
   ];
 
   programs.fish.enable = true;

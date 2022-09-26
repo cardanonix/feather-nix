@@ -326,15 +326,15 @@ myLayout =
     . wrkLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = gapSpaced 10 $ Tall nmaster delta ratio
-     full    = gapSpaced 5 Full
-     column3 = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
+     tiled   = gapSpaced 4 $ Tall nmaster delta ratio
+     full    = gapSpaced 4 Full
+     column3 = gapSpaced 4 $ ThreeColMid 1 (3/100) (1/2)
 
      -- The default number of windows in the master pane
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
+     ratio   = 1/1.618e0
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
@@ -344,9 +344,9 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (full ||| tiled)
+     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 )
      devLayout = onWorkspace devWs (column3 ||| full)
-     webLayout = onWorkspace webWs (tiled ||| full)
+     webLayout = onWorkspace webWs (full ||| tiled)
      wrkLayout = onWorkspace wrkWs (tiled ||| full)
 
      -- Fullscreen
@@ -472,17 +472,19 @@ projects =
             , projectStartHook = Just $ spawn "brave"
             }
   , Project { projectName      = ossWs
-            , projectDirectory = "~/workspace/nix-config"
-            , projectStartHook = Just . replicateM_ 2 $ spawn myTerminal
+            , projectDirectory = "~/nix-config/home/programs/xmonad/"
+            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/workspace/trading"
-            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
+            , projectDirectory = "~/nix-config/"
+            , projectStartHook = Just $ do spawn "codium"
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "telegram-desktop"
-                                           spawn "discord"
+            , projectStartHook = Just $ do spawn "discord"
+                                           spawn "telegram-desktop"
+                                           spawn "signal"
+                                           spawn "slack"
             }
   , Project { projectName      = wrkWs
             , projectDirectory = "~/"
@@ -493,7 +495,7 @@ projects =
             , projectStartHook = Just . spawn $ myTerminal <> " -e sudo su"
             }
   , Project { projectName      = etcWs
-            , projectDirectory = "~/workspace"
+            , projectDirectory = "~/"
             , projectStartHook = Just . spawn $ myTerminal
             }
   ]
