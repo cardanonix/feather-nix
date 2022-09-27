@@ -150,7 +150,7 @@ in
       isNormalUser = true;
       home = "/home/onyx";
       uid = 1000;
-      description = "onyx-tower";
+      description = "Harry Pray IV";
       extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" ];
       shell = pkgs.fish;
       # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
