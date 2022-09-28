@@ -9,7 +9,7 @@ in
     settings = {
       bell = {
         animation = "EaseOutExpo";
-        duration = 5;
+        duration = 6;
         color = "#ffffff";
       };
       colors = {
