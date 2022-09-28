@@ -417,7 +417,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , pavuctrl
             , scr
             ]                                  -?> doCenterFloat
-    , match [ btm, evince, spotify, vlc, yad, vscodium ] -?> doFullFloat
+    , match [ btm, evince, vlc, yad ] -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
     , anyOf [ isBrowserDialog

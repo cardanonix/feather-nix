@@ -4,12 +4,12 @@
   gtk = {
     enable = true;
     iconTheme = {
-      name = "BeautyLine";
-      package = pkgs.beauty-line-icon-theme;
+      name = "Gruvbox";
+      package = pkgs.gruvbox-dark-icons-gtk;
     };
     theme = {
-      name = "Juno-ocean";
-      package = pkgs.juno-theme;
+      name = "Nordic";
+      package = pkgs.nordic;
     };
   };
 }

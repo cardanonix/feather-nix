@@ -31,8 +31,8 @@ in
         decorations = "full";
         opacity = 0.8;
         padding = {
-          x = 5;
-          y = 5;
+          x = 4;
+          y = 4;
         };
       };
     };

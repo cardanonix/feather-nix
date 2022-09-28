@@ -1,6 +1,8 @@
 {
   services.picom = {
     enable = true;
+    #rounded-corners = true;
+    #corner-radius = 2;
     activeOpacity = 1.0;
     inactiveOpacity = 0.8;
     backend = "glx";
