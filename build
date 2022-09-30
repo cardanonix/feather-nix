@@ -17,7 +17,7 @@ pre_home() {
 
   # Desktop pic
   mkdir -p $HOME/Pictures/
-  cp home/nixos.png $HOME/Pictures/
+  cp home/haskellSchool.jpg $HOME/Pictures/
 }
 
 post_home() {
@@ -28,7 +28,7 @@ post_home() {
 
   # Set screenlock wallpaper
   echo "Setting screen-lock wallpaper"
-  multilockscreen -u home/nixos.png
+  multilockscreen -u home/haskellSchool.jpg
 }
 
 build_ci_home() {
