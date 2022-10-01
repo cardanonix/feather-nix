@@ -31,31 +31,31 @@
     [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
     ];
 
-  fileSystems."/home/onyx/NAS/NASvideo" =
+  fileSystems."/home/onyx/video" =
     { device = "192.168.1.212:/volume2/video";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/home/onyx/NAS/Cardano" =
+  fileSystems."/srv/Cardano" =
     { device = "192.168.1.212:/volume2/Cardano";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/home/onyx/NAS/Programming" =
+  fileSystems."/srv/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/home/onyx/NAS/plutus" =
+  fileSystems."/srv/plutus" =
     { device = "192.168.1.212:/volume2/homes/plutus";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/home/onyx/NAS/NASmusic" =
+  fileSystems."/home/onyx/music" =
     { device = "192.168.1.212:/volume2/music";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
@@ -72,11 +72,7 @@
       }
     ];
     resolutions = [
-      { x = 2048; y = 1152; }
       { x = 1920; y = 1080; }
-      { x = 2560; y = 1440; }
-      { x = 3072; y = 1728; }
-      { x = 3840; y = 2160; }
     ];
   };
 }

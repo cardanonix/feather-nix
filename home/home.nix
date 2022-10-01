@@ -144,7 +144,7 @@ in
 
   home = {
     inherit username homeDirectory;
-    stateVersion = "21.11";
+    stateVersion = "22.11";
 
     packages = defaultPkgs ++ cardanoGuildPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs ++ polybarPkgs ++ scripts ++ xmonadPkgs ++ securityPkgs;
     sessionVariables = {

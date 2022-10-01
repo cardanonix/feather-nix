@@ -17,18 +17,18 @@ pre_home() {
 
   # Desktop pic
   mkdir -p $HOME/Pictures/
-  cp home/haskellSchool.jpg $HOME/Pictures/
+  cp imgs/haskellSchool.jpg $HOME/Pictures/
 }
 
 post_home() {
   # Set user's profile picture for Gnome3
   echo "Setting profile picture for the accounts service"
-  sudo cp home/onyxTower.png /var/lib/AccountsService/icons/onyx
+  sudo cp imgs/onyxTower.png /var/lib/AccountsService/icons/onyx
   sudo echo "Icon=/var/lib/AccountsService/icons/onyx" >> /var/lib/AccountsService/users/onyx
 
   # Set screenlock wallpaper
   echo "Setting screen-lock wallpaper"
-  multilockscreen -u home/haskellSchool.jpg
+  multilockscreen -u imgs/haskellSchool.jpg
 }
 
 build_ci_home() {

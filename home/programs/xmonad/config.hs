@@ -59,6 +59,7 @@ import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
 import           XMonad.Layout.Spacing                 ( spacing )
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
+import XMonad.Layout.Spiral
 import           XMonad.Prompt                         ( XPConfig(..)
                                                        , amberXPConfig
                                                        , XPPosition(CenteredAt)
@@ -323,12 +324,16 @@ myLayout =
     . comLayout
     . devLayout
     . webLayout
-    . wrkLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
+    . misLayout
+    . musLayout 
+    . imgLayout   
+    . spoLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = gapSpaced 4 $ Tall nmaster delta ratio
      full    = gapSpaced 4 Full
      column3 = gapSpaced 4 $ ThreeColMid 1 (3/100) (1/2)
+     spirange = spiral (6/7)
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -344,10 +349,13 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 )
-     devLayout = onWorkspace devWs (column3 ||| full)
-     webLayout = onWorkspace webWs (full ||| tiled)
-     wrkLayout = onWorkspace wrkWs (tiled ||| full)
+     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 ||| spirange)
+     devLayout = onWorkspace devWs (column3 ||| full ||| spirange)
+     webLayout = onWorkspace webWs (full ||| tiled ||| spirange)
+     spoLayout = onWorkspace spoWs (tiled ||| full ||| spirange)
+     misLayout = onWorkspace misWs (tiled ||| full ||| spirange)
+     musLayout = onWorkspace musWs (tiled ||| full ||| Mirror tiled ||| column3 ||| spirange)
+     imgLayout = onWorkspace imgWs (full ||| tiled) 
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -455,12 +463,15 @@ webWs = "web"
 ossWs = "oss"
 devWs = "dev"
 comWs = "com"
-wrkWs = "wrk"
+spoWs = "spo"
 sysWs = "sys"
 etcWs = "etc"
+misWs = "mis"
+musWs = "mus"
+imgWs = "img"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, ossWs, devWs, comWs, wrkWs, sysWs, etcWs]
+myWS = [webWs, ossWs, devWs, comWs, spoWs, sysWs, etcWs, misWs, musWs, spoWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -476,8 +487,8 @@ projects =
             , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/nix-config/"
-            , projectStartHook = Just $ do spawn "codium"
+            , projectDirectory = "~/nix-config.git/onyxTower/"
+            , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
@@ -486,18 +497,30 @@ projects =
                                            spawn "signal"
                                            spawn "slack"
             }
-  , Project { projectName      = wrkWs
-            , projectDirectory = "~/"
+  , Project { projectName      = spoWs
+            , projectDirectory = "/srv/Cardano"
             , projectStartHook = Just . spawn $ myTerminal
             }
   , Project { projectName      = sysWs
-            , projectDirectory = "/etc/nixos/"
-            , projectStartHook = Just . spawn $ myTerminal <> " -e sudo su"
+            , projectDirectory = "~/nix-config.git/onyxTower/"
+            , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = etcWs
             , projectDirectory = "~/"
             , projectStartHook = Just . spawn $ myTerminal
             }
+  , Project { projectName      = misWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just . spawn $ "btm"
+            }
+  , Project { projectName      = musWs
+            , projectDirectory = "~/music"
+            , projectStartHook = Just . spawn $ "spotify"
+            }
+  , Project { projectName      = imgWs
+            , projectDirectory = "~/Pictures/"
+            , projectStartHook = Just . spawn $ "gimp"
+            } 
   ]
 
 projectsTheme :: XPConfig
