@@ -61,6 +61,6 @@ in
       signByDefault = true;
     };
     userEmail = "harryprayiv@gmail.com";
-    userName = "Harry Pray IV";
+    userName = "harryprayiv";
   };
 }
