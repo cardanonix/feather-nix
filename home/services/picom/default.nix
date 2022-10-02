@@ -18,6 +18,9 @@
     vSync = true;
     shadow = true;
     shadowOpacity = 0.75;
+    shadowExclude = [
+          "bounding_shaped && !rounded_corners"
+    ];
     package = pkgs.picom.overrideAttrs(o: {
       src = pkgs.fetchFromGitHub {
         repo = "picom";

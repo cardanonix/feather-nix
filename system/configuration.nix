@@ -9,6 +9,8 @@ let
     fonts = [
       "JetBrainsMono"
       "Iosevka"
+      "FiraMono" 
+      "Noto"
     ];
   };
 
@@ -135,14 +137,21 @@ in
   };
 
   # Making fonts accessible to applications.
-  fonts.fonts = with pkgs; [
-    customFonts
-    font-awesome
-    myfonts.flags-world-color
-    myfonts.icomoon-feather
-    hasklig
-  ];
-
+  fonts = {
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      customFonts
+      font-awesome
+      myfonts.flags-world-color
+      myfonts.icomoon-feather
+      hasklig
+      ipaexfont
+      noto-fonts-cjk
+      noto-fonts-emoji
+    ];
+  }
+  
   programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

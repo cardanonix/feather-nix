@@ -332,8 +332,8 @@ myLayout =
      -- default tiling algorithm partitions the screen into two panes
      tiled   = gapSpaced 4 $ Tall nmaster delta ratio
      full    = gapSpaced 4 Full
-     column3 = gapSpaced 4 $ ThreeColMid 1 (3/100) (1/2)
-     spirange = spiral (6/7)
+     column3 = gapSpaced 4 $ ThreeColMid 1 (3/100) (1/1.618)
+     goldenSpiral = spiral (1/1.618)
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -349,12 +349,12 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 ||| spirange)
-     devLayout = onWorkspace devWs (column3 ||| full ||| spirange)
-     webLayout = onWorkspace webWs (full ||| tiled ||| spirange)
-     spoLayout = onWorkspace spoWs (tiled ||| full ||| spirange)
-     misLayout = onWorkspace misWs (tiled ||| full ||| spirange)
-     musLayout = onWorkspace musWs (tiled ||| full ||| Mirror tiled ||| column3 ||| spirange)
+     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 ||| goldenSpiral)
+     devLayout = onWorkspace devWs (column3 ||| full ||| goldenSpiral)
+     musLayout = onWorkspace musWs (tiled ||| full ||| Mirror tiled ||| column3 ||| goldenSpiral)
+     webLayout = onWorkspace webWs (full ||| tiled ||| goldenSpiral)
+     spoLayout = onWorkspace spoWs (tiled ||| full ||| goldenSpiral)
+     misLayout = onWorkspace misWs (tiled ||| full ||| goldenSpiral)
      imgLayout = onWorkspace imgWs (full ||| tiled) 
 
      -- Fullscreen
@@ -460,18 +460,17 @@ scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify ]
 -- Workspaces
 --
 webWs = "web"
-ossWs = "oss"
+musWs = "mus"
 devWs = "dev"
 comWs = "com"
+ossWs = "oss"
 spoWs = "spo"
 sysWs = "sys"
-etcWs = "etc"
-misWs = "mis"
-musWs = "mus"
 imgWs = "img"
+misWs = "mis"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, ossWs, devWs, comWs, spoWs, sysWs, etcWs, misWs, musWs, spoWs]
+myWS = [webWs, musWs, devWs, comWs, ossWs, spoWs, sysWs, imgWs, misWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -482,9 +481,9 @@ projects =
             , projectDirectory = "~/"
             , projectStartHook = Just $ spawn "brave"
             }
-  , Project { projectName      = ossWs
-            , projectDirectory = "~/nix-config/home/programs/xmonad/"
-            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
+  , Project { projectName      = musWs
+            , projectDirectory = "~/music/"
+            , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/nix-config.git/onyxTower/"
@@ -497,29 +496,25 @@ projects =
                                            spawn "signal"
                                            spawn "slack"
             }
+  , Project { projectName      = ossWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
+            }
   , Project { projectName      = spoWs
             , projectDirectory = "/srv/Cardano"
             , projectStartHook = Just . spawn $ myTerminal
             }
   , Project { projectName      = sysWs
-            , projectDirectory = "~/nix-config.git/onyxTower/"
-            , projectStartHook = Just $ do spawn "codium -n ."
+            , projectDirectory = "~/nix-config.git/"
+            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
             }
-  , Project { projectName      = etcWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just . spawn $ myTerminal
+  , Project { projectName      = imgWs
+            , projectDirectory = "~/Pictures"
+            , projectStartHook = Just $ spawn "gimp"
             }
   , Project { projectName      = misWs
             , projectDirectory = "~/"
             , projectStartHook = Just . spawn $ "btm"
-            }
-  , Project { projectName      = musWs
-            , projectDirectory = "~/music"
-            , projectStartHook = Just . spawn $ "spotify"
-            }
-  , Project { projectName      = imgWs
-            , projectDirectory = "~/Pictures/"
-            , projectStartHook = Just . spawn $ "gimp"
             } 
   ]
 

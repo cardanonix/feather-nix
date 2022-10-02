@@ -156,6 +156,8 @@ in
   # restart services on change
   systemd.user.startServices = "sd-switch";
 
+  xsession.numlock.enable = true;
+  
   # notifications about home-manager news
   news.display = "silent";
 
