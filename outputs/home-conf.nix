@@ -48,8 +48,8 @@ let
   );
 in
 {
-  onyx-edp = mkHome { hidpi = false; };
-  onyx-hdmi = mkHome { hidpi = true; };
+  bismuth-edp = mkHome { hidpi = false; };
+  bismuth-hdmi = mkHome { hidpi = true; };
 
   # Continuos Integration automation
   ci = {

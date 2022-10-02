@@ -5,7 +5,7 @@ let
   rg      = "${pkgs.ripgrep}/bin/rg";
   wc      = "/run/current-system/sw/bin/wc";
 
-  # Onyx Tower
+  # bismuth Tower
   eth1  = "eno1";
   wifi1 = "wlp1s0";
 

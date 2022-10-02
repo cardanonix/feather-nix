@@ -31,7 +31,7 @@
     [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
     ];
 
-  fileSystems."/home/onyx/video" =
+  fileSystems."/home/bismuth/video" =
     { device = "192.168.1.212:/volume2/video";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
@@ -55,7 +55,7 @@
       fsType = "nfs";
     };
 
-  fileSystems."/home/onyx/music" =
+  fileSystems."/home/bismuth/music" =
     { device = "192.168.1.212:/volume2/music";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";

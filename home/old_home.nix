@@ -139,8 +139,8 @@ in
   home = {
       # Home Manager needs a bit of information about you and the
       # paths it should manage.
-    username = "onyx";
-    homeDirectory = "/home/onyx";
+    username = "bismuth";
+    homeDirectory = "/home/bismuth";
       # This value determines the Home Manager release that your
       # configuration is compatible with. This helps avoid breakage
       # when a new Home Manager release introduces backwards

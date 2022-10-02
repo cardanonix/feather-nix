@@ -4,11 +4,11 @@ let
   nixosSystem = inputs.nixpkgs.lib.nixosSystem;
 in
 { 
-  onyxTower = nixosSystem {
+  intelTower = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../system/machine/onyxTower
+      ../system/machine/intelTower
       ../system/configuration.nix
     ];
   };

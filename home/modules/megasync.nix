@@ -18,7 +18,7 @@ let
     };
 in
 {
-  meta.maintainers = [ hm.maintainers.onyx ];
+  meta.maintainers = [ hm.maintainers.bismuth ];
 
   options.programs.megasync = {
     enable = mkEnableOption "Syncing tool for Mega.nz";

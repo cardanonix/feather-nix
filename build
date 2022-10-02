@@ -23,8 +23,8 @@ pre_home() {
 post_home() {
   # Set user's profile picture for Gnome3
   echo "Setting profile picture for the accounts service"
-  sudo cp imgs/onyxTower.png /var/lib/AccountsService/icons/onyx
-  sudo echo "Icon=/var/lib/AccountsService/icons/onyx" >> /var/lib/AccountsService/users/onyx
+  sudo cp imgs/intelTower.png /var/lib/AccountsService/icons/bismuth
+  sudo echo "Icon=/var/lib/AccountsService/icons/bismuth" >> /var/lib/AccountsService/users/bismuth
 
   # Set screenlock wallpaper
   echo "Setting screen-lock wallpaper"
@@ -32,11 +32,11 @@ post_home() {
 }
 
 build_ci_home() {
-  nix build .#homeConfigurations.onyx-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage
 }
 
 build_ci_system() {
-  nix build .#nixosConfigurations.onyxTower.config.system.build.toplevel
+  nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
   nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel
   nix build .#nixosConfigurations.dell-xps.config.system.build.toplevel
   nix build .#nixosConfigurations.tongfang-amd.config.system.build.toplevel

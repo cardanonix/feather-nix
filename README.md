@@ -105,7 +105,7 @@ $ nix flake metadata github:harryprayiv/nix-config
 The full home configuration is not yet fully automated but the NixOS configuration can be installed by running the following command.
 
 ```console
-$ nixos-rebuild switch --flake github:harryprayiv/nix-config#onyxTower
+$ nixos-rebuild switch --flake github:harryprayiv/nix-config#intelTower
 ```
 
 Beware that the `hardware-configuration.nix` file is the result of the hardware scan of the specific machine and might not be suitable for yours.
@@ -115,7 +115,7 @@ Beware that the `hardware-configuration.nix` file is the result of the hardware 
 A fresh install requires the creation of certain directories so this has not been automated yet (see `build` script file). However, if you omit those steps, the entire HM configuration can also be built as any other flake.
 
 ```console
-$ nix build github:harryprayiv/nix-config#homeConfigurations.onyx-edp.activationPackage
+$ nix build github:harryprayiv/nix-config#homeConfigurations.bismuth-edp.activationPackage
 $ result/activate
 ```
 
@@ -134,13 +134,13 @@ $ ./build fresh-install # requires sudo
 The `build` script is only suitable for a fresh install customized to my personal use but you can build the flakes directly. E.g.
 
 ```console
-$ nix build .#nixosConfigurations.onyxTower.config.system.build.toplevel
+$ nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
 sudo result/bin/switch-to-configuration switch
 ```
 
 Or for Home Manager.
 
 ```console
-$ nix build .#homeConfigurations.onyx-edp.activationPackage
+$ nix build .#homeConfigurations.bismuth-edp.activationPackage
 $ result/activate
 ```

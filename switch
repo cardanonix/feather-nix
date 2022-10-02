@@ -10,23 +10,23 @@ activateHM() {
 }
 
 rebuild_home_edp() {
-  nix build .#homeConfigurations.onyx-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage
   activateHM
 }
 
 rebuild_home_hdmi() {
-  nix build .#homeConfigurations.onyx-hdmi.activationPackage
+  nix build .#homeConfigurations.bismuth-hdmi.activationPackage
   activateHM
 }
 
 rebuild_system() {
   # nix build .#nixosConfigurations.tongfang-amd.config.system.build.toplevel
   # sudo result/bin/switch-to-configuration switch
-  sudo nixos-rebuild switch --flake .#onyxTower --impure
+  sudo nixos-rebuild switch --flake .#intelTower --impure
 }
 
 rebuild_vm() {
-  sudo nixos-rebuild build-vm --flake .#onyxTower
+  sudo nixos-rebuild build-vm --flake .#intelTower
 }
 
 restart_X() {

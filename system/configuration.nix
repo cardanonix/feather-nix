@@ -93,7 +93,7 @@ in
     };
   };
 
-  users.extraGroups.vboxusers.members = [ "onyx" ];
+  users.extraGroups.vboxusers.members = [ "bismuth" ];
 
   # Enable sound.
   sound = {
@@ -155,9 +155,9 @@ in
   programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.onyx = {
+  users.users.bismuth = {
       isNormalUser = true;
-      home = "/home/onyx";
+      home = "/home/bismuth";
       uid = 1000;
       description = "Harry Pray IV";
       extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" ];
@@ -202,7 +202,7 @@ in
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "harryprayiv" "onyx" ];
+      trusted-users = [ "root" "harryprayiv" "bismuth" ];
       
       experimental-features = ["nix-command" "flakes"];
       
