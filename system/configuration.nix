@@ -138,7 +138,7 @@ in
 
   # Making fonts accessible to applications.
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       customFonts
@@ -150,7 +150,7 @@ in
       noto-fonts-cjk
       noto-fonts-emoji
     ];
-  }
+  };
   
   programs.fish.enable = true;
 
