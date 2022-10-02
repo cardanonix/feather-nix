@@ -1,6 +1,5 @@
 { pkgs, ... }:
 
-# TODO: figure out how to get rounded corners working without weird artifacts in xmonad (maybe impossible).
 {
   services.picom = {
     enable = true;
@@ -32,3 +31,7 @@
     });
   };
 }
+
+
+#TO-DO: nix-prefetch-url --unpack https://github.com/ibhagwan/picom.git
+#TO DO: "c4107bb6cc17773fdc6c48bb2e475ef957513c7a" is the latest revision
