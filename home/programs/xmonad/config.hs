@@ -486,7 +486,7 @@ projects =
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/nix-config.git/onyxTower/"
+            , projectDirectory = "~/nix-config.git/plutus/"
             , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = comWs
