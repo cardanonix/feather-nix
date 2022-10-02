@@ -63,6 +63,7 @@ let
     skypeforlinux        # messaging client
     slack                # messaging client
     tdesktop             # telegram messaging client
+    #TO-DO : 'nixFlakes' has been renamed to/replaced by 'nixVersions.stable')
     #tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
