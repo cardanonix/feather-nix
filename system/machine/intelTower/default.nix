@@ -22,7 +22,7 @@
     };
 
   networking = {
-    hostName = "kimchi"; # Define your hostname.
+    hostName = "intelTower"; # Define your hostname.
     interfaces.eno1.useDHCP = true;
     interfaces.eth0.useDHCP = true;
   };
