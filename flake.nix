@@ -46,7 +46,7 @@
     # LaTeX stuff
 
     tex2nix = {
-      url = github:Mic92/tex2nix;
+      url = github:harryprayiv/tex2nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
