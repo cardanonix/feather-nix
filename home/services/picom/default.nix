@@ -9,6 +9,7 @@
     inactiveOpacity = 0.8;
     settings = {
           corner-radius = 10;
+          round-borders = 2;
           blur-method = "dual_kawase";
           blur-strength = "10";
     };
@@ -17,7 +18,7 @@
     fadeDelta = 5;
     vSync = true;
     shadow = true;
-    shadowOpacity = 0.75;
+    shadowOpacity = 0.85;
     shadowExclude = [
           "bounding_shaped && !rounded_corners"
     ];
