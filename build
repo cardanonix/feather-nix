@@ -17,7 +17,9 @@ pre_home() {
 
   # Desktop pic
   mkdir -p $HOME/Pictures/
-  cp imgs/plutusSchool.jpg $HOME/Pictures/
+  cp imgs/53309.jpg $HOME/Pictures/
+
+  
 }
 
 post_home() {
@@ -37,9 +39,8 @@ build_ci_home() {
 
 build_ci_system() {
   nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
+  nix build .#nixosConfigurations.intelNUC.config.system.build.toplevel
   nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel
-  nix build .#nixosConfigurations.dell-xps.config.system.build.toplevel
-  nix build .#nixosConfigurations.tongfang-amd.config.system.build.toplevel
 }
 
 fresh_install() {
