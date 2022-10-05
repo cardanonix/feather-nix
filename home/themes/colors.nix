@@ -1,26 +1,28 @@
 {
   # More schemes at: https://github.com/atpotts/base16-nix/blob/master/schemes.json
   scheme = {
-    # https://github.com/reyemxela/base16-helios-scheme
-    helios = {
-      scheme = "Helios";
-      author = "Alex Meyer (https://github.com/reyemxela)";
-      base00 = "1d2021"; # ----
-      base01 = "383c3e"; # ---
-      base02 = "53585b"; # --
-      base03 = "6f7579"; # -
-      base04 = "cdcdcd"; # +
-      base05 = "d5d5d5"; # ++
-      base06 = "dddddd"; # +++
-      base07 = "e5e5e5"; # ++++
-      base08 = "d72638"; # red
-      base09 = "eb8413"; # orange
-      base0A = "f19d1a"; # yellow
-      base0B = "88b92d"; # green
-      base0C = "1ba595"; # aqua/cyan
-      base0D = "1e8bac"; # blue
-      base0E = "be4264"; # purple
-      base0F = "c85e0d"; # brown
+    # https://github.com/hartbit/base16-twilight-scheme
+    twilight = {
+      scheme = "Twilight";
+      author = "David Hart (https://github.com/hartbit)";
+      base00 = "1e1e1e";
+      base01 = "323537";
+      base02 = "464b50";
+      base03 = "5f5a60";
+      base04 = "838184";
+      base05 = "a7a7a7";
+      base06 = "c3c3c3";
+      base07 = "ffffff";
+      base08 = "cf6a4c";
+      base09 = "cda869";
+      base0A = "f9ee98";
+      base0B = "8f9d6a";
+      base0C = "afc4db";
+      base0D = "7587a6";
+      base0E = "9b859d";
+      base0F = "9b703f";
     };
   };
 }
+
+
