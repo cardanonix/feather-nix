@@ -4,7 +4,7 @@
 set +x
 
 activateHM() {
-  rm ~/.config/orage/oragerc.bak
+  #rm ~/.config/orage/oragerc.bak
   rm -rf ~/.config/secrets
   HOME_MANAGER_BACKUP_EXT=bak result/activate
 }
@@ -20,8 +20,8 @@ rebuild_home_hdmi() {
 }
 
 rebuild_system() {
-  # nix build .#nixosConfigurations.tongfang-amd.config.system.build.toplevel
-  # sudo result/bin/switch-to-configuration switch
+  #nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
+  #sudo result/bin/switch-to-configuration switch
   sudo nixos-rebuild switch --flake .#intelTower --impure
 }
 
