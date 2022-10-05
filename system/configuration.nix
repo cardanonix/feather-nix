@@ -130,10 +130,10 @@ in
     sshd.enable = true;
 
     # Enable CUPS to print documents.
-    #printing = {
-    #  enable = true;
-    #  drivers = [ pkgs.epson-escpr ];
-    #};
+    printing = {
+      enable = true;
+      drivers = [ pkgs.brlaser ];
+    };
   };
 
   # Making fonts accessible to applications.
@@ -158,7 +158,7 @@ in
   users.users.bismuth = {
       isNormalUser = true;
       home = "/home/bismuth";
-      uid = 1000;
+      uid = 1002;
       description = "Harry Pray IV";
       extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" ];
       shell = pkgs.fish;
@@ -230,6 +230,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
 }
