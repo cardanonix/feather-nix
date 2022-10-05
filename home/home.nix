@@ -15,9 +15,9 @@ let
     audacious            # simple music player
     bitwarden-cli        # command-line client for the password manager
     bottom               # alternative to htop & ytop
-    #brave                # web browsing  
     cachix               # nix caching
     calibre              # e-book reader
+    cmatrix
     cobang               # qr-code scanner
     discord
     dconf2nix            # dconf (gnome) files to nix converter
@@ -36,8 +36,10 @@ let
     jitsi-meet-electron  # open source video calls and chat
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
+    kodi                 # media player  
     libreoffice          # office suite
-    libnotify            # notify-send command
+    libnotify            # notify-send command4
+    mkvtoolnix
     multilockscreen      # fast lockscreen based on i3lock
     ncdu                 # disk space info (a better du)
     neofetch             # command-line system information
@@ -63,7 +65,6 @@ let
     skypeforlinux        # messaging client
     slack                # messaging client
     tdesktop             # telegram messaging client
-    #TO-DO : 'nixFlakes' has been renamed to/replaced by 'nixVersions.stable')
     tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
