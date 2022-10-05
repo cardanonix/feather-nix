@@ -11,7 +11,7 @@ in
       package = pkgs.beauty-line-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.helios; {
+    settings = with colors.scheme.twilight; {
       global = {
         monitor = 0;
         geometry = "600x50-50+65";
