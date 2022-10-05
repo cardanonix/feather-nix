@@ -59,7 +59,8 @@ import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
 import           XMonad.Layout.Spacing                 ( spacing )
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
-import XMonad.Layout.Spiral
+import           XMonad.Layout.Spiral
+import           XMonad.Layout.Fullscreen
 import           XMonad.Prompt                         ( XPConfig(..)
                                                        , amberXPConfig
                                                        , XPPosition(CenteredAt)
@@ -103,11 +104,11 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   { terminal           = myTerminal
   , focusFollowsMouse  = False
   , clickJustFocuses   = False
-  , borderWidth        = 3
+  , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#dddddd" -- light gray (default)
-  , focusedBorderColor = "#1681f2" -- blue
+  , normalBorderColor  = "#82827f" -- # light gray (#dddddd)
+  , focusedBorderColor = "#ff987d" -- greenish
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -326,14 +327,16 @@ myLayout =
     . webLayout
     . misLayout
     . musLayout 
-    . imgLayout   
+    . imgLayout
+    . ossLayout   
     . spoLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = gapSpaced 4 $ Tall nmaster delta ratio
-     full    = gapSpaced 4 Full
-     column3 = gapSpaced 4 $ ThreeColMid 1 (3/100) (1/1.618)
-     goldenSpiral = spiral (1/1.618)
+     tiled        = gapSpaced 5 $ Tall nmaster delta ratio
+     full         = gapSpaced 5 Full
+     fuller       = Full
+     column3      = gapSpaced 5 $ ThreeColMid 1 (3/100) (1/1.618)
+     goldenSpiral = gapSpaced 5 $ spiral (1/1.618)
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -342,20 +345,21 @@ myLayout =
      ratio   = 1/1.618e0
 
      -- Percent of screen to increment by when resizing panes
-     delta   = 3/100
+     delta   = 2/100
 
      -- Gaps bewteen windows
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (tiled ||| full ||| Mirror tiled ||| column3 ||| goldenSpiral)
+     comLayout = onWorkspace comWs (goldenSpiral ||| full ||| tiled)
      devLayout = onWorkspace devWs (column3 ||| full ||| goldenSpiral)
-     musLayout = onWorkspace musWs (tiled ||| full ||| Mirror tiled ||| column3 ||| goldenSpiral)
-     webLayout = onWorkspace webWs (full ||| tiled ||| goldenSpiral)
+     musLayout = onWorkspace musWs (fuller)
+     webLayout = onWorkspace webWs (fuller ||| tiled ||| full ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (tiled ||| full ||| goldenSpiral)
      misLayout = onWorkspace misWs (tiled ||| full ||| goldenSpiral)
-     imgLayout = onWorkspace imgWs (full ||| tiled) 
+     imgLayout = onWorkspace imgWs (fuller ||| tiled) 
+     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| Mirror tiled)
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -399,6 +403,7 @@ pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc"
+kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
 
@@ -418,14 +423,19 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   match = anyOf . fmap isInstance
   manageApps = composeOne
     [ isInstance calendar                      -?> doCalendarFloat
-    , match [ gimp, office ]                   -?> doFloat
+    , match [ office ]                         -?> doCenterFloat
     , match [ audacious
             , eog
             , nautilus
             , pavuctrl
             , scr
             ]                                  -?> doCenterFloat
-    , match [ btm, evince, vlc, yad ] -?> doFullFloat
+    , match [ btm
+            , evince
+            , vlc
+            , yad
+            , kodi
+            , gimp ]                           -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
     , anyOf [ isBrowserDialog
@@ -460,17 +470,17 @@ scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify ]
 -- Workspaces
 --
 webWs = "web"
+ossWs = "oss"
 musWs = "mus"
 devWs = "dev"
 comWs = "com"
-ossWs = "oss"
 spoWs = "spo"
 sysWs = "sys"
 imgWs = "img"
 misWs = "mis"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, musWs, devWs, comWs, ossWs, spoWs, sysWs, imgWs, misWs]
+myWS = [webWs, ossWs, musWs, devWs, comWs, spoWs, sysWs, imgWs, misWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -480,6 +490,10 @@ projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ spawn "brave"
+            }
+  , Project { projectName      = ossWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
@@ -495,10 +509,6 @@ projects =
                                            spawn "telegram-desktop"
                                            spawn "signal"
                                            spawn "slack"
-            }
-  , Project { projectName      = ossWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just . replicateM_ 4 $ spawn myTerminal
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/srv/Cardano"
@@ -522,7 +532,7 @@ projectsTheme :: XPConfig
 projectsTheme = amberXPConfig
   { bgHLight = "#002b36"
   , font     = "xft:Bitstream Vera Sans Mono:size=8:antialias=true"
-  , height   = 50
+  , height   = 60
   , position = CenteredAt 0.5 0.5
   }
 
@@ -545,4 +555,4 @@ projectsTheme = amberXPConfig
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = fadeInactiveLogHook 0.9
+myLogHook = fadeInactiveLogHook 0.85
