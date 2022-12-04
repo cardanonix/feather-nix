@@ -1,10 +1,19 @@
-import           Control.Monad                         ( replicateM_ )
+import           Control.Monad                         ( replicateM_
+                                                       , filterM
+                                                       , liftM
+                                                       , join
+                                                       , unless
+                                                       )
+import           Data.IORef      
+import           Data.List                                                 
 import           Data.Foldable                         ( traverse_ )
 import           Data.Monoid
 import           Graphics.X11.ExtraTypes.XF86
 import           System.Exit
+import           System.Directory                      ( doesFileExist )
 import           System.IO                             ( hPutStr
                                                        , hClose
+                                                       , writeFile
                                                        )
 import           XMonad
 import           XMonad.Actions.CycleWS                ( Direction1D(..)
@@ -28,7 +37,7 @@ import           XMonad.Actions.WithAll                ( killAll )
 import           XMonad.Hooks.EwmhDesktops             ( ewmh
                                                        , ewmhFullscreen
                                                        )
-import           XMonad.Hooks.FadeInactive             ( fadeInactiveLogHook )
+import           XMonad.Hooks.FadeInactive             
 import           XMonad.Hooks.InsertPosition           ( Focus(Newer)
                                                        , Position(Below)
                                                        , insertPosition
@@ -65,7 +74,10 @@ import           XMonad.Prompt                         ( XPConfig(..)
                                                        , amberXPConfig
                                                        , XPPosition(CenteredAt)
                                                        )
-import           XMonad.Util.EZConfig                  ( mkNamedKeymap )
+import           XMonad.Util.EZConfig                  ( mkNamedKeymap
+                                                       , additionalKeys
+                                                       , removeKeys                                                      
+                                                       )
 import           XMonad.Util.NamedActions              ( (^++^)
                                                        , NamedAction (..)
                                                        , addDescrKeys'
@@ -92,9 +104,11 @@ import qualified XMonad.Util.NamedWindows              as W
 
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
+import qualified Data.Set                              as S
 import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
+
 
 main :: IO ()
 main = mkDbusClient >>= main'
@@ -108,7 +122,7 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , modMask            = myModMask
   , workspaces         = myWS
   , normalBorderColor  = "#82827f" -- # light gray (#dddddd)
-  , focusedBorderColor = "#ff987d" -- greenish
+  , focusedBorderColor = "#ff987d" -- reddish orange
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -160,18 +174,20 @@ polybarHook :: D.Client -> PP
 polybarHook dbus =
   let wrapper c s | s /= "NSP" = wrap ("%{F" <> c <> "} ") " %{F-}" s
                   | otherwise  = mempty
-      blue   = "#2E9AFE"
-      gray   = "#7F7F7F"
-      orange = "#ea4300"
-      purple = "#9058c7"
-      red    = "#722222"
+      blue   = "#619DEC"
+      gray   = "#8D868F"
+      white  = "#FFFFFF"
+      orange = "#CF6A4C"
+      yellow = "#F9F4CD"
+      green  = "#8F9D6A"
+      darkgray    = "#5F5A60"
   in  def { ppOutput          = dbusOutput dbus
           , ppCurrent         = wrapper blue
-          , ppVisible         = wrapper gray
+          , ppVisible         = wrapper white
           , ppUrgent          = wrapper orange
           , ppHidden          = wrapper gray
-          , ppHiddenNoWindows = wrapper red
-          , ppTitle           = wrapper purple . shorten 90
+          , ppHiddenNoWindows = wrapper darkgray
+          , ppTitle           = wrapper yellow . shorten 120
           }
 
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
@@ -180,23 +196,45 @@ myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 -- Key bindings. Add, modify or remove key bindings here.
 --
 
-myTerminal   = "alacritty"
-appLauncher  = "rofi -modi drun,ssh,window -show drun -show-icons"
-screenLocker = "multilockscreen -l dim"
-playerctl c  = "playerctl --player=spotify,%any " <> c
+myTerminal    = "alacritty"
+myGuildView   = "alacritty -e ./home/bismuth/cardano_local/guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+myCardanoNode = "alacritty -e node_launch"
+myCardanoCli  = "alacritty -e node_check"
+appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
+
+blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off"
+screenLocker  = blackOut <> "hue light 17 off && hue light 14 red && hue light 14 blink && betterlockscreen -l dim && hue light 17 on"
+
+darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
+chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
+playerctl c   = "playerctl --player=spotify,%any " <> c
 
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
-showKeybindings x = addName "Show Keybindings" . io $
-  E.bracket (spawnPipe $ getAppCommand yad) hClose (\h -> hPutStr h (unlines $ showKm x))
+showKeybindings xs =
+  let
+    filename = "/home/bismuth/.xmonad/keybindings"
+    command f = "alacritty -e dialog --title 'XMonad Key Bindings' --colors --hline \"$(date)\" --textbox " ++ f ++ " 50 100"
+  in addName "Show Keybindings" $ do
+    b <- liftIO $ doesFileExist filename
+    unless b $ liftIO (writeFile filename (unlines $ showKm xs))
+    spawnOn webWs $ command filename -- show dialog on webWs
+    windows $ W.greedyView webWs     -- switch to webWs
+
+
+--XF86MonBrightnessUp
 
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"         (modm                , xK_F2      ) $ spawnOn comWs "slack"
     ] ^++^
+  keySet "Lights"
+    [ key "Darker"        (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
+    , key "Brighter"      (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
+    ] ^++^    
   keySet "Audio"
     [ key "Mute"          (0, xF86XK_AudioMute              ) $ spawn "amixer -q set Master toggle"
-    , key "Lower volume"  (0, xF86XK_AudioLowerVolume       ) $ spawn "amixer -q set Master 5%-"
-    , key "Raise volume"  (0, xF86XK_AudioRaiseVolume       ) $ spawn "amixer -q set Master 5%+"
+    , key "Lower volume"  (0, xF86XK_AudioLowerVolume       ) $ spawn "amixer -q set Master 3%-"
+    , key "Raise volume"  (0, xF86XK_AudioRaiseVolume       ) $ spawn "amixer -q set Master 3%+"
     , key "Play / Pause"  (0, xF86XK_AudioPlay              ) $ spawn $ playerctl "play-pause"
     , key "Stop"          (0, xF86XK_AudioStop              ) $ spawn $ playerctl "stop"
     , key "Previous"      (0, xF86XK_AudioPrev              ) $ spawn $ playerctl "previous"
@@ -221,9 +259,15 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Scratchpads"
     [ key "Audacious"       (modm .|. controlMask,  xK_a    ) $ runScratchpadApp audacious
     , key "bottom"          (modm .|. controlMask,  xK_y    ) $ runScratchpadApp btm
+    , key "GuildView"       (modm .|. controlMask,  xK_g    ) $ spawnOn spoWs myGuildView
+    , key "CardanoNode"     (modm .|. controlMask,  xK_c    ) $ spawnOn spoWs myCardanoNode
     , key "Files"           (modm .|. controlMask,  xK_f    ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r    ) $ runScratchpadApp scr
     , key "Spotify"         (modm .|. controlMask,  xK_s    ) $ runScratchpadApp spotify
+    , key "Vlc"             (modm .|. controlMask,  xK_v    ) $ runScratchpadApp vlc
+    , key "Mpv"             (modm .|. controlMask,  xK_m    ) $ runScratchpadApp mpv
+    , key "Gimp"            (modm .|. controlMask,  xK_i    ) $ runScratchpadApp gimp
+    , key "Kodi"            (modm .|. controlMask,  xK_k    ) $ runScratchpadApp kodi
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
@@ -256,7 +300,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Workspaces"
     [ key "Next"          (modm              , xK_period    ) nextWS'
     , key "Previous"      (modm              , xK_comma     ) prevWS'
-    , key "Remove"        (modm .|. shiftMask, xK_F4        ) removeWorkspace
+    , key "Remove"        (modm              , xF86XK_Eject ) removeWorkspace
     ] ++ switchWsById
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
@@ -287,6 +331,7 @@ switchWS dir =
 filterOutNSP =
   let g f xs = filter (\(W.Workspace t _ _) -> t /= "NSP") (f xs)
   in  g <$> getSortByIndex
+
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -323,46 +368,71 @@ myLayout =
     . smartBorders
     . fullScreenToggle
     . comLayout
-    . devLayout
+    . devLayout    
+    . musLayout     
     . webLayout
-    . misLayout
-    . musLayout 
-    . imgLayout
     . ossLayout   
-    . spoLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
+    . spoLayout
+    . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     tiled        = gapSpaced 5 $ Tall nmaster delta ratio
-     full         = gapSpaced 5 Full
+     tiled        = gapSpaced 3 $ Tall nmaster delta ratio
+     video_tile   = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
+     full         = gapSpaced 3 Full
      fuller       = Full
-     column3      = gapSpaced 5 $ ThreeColMid 1 (3/100) (1/1.618)
-     goldenSpiral = gapSpaced 5 $ spiral (1/1.618)
+     column3      = gapSpaced 3 $ ThreeColMid 1 (14/100) (2/3)
+     goldenSpiral = gapSpaced 3 $ spiral (1/1.618e0)
 
      -- The default number of windows in the master pane
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/1.618e0
+     ratio   = 1/1.618033988749894e0
 
      -- Percent of screen to increment by when resizing panes
-     delta   = 2/100
+     delta   = 3/100
 
      -- Gaps bewteen windows
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (goldenSpiral ||| full ||| tiled)
-     devLayout = onWorkspace devWs (column3 ||| full ||| goldenSpiral)
-     musLayout = onWorkspace musWs (fuller)
-     webLayout = onWorkspace webWs (fuller ||| tiled ||| full ||| goldenSpiral)
-     spoLayout = onWorkspace spoWs (tiled ||| full ||| goldenSpiral)
-     misLayout = onWorkspace misWs (tiled ||| full ||| goldenSpiral)
-     imgLayout = onWorkspace imgWs (fuller ||| tiled) 
-     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| Mirror tiled)
+     comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
+     devLayout = onWorkspace devWs (fuller ||| column3 ||| full ||| goldenSpiral ||| Mirror tiled ||| tiled)
+     musLayout = onWorkspace musWs (fuller ||| tiled)
+     webLayout = onWorkspace webWs (fuller ||| tiled ||| goldenSpiral ||| video_tile ||| full)
+     spoLayout = onWorkspace spoWs (goldenSpiral ||| Mirror tiled ||| tiled ||| column3)
+     secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
+     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled)
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
+
+
+-- Defining Rectangles using absolute points (https://gist.github.com/tkf/1343015)
+doFloatAbsRect :: Rational -> Rational -> Rational -> Rational -> ManageHook
+doFloatAbsRect x y width height = do
+  win <- ask -- get Window
+  q <- liftX (floatLocation win) -- get (ScreenId, W.RationalRect)
+  let sid = fst q :: ScreenId
+      oirgRect = snd q :: W.RationalRect
+      ss2ss ss = -- :: StackSet ... -> StackSet ...
+        W.float win newRect ss where
+          mapping = map (\s -> (W.screen s, W.screenDetail s)) (c:v) where
+            c = W.current ss
+            v = W.visible ss
+          maybeSD = lookup sid mapping
+          scRect  = fmap screenRect maybeSD
+          newRect = case scRect of
+            Nothing -> oirgRect
+            Just (Rectangle x0 y0 w0 h0) ->
+              W.RationalRect x' y' w' h' where
+                W.RationalRect x1 y1 w1 h1 = oirgRect
+                x' = if x0 == 0 then x1 else x / (fromIntegral x0)
+                y' = if y0 == 0 then y1 else y / (fromIntegral y0)
+                w' = if w0 == 0 then w1 else width / (fromIntegral w0)
+                h' = if h0 == 0 then h1 else height / (fromIntegral h0)
+  doF ss2ss
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -374,11 +444,24 @@ myLayout =
 --
 -- To find the property name associated with a program, use
 -- > xprop | grep WM_CLASS
+-- WM_CLASS(STRING) = "brave-browser", "Brave-browser"  
+-- WM_CLASS(STRING) = "keepassxc", "KeePassXC"
+-- WM_CLASS(STRING) = "discord.com__app", "Brave-browser"
+-- WM_CLASS(STRING) = "mstdn.social__home", "Brave-browser"
+-- xprop | grep WM_RESOURCE
 -- and click on the client you're interested in.
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+{- testCondition :: IORef (S.Set Window) -> Query Bool
+testCondition floats =
+    liftM not doNotFadeOutWindows <&&> isUnfocused
+    <&&> (join . asks $ \w -> liftX . io $ S.notMember w `fmap` readIORef floats)
+
+toggleFadeOut :: Window -> S.Set Window -> S.Set Window
+toggleFadeOut w s | w `S.member` s = S.delete w s
+                  | otherwise = S.insert w s -}
 
 type AppName      = String
 type AppTitle     = String
@@ -394,15 +477,19 @@ data App
 audacious = ClassApp "Audacious"            "audacious"
 btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gruvbox --default_widget_type proc"
 calendar  = ClassApp "Orage"                "orage"
+discord   = TitleApp  "Brave-browser"       "brave --app=https://discord.com/app"  --under construction
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
 gimp      = ClassApp "Gimp"                 "gimp"
-nautilus  = ClassApp "Org.gnome.Nautilus"   "nautilus"
+keepass   = ClassApp "KeePassXC"            "keepassxc"
+mastodon  = TitleApp "Brave-browser"        "brave --app=https://mstdn.social/home" --under construction
+nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
-vlc       = ClassApp "Vlc"                  "vlc"
+vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
+mpv       = ClassApp "Mpv"                  "mpv /home/bismuth/video/_Unsorted/torrents/Complete/AMC/Movies/8bit/"
 kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
@@ -412,10 +499,12 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   isBrowserDialog     = isDialog <&&> className =? "Brave-browser"
   isFileChooserDialog = isRole =? "GtkFileChooserDialog"
   isPopup             = isRole =? "pop-up"
+  isWebApp            = className =? "discord.com__app" <||> className =? "aspiechattr.me__home"
   isSplash            = isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH"
   isRole              = stringProperty "WM_WINDOW_ROLE"
   tileBelow           = insertPosition Below Newer
-  doCalendarFloat   = customFloating (W.RationalRect (11 / 15) (1 / 48) (1 / 4) (1 / 8))
+  doVideoFloat        = doFloatAbsRect 0 0 600 300
+  doCalendarFloat     = customFloating (W.RationalRect (11 / 15) (1 / 48) (1 / 4) (1 / 8))
   manageScratchpads = namedScratchpadManageHook scratchpads
   anyOf :: [Query Bool] -> Query Bool
   anyOf = foldl (<||>) (pure False)
@@ -423,27 +512,32 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   match = anyOf . fmap isInstance
   manageApps = composeOne
     [ isInstance calendar                      -?> doCalendarFloat
-    , match [ office ]                         -?> doCenterFloat
+    , match [ vlc
+            , mpv
+            ]                                  -?> tileBelow
     , match [ audacious
             , eog
             , nautilus
+            , office
             , pavuctrl
+            , kodi
             , scr
+            , keepass
             ]                                  -?> doCenterFloat
     , match [ btm
             , evince
-            , vlc
-            , yad
-            , kodi
-            , gimp ]                           -?> doFullFloat
+            , gimp
+            ]                                  -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
-    , anyOf [ isBrowserDialog
+    , anyOf [ isPopup
             , isFileChooserDialog
             , isDialog
-            , isPopup
             , isSplash
-            ]                                  -?> doCenterFloat
+            , isBrowserDialog
+            ]                                  -?> doCenterFloat 
+    , anyOf [ isWebApp
+            ]                                  -?> tileBelow        
     , isFullscreen                             -?> doFullFloat
     , pure True                                -?> tileBelow
     ]
@@ -464,7 +558,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, mpv, gimp, kodi, keepass ]
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -475,12 +569,10 @@ musWs = "mus"
 devWs = "dev"
 comWs = "com"
 spoWs = "spo"
-sysWs = "sys"
-imgWs = "img"
-misWs = "mis"
+secWs = "sec"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, ossWs, musWs, devWs, comWs, spoWs, sysWs, imgWs, misWs]
+myWS = [webWs, ossWs, musWs, devWs, comWs, spoWs, secWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -489,11 +581,11 @@ projects :: [Project]
 projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ spawn "brave"
+            , projectStartHook = Just $ do spawn "brave"
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/"
-            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
+            , projectStartHook = Just . replicateM_ 2 $ spawn myTerminal
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
@@ -505,27 +597,17 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "discord"
-                                           spawn "telegram-desktop"
-                                           spawn "signal"
-                                           spawn "slack"
+            , projectStartHook = Just $ do spawn "brave --app=https://aspiechattr.me/home"  
+                                           spawn "brave --app=https://discord.com/app"                       
             }
   , Project { projectName      = spoWs
-            , projectDirectory = "/srv/Cardano"
-            , projectStartHook = Just . spawn $ myTerminal
+            , projectDirectory = "/home/bismuth/cardano_local/"
+            , projectStartHook = Just $ do spawn myGuildView
             }
-  , Project { projectName      = sysWs
-            , projectDirectory = "~/nix-config.git/"
-            , projectStartHook = Just . replicateM_ 3 $ spawn myTerminal
-            }
-  , Project { projectName      = imgWs
-            , projectDirectory = "~/Pictures"
-            , projectStartHook = Just $ spawn "gimp"
-            }
-  , Project { projectName      = misWs
+  , Project { projectName      = secWs
             , projectDirectory = "~/"
-            , projectStartHook = Just . spawn $ "btm"
-            } 
+            , projectStartHook = Just $ runScratchpadApp keepass
+            }
   ]
 
 projectsTheme :: XPConfig
@@ -555,4 +637,4 @@ projectsTheme = amberXPConfig
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = fadeInactiveLogHook 0.85
+myLogHook = fadeInactiveLogHook 0.95
