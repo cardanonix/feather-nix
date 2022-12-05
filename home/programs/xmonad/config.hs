@@ -192,23 +192,26 @@ polybarHook dbus =
 
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
-------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
---
-
 myTerminal    = "alacritty"
-myGuildView   = "alacritty -e ./home/bismuth/cardano_local/guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+myGuildView   = "alacritty -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
 myCardanoNode = "alacritty -e node_launch"
-myCardanoCli  = "alacritty -e node_check"
+myCardanoCli  = "alacritty sleep 10m && node_check"
 appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
+playerctl c   = "playerctl --player=spotify,%any " <> c
+
+-- Hue Lighting Junk
+lghtLvl l b   = "hue light " <> l " brightness " <> b
+lghtOff l     = "hue light " <> l " off"
+lghtOn  l     = "hue light " <> l " on"
+
 
 blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off"
 screenLocker  = blackOut <> "hue light 17 off && hue light 14 red && hue light 14 blink && betterlockscreen -l dim && hue light 17 on"
-
 darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
 chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
-playerctl c   = "playerctl --player=spotify,%any " <> c
 
+------------------------------------------------------------------------
+-- Key bindings. Add, modify or remove key bindings here.
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
 showKeybindings xs =
   let
@@ -220,87 +223,88 @@ showKeybindings xs =
     spawnOn webWs $ command filename -- show dialog on webWs
     windows $ W.greedyView webWs     -- switch to webWs
 
-
---XF86MonBrightnessUp
-
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
-    [ key "Slack"         (modm                , xK_F2      ) $ spawnOn comWs "slack"
+    [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
     ] ^++^
   keySet "Lights"
-    [ key "Darker"        (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
-    , key "Brighter"      (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
+    [ key "Darker"          (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
+    , key "Brighter"        (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
     ] ^++^    
   keySet "Audio"
-    [ key "Mute"          (0, xF86XK_AudioMute              ) $ spawn "amixer -q set Master toggle"
-    , key "Lower volume"  (0, xF86XK_AudioLowerVolume       ) $ spawn "amixer -q set Master 3%-"
-    , key "Raise volume"  (0, xF86XK_AudioRaiseVolume       ) $ spawn "amixer -q set Master 3%+"
-    , key "Play / Pause"  (0, xF86XK_AudioPlay              ) $ spawn $ playerctl "play-pause"
-    , key "Stop"          (0, xF86XK_AudioStop              ) $ spawn $ playerctl "stop"
-    , key "Previous"      (0, xF86XK_AudioPrev              ) $ spawn $ playerctl "previous"
-    , key "Next"          (0, xF86XK_AudioNext              ) $ spawn $ playerctl "next"
+    [ key "Mute"            (0, xF86XK_AudioMute              ) $ spawn "amixer -q set Master toggle"
+    , key "Lower volume"    (0, xF86XK_AudioLowerVolume       ) $ spawn "amixer -q set Master 3%-"
+    , key "Raise volume"    (0, xF86XK_AudioRaiseVolume       ) $ spawn "amixer -q set Master 3%+"
+    , key "Lower S volume"  (modm, xF86XK_AudioLowerVolume         ) $ spawn $ playerctl "volume 0.05-"
+    , key "Raise S volume"  (modm, xF86XK_AudioRaiseVolume         ) $ spawn $ playerctl "volume 0.05+"
+    , key "Mute S volume"   (modm, xF86XK_AudioMute                ) $ spawn $ playerctl "volume 0.0"
+    , key "100% S volume"   (modm .|. shiftMask , xF86XK_AudioMute ) $ spawn $ playerctl "volume 1.0"
+    , key "Play / Pause"    (0, xF86XK_AudioPlay                   ) $ spawn $ playerctl "play-pause"
+    , key "Stop"            (0, xF86XK_AudioStop                   ) $ spawn $ playerctl "stop"
+    , key "Previous"        (0, xF86XK_AudioPrev                   ) $ spawn $ playerctl "previous"
+    , key "Next"            (0, xF86XK_AudioNext                   ) $ spawn $ playerctl "next"
     ] ^++^
   keySet "Launchers"
-    [ key "Terminal"      (modm .|. shiftMask  , xK_Return  ) $ spawn (XMonad.terminal conf)
-    , key "Apps (Rofi)"   (modm                , xK_p       ) $ spawn appLauncher
-    , key "Lock screen"   (modm .|. controlMask, xK_l       ) $ spawn screenLocker
+    [ key "Terminal"        (modm .|. shiftMask  , xK_Return  ) $ spawn (XMonad.terminal conf)
+    , key "Apps (Rofi)"     (modm                , xK_p       ) $ spawn appLauncher
+    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
-    [ key "Next"          (modm              , xK_space     ) $ sendMessage NextLayout
-    , key "Reset"         (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
-    , key "Fullscreen"    (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
+    [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
+    , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
+    , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
   keySet "Polybar"
-    [ key "Toggle"        (modm              , xK_equal     ) togglePolybar
+    [ key "Toggle"          (modm              , xK_equal     ) togglePolybar
     ] ^++^
   keySet "Projects"
-    [ key "Switch prompt" (modm              , xK_o         ) $ switchProjectPrompt projectsTheme
+    [ key "Switch prompt"   (modm              , xK_o         ) $ switchProjectPrompt projectsTheme
     ] ^++^
   keySet "Scratchpads"
-    [ key "Audacious"       (modm .|. controlMask,  xK_a    ) $ runScratchpadApp audacious
-    , key "bottom"          (modm .|. controlMask,  xK_y    ) $ runScratchpadApp btm
-    , key "GuildView"       (modm .|. controlMask,  xK_g    ) $ spawnOn spoWs myGuildView
-    , key "CardanoNode"     (modm .|. controlMask,  xK_c    ) $ spawnOn spoWs myCardanoNode
-    , key "Files"           (modm .|. controlMask,  xK_f    ) $ runScratchpadApp nautilus
-    , key "Screen recorder" (modm .|. controlMask,  xK_r    ) $ runScratchpadApp scr
-    , key "Spotify"         (modm .|. controlMask,  xK_s    ) $ runScratchpadApp spotify
-    , key "Vlc"             (modm .|. controlMask,  xK_v    ) $ runScratchpadApp vlc
-    , key "Mpv"             (modm .|. controlMask,  xK_m    ) $ runScratchpadApp mpv
-    , key "Gimp"            (modm .|. controlMask,  xK_i    ) $ runScratchpadApp gimp
-    , key "Kodi"            (modm .|. controlMask,  xK_k    ) $ runScratchpadApp kodi
+    [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
+    , key "bottom"          (modm .|. controlMask,  xK_y      ) $ runScratchpadApp btm
+    , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
+    , key "CardanoNode"     (modm .|. controlMask,  xK_c      ) $ spawnOn spoWs myCardanoNode
+    , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
+    , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
+    , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
+    , key "Vlc"             (modm .|. controlMask,  xK_v      ) $ runScratchpadApp vlc
+    , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ runScratchpadApp mpv
+    , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
+    , key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
-    [ key "Toggle status bar gap"  (modm              , xK_b ) toggleStruts
-    , key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q ) $ io exitSuccess
-    , key "Restart XMonad"         (modm              , xK_q ) $ spawn "xmonad --recompile; xmonad --restart"
-    , key "Capture entire screen"  (modm          , xK_Print ) $ spawn "flameshot full -p ~/Pictures/flameshot/"
-    , key "Switch keyboard layout" (modm             , xK_F8 ) $ spawn "kls"
-    , key "Disable CapsLock"       (modm             , xK_F9 ) $ spawn "setxkbmap -option ctrl:nocaps"
+    [ key "Toggle status bar gap"  (modm              , xK_b  ) toggleStruts
+    , key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q  ) $ io exitSuccess
+    , key "Restart XMonad"         (modm              , xK_q  ) $ spawn "xmonad --recompile; xmonad --restart"
+    , key "Capture entire screen"  (modm          , xK_Print  ) $ spawn "flameshot full -p ~/Pictures/flameshot/"
+    , key "Switch keyboard layout" (modm             , xK_F8  ) $ spawn "kls"
+    , key "Disable CapsLock"       (modm             , xK_F9  ) $ spawn "setxkbmap -option ctrl:nocaps"
     ] ^++^
   keySet "Windows"
-    [ key "Close focused"   (modm              , xK_BackSpace) kill
-    , key "Close all in ws" (modm .|. shiftMask, xK_BackSpace) killAll
-    , key "Refresh size"    (modm              , xK_n        ) refresh
-    , key "Focus next"      (modm              , xK_j        ) $ windows W.focusDown
-    , key "Focus previous"  (modm              , xK_k        ) $ windows W.focusUp
-    , key "Focus master"    (modm              , xK_m        ) $ windows W.focusMaster
-    , key "Swap master"     (modm              , xK_Return   ) $ windows W.swapMaster
-    , key "Swap next"       (modm .|. shiftMask, xK_j        ) $ windows W.swapDown
-    , key "Swap previous"   (modm .|. shiftMask, xK_k        ) $ windows W.swapUp
-    , key "Shrink master"   (modm              , xK_h        ) $ sendMessage Shrink
-    , key "Expand master"   (modm              , xK_l        ) $ sendMessage Expand
-    , key "Switch to tile"  (modm              , xK_t        ) $ withFocused (windows . W.sink)
-    , key "Rotate slaves"   (modm .|. shiftMask, xK_Tab      ) rotSlavesUp
-    , key "Decrease size"   (modm              , xK_d        ) $ withFocused (keysResizeWindow (-10,-10) (1,1))
-    , key "Increase size"   (modm              , xK_s        ) $ withFocused (keysResizeWindow (10,10) (1,1))
-    , key "Decr  abs size"  (modm .|. shiftMask, xK_d        ) $ withFocused (keysAbsResizeWindow (-10,-10) (1024,752))
-    , key "Incr  abs size"  (modm .|. shiftMask, xK_s        ) $ withFocused (keysAbsResizeWindow (10,10) (1024,752))
+    [ key "Close focused"   (modm              , xK_BackSpace ) kill
+    , key "Close all in ws" (modm .|. shiftMask, xK_BackSpace ) killAll
+    , key "Refresh size"    (modm              , xK_n         ) refresh
+    , key "Focus next"      (modm              , xK_j         ) $ windows W.focusDown
+    , key "Focus previous"  (modm              , xK_k         ) $ windows W.focusUp
+    , key "Focus master"    (modm              , xK_m         ) $ windows W.focusMaster
+    , key "Swap master"     (modm              , xK_Return    ) $ windows W.swapMaster
+    , key "Swap next"       (modm .|. shiftMask, xK_j         ) $ windows W.swapDown
+    , key "Swap previous"   (modm .|. shiftMask, xK_k         ) $ windows W.swapUp
+    , key "Shrink master"   (modm              , xK_h         ) $ sendMessage Shrink
+    , key "Expand master"   (modm              , xK_l         ) $ sendMessage Expand
+    , key "Switch to tile"  (modm              , xK_t         ) $ withFocused (windows . W.sink)
+    , key "Rotate slaves"   (modm .|. shiftMask, xK_Tab       ) rotSlavesUp
+    , key "Decrease size"   (modm              , xK_d         ) $ withFocused (keysResizeWindow (-10,-10) (1,1))
+    , key "Increase size"   (modm              , xK_s         ) $ withFocused (keysResizeWindow (10,10) (1,1))
+    , key "Decr  abs size"  (modm .|. shiftMask, xK_d         ) $ withFocused (keysAbsResizeWindow (-10,-10) (1024,752))
+    , key "Incr  abs size"  (modm .|. shiftMask, xK_s         ) $ withFocused (keysAbsResizeWindow (10,10) (1024,752))
     ] ^++^
   keySet "Workspaces"
-    [ key "Next"          (modm              , xK_period    ) nextWS'
-    , key "Previous"      (modm              , xK_comma     ) prevWS'
-    , key "Remove"        (modm              , xF86XK_Eject ) removeWorkspace
+    [ key "Next"            (modm              , xK_period    ) nextWS'
+    , key "Previous"        (modm              , xK_comma     ) prevWS'
+    , key "Remove"          (modm              , xF86XK_Eject ) removeWorkspace
     ] ++ switchWsById
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
@@ -453,15 +457,6 @@ doFloatAbsRect x y width height = do
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
-{- testCondition :: IORef (S.Set Window) -> Query Bool
-testCondition floats =
-    liftM not doNotFadeOutWindows <&&> isUnfocused
-    <&&> (join . asks $ \w -> liftX . io $ S.notMember w `fmap` readIORef floats)
-
-toggleFadeOut :: Window -> S.Set Window -> S.Set Window
-toggleFadeOut w s | w `S.member` s = S.delete w s
-                  | otherwise = S.insert w s -}
 
 type AppName      = String
 type AppTitle     = String
@@ -499,7 +494,6 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   isBrowserDialog     = isDialog <&&> className =? "Brave-browser"
   isFileChooserDialog = isRole =? "GtkFileChooserDialog"
   isPopup             = isRole =? "pop-up"
-  isWebApp            = className =? "discord.com__app" <||> className =? "aspiechattr.me__home"
   isSplash            = isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH"
   isRole              = stringProperty "WM_WINDOW_ROLE"
   tileBelow           = insertPosition Below Newer
@@ -535,9 +529,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , isDialog
             , isSplash
             , isBrowserDialog
-            ]                                  -?> doCenterFloat 
-    , anyOf [ isWebApp
-            ]                                  -?> tileBelow        
+            ]                                  -?> doCenterFloat        
     , isFullscreen                             -?> doFullFloat
     , pure True                                -?> tileBelow
     ]
@@ -602,7 +594,9 @@ projects =
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
-            , projectStartHook = Just $ do spawn myGuildView
+            , projectStartHook = Just $ do spawn myCardanoNode
+                                           spawn myGuildView
+                                           spawn myCardanoCli
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
