@@ -8,9 +8,9 @@ in
     layout=$(${xkbmap} -query | ${rg} layout)
 
     if [[ $layout == *"us-custom"* ]]; then
-      ${xkbmap} -layout es
-    elif [[ $layout == *"es"* ]]; then
-      ${xkbmap} -layout pl
+      ${xkbmap} -layout us
+    elif [[ $layout == *"us"* ]]; then
+      ${xkbmap} -layout latam
     else
       ${xkbmap} -layout us-custom
     fi

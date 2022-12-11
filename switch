@@ -10,7 +10,7 @@ activateHM() {
 }
 
 rebuild_home_edp() {
-  nix build .#homeConfigurations.bismuth-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
   activateHM
 }
 
@@ -23,6 +23,28 @@ rebuild_system() {
   #nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
   #sudo result/bin/switch-to-configuration switch
   sudo nixos-rebuild switch --flake .#intelTower --impure
+}
+
+rebuild_intelTower() {
+  nix flake update 
+  sudo nixos-rebuild switch --flake .#intelTower --impure 
+  nix build .#homeConfigurations.bismuth-edp.activationPackage
+  activateHM 
+}
+
+# was necessary to purge substitutes caches 
+rebuild_scratchBuild() {
+  nix flake update 
+  sudo nixos-rebuild switch --flake .#intelTower --impure --option build-use-substitutes false --show-trace
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --option build-use-substitutes false --show-trace
+  activateHM
+}
+
+rebuild_intelNUC() {
+  nix flake update
+  sudo nixos-rebuild switch --flake .#intelNUC --impure
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+  activateHM
 }
 
 rebuild_vm() {
@@ -44,9 +66,15 @@ case $1 in
   "update-fish")
     fish -c fish_update_completions;;
   "system")
-    rebuild_system;;
+    rebuild_system;;  
+  "intelTower")
+    rebuild_intelTower;;
+  "intelNUC")
+    rebuild_intelNUC;;
+  "scratchBuild")
+    rebuild_scratchBuild;;
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp', 'hdmi', 'restart-x', 'update-fish', 'system' or 'vm'";;
+    echo "expected 'edp', 'hdmi', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelNUC' , 'scratchBuild', or 'vm'";;
 esac

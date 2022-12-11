@@ -15,8 +15,8 @@ in
       nix build --impure .#homeConfigurations.bismuth-hdmi.activationPackage
       result/activate
       cd -
-    elif [[ $monitors == *"eDP"* ]]; then
-      echo "Switching to HM config for eDP laptop display"
+    elif [[ $monitors == *"HDMI-2"* ]]; then
+      echo "Switching to HM config for HDMI-2 laptop display"
       cd ${home}
       nix build --impure .#homeConfigurations.bismuth-edp.activationPackage
       result/activate

@@ -37,19 +37,19 @@
       fsType = "nfs";
     };
 
-  fileSystems."/srv/Cardano" =
+  fileSystems."/home/bismuth/Cardano" =
     { device = "192.168.1.212:/volume2/Cardano";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/srv/Programming" =
+  fileSystems."/home/bismuth/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/srv/plutus" =
+  fileSystems."/home/bismuth/plutus" =
     { device = "192.168.1.212:/volume2/homes/plutus";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";

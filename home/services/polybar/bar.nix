@@ -3,28 +3,28 @@
 let
   bar = ''
     [bar/main]
-    monitor = ''${env:MONITOR:eDP}
+    monitor = ''${env:MONITOR:HDMI-2}
     width = 100%
-    height = 48
-    radius = 6.0
+    height = 32
+    radius = 0.0
     fixed-center = true
 
     background = ''${color.bg}
     foreground = ''${color.fg}
 
-    padding-left = 0
-    padding-right = 0
+    padding-left = 2
+    padding-right = 2
 
     module-margin-left = 1
-    module-margin-right = 2
+    module-margin-right = 1
 
-    tray-padding = 3
+    tray-padding = 8
     tray-background = ''${color.bg}
 
     cursor-click = pointer
     cursor-scroll = ns-resize
 
-    overline-size = 2
+    overline-size = 1
     overline-color = ''${color.ac}
 
     border-bottom-size = 0
@@ -51,9 +51,9 @@ let
     [bar/top]
     inherit = bar/main
 
-    tray-position = center
-    modules-left = right-end-top nixos xmonad left-end-bottom right-end-top left-end-top
-    modules-right = left-end-top clickable-keyboard clickable-github temperature clickable-date battery
+    tray-position = none
+    modules-left = nixos xmonad 
+    modules-right = mpris  clickable-date
     enable-ipc = true
   '';
 
@@ -62,9 +62,9 @@ let
     inherit = bar/main
     bottom = true
 
-    tray-position = none
-    modules-left = right-end-bottom mpris left-end-top cpu memory filesystem
-    modules-right = left-end-bottom wired-network wireless-network pulseaudio left-end-bottom powermenu
+    tray-position = center
+    modules-left =  cpu temperature memory filesystem
+    modules-right = wired-network  clickable-keyboard pulseaudio  powermenu
     enable-ipc = true
   '';
 in

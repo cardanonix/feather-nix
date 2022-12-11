@@ -27,6 +27,8 @@
     interfaces.eth0.useDHCP = true;
   };
 
+  services.sysprof.enable = true;
+  
   swapDevices =
     [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
     ];
@@ -37,19 +39,19 @@
       fsType = "nfs";
     };
 
-  fileSystems."/srv/Cardano" =
+  fileSystems."/home/bismuth/Cardano" =
     { device = "192.168.1.212:/volume2/Cardano";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/srv/Programming" =
+  fileSystems."/home/bismuth/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };
 
-  fileSystems."/srv/plutus" =
+  fileSystems."/home/bismuth/plutus" =
     { device = "192.168.1.212:/volume2/homes/plutus";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
@@ -57,6 +59,12 @@
 
   fileSystems."/home/bismuth/music" =
     { device = "192.168.1.212:/volume2/music";
+      options = [ "x-systemd.automount" "noauto" ];
+      fsType = "nfs";
+    };
+
+  fileSystems."/home/bismuth/shared_photos" =
+    { device = "192.168.1.212:/volume2/shared_photos";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     };

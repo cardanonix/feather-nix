@@ -3,7 +3,7 @@
 {
   xdg.configFile."orage/oragerc".text = ''
     [PARAMETERS]
-    Timezone=Europe/Warsaw
+    Timezone=America/NewYork
     Archive limit=0
     Archive file=/home/bismuth/.local/share/orage/orage_archive.ics
     Orage file=/home/bismuth/.local/share/orage/orage.ics

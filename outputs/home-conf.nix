@@ -15,7 +15,7 @@ let
     overlays = [
       fishOverlay
       nurpkgs.overlay
-      neovim-flake.overlays.default
+      #neovim-flake.overlays.default
       (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
       ((import ../home/overlays/md-toc) { inherit (inputs) gh-md-toc; })
       (import ../home/overlays/protonvpn-gui)
@@ -30,7 +30,7 @@ let
 
   imports = [
     homeage.homeManagerModules.homeage
-    neovim-flake.nixosModules.hm
+    #neovim-flake.nixosModules.hm
     ../home/home.nix
   ];
 
@@ -39,7 +39,7 @@ let
       inherit pkgs;
 
       extraSpecialArgs = {
-        inherit hidpi;
+        inherit hidpi inputs;
         addons = nur.repos.rycee.firefox-addons;
       };
 
@@ -51,9 +51,4 @@ in
   bismuth-edp = mkHome { hidpi = false; };
   bismuth-hdmi = mkHome { hidpi = true; };
 
-  # Continuos Integration automation
-  ci = {
-    metals = pkgs.callPackage ../home/programs/neovim-ide/metals.nix { };
-    metals-updater = pkgs.callPackage ../home/programs/neovim-ide/update-metals.nix { };
-  };
 }

@@ -33,7 +33,7 @@ let
     libreoffice          # office suite
     libnotify            # notify-send command
     mr
-    multilockscreen      # fast lockscreen based on i3lock
+    betterlockscreen      # fast lockscreen based on i3lock
     ncdu                 # disk space info (a better du)
     neofetch             # command-line system information
     nfs-utils

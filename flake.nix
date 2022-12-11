@@ -1,5 +1,5 @@
 {
-  description = "gvolpe's Home Manager & NixOS configurations";
+  description = "harryprayiv's Home Manager & NixOS configurations";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -36,6 +36,21 @@
       flake = false;
     };
 
+     # Cardano Node
+    cardano-node = {
+      url = github:input-output-hk/cardano-node;
+    }; 
+
+         # Cardano Wallet
+    cardano-wallet = {
+      url = github:input-output-hk/cardano-wallet;
+    };
+
+     # Plutus Apps
+/*     plutus-apps = {
+      url = github:/input-output-hk/plutus-apps;
+    };  */
+
     # Github Markdown ToC generator
 
     gh-md-toc = {
@@ -46,7 +61,7 @@
     # LaTeX stuff
 
     tex2nix = {
-      url = github:harryprayiv/tex2nix;
+      url = github:Mic92/tex2nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

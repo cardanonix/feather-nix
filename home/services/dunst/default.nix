@@ -2,7 +2,7 @@
 
 let
   colors = import ../../themes/colors.nix;
-in
+in 
 {
   services.dunst = {
     enable = true;
@@ -40,16 +40,16 @@ in
       };
       urgency_low = {
         background = "#${base00}";
-        foreground = "#${base05}";
+        foreground = "#${base0E}";
         timeout = 4;
       };
       urgency_normal = {
         background = "#${base00}";
-        foreground = "#${base05}";
+        foreground = "#${base0E}";
         timeout = 4;
       };
       urgency_critical = {
-        background = "#${base0A}";
+        background = "#${base00}";
         foreground = "#${base0D}";
         frame_color = "#${base08}";
         timeout = 10;

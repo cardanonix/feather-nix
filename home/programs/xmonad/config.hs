@@ -193,22 +193,21 @@ polybarHook dbus =
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
 myTerminal    = "alacritty"
-myGuildView   = "alacritty -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-myCardanoNode = "alacritty -e node_launch"
-myCardanoCli  = "alacritty sleep 10m && node_check"
+myGuildView   = "sleep 20 && alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+myCardanoNode = "alacritty -o font.size=5 -e node_launch"
+myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
 appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c   = "playerctl --player=spotify,%any " <> c
 
 -- Hue Lighting Junk
-lghtLvl l b   = "hue light " <> l " brightness " <> b
-lghtOff l     = "hue light " <> l " off"
-lghtOn  l     = "hue light " <> l " on"
-
-
-blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off"
-screenLocker  = blackOut <> "hue light 17 off && hue light 14 red && hue light 14 blink && betterlockscreen -l dim && hue light 17 on"
+lghtLvl l b   = "hue light " <> l <> " brightness " <> b
+lghtOff l     = "hue light " <> l <> " off"
+lghtOn  l     = "hue light " <> l <> " on"
+blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off "
+screenLocker  = "betterlockscreen -l dim"
 darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
 chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
+coldLights    = "hue light 3 concentrate && hue light 14 concentrate && hue light 17 concentrate && hue light 8 concentrate && hue light 5 concentrate && hue light 6 pink && hue light 9 concentrate"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -228,13 +227,14 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
     ] ^++^
   keySet "Lights"
-    [ key "Darker"          (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
-    , key "Brighter"        (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
+    [ key "DarkerWarm"          (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
+    , key "BrighterWarm"        (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
+    , key "BrighterBlue"        (modm, xF86XK_MonBrightnessUp     ) $ spawn coldLights
     ] ^++^    
   keySet "Audio"
-    [ key "Mute"            (0, xF86XK_AudioMute              ) $ spawn "amixer -q set Master toggle"
-    , key "Lower volume"    (0, xF86XK_AudioLowerVolume       ) $ spawn "amixer -q set Master 3%-"
-    , key "Raise volume"    (0, xF86XK_AudioRaiseVolume       ) $ spawn "amixer -q set Master 3%+"
+    [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
+    , key "Lower volume"    (0, xF86XK_AudioLowerVolume            ) $ spawn "amixer -q set Master 3%-"
+    , key "Raise volume"    (0, xF86XK_AudioRaiseVolume            ) $ spawn "amixer -q set Master 3%+"
     , key "Lower S volume"  (modm, xF86XK_AudioLowerVolume         ) $ spawn $ playerctl "volume 0.05-"
     , key "Raise S volume"  (modm, xF86XK_AudioRaiseVolume         ) $ spawn $ playerctl "volume 0.05+"
     , key "Mute S volume"   (modm, xF86XK_AudioMute                ) $ spawn $ playerctl "volume 0.0"
@@ -383,8 +383,8 @@ myLayout =
      tiled        = gapSpaced 3 $ Tall nmaster delta ratio
      video_tile   = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
      full         = gapSpaced 3 Full
-     fuller       = Full
-     column3      = gapSpaced 3 $ ThreeColMid 1 (14/100) (2/3)
+     fuller       = gapSpaced 0 Full
+     column3      = gapSpaced 3 $ ThreeColMid 1 (33/100) (2/3)
      goldenSpiral = gapSpaced 3 $ spiral (1/1.618e0)
 
      -- The default number of windows in the master pane
@@ -407,7 +407,7 @@ myLayout =
      webLayout = onWorkspace webWs (fuller ||| tiled ||| goldenSpiral ||| video_tile ||| full)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| Mirror tiled ||| tiled ||| column3)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
-     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled)
+     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -472,19 +472,20 @@ data App
 audacious = ClassApp "Audacious"            "audacious"
 btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gruvbox --default_widget_type proc"
 calendar  = ClassApp "Orage"                "orage"
-discord   = TitleApp  "Brave-browser"       "brave --app=https://discord.com/app"  --under construction
+discord   = TitleApp "Discord"              "brave --app=https://discord.com/app"  --under construction
+cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
 gimp      = ClassApp "Gimp"                 "gimp"
 keepass   = ClassApp "KeePassXC"            "keepassxc"
-mastodon  = TitleApp "Brave-browser"        "brave --app=https://mstdn.social/home" --under construction
+mastodon  = TitleApp "Mastodon"             "brave --app=https://mstdn.social/home" --under construction
 nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
-mpv       = ClassApp "Mpv"                  "mpv /home/bismuth/video/_Unsorted/torrents/Complete/AMC/Movies/8bit/"
+mpv       = ClassApp "Mpv"                  "mpv /home/bismuth/video/_Movies/Fight\\ Club\\ \\(1999\\)\\ \\[4.3G.1080p.x265.10b.139min\\]\\ \\~A4A6E32C/Fight\\ Club\\ \\(1999\\)\\ \\[x265_10b_1920x800_4.2\\ Mbps_AAC-7.1_Tigole\\].mkv"
 kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
@@ -577,7 +578,11 @@ projects =
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/"
-            , projectStartHook = Just . replicateM_ 2 $ spawn myTerminal
+            , projectStartHook = Just $ do spawn "alacritty -o font.size=15 --hold -e ponysay Hi Audrey!" 
+                                           spawn "alacritty -o font.size=6 -e cmatrix -r"
+                                           spawn "alacritty -o font.size=5 -e cmatrix -m"
+                                           spawn "alacritty -o font.size=4 --hold -e neofetch"
+                                           spawn "alacritty -o font.size=2 -e nyancat"
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
@@ -589,14 +594,16 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "brave --app=https://aspiechattr.me/home"  
-                                           spawn "brave --app=https://discord.com/app"                       
+            , projectStartHook = Just $ do spawn "discord"
+                                           spawn "telegram-desktop"
+                                           spawn "signal"
+                                           spawn "slack"                     
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
             , projectStartHook = Just $ do spawn myCardanoNode
-                                           spawn myGuildView
-                                           spawn myCardanoCli
+                                           (spawnOn spoWs myGuildView)
+                                           (spawnOn spoWs myCardanoCli)
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"

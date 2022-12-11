@@ -4,25 +4,23 @@
     # https://github.com/hartbit/base16-twilight-scheme
     twilight = {
       scheme = "Twilight";
-      author = "David Hart (https://github.com/hartbit)";
-      base00 = "1e1e1e";
-      base01 = "323537";
-      base02 = "464b50";
-      base03 = "5f5a60";
-      base04 = "838184";
-      base05 = "a7a7a7";
-      base06 = "c3c3c3";
-      base07 = "ffffff";
-      base08 = "cf6a4c";
-      base09 = "cda869";
-      base0A = "f9ee98";
-      base0B = "8f9d6a";
-      base0C = "afc4db";
-      base0D = "7587a6";
-      base0E = "9b859d";
-      base0F = "9b703f";
+      author = "Harry Pray (https://github.com/hartbit)";
+      base00 = "202020";
+      base01 = "65A6AD";
+      base02 = "90A224";
+      base03 = "A76A24";
+      base04 = "627A92";
+      base05 = "D48FAD";
+      base06 = "BCAD67";
+      base07 = "B2A191";
+      base08 = "404040";
+      base09 = "FF6C5F";
+      base0A = "B8CA4B";
+      base0B = "C7A551";
+      base0C = "95B9DE";
+      base0D = "A89AE4";
+      base0E = "9FA590";
+      base0F = "E8D0C3";
     };
   };
 }
-
-

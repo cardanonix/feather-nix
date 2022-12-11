@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, ... }:
+{ config, lib, pkgs, stdenv, inputs, ... }:
 
 let
   username = "bismuth";
@@ -9,17 +9,18 @@ let
   work-browser = pkgs.callPackage ./programs/browsers/work.nix {};
 
   defaultPkgs = with pkgs; [
+    aalib                # make ASCI text 
     any-nix-shell        # fish support for nix shell
     arandr               # simple GUI for xrandr
     asciinema            # record the terminal
     audacious            # simple music player
-    bitwarden-cli        # command-line client for the password manager
+    blender              # 3D computer graphics software tool set
+    bc                   # required for Cardano Guild gLiveView
     bottom               # alternative to htop & ytop
     cachix               # nix caching
     calibre              # e-book reader
-    cmatrix
     cobang               # qr-code scanner
-    discord
+    discord              # my chat of choice
     dconf2nix            # dconf (gnome) files to nix converter
     dmenu                # application launcher
     docker-compose       # docker manager
@@ -33,64 +34,78 @@ let
     gnomecast            # chromecast local files
     hyperfine            # command-line benchmarking tool
     insomnia             # rest client with graphql support
-    jitsi-meet-electron  # open source video calls and chat
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
     kodi                 # media player  
+    krita                # image editor (supposedly better than gimp)
     libreoffice          # office suite
     libnotify            # notify-send command4
-    mkvtoolnix
-    multilockscreen      # fast lockscreen based on i3lock
+    mkvtoolnix           # tools for encoding MKV files, etc
+    betterlockscreen      # fast lockscreen based on i3lock
     ncdu                 # disk space info (a better du)
-    neofetch             # command-line system information
+    nfs-utils            # utilities for NFS
     ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
-    nyancat              # the famous rainbow cat!
     mr                   # mass github actions
     md-toc               # generate ToC in markdown files
+    mpv                  # media player
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences
     pasystray            # pulseaudio systray
-    #pgcli               # modern postgres client (FIXME: broken on nixpkgs)
+    pgcli                # modern postgres client
     playerctl            # music player controller
     prettyping           # a nicer ping
     protonvpn-gui        # official proton vpn client
     pulsemixer           # pulseaudio mixer
-    rage                 # encryption tool for secrets management
     ranger               # terminal file explorer
+    rawtherapee          # raw photo manipulation and grading
     ripgrep              # fast grep
     rnix-lsp             # nix lsp server
     simple-scan          # scanner gui
     simplescreenrecorder # screen recorder gui
-    skypeforlinux        # messaging client
     slack                # messaging client
     tdesktop             # telegram messaging client
     tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
     vlc                  # media player
-    vscodium
     xsel                 # clipboard support (also for neovim)
     yad                  # yet another dialog - fork of zenity
+    xssproxy             # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
+    xautolock
+    hue-cli
+    element
 
     # work stuff
     work-browser
 
-    # fixes the `ar` error required by cabal
-    binutils-unwrapped
-  ];
+    # FOSS additions
+    ungoogled-chromium
+    obsidian
 
-  gitPkgs = with pkgs.gitAndTools; [
-    diff-so-fancy # git diff with colors
-    git-crypt     # git files encryption
-    hub           # github command-line client
-    tig           # diff and commit view
+    #  Ricing
+    cmatrix              # dorky terminal matrix effect
+    nyancat              # the famous rainbow cat!  
+    ponysay
+    pipes         
+
+    #  Security
+    rage                     # encryption tool for secrets management
+    keepassxc                # Security ##
+    gnupg                    # Security ##
+    #ledger-live-desktop      # Ledger Nano X Support for NixOS
+    bitwarden-cli            # command-line client for the password manager
+
+    
+    binutils-unwrapped       # fixes the `ar` error required by cabal
+    jupyter
   ];
 
   gnomePkgs = with pkgs.gnome; [
     eog            # image viewer
     evince         # pdf reader
     nautilus       # file manager
+    gucharmap      # gnome character map (for font creation) 
   ];
 
   haskellPkgs = with pkgs.haskellPackages; [
@@ -101,43 +116,42 @@ let
     haskell-language-server # haskell IDE (ships with ghcide)
     hoogle                  # documentation
     nix-tree                # visualize nix dependencies
+    ihaskell
+    ihaskell-blaze 
+    #ghcup
   ];
 
-  polybarPkgs = with pkgs; [
-    font-awesome          # awesome fonts
-    material-design-icons # fonts with glyphs
-    xfce.orage            # lightweight calendar
+  cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
+    cardano-node
+    cardano-cli
   ];
 
-  scripts = pkgs.callPackage ./scripts/default.nix { inherit config pkgs; };
+/*
+  plutusPkgs = with inputs.plutus.packages.${system}; [
+    plutus_repl
+    #plutus_cli
+  ]; 
+  plutusAppsPkgs = with inputs.plutus-apps.packages.${system}; [
+    plutus-pab-executables.components.exes.pab-cli
+    plutus-chain-index.components.exes.plutus-chain-index
+    marconi.components.exes.marconi
+    marconi-mamba.components.exes.marconi-mamba
+    plutus-example.components.exes.create-script-context
+  ];  
+*/
 
-  securityPkgs = with pkgs; [
-    yubikey-manager          # yubikey manager cli
-    yubioath-desktop         # yubikey OTP manager (gui)
-    keepass
-    gnupg                    # Security ##
-    ledger-live-desktop      # Ledger Nano X Support for NixOS
-  ];
+in
 
-  cardanoGuildPkgs = with pkgs; [
-    bc        # required for gLiveView
-  ];
-
-  xmonadPkgs = with pkgs; [
-    networkmanager_dmenu   # networkmanager on dmenu
-    networkmanagerapplet   # networkmanager applet
-    nitrogen               # wallpaper manager
-    xcape                  # keymaps modifier
-    xorg.xkbcomp           # keymaps modifier
-    xorg.xmodmap           # keymaps modifier
-    xorg.xrandr            # display manager (X Resize and Rotate protocol)
-  ];
-
-in 
 {
   programs.home-manager.enable = true;
 
-  imports = (import ./modules) ++ (import ./age) ++ (import ./programs) ++ (import ./services) ++ [(import ./themes)];
+    imports = builtins.concatMap import [
+    ./modules
+    ./programs
+    ./scripts
+    ./services
+    ./themes
+  ];
 
   xdg = {
     inherit configHome;
@@ -148,13 +162,20 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ cardanoGuildPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs ++ polybarPkgs ++ scripts ++ xmonadPkgs ++ securityPkgs;
+    packages = defaultPkgs ++ gnomePkgs ++ cardanoNodePkgs ++ haskellPkgs;
+
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
     };
+    pointerCursor = { 
+      name = "phinger-cursors"; 
+      package = pkgs.phinger-cursors; 
+      size = 25; 
+      gtk.enable = true; 
+    };
   };
-
+  
   # restart services on change
   systemd.user.startServices = "sd-switch";
 
@@ -162,64 +183,4 @@ in
   
   # notifications about home-manager news
   news.display = "silent";
-
-  programs = {
-    bat.enable = true;
-
-    broot = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
-    fzf = {
-      enable = true;
-      enableFishIntegration = true;
-      defaultCommand = "fd --type file --follow"; # FZF_DEFAULT_COMMAND
-      defaultOptions = [ "--height 20%" ]; # FZF_DEFAULT_OPTS
-      fileWidgetCommand = "fd --type file --follow"; # FZF_CTRL_T_COMMAND
-    };
-
-    gpg.enable = true;
-
-    htop = {
-      enable = true;
-      settings = {
-        sort_direction = true;
-        sort_key = "PERCENT_CPU";
-      };
-    };
-
-    jq.enable = true;
-
-    obs-studio = {
-      enable = true;
-      plugins = [];
-    };
-
-    ssh.enable = true;
-
-    #vscodium = {
-    #  enable = true;
-    #};
-
-    zoxide = {
-      enable = true;
-      enableFishIntegration = true;
-      options = [];
-    };
-
-    # programs with custom modules
-    megasync.enable = true;
-    spotify.enable = true;
-  };
-
-  services = {
-    flameshot.enable = true;
-  };
-
 }

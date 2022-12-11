@@ -28,6 +28,14 @@ let
   rg = "${pkgs.ripgrep}/bin/rg";
 in
 {
+  home.packages = with pkgs.gitAndTools; [
+    diff-so-fancy # git diff with colors
+    git-crypt     # git files encryption
+    hub           # github command-line client
+    tig           # diff and commit view
+    
+  ];
+
   programs.git = {
     enable = true;
     aliases = {
@@ -44,6 +52,7 @@ in
       dc = "diff --cached";
     };
     extraConfig = gitConfig;
+    #extraConfig = gitConfig.safe.directory = "/home/bismuth/Programming/";
     ignores = [
       "*.bloop"
       "*.bsp"
@@ -62,5 +71,6 @@ in
     };
     userEmail = "harryprayiv@gmail.com";
     userName = "harryprayiv";
+
   };
 }

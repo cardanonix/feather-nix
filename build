@@ -17,7 +17,7 @@ pre_home() {
 
   # Desktop pic
   mkdir -p $HOME/Pictures/
-  cp imgs/53309.jpg $HOME/Pictures/
+  cp imgs/longboat01_yanoi_plutus.JPG $HOME/Pictures/
 
   
 }
@@ -30,7 +30,7 @@ post_home() {
 
   # Set screenlock wallpaper
   echo "Setting screen-lock wallpaper"
-  multilockscreen -u imgs/plutusSchool.jpg
+  betterlockscreen -u imgs/longboat01_yanoi_plutus.JPG
 }
 
 build_ci_home() {
@@ -39,8 +39,8 @@ build_ci_home() {
 
 build_ci_system() {
   nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
-  nix build .#nixosConfigurations.intelNUC.config.system.build.toplevel
-  nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel
+  #nix build .#nixosConfigurations.intelNUC.config.system.build.toplevel
+  #nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel
 }
 
 fresh_install() {

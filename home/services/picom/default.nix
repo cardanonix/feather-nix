@@ -10,9 +10,9 @@
           corner-radius = 8;
           round-borders = 2;
           blur-method = "dual_kawase";
-          blur-strength = "15";
+          blur-strength = "5";
     };
-        opacityRules = [ "100:name *= 'i3lock'" ];
+    opacityRules = [ "100:name *= 'i3lock'" ];
     fade = true;
     fadeDelta = 5;
     vSync = true;
@@ -25,13 +25,18 @@
       src = pkgs.fetchFromGitHub {
         repo = "picom";
         owner = "ibhagwan";
-        rev = "44b4970f70d6b23759a61a2b94d9bfb4351b41b1";
-        sha256 = "0iff4bwpc00xbjad0m000midslgx12aihs33mdvfckr75r114ylh";
+        rev = "c4107bb6cc17773fdc6c48bb2e475ef957513c7a";
+        sha256 = "1hVFBGo4Ieke2T9PqMur1w4D0bz/L3FAvfujY9Zergw=";
       };
     });
   };
 }
+/*
+used nix-prefetch-github ibhagwan picom to find latest commit sha256
+  rev = "c4107bb6cc17773fdc6c48bb2e475ef957513c7a";
+  sha256 = "1hVFBGo4Ieke2T9PqMur1w4D0bz/L3FAvfujY9Zergw=";
 
-
-# TODO: nix-prefetch-url --unpack https://github.com/ibhagwan/picom.git
-# TODO: "c4107bb6cc17773fdc6c48bb2e475ef957513c7a" is the latest revision
+old working revsion/sha256         
+  rev = "44b4970f70d6b23759a61a2b94d9bfb4351b41b1";
+  sha256 = "0iff4bwpc00xbjad0m000midslgx12aihs33mdvfckr75r114ylh";
+*/
