@@ -9,7 +9,7 @@
       haskell.haskell
       justusadam.language-haskell
       arrterian.nix-env-selector
-      pinage404.nix-extension-pack incorporate
+      #pinage404.nix-extension-pack incorporate
       jnoortheen.nix-ide
       arcticicestudio.nord-visual-studio-code
       gruntfuggly.todo-tree

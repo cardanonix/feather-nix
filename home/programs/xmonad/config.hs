@@ -578,18 +578,17 @@ projects =
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "alacritty -o font.size=15 --hold -e ponysay Hi Audrey!" 
+            , projectStartHook = Just $ do spawn "alacritty -o font.size=15 -e ponysay --pony pinkie Hi, Audrey!" 
                                            spawn "alacritty -o font.size=6 -e cmatrix -r"
                                            spawn "alacritty -o font.size=5 -e cmatrix -m"
-                                           spawn "alacritty -o font.size=4 --hold -e neofetch"
-                                           spawn "alacritty -o font.size=2 -e nyancat"
+                                           spawn "alacritty -o font.size=4 -e ponysay --pony pinkie hi"
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/nix-config.git/plutus/"
+            , projectDirectory = "~/nix-config/"
             , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = comWs

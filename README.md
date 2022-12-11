@@ -6,15 +6,15 @@ nix-config
 
 My current — and always evolving — NixOS configuration files, home-manager, neovim, etc.
 
-![scala-dev-env](imgs/scala-dev.png)
-
-![desktop](imgs/desktop-1.jpg)
-
-![amd](imgs/amd.jpg)
+![Web Workspace](imgs/screenshotWs/webWs.png)
+![Open Source Software Workspace](imgs/screenshotWs/ossWs.png)
+![Music Workspace](imgs/screenshotWs/musWs.png)
+![Developer Workspace](imgs/screenshotWs/devWs.png)
+![Communications Workspace](imgs/screenshotWs/comWs.png)
+![Stake Pool Workspace](imgs/screenshotWs/spoWs.png)
+![Security Workspace](imgs/screenshotWs/secWs.png)
 
 ![themes](imgs/theme.jpg)
-
-NOTE: My new neovim configuration is now a separate flake: https://github.com/harryprayiv/neovim-flake
 
 ## Programs
 
@@ -28,8 +28,6 @@ The `home.nix` file contains details about all the software I use, but here's a 
 | Status Bar     | [Polybar](https://polybar.github.io/) |
 | Terminal       | [Alacritty](https://github.com/alacritty/alacritty) |
 | Window Manager | [XMonad](https://xmonad.org/) |
-
-If you're interested in using `taffybar` or `xmobar`, browse the commit history and you will find the configuration files I used. Here's a [screenshot](imgs/taffybar.png) showcasing the former.
 
 ## Themes
 
@@ -59,7 +57,6 @@ Here is an overview of the folders' structure:
 │  ├── services
 │  └── themes
 ├── imgs
-├── notes
 ├── outputs
 │  ├── home-conf.nix
 │  └── nixos-conf.nix
@@ -77,7 +74,6 @@ Here is an overview of the folders' structure:
 - `flake.nix`: home and system configurations.
 - `home`: all the user programs, services and dotfiles.
 - `imgs`: screenshots and other images.
-- `notes`: cheat-sheets, docs, etc.
 - `outputs`: the Home Manager and NixOS flake outputs.
 - `system`: the NixOS configuration, settings for different laptops and window managers.
 
@@ -87,17 +83,38 @@ You can have a look at the available flake outputs before getting started.
 
 ```console
 $ nix flake show github:harryprayiv/nix-config
-github:harryprayiv/nix-config/0161ea3bd15e0cd06696f27bd60c588991305b20
+git+file:///home/bismuth/nix-config
 ├───homeConfigurations: unknown
 └───nixosConfigurations
-    ├───dell-xps: NixOS configuration
-    └───tongfang-amd: NixOS configuration
+    ├───intelNUC: NixOS configuration
+    ├───intelTower: NixOS configuration
+    └───plutusVM: NixOS configuration
 ```
 
 As well as all the declared flake inputs.
 
 ```console
 $ nix flake metadata github:harryprayiv/nix-config
+Resolved URL:  github:harryprayiv/nix-config
+Locked URL:    github:harryprayiv/nix-config/8c589a464114b6e6d8efd5e42804f2e8f2c5a9b6
+Description:   Harry's Home Manager & NixOS configurations
+Path:          /nix/store/ics3lfa1d1b2rkb9ywlrn7sga47j507j-source
+Revision:      8c589a464114b6e6d8efd5e42804f2e8f2c5a9b6
+Last modified: 2022-12-05 15:16:27
+Inputs:
+├───fish-bobthefish-theme: github:gvolpe/theme-bobthefish/e4418e8a7de9fbd6b5053a9b9009aa84a48398cd
+├───fish-keytool-completions: github:ckipp01/keytool-fish-completions/dcb24bae7b8437e1e1210b00b7172841a26d6573
+├───gh-md-toc: github:ekalinin/github-markdown-toc/435768259cb60e5842f7cde0679d495b3c31dfbd
+├───home-manager: github:nix-community/home-manager/e4e639dd4dc3e431aa5b5f95325f9a66ac7e0dd9
+│   ├───nixpkgs follows input 'nixpkgs'
+│   └───utils: github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0
+├───homeage: github:jordanisaacs/homeage/dd98c460175a0781ad0b51f4392de97c5454a5c4
+│   └───nixpkgs follows input 'nixpkgs'
+├───nixpkgs: github:NixOS/nixpkgs/fd54651f5ffb4a36e8463e0c327a78442b26cbe7
+├───nurpkgs: github:nix-community/NUR/0092c612677e73dc8552d600727c7b076ca4a2da
+└───tex2nix: github:harryprayiv/tex2nix/0634103134b4b7cb587c947e5588f8042f613a79
+    ├───flake-utils: github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0
+    └───nixpkgs follows input 'nixpkgs'
 ```
 
 ### NixOS

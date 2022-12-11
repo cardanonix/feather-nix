@@ -10,6 +10,7 @@
   mastodon-link            = "nlfdgcdfjnobjocicnddjghdbmgglame"; 
 
 # Cardano
+  lace                     = "gafhhkghbfjjkeiendhlofajokpaflmk";
   eternl                   = "kmhcihpebfmpgmihbkipmjlmmioameka";
   /* 
   yoroi                    = "ffnbelfdoeiohenkjibnmadjiehjhajb";
