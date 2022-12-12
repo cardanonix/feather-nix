@@ -16,6 +16,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    haskellNix = {
+      url = "github:input-output-hk/haskell.nix";
+      # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     neovim-flake = {
       #url = git+file:///home/gvolpe/workspace/neovim-flake;   BOO
       url = github:gvolpe/neovim-flake;
@@ -42,9 +48,9 @@
     }; 
 
          # Cardano Wallet
-    cardano-wallet = {
-      url = github:input-output-hk/cardano-wallet;
-    };
+    #cardano-wallet = {
+    #  url = github:input-output-hk/cardano-wallet;
+    #};
 
      # Plutus Apps
 /*     plutus-apps = {
