@@ -578,10 +578,8 @@ projects =
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "alacritty -o font.size=15 -e ponysay --pony pinkie Hi, Audrey!" 
-                                           spawn "alacritty -o font.size=6 -e cmatrix -r"
-                                           spawn "alacritty -o font.size=5 -e cmatrix -m"
-                                           spawn "alacritty -o font.size=4 -e ponysay --pony pinkie hi"
+            , projectStartHook = Just $ do spawn myTerminal 
+                                           spawn myTerminal
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
@@ -601,8 +599,6 @@ projects =
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
             , projectStartHook = Just $ do spawn myCardanoNode
-                                           (spawnOn spoWs myGuildView)
-                                           (spawnOn spoWs myCardanoCli)
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
