@@ -6,7 +6,7 @@ nix-config for my intelTower
 
 My current — and always evolving — NixOS configuration files, home-manager, neovim, etc.
 
-## Web
+## Web Workspace
 ![Web Workspace](imgs/screenshotWs/webWs.png)
 ## Open Source Software Workspace
 ![Open Source Software Workspace](imgs/screenshotWs/ossWs.png)
