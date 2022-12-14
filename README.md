@@ -6,15 +6,20 @@ nix-config for my intelTower
 
 My current — and always evolving — NixOS configuration files, home-manager, neovim, etc.
 
+## Web
 ![Web Workspace](imgs/screenshotWs/webWs.png)
+## Open Source Software Workspace
 ![Open Source Software Workspace](imgs/screenshotWs/ossWs.png)
+## Music Workspace
 ![Music Workspace](imgs/screenshotWs/musWs.png)
+## Developer Workspace
 ![Developer Workspace](imgs/screenshotWs/devWs.png)
+## Communications Workspace
 ![Communications Workspace](imgs/screenshotWs/comWs.png)
+## Stake Pool Workspace
 ![Stake Pool Workspace](imgs/screenshotWs/spoWs.png)
+## Security Workspace
 ![Security Workspace](imgs/screenshotWs/secWs.png)
-
-![themes](imgs/theme.jpg)
 
 ## Programs
 
