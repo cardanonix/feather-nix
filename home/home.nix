@@ -99,6 +99,7 @@ let
     
     binutils-unwrapped       # fixes the `ar` error required by cabal
     jupyter
+    tootle                   # mastodon client
   ];
 
   gnomePkgs = with pkgs.gnome; [
