@@ -14,13 +14,12 @@ let
     arandr               # simple GUI for xrandr
     asciinema            # record the terminal
     audacious            # simple music player
-    blender              # 3D computer graphics software tool set
+    binutils-unwrapped   # fixes the `ar` error required by cabal
     bc                   # required for Cardano Guild gLiveView
     bottom               # alternative to htop & ytop
     cachix               # nix caching
     calibre              # e-book reader
     cobang               # qr-code scanner
-    discord              # my chat of choice
     dconf2nix            # dconf (gnome) files to nix converter
     dmenu                # application launcher
     docker-compose       # docker manager
@@ -29,26 +28,22 @@ let
     duf                  # disk usage/free utility
     exa                  # a better `ls`
     fd                   # "find" for files
-    gimp                 # gnu image manipulation program
     glow                 # terminal markdown viewer
     gnomecast            # chromecast local files
     hyperfine            # command-line benchmarking tool
     insomnia             # rest client with graphql support
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
-    kodi                 # media player  
-    krita                # image editor (supposedly better than gimp)
     libreoffice          # office suite
     libnotify            # notify-send command4
-    mkvtoolnix           # tools for encoding MKV files, etc
-    betterlockscreen      # fast lockscreen based on i3lock
+    betterlockscreen     # fast lockscreen based on i3lock
     ncdu                 # disk space info (a better du)
     nfs-utils            # utilities for NFS
     ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
     mr                   # mass github actions
     md-toc               # generate ToC in markdown files
-    mpv                  # media player
+    obsidian             # note taking/mind mapping
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences
     pasystray            # pulseaudio systray
@@ -58,48 +53,54 @@ let
     protonvpn-gui        # official proton vpn client
     pulsemixer           # pulseaudio mixer
     ranger               # terminal file explorer
-    rawtherapee          # raw photo manipulation and grading
     ripgrep              # fast grep
     rnix-lsp             # nix lsp server
     simple-scan          # scanner gui
     simplescreenrecorder # screen recorder gui
-    slack                # messaging client
-    tdesktop             # telegram messaging client
     tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
-    vlc                  # media player
+    ungoogled-chromium   # chrome without the Goog 
     xsel                 # clipboard support (also for neovim)
     yad                  # yet another dialog - fork of zenity
     xssproxy             # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
-    xautolock
-    hue-cli
-    element
+    xautolock            # autolock stuff
+    hue-cli              # lights for my residence
+    jupyter              # pyton jupyter notebooks
 
-    # work stuff
+    # Work Stuff
     work-browser
 
-    # FOSS additions
-    ungoogled-chromium
-    obsidian
+    #  Messaging and Social Networks
+    element-desktop      # matrix client
+    discord              # discord app (breaks often)
+    tdesktop             # telegram messaging client
+    slack                # messaging client
+    tootle               # mastodon client of choice
 
     #  Ricing
     cmatrix              # dorky terminal matrix effect
     nyancat              # the famous rainbow cat!  
-    ponysay
-    pipes         
+    ponysay              # for sweet Audrey
+    pipes                # pipes vis in terminal
 
     #  Security
-    rage                     # encryption tool for secrets management
-    keepassxc                # Security ##
-    gnupg                    # Security ##
-    ledger-live-desktop      # Ledger Nano X Support for NixOS
-    bitwarden-cli            # command-line client for the password manager
+    rage                 # encryption tool for secrets management
+    keepassxc            # Security ##
+    gnupg                # Security ##
+    ledger-live-desktop  # Ledger Nano X Support for NixOS
+    bitwarden-cli        # command-line client for the password manager
+  ];
 
-    
-    binutils-unwrapped       # fixes the `ar` error required by cabal
-    jupyter
-    tootle                   # mastodon client
+  extraPkgs = with pkgs; [
+    vlc                  # media player
+    rawtherapee          # raw photo manipulation and grading
+    mpv                  # media player
+    kodi                 # media player  
+    gimp                 # gnu image manipulation program
+    blender              # 3D computer graphics software tool set
+    krita                # image editor (supposedly better than gimp)
+    mkvtoolnix           # tools for encoding MKV files, etc
   ];
 
   gnomePkgs = with pkgs.gnome; [
@@ -127,20 +128,6 @@ let
     cardano-cli
   ];
 
-/*
-  plutusPkgs = with inputs.plutus.packages.${system}; [
-    plutus_repl
-    #plutus_cli
-  ]; 
-  plutusAppsPkgs = with inputs.plutus-apps.packages.${system}; [
-    plutus-pab-executables.components.exes.pab-cli
-    plutus-chain-index.components.exes.plutus-chain-index
-    marconi.components.exes.marconi
-    marconi-mamba.components.exes.marconi-mamba
-    plutus-example.components.exes.create-script-context
-  ];  
-*/
-
 in
 
 {
@@ -163,7 +150,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ cardanoNodePkgs ++ haskellPkgs;
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs;
 
     sessionVariables = {
       DISPLAY = ":0";
