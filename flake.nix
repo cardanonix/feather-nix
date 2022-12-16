@@ -44,7 +44,7 @@
 
      # Cardano Node
     cardano-node = {
-      url = github:input-output-hk/cardano-node;
+      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
     }; 
 
          # Cardano Wallet
