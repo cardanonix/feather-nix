@@ -2,6 +2,8 @@
 
 let
   gitConfig = {
+    safe.directory = "/home/bismuth/Programming/";
+    gpg.program = "/nix/store/gpsmzjn3g5kny90j2gg6n3a0my5j9cgv-gnupg-2.3.7/bin/gpg2";
     core = {
       editor = "nvim";
       pager  = "diff-so-fancy | less --tabs=4 -RFX";
@@ -52,7 +54,7 @@ in
       dc = "diff --cached";
     };
     extraConfig = gitConfig;
-    #extraConfig = gitConfig.safe.directory = "/home/bismuth/Programming/";
+
     ignores = [
       "*.bloop"
       "*.bsp"
@@ -66,11 +68,10 @@ in
       "*.jvmopts"      # should be local to every project
     ];
     signing = {
-      key = "0xDA020C61661DEDC7";
+      key = "0xAAF9795E393B4DA0";
       signByDefault = true;
     };
     userEmail = "harryprayiv@gmail.com";
     userName = "harryprayiv";
-
   };
 }

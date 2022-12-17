@@ -48,7 +48,7 @@ rebuild_intelNUC() {
 }
 
 rebuild_vm() {
-  sudo nixos-rebuild build-vm --flake .#intelTower
+  sudo nixos-rebuild build-vm --flake .#intelTower --impure
 }
 
 restart_X() {

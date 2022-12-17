@@ -28,6 +28,17 @@
   };
 
   services.sysprof.enable = true;
+
+  # Enable sound.
+  sound = {
+    enable = true;
+    mediaKeys.enable = true;
+  };
+
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
   
   swapDevices =
     [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
@@ -82,5 +93,21 @@
     resolutions = [
       { x = 1920; y = 1080; }
     ];
+  };
+
+    # Enable Docker & VirtualBox support.
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
   };
 }

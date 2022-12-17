@@ -32,15 +32,19 @@ in
       plugins = [ pkgs.networkmanager-openvpn ];
     };
 
+  # disable the firewall 
+    firewall.enable = false;
+    #firewall.allowedTCPPorts = [ ... ];
+    #firewall.allowedUDPPorts = [ ... ];
+    
+    #proxy.default = "http://user:password@proxy:port/";
+    #proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
   };
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -70,47 +74,7 @@ in
   };
 
   # List services that you want to enable:
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  # Enable Docker & VirtualBox support.
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-
-    virtualbox.host = {
-      enable = false;
-      enableExtensionPack = false;
-    };
-  };
-
   users.extraGroups.vboxusers.members = [ "bismuth" ];
-
-  # Enable sound.
-  sound = {
-    enable = true;
-    mediaKeys.enable = true;
-  };
-
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
-  # Scanner backend
-  #hardware.sane = {
-  #  enable = true;
-  #extraBackends = [ pkgs.epkowa pkgs.sane-airscan ];
-  #};
 
   services = {
     # Mount MTP devices
@@ -167,7 +131,6 @@ in
 
   users.groups.plugdev = {};
   
-
   security = {
     # Yubikey login & sudo
     pam.yubico = {
