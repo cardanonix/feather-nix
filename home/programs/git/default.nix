@@ -3,7 +3,7 @@
 let
   gitConfig = {
     safe.directory = "/home/bismuth/Programming/";
-    gpg.program = "/nix/store/gpsmzjn3g5kny90j2gg6n3a0my5j9cgv-gnupg-2.3.7/bin/gpg2";
+    gpg.program = "${pkgs.gnupg}/bin/gpg2";
     core = {
       editor = "nvim";
       pager  = "diff-so-fancy | less --tabs=4 -RFX";
