@@ -6,7 +6,7 @@
     inactiveInterval = 180;
     lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
     xautolock.extraOptions = [
-      "Xautolock.killer: systemctl suspend"
+      "Xautolock.locker: systemctl suspend"
     ];
   };
 }
