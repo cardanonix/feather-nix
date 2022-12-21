@@ -375,17 +375,20 @@ myLayout =
     . devLayout    
     . musLayout     
     . webLayout
+    . mscLayout
     . ossLayout   
     . spoLayout
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
      tiled        = gapSpaced 3 $ Tall nmaster delta ratio
+     tiled_nogap  = gapSpaced 0 $ Tall nmaster delta ratio
      video_tile   = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
      full         = gapSpaced 3 Full
      fuller       = gapSpaced 0 Full
      column3      = gapSpaced 3 $ ThreeColMid 1 (33/100) (2/3)
      goldenSpiral = gapSpaced 3 $ spiral (1/1.618e0)
+     silverSpiral = gapSpaced 3 $ spiralWithDir East CCW (1/1.618e0) 
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -401,13 +404,16 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
-     devLayout = onWorkspace devWs (fuller ||| column3 ||| full ||| goldenSpiral ||| Mirror tiled ||| tiled)
-     musLayout = onWorkspace musWs (fuller ||| tiled)
-     webLayout = onWorkspace webWs (fuller ||| tiled ||| goldenSpiral ||| video_tile ||| full)
-     spoLayout = onWorkspace spoWs (goldenSpiral ||| Mirror tiled ||| tiled ||| column3)
-     secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
+     webLayout = onWorkspace webWs (fuller ||| tiled ||| goldenSpiral ||| full)
+     --mscLayout = onWorkspace mscWs (Mirror tiled ||| fuller ||| column3 ||| goldenSpiral ||| full ||| tiled ||| video_tile)
+     mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
+     musLayout = onWorkspace musWs (fuller ||| tiled)
+     devLayout = onWorkspace devWs (Mirror tiled_nogap ||| fuller ||| column3 ||| goldenSpiral ||| full ||| Mirror tiled)
+     comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
+     spoLayout = onWorkspace spoWs (Mirror tiled_nogap ||| fuller ||| column3 ||| goldenSpiral ||| full ||| tiled)
+     secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
+
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -557,6 +563,7 @@ scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, m
 -- Workspaces
 --
 webWs = "web"
+mscWs = "msc"
 ossWs = "oss"
 musWs = "mus"
 devWs = "dev"
@@ -565,7 +572,7 @@ spoWs = "spo"
 secWs = "sec"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, ossWs, musWs, devWs, comWs, spoWs, secWs]
+myWS = [webWs, mscWs, ossWs, musWs, devWs, comWs, spoWs, secWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -575,6 +582,10 @@ projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn "brave"
+            }
+  , Project { projectName      = mscWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = ossWs
             , projectDirectory = "~/"

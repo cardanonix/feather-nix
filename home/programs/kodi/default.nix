@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
 {
-  #pkgs.kodi.withPackages (exts: [ exts.amber-skin ])
   programs.kodi = {
     enable = true;
+    withPackages (exts: [ exts.amber-skin ])
     settings.videolibrary = { 
       showemptytvshows = "true"; 
       recentlyaddeditems = "100";
