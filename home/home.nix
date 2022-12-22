@@ -101,6 +101,7 @@ let
     blender              # 3D computer graphics software tool set
     krita                # image editor (supposedly better than gimp)
     mkvtoolnix           # tools for encoding MKV files, etc
+    filebot
   ];
 
   gnomePkgs = with pkgs.gnome; [
