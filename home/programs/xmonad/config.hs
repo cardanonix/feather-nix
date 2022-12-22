@@ -645,5 +645,6 @@ projectsTheme = amberXPConfig
 
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
---
-myLogHook = fadeInactiveLogHook 0.95
+--TODO: Add trandparency on a per app basis
+--TODO: Add figure out how to make one window persistent using a keystroke
+myLogHook = fadeInactiveLogHook 1.0
