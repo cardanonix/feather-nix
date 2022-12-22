@@ -2,7 +2,9 @@
 
 let
   gitConfig = {
-    safe.directory = "/home/bismuth/Programming/";
+    safe.directory = "/home/bismuth/$";
+    #safe.directory = "/home/bismuth/Cardano/git/IOHK/Alonzo-testnet";
+    #safe.directory = "/home/bismuth/Cardano/git/IOHK/";
     gpg.program = "${pkgs.gnupg}/bin/gpg2";
     core = {
       editor = "nvim";
