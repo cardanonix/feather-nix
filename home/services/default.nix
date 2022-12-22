@@ -8,11 +8,12 @@ in
 [
   ./dunst
   ./gpg-agent
+  #./cardano-wallet # TODO: fix cardano wallet
   ./networkmanager
   ./picom
   ./polybar
   ./screenlocker
-  #./betterlockscreen
+  #./betterlockscreen #TODO: fix screen locker
   ./udiskie
   more
 ]

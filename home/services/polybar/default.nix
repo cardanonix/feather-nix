@@ -28,6 +28,9 @@ let
   );
 
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
+  openFearandGreed = "${xdgUtils}/bin/xdg-open https\\://alternative.me/crypto/fear-and-greed-index/";
+  openCardanoSubreddit = "${xdgUtils}/bin/xdg-open https\\://old.reddit.com/r/cardano/";
+
 
   mypolybar = pkgs.polybar.override {
     alsaSupport   = true;
@@ -104,6 +107,7 @@ let
     interval = 43200
     format =   <label>
     format-padding = 1
+    click-left = ${openFearandGreed} 
   '';
 
   ada = ''
@@ -118,6 +122,7 @@ let
     interval = 120
     format =   <label>
     format-padding = 0
+    click-left = ${openCardanoSubreddit} 
   '';
 
   xmonad = ''
