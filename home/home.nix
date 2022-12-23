@@ -43,6 +43,7 @@ let
     nix-index            # locate packages containing certain nixpkgs
     mr                   # mass github actions
     md-toc               # generate ToC in markdown files
+    openjdk
     obsidian             # note taking/mind mapping
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences
@@ -121,7 +122,6 @@ let
     nix-tree                # visualize nix dependencies
     ihaskell
     ihaskell-blaze 
-    #ghcup
   ];
 
   cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [

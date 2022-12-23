@@ -15,15 +15,15 @@
       arcticicestudio.nord-visual-studio-code
       gruntfuggly.todo-tree
       ];
-     userSettings = {
-      "window.zoomLevel" = "-2";
-      "haskell.manageHLS" = "GHCup";
-      "explorer.confirmDelete" = "false";
-      "git.autofetch" = "true";
-      "git.autoStash" = "true";
-      "explorer.confirmDragAndDrop" = "false";
-      "git.enableCommitSigning" = "true";
-      "editor.minimap.enabled" = "false";
+    userSettings = {
+        "window.zoomLevel" = "-2";
+        "haskell.manageHLS" = "GHCup";
+        "explorer.confirmDelete" = false;
+        "git.autofetch" = true;
+        "git.autoStash" = true;
+        "explorer.confirmDragAndDrop" = false;
+        "git.enableCommitSigning" = true;
+        "editor.minimap.enabled" = false;
     };
   };
-}  
+}
