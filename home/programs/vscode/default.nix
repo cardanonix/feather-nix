@@ -2,7 +2,7 @@
 
 let
   alacritty  = "${pkgs.alacritty}/bin/alacritty";
-  fish = "${pkgs.fish}/bin/fish";
+  bash = "${pkgs.bash}/bin/bash";
 in
 {
   programs.vscode = {
@@ -23,7 +23,8 @@ in
         "window.zoomLevel" = "-2";
         "terminal.explorerKind" = "external";
         "terminal.external.linuxExec" = "${alacritty}";
-        "terminal.integrated.defaultProfile.linux" = "${fish}";
+        "terminal.integrated.defaultProfile.linux" = "${bash}";
+        "nix.enableLanguageServer" = true;
         "haskell.manageHLS" = "GHCup";
         "explorer.confirmDelete" = false;
         "git.autofetch" = true;
