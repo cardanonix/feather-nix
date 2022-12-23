@@ -1,5 +1,9 @@
 { config, lib, pkgs, ... }:
 
+let
+  alacritty  = "${pkgs.alacritty}/bin/alacritty";
+  fish = "${pkgs.fish}/bin/fish";
+in
 {
   programs.vscode = {
     enable = true;
@@ -17,6 +21,9 @@
       ];
     userSettings = {
         "window.zoomLevel" = "-2";
+        "terminal.explorerKind" = "external";
+        "terminal.external.linuxExec" = "${alacritty}";
+        "terminal.integrated.defaultProfile.linux" = "${fish}";
         "haskell.manageHLS" = "GHCup";
         "explorer.confirmDelete" = false;
         "git.autofetch" = true;
@@ -27,3 +34,5 @@
     };
   };
 }
+
+  
