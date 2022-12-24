@@ -176,12 +176,16 @@ in
 
       substituters = [
       "https://cache.nixos.org/"
-      "https://cache.iog.io"
+      "https://cache.iog.io"      
+      "https://niv.cachix.org"
+      #"https://static-haskell-nix.cachix.org"
       ];
       trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM=" 
+      #TODO: static haskell"static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
       ];
     };
   };

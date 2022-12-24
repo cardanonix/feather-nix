@@ -37,6 +37,7 @@ let
     libreoffice          # office suite
     libnotify            # notify-send command4
     betterlockscreen     # fast lockscreen based on i3lock
+    niv                  # painless dependencies for Nix projects
     ncdu                 # disk space info (a better du)
     nfs-utils            # utilities for NFS
     ngrok                # secure tunneling to localhost
