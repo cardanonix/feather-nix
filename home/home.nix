@@ -109,8 +109,13 @@ let
   gnomePkgs = with pkgs.gnome; [
     eog            # image viewer
     evince         # pdf reader
-    nautilus       # file manager
     gucharmap      # gnome character map (for font creation) 
+    #nautilus # file manager
+
+    # file manager overlay
+    pkgs.nautilus-gtk3
+    #pkgs.nautilus-bin
+    #pkgs.nautilus-patched
   ];
 
   haskellPkgs = with pkgs.haskellPackages; [
@@ -146,6 +151,7 @@ in
 
     imports = builtins.concatMap import [
     ./modules
+    #./age TODO: get homage/age working
     ./programs
     ./scripts
     ./services

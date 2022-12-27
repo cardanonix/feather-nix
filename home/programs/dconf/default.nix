@@ -9,6 +9,10 @@ with lib.hm.gvariant;
       default-zoom-level = "small";
     };
 
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "list-view";
       default-sort-order = "type";
