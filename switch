@@ -26,9 +26,16 @@ rebuild_system() {
 }
 
 rebuild_intelTower() {
-  nix flake update 
   sudo nixos-rebuild switch --flake .#intelTower --impure 
   nix build .#homeConfigurations.bismuth-edp.activationPackage
+  activateHM 
+}
+
+rebuild_intelTower_withUpdate() {
+  nix flake update 
+  export NIXPKGS_ALLOW_BROKEN=1
+  sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure --show-trace
   activateHM 
 }
 
@@ -69,6 +76,8 @@ case $1 in
     rebuild_system;;  
   "intelTower")
     rebuild_intelTower;;
+  "intelTowerNew")
+    rebuild_intelTower_withUpdate;;
   "intelNUC")
     rebuild_intelNUC;;
   "scratchBuild")
@@ -76,5 +85,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp', 'hdmi', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelNUC' , 'scratchBuild', or 'vm'";;
+    echo "expected 'edp', 'hdmi', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerNew' , 'intelNUC' , 'scratchBuild', or 'vm'";;
 esac
