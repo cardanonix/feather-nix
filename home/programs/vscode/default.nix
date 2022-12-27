@@ -20,10 +20,12 @@ in
       gruntfuggly.todo-tree
       ];
     userSettings = {
+        "update.mode" = "none";
         "window.zoomLevel" = "-2";
         "terminal.explorerKind" = "external";
         "terminal.external.linuxExec" = "${alacritty}";
         "terminal.integrated.defaultProfile.linux" = "${bash}";
+        "terminal.integrated.copyOnSelection" = true;
         "nix.enableLanguageServer" = true;
         "haskell.manageHLS" = "GHCup";
         "explorer.confirmDelete" = false;

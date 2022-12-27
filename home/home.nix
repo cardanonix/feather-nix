@@ -118,6 +118,7 @@ let
     cabal2nix               # convert cabal projects to nix
     cabal-install           # package manager
     ghc                     # compiler
+    stack
     haskell-language-server # haskell IDE (ships with ghcide)
     hoogle                  # documentation
     nix-tree                # visualize nix dependencies
@@ -128,6 +129,14 @@ let
   cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
     cardano-node
     cardano-cli
+/*  cardano-node-measured
+    cardano-node-process
+    cardano-node-snapshot 
+    " warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-measured'
+      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-process'
+      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-snapshot'
+      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'nixpkgs' "  
+*/
   ];
 
 in
