@@ -144,16 +144,17 @@ let
 */
   ];
 
+    scripts = pkgs.callPackage ./scripts/default.nix { inherit config pkgs; };
+
 in
 
 {
   programs.home-manager.enable = true;
 
-    imports = builtins.concatMap import [
+  imports = builtins.concatMap import [
     ./modules
     #./age TODO: get homage/age working
     ./programs
-    ./scripts
     ./services
     ./themes
   ];
@@ -167,7 +168,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs;
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs ++ scripts;
 
     sessionVariables = {
       DISPLAY = ":0";
