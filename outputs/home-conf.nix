@@ -18,8 +18,9 @@ let
 
     overlays = [
       fishOverlay
+      nautilusOverlay
       nurpkgs.overlay
-      #neovim-flake.overlays.${system}.default
+      neovim-flake.overlays.${system}.default
       (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
       ((import ../home/overlays/md-toc) { inherit (inputs) gh-md-toc; })
       (import ../home/overlays/protonvpn-gui)
