@@ -7,6 +7,10 @@ let
     inherit fish-bobthefish-theme fish-keytool-completions;
   };
 
+  nautilusOverlay = f: p: {
+    nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
+  };
+
   pkgs = import nixpkgs {
     inherit system;
 
@@ -15,11 +19,12 @@ let
     overlays = [
       fishOverlay
       nurpkgs.overlay
-      #neovim-flake.overlays.default
+      #neovim-flake.overlays.${system}.default
       (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
       ((import ../home/overlays/md-toc) { inherit (inputs) gh-md-toc; })
       (import ../home/overlays/protonvpn-gui)
       (import ../home/overlays/ranger)
+      (import ../home/overlays/nautilus)
     ];
   };
 
@@ -30,7 +35,7 @@ let
 
   imports = [
     homeage.homeManagerModules.homeage
-    #neovim-flake.nixosModules.hm
+    neovim-flake.nixosModules.${system}.hm
     ../home/home.nix
   ];
 
