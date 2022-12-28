@@ -6262,11 +6262,11 @@
         "which-key": "which-key"
       },
       "locked": {
-        "lastModified": 1672164494,
-        "narHash": "sha256-6dSvP2UH77qCXubAi/ctKXWq+FDiQz4HEd40HRscKHw=",
+        "lastModified": 1672240487,
+        "narHash": "sha256-Jc56v2+vS7sNmKemlp6aJQwEOoXMn0ETZyx6UAt2qqY=",
         "owner": "gvolpe",
         "repo": "neovim-flake",
-        "rev": "41284367fa5ef7334f835dff2c57831fe07d2eb2",
+        "rev": "c4c90a2c314c83f3985d406401c5908f4ddabacb",
         "type": "github"
       },
       "original": {
@@ -8412,18 +8412,12 @@
       }
     },
     "nmd": {
-      "inputs": {
-        "nixpkgs": [
-          "neovim-flake",
-          "nixpkgs"
-        ]
-      },
       "locked": {
-        "lastModified": 1672164365,
-        "narHash": "sha256-CzYvUrNkyJTOD6yZKOUfkbFIBanR9pIkzE2vF7iYKSY=",
+        "lastModified": 1672240039,
+        "narHash": "sha256-lmct89fYDOr9YdWVvdJgklv/7WttRSiDAkoi2cvvAW4=",
         "owner": "gvolpe",
         "repo": "nmd",
-        "rev": "e30a62bdfbc856317c8d8ecd74ccca93eb394ae9",
+        "rev": "a59e840c2e8d54415485f349760e1350cb80d911",
         "type": "github"
       },
       "original": {
