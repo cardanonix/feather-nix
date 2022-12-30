@@ -516,8 +516,9 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   match = anyOf . fmap isInstance
   manageApps = composeOne
     [ isInstance calendar                      -?> doCalendarFloat
+    , match [ virtbox
+            ]                                  -?> tileAbove
     , match [ vlc
-            , virtbox
             , mpv
             , keepass
             ]                                  -?> tileBelow
@@ -561,7 +562,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, mpv, gimp, kodi, keepass ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, mpv, gimp, kodi, keepass, virtbox ]
 
 ------------------------------------------------------------------------
 -- Workspaces
