@@ -119,7 +119,7 @@ let
   ];
 
   haskellPkgs = with pkgs.haskellPackages; [
-    brittany                # code formatter
+    #brittany               # code formatter (broken because of Multistate 0.8.0.4)
     cabal2nix               # convert cabal projects to nix
     cabal-install           # package manager
     ghc                     # compiler
@@ -134,14 +134,12 @@ let
   cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
     cardano-node
     cardano-cli
-/*  cardano-node-measured
-    cardano-node-process
-    cardano-node-snapshot 
-    " warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-measured'
-      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-process'
-      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'cardano-node-snapshot'
-      warning: input 'cardano-node/cardano-node-workbench/membench' has an override for a non-existent input 'nixpkgs' "  
-*/
+    cardano-submit-api 
+    cardano-tracer 
+    bech32 
+    locli  
+    db-analyser
+    #plutus-example #currently broken
   ];
 
 in
@@ -166,7 +164,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs;
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";

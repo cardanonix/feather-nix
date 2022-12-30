@@ -85,6 +85,8 @@ in
       enable = true;
       allowSFTP = true;
     };
+    
+    #flatpak.enable = true;
 
     # Yubikey smart card mode (CCID) and OTP mode (udev)
     pcscd.enable = true;

@@ -18,15 +18,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    haskellNix = {
+     haskellNix = {
       url = "github:input-output-hk/haskell.nix";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     neovim-flake = {
-      #url = git+file:///home/gvolpe/workspace/neovim-flake;   BOO
-      url = github:manveru/neovim-flake;
+      url = github:gvolpe/neovim-flake;
       # neovim-flake pushes its binaries to the cache using its own nixpkgs version
       # if we instead use ours, we'd be rebuilding all plugins from scratch
       #inputs.nixpkgs.follows = "nixpkgs";
@@ -48,16 +47,6 @@
     cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
     }; 
-
-         # Cardano Wallet
-    #cardano-wallet = {
-    #  url = github:input-output-hk/cardano-wallet;
-    #};
-
-     # Plutus Apps
-/*     plutus-apps = {
-      url = github:/input-output-hk/plutus-apps;
-    };  */
 
     # Github Markdown ToC generator
 

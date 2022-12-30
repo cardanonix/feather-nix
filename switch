@@ -7,7 +7,7 @@ activateHM() {
   #rm ~/.config/orage/oragerc.bak
   rm -rf ~/.config/secrets
   HOME_MANAGER_BACKUP_EXT=bak result/activate
-  hm-changes-report
+  #hm-changes-report
 }
 
 rebuild_home_edp() {
@@ -28,7 +28,7 @@ rebuild_system() {
 
 rebuild_intelTower() {
   sudo nixos-rebuild switch --flake .#intelTower --impure 
-  nix build .#homeConfigurations.bismuth-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
   activateHM 
 }
 

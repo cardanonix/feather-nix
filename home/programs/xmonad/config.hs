@@ -39,7 +39,8 @@ import           XMonad.Hooks.EwmhDesktops             ( ewmh
                                                        )
 import           XMonad.Hooks.FadeInactive             
 import           XMonad.Hooks.InsertPosition           ( Focus(Newer)
-                                                       , Position(Below)
+                                                       , Position(Below, Above)
+                                                       --, Position(Above)
                                                        , insertPosition
                                                        )
 import           XMonad.Hooks.ManageDocks              ( Direction2D(..)
@@ -121,8 +122,8 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#82827f" -- # light gray (#dddddd)
-  , focusedBorderColor = "#ff987d" -- reddish orange
+  , normalBorderColor  = "#372716" -- # dark brown (372716d)
+  , focusedBorderColor = "#FFBF7D" -- yellowish orange
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -264,11 +265,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
     , key "bottom"          (modm .|. controlMask,  xK_y      ) $ runScratchpadApp btm
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
-    , key "CardanoNode"     (modm .|. controlMask,  xK_c      ) $ spawnOn spoWs myCardanoNode
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
     , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
-    , key "Vlc"             (modm .|. controlMask,  xK_v      ) $ runScratchpadApp vlc
     , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ runScratchpadApp mpv
     , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
     , key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
@@ -406,7 +405,7 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (fuller ||| tiled ||| goldenSpiral ||| full)
+     webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
      mscLayout = onWorkspace mscWs (fuller ||| Mirror tiled_nogap ||| tiled_nogap ||| Mirror tiled ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
@@ -479,6 +478,7 @@ data App
 
 audacious = ClassApp "Audacious"            "audacious"
 btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gruvbox --default_widget_type proc"
+virtbox   = ClassApp "VirtualBox Machine"   "VBoxManage startvm 'plutusVM_bismuth'"
 calendar  = ClassApp "Orage"                "orage"
 discord   = TitleApp "Discord"              "brave --app=https://discord.com/app"  --under construction
 cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
@@ -506,6 +506,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   isSplash            = isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH"
   isRole              = stringProperty "WM_WINDOW_ROLE"
   tileBelow           = insertPosition Below Newer
+  tileAbove           = insertPosition Above Newer
   doVideoFloat        = doFloatAbsRect 0 0 600 300
   doCalendarFloat     = customFloating (W.RationalRect (11 / 15) (1 / 48) (1 / 4) (1 / 8))
   manageScratchpads = namedScratchpadManageHook scratchpads
@@ -516,7 +517,9 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   manageApps = composeOne
     [ isInstance calendar                      -?> doCalendarFloat
     , match [ vlc
+            , virtbox
             , mpv
+            , keepass
             ]                                  -?> tileBelow
     , match [ audacious
             , eog
@@ -525,7 +528,6 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , pavuctrl
             , kodi
             , scr
-            , keepass
             ]                                  -?> doCenterFloat
     , match [ btm
             , evince
@@ -566,15 +568,16 @@ scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, m
 --
 webWs = "web"
 mscWs = "msc"
-ossWs = "oss"
 musWs = "mus"
 devWs = "dev"
 comWs = "com"
 spoWs = "spo"
+ossWs = "oss"
 secWs = "sec"
+vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, ossWs, musWs, devWs, comWs, spoWs, secWs]
+myWS = [webWs, mscWs, musWs, devWs, comWs, spoWs, ossWs, secWs, vmsWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -589,11 +592,6 @@ projects =
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn myTerminal
             }
-  , Project { projectName      = ossWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn myTerminal 
-                                           spawn myTerminal
-            }
   , Project { projectName      = musWs
             , projectDirectory = "~/music/"
             , projectStartHook = Just $ runScratchpadApp spotify
@@ -604,18 +602,28 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "discord"
-                                           spawn "telegram-desktop"
-                                           spawn "signal"
-                                           spawn "slack"                     
+            , projectStartHook = Just $ do spawn "tootle"
+                                           spawn "element-desktop"
+                                           --spawn "discord"
+                                           --spawn "telegram-desktop"
+                                           --spawn "signal"
+                                           --spawn "slack"
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
             , projectStartHook = Just $ do spawn myCardanoNode
             }
+  , Project { projectName      = ossWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just $ do spawn myTerminal 
+            }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ runScratchpadApp keepass
+            }
+  , Project { projectName      = vmsWs
+            , projectDirectory = "~/"
+            , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]
 
