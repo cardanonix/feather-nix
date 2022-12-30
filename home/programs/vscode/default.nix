@@ -18,6 +18,7 @@ in
       jnoortheen.nix-ide
       arcticicestudio.nord-visual-studio-code
       gruntfuggly.todo-tree
+      moshfeu.diff-merge
       ];
     userSettings = {
         "update.mode" = "none";

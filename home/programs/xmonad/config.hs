@@ -123,7 +123,7 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , modMask            = myModMask
   , workspaces         = myWS
   , normalBorderColor  = "#372716" -- # dark brown (372716d)
-  , focusedBorderColor = "#FFBF7D" -- yellowish orange
+  , focusedBorderColor = "#E0964B" -- yellowish orange
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -406,7 +406,7 @@ myLayout =
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
-     mscLayout = onWorkspace mscWs (fuller ||| Mirror tiled_nogap ||| tiled_nogap ||| Mirror tiled ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)
