@@ -486,7 +486,7 @@ eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
 gimp      = ClassApp "Gimp"                 "gimp"
 keepass   = ClassApp "KeePassXC"            "keepassxc"
-mastodon  = TitleApp "Mastodon"             "brave --app=https://mstdn.social/home" --under construction
+mastodon  = TitleApp "Mastodon"             "com.github.bleakgrey.tootle" --under construction
 nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
@@ -603,9 +603,9 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "tootle"
+            , projectStartHook = Just $ do spawn "com.github.bleakgrey.tootle"
                                            spawn "element-desktop"
-                                           --spawn "discord"
+                                           spawn "discord"
                                            --spawn "telegram-desktop"
                                            --spawn "signal"
                                            --spawn "slack"
