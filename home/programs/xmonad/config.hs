@@ -38,8 +38,8 @@ import           XMonad.Hooks.EwmhDesktops             ( ewmh
                                                        , ewmhFullscreen
                                                        )
 import           XMonad.Hooks.FadeInactive             
-import           XMonad.Hooks.InsertPosition           ( Focus(Newer)
-                                                       , Position(Below, Above)
+import           XMonad.Hooks.InsertPosition           ( Focus(..)
+                                                       , Position(..)
                                                        --, Position(Above)
                                                        , insertPosition
                                                        )
@@ -226,6 +226,7 @@ showKeybindings xs =
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
+    , key "Youtube"         (modm .|. controlMask, xK_v       ) $ spawnOn webWs "brave --app=https://youtube.com/"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"          (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
@@ -481,6 +482,7 @@ btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gru
 virtbox   = ClassApp "VirtualBox Machine"   "VBoxManage startvm 'plutusVM_bismuth'"
 calendar  = ClassApp "Orage"                "orage"
 discord   = TitleApp "Discord"              "brave --app=https://discord.com/app"  --under construction
+--youtube   = TitleApp "Youtube"              "brave --app=https://youtube.com/app"  --under construction
 cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
@@ -537,7 +539,8 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
     , anyOf [ isPopup
-            , isFileChooserDialog
+            ]                                  -?> tileBelow  
+    , anyOf [ isFileChooserDialog
             , isDialog
             , isSplash
             , isBrowserDialog
