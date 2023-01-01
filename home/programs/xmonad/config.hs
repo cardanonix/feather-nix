@@ -601,7 +601,7 @@ projects =
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/nix-config/"
+            , projectDirectory = "~/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = comWs
