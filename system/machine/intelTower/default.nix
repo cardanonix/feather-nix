@@ -80,7 +80,7 @@
       fsType = "nfs";
     };
 
-  services.xserver = {
+  services = {
     avahi = {
       nssmdns = true;
       enable = true;
@@ -90,23 +90,22 @@
       domain = true;
       };
     };
-    xrandrHeads = [
-      { output = "HDMI-2";
-        primary = true;
-        monitorConfig = ''
-          Option "PreferredMode" "1920x1080"
-          Option "Position" "0 0"
-        '';
-      }
-    ];
-    resolutions = [
-      { x = 1920; y = 1080; }
-    ];
+    xserver = {
+      xrandrHeads = [
+        { output = "HDMI-2";
+          primary = true;
+          monitorConfig = ''
+            Option "PreferredMode" "1920x1080"
+            Option "Position" "0 0"
+          '';
+        }
+      ];
+      resolutions = [
+        { x = 1920; y = 1080; }
+      ];
+    };
   };
-
-services.
-};
-
+  
     # Enable Docker & VirtualBox support.
   virtualisation = {
     docker = {
