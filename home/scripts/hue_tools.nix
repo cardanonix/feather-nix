@@ -167,3 +167,15 @@ pkgs.writeShellScriptBin "hue_tools" ''
           light_status
   fi
 ''
+
+
+/* -- Hue Lighting Junk
+lghtLvl l b   = "hue light " <> l <> " brightness " <> b
+lghtOff l     = "hue light " <> l <> " off"
+lghtOn  l     = "hue light " <> l <> " on"
+blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off "
+screenLocker  = "betterlockscreen -l dim"
+darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
+chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
+coldLights    = "hue light 3 concentrate && hue light 14 concentrate && hue light 17 concentrate && hue light 8 concentrate && hue light 5 concentrate && hue light 6 pink && hue light 9 concentrate"
+ */

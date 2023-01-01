@@ -194,7 +194,7 @@ polybarHook dbus =
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
 myTerminal    = "alacritty"
-myGuildView   = "sleep 20 && alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+myGuildView   = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
 myCardanoNode = "alacritty -o font.size=5 -e node_launch"
 myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
 appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
@@ -601,7 +601,7 @@ projects =
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/nix-config.git/intelTower/"
+            , projectDirectory = "~/plutus/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
             }
   , Project { projectName      = comWs
