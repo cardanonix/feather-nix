@@ -3,7 +3,6 @@
 let
   gitConfig = {
     safe.directory = "*";
-    #test
     gpg.program = "${pkgs.gnupg}/bin/gpg2";
     core = {
       editor = "nvim";
