@@ -11,7 +11,7 @@ in
       lock_timeout = "240";
       fx_list = "(dim blur dimblur pixel color)";
       dim_level = "1";
-      blur_level = "1";
+      blur_level = "0";
       pixel_scale = "10,1000";
       solid_color = "333333";
       loginbox = "00000066";
