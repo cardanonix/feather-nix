@@ -81,6 +81,15 @@
     };
 
   services.xserver = {
+    avahi = {
+      nssmdns = true;
+      enable = true;
+      publish = {
+      enable = true;
+      userServices = true;
+      domain = true;
+      };
+    };
     xrandrHeads = [
       { output = "HDMI-2";
         primary = true;
@@ -94,6 +103,9 @@
       { x = 1920; y = 1080; }
     ];
   };
+
+services.
+};
 
     # Enable Docker & VirtualBox support.
   virtualisation = {
