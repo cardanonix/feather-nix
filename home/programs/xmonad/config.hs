@@ -389,8 +389,8 @@ myLayout =
      full           = gapSpaced 3 Full
      fuller         = gapSpaced 0 Full
      column3        = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral   = gapSpaced 3 $ spiral ratio
-     silverSpiral   = gapSpaced 3 $ spiralWithDir East CCW golden_ratio
+     goldenSpiral   = gapSpaced 3 $ spiral golden_ratio
+     silverSpiral   = gapSpaced 3 $ spiralWithDir East CCW ratio
      --silverSpiral = gapSpaced 3 $ spiral ratio 
 
      -- The default number of windows in the master pane
