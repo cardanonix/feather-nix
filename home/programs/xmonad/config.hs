@@ -373,11 +373,11 @@ myLayout =
     . smartBorders
     . fullScreenToggle
     . comLayout
-    . devLayout    
+    . vscLayout    
     . musLayout     
     . webLayout
     . mscLayout
-    . ossLayout   
+    . devLayout   
     . spoLayout
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
@@ -412,9 +412,9 @@ myLayout =
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
      mscLayout = onWorkspace mscWs (column3_og ||| tiled_spaced ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
-     ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
+     devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)
-     devLayout = onWorkspace devWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
@@ -576,15 +576,15 @@ scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, m
 webWs = "web"
 mscWs = "msc"
 musWs = "mus"
-devWs = "dev"
+vscWs = "vsc"
 comWs = "com"
 spoWs = "spo"
-ossWs = "oss"
+devWs = "dev"
 secWs = "sec"
 vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, musWs, devWs, comWs, spoWs, ossWs, secWs, vmsWs]
+myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -603,7 +603,7 @@ projects =
             , projectDirectory = "~/music/"
             , projectStartHook = Just $ runScratchpadApp spotify
             }
-  , Project { projectName      = devWs
+  , Project { projectName      = vscWs
             , projectDirectory = "~/plutus/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
@@ -622,7 +622,7 @@ projects =
             , projectDirectory = "/home/bismuth/cardano_local/"
             , projectStartHook = Just $ do spawn myCardanoNode
             }
-  , Project { projectName      = ossWs
+  , Project { projectName      = devWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn myTerminal 
             }
