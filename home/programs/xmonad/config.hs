@@ -609,7 +609,7 @@ projects =
             , projectStartHook = Just $ do spawn "com.github.bleakgrey.tootle"
                                            spawn "element-desktop"
                                            spawn "discord"
-                                           ---spawn "telegram-desktop"
+                                           --spawn "telegram-desktop"
                                            --spawn "signal"
                                            --spawn "slack"
             }
