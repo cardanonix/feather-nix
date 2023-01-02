@@ -381,21 +381,23 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     tiled        = gapSpaced 3 $ Tall nmaster delta golden_ratio
-     tiled_nogap  = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     video_tile   = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
-     full         = gapSpaced 3 Full
-     fuller       = gapSpaced 0 Full
-     column3      = gapSpaced 3 $ ThreeColMid 1 (33/100) (2/3)
-     goldenSpiral = gapSpaced 3 $ spiral ratio
-     silverSpiral = gapSpaced 3 $ spiralWithDir East CCW golden_ratio
+     tiled          = gapSpaced 3 $ Tall nmaster delta golden_ratio
+     tiled_nogap    = gapSpaced 0 $ Tall nmaster delta golden_ratio
+     tiled_spaced   = gapSpaced 10 $ Tall nmaster delta ratio
+     column3_og     = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
+     video_tile     = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
+     full           = gapSpaced 3 Full
+     fuller         = gapSpaced 0 Full
+     column3        = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral   = gapSpaced 3 $ spiral ratio
+     silverSpiral   = gapSpaced 3 $ spiralWithDir East CCW golden_ratio
      --silverSpiral = gapSpaced 3 $ spiral ratio 
 
      -- The default number of windows in the master pane
      nmaster = 1
 
      -- Default proportions of screen occupied by master pane
-     ratio          = 6/7.5
+     ratio          = 1/2
      golden_ratio   = 1/1.618033988749894e0
 
      -- Percent of screen to increment by when resizing panes
@@ -407,11 +409,11 @@ myLayout =
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
-     mscLayout = onWorkspace mscWs (fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (column3_og ||| tiled_spaced ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      ossLayout = onWorkspace ossWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)
-     devLayout = onWorkspace devWs (Mirror tiled_nogap ||| fuller ||| column3 ||| goldenSpiral ||| full ||| Mirror tiled)
+     devLayout = onWorkspace devWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
