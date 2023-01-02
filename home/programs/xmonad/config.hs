@@ -194,6 +194,7 @@ polybarHook dbus =
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
 myTerminal    = "alacritty"
+delayTerminal = "sleep 2s && alacritty"
 myGuildView   = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
 myCardanoNode = "alacritty -o font.size=5 -e node_launch"
 myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
