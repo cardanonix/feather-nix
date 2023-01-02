@@ -605,6 +605,8 @@ projects =
   , Project { projectName      = devWs
             , projectDirectory = "~/plutus/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn myTerminal 
+                                           
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
