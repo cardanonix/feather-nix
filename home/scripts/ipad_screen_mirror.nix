@@ -3,12 +3,14 @@
 
 #  tutorial here: https://taoa.io/posts/Setting-up-ipad-screen-mirroring-on-nixos/
 let
-  profiles = "/nix/var/nix/profiles/per-user/${config.home.username}/home-manager-*-link";
+  profiles   = "/nix/var/nix/profiles/per-user/${config.home.username}/home-manager-*-link";
   local_cidr = "${1:-"192.168.0.0/16"}";
-  awk = "${pkgs.awk}/bin/awk";
-  grep = "${pkgs.grep}/bin/grep";
-  #iptables = "${pkgs.iptables}/bin/iptables";
-  head = "${pkgs.head}/bin/head";
+  awk        = "${pkgs.awk}/bin/awk";
+  grep       = "${pkgs.grep}/bin/grep";
+  #iptables   = "${pkgs.iptables}/bin/iptables";
+  head       = "${pkgs.head}/bin/head";
+  uxplay     = "${pkgs.head}/bin/head";
+  trap       = "${pkgs.head}/bin/head";
 
 in 
 pkgs.writeShellScriptBin "ipad_screen_mirror" ''
