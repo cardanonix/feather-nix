@@ -105,6 +105,7 @@ let
     mkvtoolnix           # tools for encoding MKV files, etc
     filebot              # batch renaming
     kdenlive             # super nice video editor
+    mlt                  # kdenlive uses the MLT framework to process all video operations
     mediainfo            # additional package for kdenlive
   ];
 
