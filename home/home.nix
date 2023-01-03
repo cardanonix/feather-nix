@@ -105,6 +105,7 @@ let
     mkvtoolnix           # tools for encoding MKV files, etc
     filebot              # batch renaming
     kdenlive             # super nice video editor
+    mediainfo            # additional package for kdenlive
   ];
 
   gnomePkgs = with pkgs.gnome; [
