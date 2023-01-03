@@ -68,6 +68,7 @@ import           XMonad.Layout.MultiToggle.Instances   ( StdTransformers(NBFULL)
 import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
 import           XMonad.Layout.Spacing                 ( spacing )
+import           XMonad.Layout.HintedGrid
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
 import           XMonad.Layout.Spiral
 import           XMonad.Layout.Fullscreen
@@ -382,6 +383,8 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
+     grid           = gapSpaced 3 $ Grid False
+     grid_strict    = GridRatio grid_ratio False 
      tiled          = gapSpaced 3 $ Tall nmaster delta golden_ratio
      tiled_nogap    = gapSpaced 0 $ Tall nmaster delta golden_ratio
      tiled_spaced   = gapSpaced 10 $ Tall nmaster delta ratio
@@ -400,6 +403,7 @@ myLayout =
      -- Default proportions of screen occupied by master pane
      ratio          = 1/2
      golden_ratio   = 1/1.618033988749894e0
+     grid_ratio     = 2.4/1
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
@@ -410,7 +414,7 @@ myLayout =
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
-     mscLayout = onWorkspace mscWs (column3_og ||| tiled_spaced ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)

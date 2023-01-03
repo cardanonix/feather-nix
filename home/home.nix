@@ -96,7 +96,7 @@ let
 
   extraPkgs = with pkgs; [
     vlc                  # media player
-    rawtherapee          # raw photo manipulation and grading
+    darktable            # raw photo manipulation and grading
     mpv                  # media player
     kodi                 # media player  
     gimp                 # gnu image manipulation program
@@ -104,7 +104,7 @@ let
     krita                # image editor (supposedly better than gimp)
     mkvtoolnix           # tools for encoding MKV files, etc
     filebot              # batch renaming
-    #shairport-sync       # airplay on NixOS?
+    kdenlive             # super nice video editor
   ];
 
   gnomePkgs = with pkgs.gnome; [

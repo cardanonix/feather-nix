@@ -52,6 +52,7 @@ let
   networkScript   = pkgs.callPackage ./scripts/network.nix {};
   fgindexScript   = pkgs.callPackage ./scripts/fngi.nix {};
   adaScript       = pkgs.callPackage ./scripts/ada.nix {};
+  cnodeScript     = pkgs.callPackage ./scripts/cnode.nix {};
 
   bctl = ''
     [module/bctl]
@@ -125,6 +126,18 @@ let
     click-left = ${openCardanoSubreddit} 
   '';
 
+  cnode = ''
+    [module/cnode]
+    type = custom/script
+
+    exec = ${cnodeScript}/bin/cnode
+
+    interval = 5
+    format =   <label>
+    format-padding = 0
+    click-left = "${cnodeScript}/bin/cnode --toggle" 
+  '';
+
   xmonad = ''
     [module/xmonad]
     type = custom/script
@@ -133,7 +146,7 @@ let
     tail = true
   '';
 
-  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada;
+  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnode;
 in
 {
   home.packages = with pkgs; [
