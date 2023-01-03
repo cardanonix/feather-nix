@@ -395,6 +395,9 @@ myLayout =
      column3        = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral   = gapSpaced 3 $ spiral golden_ratio
      silverSpiral   = gapSpaced 3 $ spiralWithDir East CCW ratio
+
+     --mylayout       = tmsCombineTwoDefault (Tall 0 (3/100) 0) simpleTabbed
+     mylayout       = tmsCombineTwoDefault (Tall 0 (3/100) 0) grid
      --silverSpiral = gapSpaced 3 $ spiral ratio 
 
      -- The default number of windows in the master pane
@@ -414,7 +417,7 @@ myLayout =
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
-     mscLayout = onWorkspace mscWs (Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (myLayout ||| Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
      devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)
