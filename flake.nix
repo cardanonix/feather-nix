@@ -18,9 +18,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     haskellNix = {
+    haskellNix = {
       url = "github:input-output-hk/haskell.nix";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    iohkNix = {
+      url = "github:input-output-hk/iohk-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -47,6 +52,11 @@
     cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
     }; 
+
+/*          # Cardano Node
+    cardano-wallet = {
+      url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
+    };  */
 
     # Github Markdown ToC generator
 

@@ -8,6 +8,7 @@ in
 [
   ./dunst
   ./gpg-agent
+  #./cardano-node
   #./cardano-wallet # TODO: fix cardano wallet
   ./networkmanager
   ./picom

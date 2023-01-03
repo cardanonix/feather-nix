@@ -5337,6 +5337,26 @@
         "type": "github"
       }
     },
+    "iohkNix_19": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1670489000,
+        "narHash": "sha256-JewWjqVJSt+7eZQT9bGdhlSsS9dmsSKsMzK9g11tcLU=",
+        "owner": "input-output-hk",
+        "repo": "iohk-nix",
+        "rev": "61510bb482eaca8cb7d61f40f5d375d95ea1fbf7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "input-output-hk",
+        "repo": "iohk-nix",
+        "type": "github"
+      }
+    },
     "iohkNix_2": {
       "inputs": {
         "nixpkgs": [
@@ -9682,6 +9702,7 @@
         "haskellNix": "haskellNix_19",
         "home-manager": "home-manager",
         "homeage": "homeage",
+        "iohkNix": "iohkNix_19",
         "neovim-flake": "neovim-flake",
         "nixpkgs": "nixpkgs_22",
         "nixpkgs-nautilus-gtk3": "nixpkgs-nautilus-gtk3",

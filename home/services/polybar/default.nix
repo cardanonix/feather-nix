@@ -1,7 +1,15 @@
-{ config, pkgs, specialArgs, ... }:
+{ config, pkgs, specialArgs, inputs, ... }:
 
 let
+
+  cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
+    cardano-node
+  ];
+
   browser = "${pkgs.brave}/bin/brave";
+  terminal = "${pkgs.alacritty}/bin/alacritty";
+
+
 
   openCalendar = "${pkgs.xfce.orage}/bin/orage";
 
@@ -53,6 +61,7 @@ let
   fgindexScript   = pkgs.callPackage ./scripts/fngi.nix {};
   adaScript       = pkgs.callPackage ./scripts/ada.nix {};
   cnodeScript     = pkgs.callPackage ./scripts/cnode.nix {};
+  launchScript    = pkgs.callPackage ../../scripts/node_launch.nix { inherit inputs pkgs config; };
 
   bctl = ''
     [module/bctl]
@@ -133,9 +142,9 @@ let
     exec = ${cnodeScript}/bin/cnode
 
     interval = 5
-    format =   <label>
+    format =  <label>
     format-padding = 0
-    click-left = "${cnodeScript}/bin/cnode --toggle" 
+    click-left = "${terminal} --hold -e ${launchScript}/bin/node_launch"
   '';
 
   xmonad = ''
@@ -153,6 +162,7 @@ in
     font-awesome          # awesome fonts
     material-design-icons # fonts with glyphs
     xfce.orage            # lightweight calendar
+    inputs.cardano-node.packages.x86_64-linux.cardano-node
   ];
   
   services.polybar = {
