@@ -142,7 +142,8 @@ let
     exec = ${cnodeScript}/bin/cnode
 
     interval = 5
-    format =  <label>
+    format = "%{T2}<label>"
+    content-foreground = ''${color.lbshade4}
     format-padding = 0
     click-left = "${terminal} --hold -e ${launchScript}/bin/node_launch"
   '';

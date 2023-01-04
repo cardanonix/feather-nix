@@ -1,4 +1,4 @@
-{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 }:
+{ font0 ? 16, font1 ? 15, font2 ? 30, font3 ? 28, font4 ? 7, font5 ? 16 }:
 
 let
   bar = ''
@@ -12,8 +12,8 @@ let
     background = ''${color.bg}
     foreground = ''${color.fg}
 
-    padding-left = 1
-    padding-right = 1
+    padding-left = 2
+    padding-right = 2
 
     module-margin-left = 1
     module-margin-right = 1
