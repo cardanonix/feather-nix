@@ -69,6 +69,7 @@ let
     xautolock            # autolock stuff
     hue-cli              # lights for my residence
     jupyter              # pyton jupyter notebooks
+    lorri                # needed for direnv
 
     # Work Stuff
     work-browser
@@ -144,6 +145,14 @@ let
     db-analyser
     #plutus-example #currently broken
   ];
+  
+  rustPkgs = with pkgs; [
+    rustc
+    cargo
+    rustfmt
+    rust-analyzer
+    clippy
+  ];
 
 in
 
@@ -167,7 +176,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs ++ rustPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
