@@ -5,7 +5,7 @@ let
     [bar/main]
     monitor = ''${env:MONITOR:HDMI-2}
     width = 100%
-    height = 32
+    height = 30
     radius = 0.0
     fixed-center = true
 

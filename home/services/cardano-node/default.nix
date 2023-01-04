@@ -6,21 +6,21 @@ let
   config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
   node_socket_path  = "/Cardano/mainnet/db/node.socket";
   db_path           = "/Cardano/mainnet/db";
+  
 in
 {
-  imports = [
+   imports = [
     inputs.cardano-node.packages.x86_64-linux
-  ]; 
-
-  services.cardano-node = {
+  ];
+  config.services.cardano-node = {
     enable = true;
     environment = "mainnet";
     useNewTopology = true;
     topology = "${topology}";
-    config = "${home}${config}";
+    nodeConfigFile = "${home}${config}";
     databasePath = "${home}${db_path}";
     socketPath = "${home}${node_socket_path}";
-    nodeId = "bismuthian Test!!!";
+    #nodeId = "bismuthian Test!!!";
     rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ];
   };
 }

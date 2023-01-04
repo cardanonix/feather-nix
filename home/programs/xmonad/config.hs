@@ -380,6 +380,7 @@ myLayout =
     . mscLayout
     . devLayout   
     . spoLayout
+    . vmsLayout
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
@@ -416,14 +417,13 @@ myLayout =
      -- Per workspace layout
      webLayout = onWorkspace webWs (fuller ||| tiled_nogap ||| goldenSpiral ||| tiled ||| full)
      mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
-     --mscLayout = onWorkspace mscWs (silverSpiral ||| goldenSpiral)
-     devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      musLayout = onWorkspace musWs (fuller ||| tiled)
-     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| doubletiled ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
+     devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
-
+     vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)

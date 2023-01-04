@@ -54,7 +54,7 @@ border-color = #00000000
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
+module-margin-left = 2
 module-margin-right = 2
 
 ; Text Fonts
