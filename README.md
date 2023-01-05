@@ -96,7 +96,7 @@ You can have a look at the available flake outputs before getting started.
 
 ```console
 $ nix flake show github:harryprayiv/nix-config
-git+file:///home/bismuth/nix-config
+github:harryprayiv/nix-config/
 ├───homeConfigurations: unknown
 └───nixosConfigurations
     ├───intelNUC: NixOS configuration
