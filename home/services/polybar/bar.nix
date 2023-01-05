@@ -1,4 +1,4 @@
-{ font0 ? 16, font1 ? 15, font2 ? 30, font3 ? 28, font4 ? 7, font5 ? 16, font6 ? 30 }:
+{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 16 }:
 
 let
   bar = ''
@@ -43,7 +43,7 @@ let
     ; Keyboard layout icons
     font-5 = FlagsWorldColor:size=${toString font5}:antialias=false;3
     ; Larger font size for bar fill icons
-    font-6 = cryptofont:style=Medium:size=${toString font6};3
+    font-6 = Cryptofont:style=Solid:size=${toString font6};3
 
     ;font-5 = "MaterialIcons:size=40;0"
     ;font-6 = Font Awesome 5 Free:style=Solid:pixelsize=20;3

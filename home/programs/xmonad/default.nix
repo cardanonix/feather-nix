@@ -13,7 +13,7 @@ let
     ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-0 --mode 3840x2160 --rate 30.00
   '';
 
-  hdmiExtra = if specialArgs.hidpi then xrandrOps else "";
+  uhdExtra = if specialArgs.hidpi then xrandrOps else "";
 
   polybarOpts = ''
     ${pkgs.nitrogen}/bin/nitrogen --restore &
@@ -47,7 +47,7 @@ in
   xsession = {
     enable = true;
 
-    initExtra = extra + polybarOpts + hdmiExtra;
+    initExtra = extra + polybarOpts + uhdExtra;
 
     windowManager.xmonad = {
       enable = true;

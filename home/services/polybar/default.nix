@@ -13,19 +13,19 @@ let
 
   openCalendar = "${pkgs.xfce.orage}/bin/orage";
 
-  hdmiBar = pkgs.callPackage ./bar.nix { };
+  uhdBar = pkgs.callPackage ./bar.nix { };
 
-  laptopBar = pkgs.callPackage ./bar.nix {
+  hdBar = pkgs.callPackage ./bar.nix {
     font0 = 10;
     font1 = 12;
-    font2 = 24;
-    font3 = 18;
+    font2 = 15;
+    font3 = 14;
     font4 = 5;
     font5 = 10;
     font6 = 18;
   };
 
-  mainBar = if specialArgs.hidpi then hdmiBar else laptopBar;
+  mainBar = if specialArgs.hidpi then uhdBar else hdBar;
 
   xdgUtils = pkgs.xdg-utils.overrideAttrs (
     old: {
@@ -142,7 +142,7 @@ let
 
     exec = ${cnodeScript}/bin/cnode
 
-    interval = 5
+    interval = 50
     format = "%{T2}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0

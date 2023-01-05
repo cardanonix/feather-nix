@@ -55,6 +55,6 @@ let
 in
 {
   bismuth-edp = mkHome { hidpi = false; };
-  bismuth-hdmi = mkHome { hidpi = true; };
+  bismuth-uhd = mkHome { hidpi = true; };
 
 }

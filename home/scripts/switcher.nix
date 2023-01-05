@@ -12,7 +12,7 @@ in
     if [[ $monitors == *"HDMI"* ]]; then
       echo "Switching to HM config for HDMI display"
       cd ${home}
-      nix build --impure .#homeConfigurations.bismuth-hdmi.activationPackage
+      nix build --impure .#homeConfigurations.bismuth-uhd.activationPackage
       result/activate
       cd -
     elif [[ $monitors == *"HDMI-2"* ]]; then

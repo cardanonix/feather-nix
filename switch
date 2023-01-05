@@ -15,8 +15,8 @@ rebuild_home_edp() {
   activateHM
 }
 
-rebuild_home_hdmi() {
-  nix build .#homeConfigurations.bismuth-hdmi.activationPackage
+rebuild_home_uhd() {
+  nix build .#homeConfigurations.bismuth-uhd.activationPackage
   activateHM
 }
 
@@ -67,8 +67,8 @@ restart_X() {
 case $1 in
   "edp")
     rebuild_home_edp;;
-  "hdmi")
-    rebuild_home_hdmi;;
+  "uhd")
+    rebuild_home_uhd;;
   "restart-x")
     restart_X;;
   "update-fish")
@@ -86,5 +86,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp', 'hdmi', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerNew' , 'intelNUC' , 'scratchBuild', or 'vm'";;
+    echo "expected 'edp', 'uhd', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerNew' , 'intelNUC' , 'scratchBuild', or 'vm'";;
 esac
