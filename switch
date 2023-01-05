@@ -27,8 +27,9 @@ rebuild_system() {
 }
 
 rebuild_intelTower() {
-  sudo nixos-rebuild switch --flake .#intelTower --impure 
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
+  sudo nixos-rebuild switch --flake .#intelTower 
+  #--impure 
+  nix build .#homeConfigurations.bismuth-edp.activationPackage
   activateHM 
 }
 
@@ -36,7 +37,7 @@ rebuild_intelTower_withUpdate() {
   nix flake update 
   ##export NIXPKGS_ALLOW_BROKEN=1
   sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
-  nix build .#homeConfigurations.bismuth-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
   activateHM 
 }
 
@@ -64,6 +65,14 @@ restart_X() {
   systemctl restart display-manager
 }
 
+collect_ALL_garbage() {
+  sudo nix-collect-garbage -d
+  nix-collect garbage -d
+  nix-store --gc
+  echo "your royal file system is clean!"
+}
+
+
 case $1 in
   "edp")
     rebuild_home_edp;;
@@ -77,14 +86,16 @@ case $1 in
     rebuild_system;;  
   "intelTower")
     rebuild_intelTower;;
-  "intelTowerNew")
+  "intelTowerFULL")
     rebuild_intelTower_withUpdate;;
   "intelNUC")
     rebuild_intelNUC;;
   "scratchBuild")
     rebuild_scratchBuild;;
+  "trashPanda")
+    collect_ALL_garbage;;
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp', 'uhd', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerNew' , 'intelNUC' , 'scratchBuild', or 'vm'";;
+    echo "expected 'edp', 'uhd', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerFULL' , 'intelNUC' , 'scratchBuild', 'trashPanda', or 'vm'";;
 esac
