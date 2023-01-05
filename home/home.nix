@@ -19,7 +19,6 @@ let
     bottom               # alternative to htop & ytop
     cachix               # nix caching
     calibre              # e-book reader
-    cobang               # qr-code scanner
     dconf2nix            # dconf (gnome) files to nix converter
     dmenu                # application launcher
     docker-compose       # docker manager
@@ -70,6 +69,7 @@ let
     hue-cli              # lights for my residence
     jupyter              # pyton jupyter notebooks
     lorri                # needed for direnv
+    ihp-new              # Haskell web framework (the Django of Haskell)
 
     # Work Stuff
     work-browser
