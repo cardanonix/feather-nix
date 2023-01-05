@@ -43,6 +43,11 @@ The `home.nix` file contains details about all the software I use, but here's a 
 | GTK Icon Theme | [Beauty Line](https://www.gnome-look.org/p/1425426/) |
 | Terminal Font  | [JetBrainsMono](https://www.jetbrains.com/lp/mono/) |
 
+## Cardano Font
+![Cardano Custom Typeface Building](imgs/screenshotWs/cardano_logo_collection.png)
+![Full Screen Image](imgs/screenshotWs/fontCreation.png)
+
+
 ## Structure
 
 Here is an overview of the folders' structure:
