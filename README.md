@@ -1,4 +1,4 @@
-nix-config for my intelTower
+nix-config for 'intelTower'
 ==========
 
 [![CI Home](https://github.com/harryprayiv/nix-config/workflows/Home/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
@@ -96,7 +96,7 @@ You can have a look at the available flake outputs before getting started.
 
 ```console
 $ nix flake show github:harryprayiv/nix-config
-git+file:///home/bismuth/nix-config
+github:harryprayiv/nix-config/
 ├───homeConfigurations: unknown
 └───nixosConfigurations
     ├───intelNUC: NixOS configuration
