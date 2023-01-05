@@ -22,6 +22,7 @@ let
     font3 = 18;
     font4 = 5;
     font5 = 10;
+    font6 = 18;
   };
 
   mainBar = if specialArgs.hidpi then hdmiBar else laptopBar;

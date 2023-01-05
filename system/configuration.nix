@@ -111,6 +111,7 @@ in
       font-awesome
       myfonts.flags-world-color
       myfonts.icomoon-feather
+      myfonts.cryptofont
       hasklig
       ipaexfont
       noto-fonts-cjk
