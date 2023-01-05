@@ -108,6 +108,7 @@ let
     kdenlive             # super nice video editor
     mlt                  # kdenlive uses the MLT framework to process all video operations
     mediainfo            # additional package for kdenlive
+    inkscape
   ];
 
   gnomePkgs = with pkgs.gnome; [
