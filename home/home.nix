@@ -109,6 +109,7 @@ let
     mlt                  # kdenlive uses the MLT framework to process all video operations
     mediainfo            # additional package for kdenlive
     inkscape
+    fontforge
   ];
 
   gnomePkgs = with pkgs.gnome; [
