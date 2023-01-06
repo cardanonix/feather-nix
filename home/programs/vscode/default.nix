@@ -10,15 +10,13 @@ in
     package = pkgs.vscodium;
     enableUpdateCheck = false;
     extensions = with pkgs.vscode-extensions; [
+      equinusocio.vsc-material-theme
       mkhl.direnv
       haskell.haskell
       justusadam.language-haskell
       arrterian.nix-env-selector
-      #pinage404.nix-extension-pack incorporate
       jnoortheen.nix-ide
-      arcticicestudio.nord-visual-studio-code
       gruntfuggly.todo-tree
-      #moshfeu.diff-merge  
       ];
     userSettings = {
         "update.mode" = "none";
@@ -35,6 +33,7 @@ in
         "explorer.confirmDragAndDrop" = false;
         "git.enableCommitSigning" = true;
         "editor.minimap.enabled" = false;
+        "workbench.colorTheme" = "Material Theme Darker";
     };
   };
 }
