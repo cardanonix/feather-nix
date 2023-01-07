@@ -10,7 +10,7 @@ in
     package = pkgs.vscodium;
     enableUpdateCheck = false;
     extensions = with pkgs.vscode-extensions; [
-      equinusocio.vsc-material-theme
+      #equinusocio.vsc-material-theme
       mkhl.direnv
       haskell.haskell
       justusadam.language-haskell
