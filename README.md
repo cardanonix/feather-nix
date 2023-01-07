@@ -109,25 +109,25 @@ As well as all the declared flake inputs.
 ```console
 $ nix flake metadata github:harryprayiv/nix-config
 Resolved URL:  github:harryprayiv/nix-config
-Locked URL:    github:harryprayiv/nix-config/8c589a464114b6e6d8efd5e42804f2e8f2c5a9b6
-Description:   Harry's Home Manager & NixOS configurations
-Path:          /nix/store/ics3lfa1d1b2rkb9ywlrn7sga47j507j-source
-Revision:      8c589a464114b6e6d8efd5e42804f2e8f2c5a9b6
-Last modified: 2022-12-05 15:16:27
+Locked URL:    github:harryprayiv/nix-config/69c395a7f8b0911f431c6a081024205bdb042d88
+Description:   harryprayiv's Home Manager & NixOS configurations
+Path:          /nix/store/a1m0kmyrrrpraj8x7jcjdvyr8dgj4xh6-source
+Revision:      69c395a7f8b0911f431c6a081024205bdb042d88
+Last modified: 2023-01-06 16:27:31
 Inputs:
+├───cardano-node: github:input-output-hk/cardano-node/f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2
 ├───fish-bobthefish-theme: github:gvolpe/theme-bobthefish/e4418e8a7de9fbd6b5053a9b9009aa84a48398cd
 ├───fish-keytool-completions: github:ckipp01/keytool-fish-completions/dcb24bae7b8437e1e1210b00b7172841a26d6573
-├───gh-md-toc: github:ekalinin/github-markdown-toc/435768259cb60e5842f7cde0679d495b3c31dfbd
-├───home-manager: github:nix-community/home-manager/e4e639dd4dc3e431aa5b5f95325f9a66ac7e0dd9
-│   ├───nixpkgs follows input 'nixpkgs'
-│   └───utils: github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0
-├───homeage: github:jordanisaacs/homeage/dd98c460175a0781ad0b51f4392de97c5454a5c4
-│   └───nixpkgs follows input 'nixpkgs'
-├───nixpkgs: github:NixOS/nixpkgs/fd54651f5ffb4a36e8463e0c327a78442b26cbe7
-├───nurpkgs: github:nix-community/NUR/0092c612677e73dc8552d600727c7b076ca4a2da
-└───tex2nix: github:harryprayiv/tex2nix/0634103134b4b7cb587c947e5588f8042f613a79
-    ├───flake-utils: github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0
-    └───nixpkgs follows input 'nixpkgs'
+├───gh-md-toc: github:ekalinin/github-markdown-toc/661b5c5111f47174e2d9092c8d76867e5a1f249d
+├───haskellNix: github:input-output-hk/haskell.nix/895435f1893db0ff3666f25ed7d6c92c78673322
+├───home-manager: github:nix-community/home-manager/54245e1820caabd8a0b53ce4d47e4d0fefe04cd4
+├───homeage: github:jordanisaacs/homeage/02bfe4ca06962d222e522fff0240c93946b20278
+├───iohkNix: github:input-output-hk/iohk-nix/ca3d466ed36011bcc14290c6d36c503eb03eb71b
+├───neovim-flake: github:gvolpe/neovim-flake/7cf22b0e4bab8935615339ab7c3be4215471896b
+├───nixpkgs: github:NixOS/nixpkgs/9813adc7f7c0edd738c6bdd8431439688bb0cb3d
+├───nixpkgs-nautilus-gtk3: github:NixOS/nixpkgs/37bd39839acf99c5b738319f42478296f827f274
+├───nurpkgs: github:nix-community/NUR/f147ac90edce3f61ca8bb5f883400267a1057987
+└───tex2nix: github:Mic92/tex2nix/9ec1c0cd8eecf938f4954c53755c4564679486d9
 ```
 
 ### NixOS
