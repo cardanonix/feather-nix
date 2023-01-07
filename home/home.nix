@@ -41,7 +41,6 @@ let
     nfs-utils            # utilities for NFS
     ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
-    mr                   # mass github actions
     md-toc               # generate ToC in markdown files
     openjdk
     obsidian             # note taking/mind mapping
@@ -66,7 +65,6 @@ let
     yad                  # yet another dialog - fork of zenity
     xssproxy             # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
     xautolock            # autolock stuff
-    hue-cli              # lights for my residence
     jupyter              # pyton jupyter notebooks
     lorri                # needed for direnv
     ihp-new              # Haskell web framework (the Django of Haskell)
@@ -110,6 +108,11 @@ let
     mediainfo            # additional package for kdenlive
     inkscape
     fontforge
+  ];
+
+  homePkgs = with pkgs; [
+    hue-cli              # lights for my residence
+    mr                   # mass github actions
   ];
 
   gnomePkgs = with pkgs.gnome; [
@@ -178,7 +181,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs ++ rustPkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs ++ rustPkgs ++ homePkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
