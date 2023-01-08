@@ -17,6 +17,7 @@ in
       arrterian.nix-env-selector
       jnoortheen.nix-ide
       gruntfuggly.todo-tree
+      hoovercj.haskell-linter
       ];
     userSettings = {
         "update.mode" = "none";
