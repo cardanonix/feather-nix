@@ -2,3 +2,4 @@ nixos/home/result
 result
 .vscode/
 .vscode/settings.json
+.direnv/
