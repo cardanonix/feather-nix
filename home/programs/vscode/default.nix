@@ -3,6 +3,7 @@
 let
   alacritty  = "${pkgs.alacritty}/bin/alacritty";
   bash = "${pkgs.bash}/bin/bash";
+  hls = "${pkgs.haskellPackages.haskell-language-server}/bin/haskell-language-server";
 in
 {
   programs.vscode = {
@@ -28,6 +29,7 @@ in
         "terminal.integrated.copyOnSelection" = true;
         "nix.enableLanguageServer" = true;
         "haskell.manageHLS" = "GHCup";
+        "haskell.ghcupExecutablePath" = "${hls}";
         "explorer.confirmDelete" = false;
         "git.autofetch" = true;
         "git.autoStash" = true;
