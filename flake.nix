@@ -74,8 +74,15 @@
   };
 
   outputs = inputs:
-    let system = "x86_64-linux"; in
+    let system = "x86_64-linux";
+    in
     {
+/*       devShells.x86_64-linux.default = (
+        import ./shell.nix {
+          inherit inputs system;
+        }
+      ); */
+
       homeConfigurations = (
         import ./outputs/home-conf.nix {
           inherit inputs system;
