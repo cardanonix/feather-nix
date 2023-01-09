@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, specialArgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   home              = "/home/bismuth";
@@ -6,14 +6,17 @@ let
   config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
   node_socket_path  = "/Cardano/mainnet/db/node.socket";
   db_path           = "/Cardano/mainnet/db";
+  #cfg               = config.services.cardano-node;
   
 in
 {
    imports = [
-    inputs.cardano-node.packages.x86_64-linux
+    inputs.cardano-node.nixosModules
   ];
-  config.services.cardano-node = {
+
+  services.config.cardano-node = {
     enable = true;
+    #executable = "exec config.services.cardano-node.pkgs.cardanoNodePackages.cardano-node/bin/cardano-node";
     environment = "mainnet";
     useNewTopology = true;
     topology = "${topology}";

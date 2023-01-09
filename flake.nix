@@ -53,6 +53,13 @@
       url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
     }; 
 
+    ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
+    cardano-node-workbench = {
+      url = "github:input-output-hk/cardano-node/ed9932c52aaa535b71f72a5b4cc0cecb3344a5a3";
+      # This is to avoid circular import (TODO: remove this workbench pin entirely using materialization):
+      inputs.membench.url = "github:input-output-hk/empty-flake";
+    };
+
          # Cardano Wallet
 /*     cardano-wallet = {
       url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";

@@ -142,7 +142,7 @@ let
 
     exec = ${cnodeScript}/bin/cnode
 
-    interval = 50
+    interval = 5
     format = "%{T2}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0

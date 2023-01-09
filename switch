@@ -11,7 +11,7 @@ activateHM() {
 }
 
 rebuild_home_edp() {
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
   activateHM
 }
 

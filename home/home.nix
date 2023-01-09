@@ -148,9 +148,9 @@ let
     bech32 
     locli  
     db-analyser
-    #plutus-example #currently broken
+    #plutus-example
   ];
-  
+
   rustPkgs = with pkgs; [
     rustc
     cargo
