@@ -10,13 +10,16 @@ let
   
 in
 {
-   imports = [
-    inputs.cardano-node.nixosModules
+  imports = [
+    inputs.cardano-node.nixosModule
   ];
 
-  services.config.cardano-node = {
+  services.cardano-node.cardanoNodePackages = lib.mkDefault (mkCardanoNodePackages flake.project.${pkgs.system});
+  
+  services.cardano-node = {
     enable = true;
-    #executable = "exec config.services.cardano-node.pkgs.cardanoNodePackages.cardano-node/bin/cardano-node";
+    /*
+    executable = "exec config.services.cardano-node.pkgs.cardanoNodePackages.cardano-node/bin/cardano-node";
     environment = "mainnet";
     useNewTopology = true;
     topology = "${topology}";
@@ -24,6 +27,7 @@ in
     databasePath = "${home}${db_path}";
     socketPath = "${home}${node_socket_path}";
     #nodeId = "bismuthian Test!!!";
-    rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ];
+    rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
+    */
   };
 }

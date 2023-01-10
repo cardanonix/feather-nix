@@ -148,7 +148,13 @@ let
     bech32 
     locli  
     db-analyser
-    #plutus-example
+/*     plutus-example
+    error (ignored): error: end of string reached
+error: the path '~/.gitconfig' can not be resolved in pure mode */
+  ];
+
+  cardanoNodeSvcPkgs = with inputs.cardano-node.nixosModules; [
+    cardano-node-service
   ];
 
   rustPkgs = with pkgs; [
