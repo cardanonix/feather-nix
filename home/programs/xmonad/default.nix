@@ -13,7 +13,7 @@ let
     ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-0 --mode 3840x2160 --rate 30.00
   '';
 
-  uhdExtra = if specialArgs.hidpi then xrandrOps else "";
+  uhdExtra = if specialArgs.ultraHD then xrandrOps else "";
 
   polybarOpts = ''
     ${pkgs.nitrogen}/bin/nitrogen --restore &

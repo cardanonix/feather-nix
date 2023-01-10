@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.programs.signal;
 
-  scaleFactor = if specialArgs.hidpi then "2" else "1.5";
+  scaleFactor = if specialArgs.ultraHD then "2" else "1.5";
 
   signal = pkgs.signal-desktop.overrideAttrs (old: {
     preFixup = old.preFixup + ''

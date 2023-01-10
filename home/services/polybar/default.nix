@@ -25,7 +25,7 @@ let
     font6 = 18;
   };
 
-  mainBar = if specialArgs.hidpi then uhdBar else hdBar;
+  mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
 
   xdgUtils = pkgs.xdg-utils.overrideAttrs (
     old: {

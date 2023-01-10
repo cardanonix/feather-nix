@@ -28,7 +28,7 @@ in
       };
 
       settings = {
-        scaleFactor = if specialArgs.hidpi then 1.0 else 0.7;
+        scaleFactor = if specialArgs.ultraHD then 1.0 else 0.7;
       };
 
       user = {

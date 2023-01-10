@@ -7,7 +7,7 @@ let
 
   package = pkgs.megasync;
 
-  hidpiPackage = pkgs.symlinkJoin
+  ultraHDPackage = pkgs.symlinkJoin
     {
       name = "megasync";
       paths = [ pkgs.megasync ];
@@ -26,7 +26,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [
-      (if specialArgs.hidpi then hidpiPackage else package)
+      (if specialArgs.ultraHD then ultraHDPackage else package)
     ];
   };
 }

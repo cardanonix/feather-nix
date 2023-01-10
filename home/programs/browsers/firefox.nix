@@ -1,7 +1,7 @@
 { pkgs, specialArgs, ... }:
 
 let
-  inherit (specialArgs) addons hidpi;
+  inherit (specialArgs) addons ultraHD;
 
   # disable the annoying floating icon with camera and mic when on a call
   disableWebRtcIndicator = ''
@@ -12,7 +12,7 @@ let
 
   # DPI settings
   dpiSettings = {
-    "layout.css.devPixelsPerPx" = if hidpi then "-1.0" else "0.7";
+    "layout.css.devPixelsPerPx" = if ultraHD then "-1.0" else "0.7";
   };
 
   # ~/.mozilla/firefox/PROFILE_NAME/prefs.js | user.js

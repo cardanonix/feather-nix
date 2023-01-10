@@ -40,12 +40,12 @@ let
     ../home/home.nix
   ];
 
-  mkHome = { hidpi ? false }: (
+  mkHome = { ultraHD ? false }: (
     home-manager.lib.homeManagerConfiguration rec {
       inherit pkgs;
 
       extraSpecialArgs = {
-        inherit hidpi inputs;
+        inherit ultraHD inputs;
         addons = nur.repos.rycee.firefox-addons;
       };
 
@@ -54,7 +54,7 @@ let
   );
 in
 {
-  bismuth-edp = mkHome { hidpi = false; };
-  bismuth-uhd = mkHome { hidpi = true; };
+  bismuth-edp = mkHome { ultraHD = false; };
+  bismuth-uhd = mkHome { ultraHD = true; };
 
 }

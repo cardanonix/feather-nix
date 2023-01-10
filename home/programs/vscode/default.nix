@@ -38,7 +38,8 @@ in
         "explorer.confirmDragAndDrop" = false;
         "git.enableCommitSigning" = true;
         "editor.minimap.enabled" = false;
-        "workbench.colorTheme" = "Material Theme Darker";
+        "diffEditor.ignoreTrimWhitespace" = false;
+        "window.autoDetectColorScheme" = true;
     };
   };
 }

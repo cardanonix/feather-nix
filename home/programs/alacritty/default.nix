@@ -1,7 +1,7 @@
 { pkgs, specialArgs, ... }:
 
 let
-  fontSize = if specialArgs.hidpi then 10 else 8;
+  fontSize = if specialArgs.ultraHD then 10 else 8;
 in
 {
   programs.alacritty = {
