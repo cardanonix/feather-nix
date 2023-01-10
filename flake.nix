@@ -36,6 +36,11 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
+/*     cardano-flake = {
+      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    };  */
+
     # Fish shell
 
     fish-bobthefish-theme = {
@@ -51,7 +56,22 @@
      # Cardano Node
     cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
+      #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
+      #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
+
+/*     cardano-node-process = {
+      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
+    }; 
+
+    cardano-node-snapshot = {
+      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
+    }; 
+
+    cardano-node-measured = {
+      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
+    }; */
+
 
     ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
     cardano-node-workbench = {
@@ -84,8 +104,8 @@
     let system = "x86_64-linux";
     in
     {
-/*       devShells.x86_64-linux.default = (
-        import ./shell.nix {
+/*    devShellsConfigurations = (
+        import ./outputs/devShells-conf.nix {
           inherit inputs system;
         }
       ); */

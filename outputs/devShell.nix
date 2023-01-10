@@ -3,6 +3,7 @@
 with inputs;
 
 let
+
   fishOverlay = f: p: {
     inherit fish-bobthefish-theme fish-keytool-completions;
   };
@@ -37,7 +38,7 @@ let
   imports = [
     homeage.homeManagerModules.homeage
     neovim-flake.nixosModules.${system}.hm
-    #cardano-flake.nixosModules.systemd.services.cardano-node
+    cardano-flake.nixosModules.${system}.hm
     ../home/home.nix
   ];
 
@@ -54,8 +55,29 @@ let
     }
   );
 in
-{
-  bismuth-edp = mkHome { ultraHD = false; };
-  bismuth-uhd = mkHome { ultraHD = true; };
-
+{ 
+  devShell = pkgs.mkDevShell {
+    imports = builtins.concatMap import [
+      ./nixos-conf.nix
+      ./home-conf.nix
+      dev-shells.devshellModules."${system}"
+    ];
+  }; 
 }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

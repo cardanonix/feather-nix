@@ -141,6 +141,8 @@ let
   ];
 
   cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
+    #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
+    #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     cardano-node
     cardano-cli
     cardano-submit-api 
@@ -148,13 +150,10 @@ let
     bech32 
     locli  
     db-analyser
-/*     plutus-example
-    error (ignored): error: end of string reached
-error: the path '~/.gitconfig' can not be resolved in pure mode */
-  ];
-
-  cardanoNodeSvcPkgs = with inputs.cardano-node.nixosModules; [
-    cardano-node-service
+    /*plutus-example
+      error (ignored): error: end of string reached
+      error: the path '~/.gitconfig' can not be resolved in pure mode 
+    */
   ];
 
   rustPkgs = with pkgs; [
