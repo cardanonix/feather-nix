@@ -93,7 +93,7 @@ let
     bitwarden-cli        # command-line client for the password manager
   ];
 
-  extraPkgs = with pkgs; [
+  cpuHungryPkgs = with pkgs; [
     vlc                  # media player
     darktable            # raw photo manipulation and grading
     mpv                  # media player
@@ -187,7 +187,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ extraPkgs ++ cardanoNodePkgs ++ rustPkgs ++ homePkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ cpuHungryPkgs ++ cardanoNodePkgs ++ rustPkgs ++ homePkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
