@@ -33,8 +33,8 @@ in
     };
 
   # disable the firewall 
-    firewall.enable = false;
-    #firewall.allowedTCPPorts = [ ... ];
+    firewall.enable = true;
+    firewall.allowedTCPPorts = [ 3001 9090 3000 3100 12798 ];
     #firewall.allowedUDPPorts = [ ... ];
     
     #proxy.default = "http://user:password@proxy:port/";
@@ -54,16 +54,33 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    alacritty
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-    brave
-    git-crypt
-    gnupg
-    firejail
-  ];
+  environment = let
+    basePackages = with pkgs; [
+      alacritty
+      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      wget
+      git
+      brave
+      git-crypt
+      gnupg
+      firejail
+      dnsutils
+      screen
+      jq
+      pinentry
+      python3Packages.ipython
+      srm
+    ];
+    cardanoPackages = [
+      inputs.cardano-node.packages.x86_64-linux.cardano-node
+      inputs.cardano-node.packages.x86_64-linux.cardano-cli
+    ];
+  in {
+    systemPackages = basePackages ++ cardanoPackages;
+/*     variables = {
+      CARDANO_NODE_SOCKET_PATH = config.services.cardano-node.socketPath;
+    }; */
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -127,12 +144,13 @@ in
       home = "/home/bismuth";
       uid = 1002;
       description = "Harry Pray IV";
-      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" ];
+      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" ];
       shell = pkgs.fish;
       # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };
 
   users.groups.plugdev = {};
+  users.groups.cardano-node.gid = 1002;
   
   security = {
     # Yubikey login & sudo

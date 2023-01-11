@@ -2,11 +2,16 @@
   description = "harryprayiv's Home Manager & NixOS configurations";
 
   inputs = {
+
+    flake-utils.url = "github:numtide/flake-utils";
+    
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
     nixpkgs-nautilus-gtk3.url = github:NixOS/nixpkgs?ref=37bd398;
 
     nurpkgs.url = github:nix-community/NUR;
+
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
       url = github:nix-community/home-manager;
@@ -19,10 +24,13 @@
     };
 
     haskellNix = {
-      url = "github:input-output-hk/haskell.nix";
+      url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    cncli.url = "github:AndrewWestberg/cncli";
+
 
     iohkNix = {
       url = "github:input-output-hk/iohk-nix";
@@ -35,11 +43,6 @@
       # if we instead use ours, we'd be rebuilding all plugins from scratch
       #inputs.nixpkgs.follows = "nixpkgs";
     };
-
-/*     cardano-flake = {
-      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
-      #inputs.nixpkgs.follows = "nixpkgs";
-    };  */
 
     # Fish shell
 
@@ -59,19 +62,6 @@
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
-
-/*     cardano-node-process = {
-      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
-    }; 
-
-    cardano-node-snapshot = {
-      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
-    }; 
-
-    cardano-node-measured = {
-      url = "github:input-output-hk/cardano-node?rev=f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2";
-    }; */
-
 
     ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
     cardano-node-workbench = {
@@ -122,4 +112,6 @@
         }
       );
     };
+
+    
 }
