@@ -5,6 +5,7 @@ import           Control.Monad                         ( replicateM_
                                                        , unless
                                                        )
 import           Data.IORef      
+import           Data.Char
 import           Data.List                                                 
 import           Data.Foldable                         ( traverse_ )
 import           Data.Monoid
@@ -145,6 +146,17 @@ myStartupHook = startupHook def
 -- original idea: https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
+-- for working with string literals in the terminal
+-- human readable directories into Haskell friendly ones for use in terminal
+toStringLiteral :: String -> String
+toStringLiteral = concatMap escape
+  where escape c
+          | c == ' ' = "\\ "
+          | c `elem` "([\\" = '\\' : [c]
+          | isPrint c = [c]
+          | otherwise = '\\' : show (ord c)
+
+
 instance UrgencyHook LibNotifyUrgencyHook where
   urgencyHook LibNotifyUrgencyHook w = do
     name     <- W.getName w
@@ -201,6 +213,12 @@ myCardanoNode = "alacritty -o font.size=5 -e node_launch"
 myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
 appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c   = "playerctl --player=spotify,%any " <> c
+
+currentMovieDir = toStringLiteral "/home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In the Mood for Love (2000) [x265_10b_1800x1080_2.4 Mbps_AAC-5.1_lOVE].mkv" 
+--mpvCmd = $"mpv " ++ currentMovieDir
+mpvCmd = "mpv /home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In\\ the\\ Mood\\ for\\ Love\\ \\(2000\\)\\ \\[x265_10b_1800x1080_2.4\\ Mbps_AAC-5.1_lOVE\\].mkv"
+--mpvCmd = "mpv /home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In the Mood for Love (2000) [x265_10b_1800x1080_2.4 Mbps_AAC-5.1_lOVE].mkv"
+
 
 -- Hue Lighting Junk
 lghtLvl l b   = "hue light " <> l <> " brightness " <> b
@@ -503,7 +521,7 @@ pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
-mpv       = ClassApp "Mpv"                  "mpv /home/bismuth/video/_Movies/Fight\\ Club\\ \\(1999\\)\\ \\[4.3G.1080p.x265.10b.139min\\]\\ \\~A4A6E32C/Fight\\ Club\\ \\(1999\\)\\ \\[x265_10b_1920x800_4.2\\ Mbps_AAC-7.1_Tigole\\].mkv"
+mpv       = ClassApp "Mpv"                  mpvCmd 
 kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
