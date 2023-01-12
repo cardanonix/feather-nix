@@ -2,14 +2,15 @@
 
 {
   # TODO: these are shit file systems, go btrfs or zfs or go home
-  fileSystems."/boot" =
-    { 
-      device = "/dev/disk/by-uuid/E190-B72F";
-      fsType = "vfat";
-    };
   fileSystems."/" =
-    { 
-      device = "/dev/disk/by-uuid/b7936e98-ae0f-4c3d-99f1-c27b97968d58";
+    { device = "/dev/disk/by-uuid/83635777-72ad-40e5-b879-42db06150562";
       fsType = "ext4";
     };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/2F1A-A080";
+      fsType = "vfat";
+    };
+
+  #hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
