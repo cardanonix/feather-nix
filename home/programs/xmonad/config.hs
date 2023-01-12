@@ -196,7 +196,8 @@ polybarHook dbus =
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
 myTerminal     = "alacritty"
-myBashTerminal = "alacritty --hold -e bash --login"
+myBishTerminal = "alacritty --hold -e bish"
+myZishTerminal = "alacritty --hold -e zish"
 
 delayTerminal  = "sleep 2s && alacritty"
 myGuildView    = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
@@ -269,10 +270,11 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Next"            (0, xF86XK_AudioNext                   ) $ spawn $ playerctl "next"
     ] ^++^
   keySet "Launchers"
-    [ key "Terminal"        (modm .|. shiftMask  , xK_Return                  ) $ spawn (XMonad.terminal conf)
-    , key "Bash"            (modm .|. shiftMask .|. controlMask  , xK_Return  ) $ spawn myBashTerminal    
-    , key "Apps (Rofi)"     (modm                , xK_p                       ) $ spawn appLauncher
-    , key "Lock screen"     (modm .|. controlMask, xK_l                       ) $ spawn screenLocker
+    [ key "Terminal"        (modm .|. shiftMask  , xK_Return  ) $ spawn (XMonad.terminal conf)
+    , key "Bish"            (modm .|. controlMask,  xK_b      ) $ spawn myBishTerminal   
+    , key "Zish"            (modm .|. controlMask,  xK_z      ) $ spawn myZishTerminal    
+    , key "Apps (Rofi)"     (modm                , xK_p       ) $ spawn appLauncher
+    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout

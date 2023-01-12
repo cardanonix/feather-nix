@@ -35,11 +35,13 @@ in
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      cat  = "bat";
-      dc   = "docker-compose";
-      dps  = "docker-compose ps";
-      dcd  = "docker-compose down --remove-orphans";
-      drm  = "docker images -a -q | xargs docker rmi -f";
+      # cat  = "bat";
+      bish = "bash --login";
+      zish = "zsh";
+      # dc   = "docker-compose";
+      # dps  = "docker-compose ps";
+      # dcd  = "docker-compose down --remove-orphans";
+      # drm  = "docker images -a -q | xargs docker rmi -f";
       du   = "ncdu --color dark -rr -x";
       ls   = "exa";
       ll   = "ls -a";
