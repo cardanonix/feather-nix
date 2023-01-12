@@ -146,17 +146,6 @@ myStartupHook = startupHook def
 -- original idea: https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
--- for working with string literals in the terminal
--- human readable directories into Haskell friendly ones for use in terminal
-toStringLiteral :: String -> String
-toStringLiteral = concatMap escape
-  where escape c
-          | c == ' ' = "\\ "
-          | c `elem` "([\\" = '\\' : [c]
-          | isPrint c = [c]
-          | otherwise = '\\' : show (ord c)
-
-
 instance UrgencyHook LibNotifyUrgencyHook where
   urgencyHook LibNotifyUrgencyHook w = do
     name     <- W.getName w
@@ -214,6 +203,17 @@ myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
 appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c   = "playerctl --player=spotify,%any " <> c
 
+
+-- for working with string literals in the terminal
+-- human readable directories into Haskell friendly ones for use in terminal
+toStringLiteral :: String -> String
+toStringLiteral = concatMap escape
+  where escape c
+          | c == ' ' = "\\ "
+          | c `elem` "([\\" = '\\' : [c]
+          | isPrint c = [c]
+          | otherwise = '\\' : show (ord c)
+          
 currentMovieDir = toStringLiteral "/home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In the Mood for Love (2000) [x265_10b_1800x1080_2.4 Mbps_AAC-5.1_lOVE].mkv" 
 --mpvCmd = $"mpv " ++ currentMovieDir
 mpvCmd = "mpv /home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In\\ the\\ Mood\\ for\\ Love\\ \\(2000\\)\\ \\[x265_10b_1800x1080_2.4\\ Mbps_AAC-5.1_lOVE\\].mkv"
