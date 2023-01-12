@@ -10,7 +10,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "sd_mod" ];
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-intel" ];
@@ -27,20 +27,9 @@
     #interfaces.eth0.useDHCP = true;
   };
 
-  # Enable sound.
-  sound = {
-    enable = true;
-    mediaKeys.enable = true;
-  };
-
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
-
-/*   swapDevices =
-    [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
-    ]; */
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/8e6afd02-5fe0-4f63-9be4-c074a9f995ea"; }
+    ];
 
   fileSystems."/home/bismuth/video" =
     { device = "192.168.1.212:/volume2/video";
@@ -72,6 +61,12 @@
       fsType = "nfs";
     };
 
+  fileSystems."/home/bismuth/shared_photos" =
+    { device = "192.168.1.212:/volume2/shared_photos";
+      options = [ "x-systemd.automount" "noauto" ];
+      fsType = "nfs";
+    };
+
   services.xserver = {
     xrandrHeads = [
       { output = "HDMI-1";
@@ -85,20 +80,5 @@
     resolutions = [
       { x = 1920; y = 1080; }
     ];
-  };
-      # Enable Docker & VirtualBox support.
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-
-    virtualbox.host = {
-      enable = false;
-      enableExtensionPack = false;
-    };
   };
 }
