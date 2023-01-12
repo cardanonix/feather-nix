@@ -195,13 +195,15 @@ polybarHook dbus =
 
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
-myTerminal    = "alacritty"
-delayTerminal = "sleep 2s && alacritty"
-myGuildView   = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-myCardanoNode = "alacritty -o font.size=5 -e node_launch"
-myCardanoCli  = "sleep 20m && alacritty --hold -e node_check"
-appLauncher   = "rofi -modi drun,ssh,window -show drun -show-icons"
-playerctl c   = "playerctl --player=spotify,%any " <> c
+myTerminal     = "alacritty"
+myBashTerminal = "alacritty --hold -e bash --login"
+
+delayTerminal  = "sleep 2s && alacritty"
+myGuildView    = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+myCardanoNode  = "alacritty -o font.size=5 -e node_launch"
+myCardanoCli   = "sleep 20m && alacritty --hold -e node_check"
+appLauncher    = "rofi -modi drun,ssh,window -show drun -show-icons"
+playerctl c    = "playerctl --player=spotify,%any " <> c
 
 
 -- for working with string literals in the terminal
@@ -267,9 +269,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Next"            (0, xF86XK_AudioNext                   ) $ spawn $ playerctl "next"
     ] ^++^
   keySet "Launchers"
-    [ key "Terminal"        (modm .|. shiftMask  , xK_Return  ) $ spawn (XMonad.terminal conf)
-    , key "Apps (Rofi)"     (modm                , xK_p       ) $ spawn appLauncher
-    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
+    [ key "Terminal"        (modm .|. shiftMask  , xK_Return                  ) $ spawn (XMonad.terminal conf)
+    , key "Bash"            (modm .|. shiftMask .|. controlMask  , xK_Return  ) $ spawn myBashTerminal    
+    , key "Apps (Rofi)"     (modm                , xK_p                       ) $ spawn appLauncher
+    , key "Lock screen"     (modm .|. controlMask, xK_l                       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
