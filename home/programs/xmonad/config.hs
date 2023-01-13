@@ -246,6 +246,8 @@ showKeybindings xs =
     spawnOn webWs $ command filename -- show dialog on webWs
     windows $ W.greedyView webWs     -- switch to webWs
 
+
+ -- I used "xev" to figure out exactly what key I was pressing to make many of these 
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
