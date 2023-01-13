@@ -27,8 +27,21 @@
     #interfaces.eth0.useDHCP = true;
   };
 
+  services.sysprof.enable = true;
+
+  # Enable sound.
+  sound = {
+    enable = true;
+    mediaKeys.enable = true;
+  };
+
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+  
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/8e6afd02-5fe0-4f63-9be4-c074a9f995ea"; }
+    [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
     ];
 
   fileSystems."/home/bismuth/video" =
@@ -67,18 +80,45 @@
       fsType = "nfs";
     };
 
-  services.xserver = {
-    xrandrHeads = [
-      { output = "HDMI-1";
-        primary = true;
-        monitorConfig = ''
-          Option "PreferredMode" "1920x1080"
-          Option "Position" "0 0"
-        '';
-      }
-    ];
-    resolutions = [
-      { x = 1920; y = 1080; }
-    ];
+  services = {
+    avahi = {
+      nssmdns = true;
+      enable = true;
+      publish = {
+      enable = true;
+      userServices = true;
+      domain = true;
+      };
+    };
+    xserver = {
+      xrandrHeads = [
+        { output = "HDMI-1";
+          primary = true;
+          monitorConfig = ''
+            Option "PreferredMode" "1920x1080"
+            Option "Position" "0 0"
+          '';
+        }
+      ];
+      resolutions = [
+        { x = 1920; y = 1080; }
+      ];
+    };
+  };
+  
+    # Enable Docker & VirtualBox support.
+  virtualisation = {
+    docker = {
+      enable = false;
+      autoPrune = {
+        enable = false;
+        dates = "weekly";
+      };
+    };
+
+    virtualbox.host = {
+      enable = false;
+      enableExtensionPack = false;
+    };
   };
 }

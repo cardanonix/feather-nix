@@ -1581,11 +1581,6 @@
         "iohkNix": "iohkNix_6",
         "membench": "membench_4",
         "nixpkgs": [
-          "cardano-node",
-          "node-measured",
-          "node-measured",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1614,13 +1609,6 @@
         "iohkNix": "iohkNix_7",
         "membench": "membench_5",
         "nixpkgs": [
-          "cardano-node",
-          "node-measured",
-          "node-measured",
-          "membench",
-          "cardano-node-snapshot",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1648,11 +1636,6 @@
         "iohkNix": "iohkNix_10",
         "membench": "membench_7",
         "nixpkgs": [
-          "cardano-node",
-          "node-measured",
-          "node-process",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1681,13 +1664,6 @@
         "iohkNix": "iohkNix_11",
         "membench": "membench_8",
         "nixpkgs": [
-          "cardano-node",
-          "node-measured",
-          "node-process",
-          "membench",
-          "cardano-node-snapshot",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1715,11 +1691,6 @@
         "iohkNix": "iohkNix_14",
         "membench": "membench_10",
         "nixpkgs": [
-          "cardano-node",
-          "node-measured",
-          "node-snapshot",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1747,10 +1718,6 @@
         "iohkNix": "iohkNix_17",
         "membench": "membench_12",
         "nixpkgs": [
-          "cardano-node",
-          "node-snapshot",
-          "membench",
-          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -6332,7 +6299,7 @@
         "lualine": "lualine",
         "mind-nvim": "mind-nvim",
         "nightfox": "nightfox",
-        "nixpkgs": "nixpkgs_17",
+        "nixpkgs": "nixpkgs_18",
         "nmd": "nmd",
         "null-ls": "null-ls",
         "nvim-autopairs": "nvim-autopairs",
@@ -8271,6 +8238,19 @@
     },
     "nixpkgs_17": {
       "locked": {
+        "lastModified": 1673450908,
+        "narHash": "sha256-b8em+kwrNtnB7gR8SyVf6WuTyQ+6tHS6dzt9D9wgKF0=",
+        "path": "/nix/store/izkfanzxhdp831q9a1lbbj1qrv70543z-source",
+        "rev": "6c8644fc37b6e141cbfa6c7dc8d98846c4ff0c2e",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_18": {
+      "locked": {
         "lastModified": 1672997035,
         "narHash": "sha256-DNaNjsGMRYefBTAxFIrVOB2ok477cj1FTpqnu/mKRf4=",
         "owner": "nixos",
@@ -8285,7 +8265,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_18": {
+    "nixpkgs_19": {
       "locked": {
         "lastModified": 1670507980,
         "narHash": "sha256-riNZa0xzM1it3pzxciwALeMs+0CsBMWIW2FqulzK8vM=",
@@ -8295,21 +8275,6 @@
       },
       "original": {
         "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_19": {
-      "locked": {
-        "lastModified": 1673226411,
-        "narHash": "sha256-b6cGb5Ln7Zy80YO66+cbTyGdjZKtkoqB/iIIhDX9gRA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "aa1d74709f5dac623adb4d48fdfb27cc2c92a4d4",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
         "type": "indirect"
       }
     },
@@ -8325,6 +8290,21 @@
       "original": {
         "id": "nixpkgs",
         "ref": "nixos-21.05-small",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_20": {
+      "locked": {
+        "lastModified": 1673226411,
+        "narHash": "sha256-b6cGb5Ln7Zy80YO66+cbTyGdjZKtkoqB/iIIhDX9gRA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "aa1d74709f5dac623adb4d48fdfb27cc2c92a4d4",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
         "type": "indirect"
       }
     },
@@ -9737,7 +9717,7 @@
         "homeage": "homeage",
         "iohkNix": "iohkNix_20",
         "neovim-flake": "neovim-flake",
-        "nixpkgs": "nixpkgs_19",
+        "nixpkgs": "nixpkgs_20",
         "nixpkgs-nautilus-gtk3": "nixpkgs-nautilus-gtk3",
         "nurpkgs": "nurpkgs",
         "sops-nix": "sops-nix",
@@ -9762,10 +9742,7 @@
     },
     "rust-nix": {
       "inputs": {
-        "nixpkgs": [
-          "cncli",
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_17"
       },
       "locked": {
         "lastModified": 1614256663,
@@ -10258,7 +10235,7 @@
     "ts-build": {
       "inputs": {
         "flake-utils": "flake-utils_23",
-        "nixpkgs": "nixpkgs_18"
+        "nixpkgs": "nixpkgs_19"
       },
       "locked": {
         "lastModified": 1669771646,

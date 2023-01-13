@@ -10,9 +10,15 @@ in
     monitors=$(${xrandr} --query | ${rg} '\bconnected')
 
     if [[ $monitors == *"HDMI"* ]]; then
-      echo "Switching to HM config for HDMI display"
+      echo "Switching to HM config for uhd display"
       cd ${home}
       nix build --impure .#homeConfigurations.bismuth-uhd.activationPackage
+      result/activate
+      cd -
+    elif [[ $monitors == *"HDMI-1"* ]]; then
+      echo "Switching to HM config for HDMI-2 laptop display"
+      cd ${home}
+      nix build --impure .#homeConfigurations.bismuth-edp.activationPackage
       result/activate
       cd -
     elif [[ $monitors == *"HDMI-2"* ]]; then

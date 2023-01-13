@@ -13,37 +13,19 @@ in
   programs.cardano-node = {
     enable = true;
 
-
     profiles = {
-      "slow" = {
+      "mainnet_Relay" = {
+        environment = "testnet";
+        priority = "1";
         fingerprint = {
-/*           HDMI-2 = bismuthId; */
+        cardanoID = ${nodeIdentifier}
         };
 
         config = {
-/*           HDMI-2 = {
             enable = true;
-            crtc = 0; */
-          };
+            rate = "normal";
         };
       };
-
-      "fast" = {
-        fingerprint = {
-/*           HDMI-2 = bismuthId; */
-        };
-
-        config = {
-          HDMI-2 = {
-            #enable = true;
-            #crtc = 1;
-            #position = "0x0";
-            #mode = "1920x1080";
-            #rate = "60.04";
-            #rotate = "normal";
-          };
-        };
-      };
-    };
-
+    };      
   }
+}
