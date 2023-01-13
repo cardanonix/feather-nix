@@ -35,9 +35,8 @@ in
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      # cat  = "bat";
-      bish = "bash --login";
-      zish = "zsh";
+      bat  = "bat";
+      bash = "bash --login";
       # dc   = "docker-compose";
       # dps  = "docker-compose ps";
       # dcd  = "docker-compose down --remove-orphans";

@@ -196,8 +196,8 @@ polybarHook dbus =
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
 myTerminal     = "alacritty"
-myBishTerminal = "alacritty --hold -e bish"
-myZishTerminal = "alacritty --hold -e zish"
+myBashTerminal = "alacritty --hold -e bash"
+myZshTerminal = "alacritty --hold -e zsh"
 
 delayTerminal  = "sleep 2s && alacritty"
 myGuildView    = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
@@ -249,12 +249,12 @@ showKeybindings xs =
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
-    , key "Youtube"         (modm .|. controlMask, xK_v       ) $ spawnOn webWs "brave --app=https://youtube.com/"
+    , key "Youtube"         (modm .|. controlMask,  xK_y      ) $ spawnOn webWs "brave --app=https://youtube.com/"
     ] ^++^
   keySet "Lights"
-    [ key "DarkerWarm"          (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
-    , key "BrighterWarm"        (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
-    , key "BrighterBlue"        (modm, xF86XK_MonBrightnessUp     ) $ spawn coldLights
+    [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
+    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
+    , key "BrighterBlue"    (modm, xF86XK_MonBrightnessUp     ) $ spawn coldLights
     ] ^++^    
   keySet "Audio"
     [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
@@ -271,9 +271,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Launchers"
     [ key "Terminal"        (modm .|. shiftMask  , xK_Return  ) $ spawn (XMonad.terminal conf)
-    , key "Bish"            (modm .|. controlMask,  xK_b      ) $ spawn myBishTerminal   
-    , key "Zish"            (modm .|. controlMask,  xK_z      ) $ spawn myZishTerminal    
-    , key "Apps (Rofi)"     (modm                , xK_p       ) $ spawn appLauncher
+    , key "Bash Terminal"   (modm .|. controlMask,  xK_b      ) $ spawn myBashTerminal   
+    , key "Zsh Terminal"    (modm .|. controlMask,  xK_z      ) $ spawn myZshTerminal    
+    , key "Apps (Rofi)"     (0, xF86XK_LaunchA                ) $ spawn appLauncher
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
@@ -285,11 +285,11 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Toggle"          (modm              , xK_equal     ) togglePolybar
     ] ^++^
   keySet "Projects"
-    [ key "Switch prompt"   (modm              , xK_o         ) $ switchProjectPrompt projectsTheme
+    [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
     ] ^++^
   keySet "Scratchpads"
     [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
-    , key "bottom"          (modm .|. controlMask,  xK_y      ) $ runScratchpadApp btm
+    , key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
