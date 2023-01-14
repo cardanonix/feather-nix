@@ -1581,6 +1581,11 @@
         "iohkNix": "iohkNix_6",
         "membench": "membench_4",
         "nixpkgs": [
+          "cardano-node",
+          "node-measured",
+          "node-measured",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1609,6 +1614,13 @@
         "iohkNix": "iohkNix_7",
         "membench": "membench_5",
         "nixpkgs": [
+          "cardano-node",
+          "node-measured",
+          "node-measured",
+          "membench",
+          "cardano-node-snapshot",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1636,6 +1648,11 @@
         "iohkNix": "iohkNix_10",
         "membench": "membench_7",
         "nixpkgs": [
+          "cardano-node",
+          "node-measured",
+          "node-process",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1664,6 +1681,13 @@
         "iohkNix": "iohkNix_11",
         "membench": "membench_8",
         "nixpkgs": [
+          "cardano-node",
+          "node-measured",
+          "node-process",
+          "membench",
+          "cardano-node-snapshot",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1691,6 +1715,11 @@
         "iohkNix": "iohkNix_14",
         "membench": "membench_10",
         "nixpkgs": [
+          "cardano-node",
+          "node-measured",
+          "node-snapshot",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],
@@ -1718,6 +1747,10 @@
         "iohkNix": "iohkNix_17",
         "membench": "membench_12",
         "nixpkgs": [
+          "cardano-node",
+          "node-snapshot",
+          "membench",
+          "cardano-node-snapshot",
           "haskellNix",
           "nixpkgs-2105"
         ],

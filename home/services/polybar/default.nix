@@ -99,7 +99,7 @@ let
     exec = ${mprisScript}/bin/mpris
     tail = true
 
-    label-maxlen = 60
+    label-maxlen = 50
 
     interval = 2
     format =   <label>
@@ -153,7 +153,7 @@ let
     [module/xmonad]
     type = custom/script
     exec = ${pkgs.xmonad-log}/bin/xmonad-log
-
+    label-maxlen = 320
     tail = true
   '';
 

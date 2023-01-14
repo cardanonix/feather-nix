@@ -10,7 +10,7 @@ let
 
 in
 {
-  programs.cardano-node = {
+/*   programs.cardano-node = {
     enable = true;
 
     profiles = {
@@ -20,12 +20,11 @@ in
         fingerprint = {
         cardanoID = ${nodeIdentifier}
         };
-
-        config = {
-            enable = true;
-            rate = "normal";
-        };
       };
-    };      
-  }
+      config = {
+          enable = true;
+          rate = "normal";
+      };
+    };
+  };  */     
 }
