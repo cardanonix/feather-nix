@@ -6,7 +6,7 @@ let
 in 
   fetchurl {
     name = "${pname}-${version}";
-    url = "https://github.com/monzanifabio/cryptofont/blob/master/fonts/${pname}.ttf";
+    url = "https://raw.githubusercontent.com/monzanifabio/cryptofont/master/fonts/${pname}.ttf"; 
 
     downloadToTemp = true;
     recursiveHash = true;

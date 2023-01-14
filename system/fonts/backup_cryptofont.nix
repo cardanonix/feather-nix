@@ -1,7 +1,7 @@
 { stdenv, lib }:
 
 stdenv.mkDerivation {
-  name = "Cryptofont";
+  name = "cryptofont";
   src = ./cryptofont.ttf;
 
   phases = ["installPhase"];

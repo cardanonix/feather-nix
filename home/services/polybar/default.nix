@@ -143,7 +143,7 @@ let
     exec = ${cnodeScript}/bin/cnode
 
     interval = 5
-    format = "%{T2}<label>"
+    format = "%{T6}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0
     click-left = "${terminal} --hold -e ${launchScript}/bin/node_launch"
@@ -153,7 +153,7 @@ let
     [module/xmonad]
     type = custom/script
     exec = ${pkgs.xmonad-log}/bin/xmonad-log
-    label-maxlen = 320
+    label-maxlen = 318
     tail = true
   '';
 
