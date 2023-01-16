@@ -29,6 +29,8 @@
 
   services.sysprof.enable = true;
 
+  nix.settings.cores = 4;
+
   # Enable sound.
   sound = {
     enable = true;
