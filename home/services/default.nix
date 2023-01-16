@@ -16,6 +16,7 @@ in
   ./picom
   ./polybar
   ./screenlocker
+  ./redshift
   #./betterlockscreen #TODO: fix screen locker
   ./udiskie
   more
