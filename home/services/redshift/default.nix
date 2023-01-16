@@ -2,20 +2,17 @@
 
   services.redshift = {
     enable = true;
-    
     settings.redshift = {
       # Note the string values below.
       brightness-day = "1";
       brightness-night = "1";
     };
-
     temperature = {
-      day = 6000;
-      night = 2900;
+      day = 5680;
+      night = 2000;
     };
-    
     provider = "manual";
-    latitude = 42.43632586235741;
-    longitude = -71.08012453940802;
+    latitude = 42.4363258;
+    longitude = -71.0801245;
   };
 }

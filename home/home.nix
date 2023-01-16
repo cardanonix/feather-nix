@@ -68,6 +68,9 @@ let
     jupyter              # pyton jupyter notebooks
     lorri                # needed for direnv
     ihp-new              # Haskell web framework (the Django of Haskell)
+    python3Packages.ipython
+    srm
+    pinentry
 
     # Work Stuff
     work-browser
@@ -191,7 +194,9 @@ in
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
+      CARDANO_NODE_SOCKET_PATH = "/Cardano/mainnet/db/node.socket";
     };
+
     pointerCursor = { 
       name = "phinger-cursors"; 
       package = pkgs.phinger-cursors; 
