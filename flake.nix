@@ -11,8 +11,6 @@
 
     nurpkgs.url = github:nix-community/NUR;
 
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";

@@ -100,7 +100,7 @@ let
     vlc                  # media player
     darktable            # raw photo manipulation and grading
     mpv                  # media player
-    kodi                 # media player  
+    #kodi                 # media player  
     gimp                 # gnu image manipulation program
     blender              # 3D computer graphics software tool set
     krita                # image editor (supposedly better than gimp)
