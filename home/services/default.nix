@@ -15,7 +15,7 @@ in
   ./polybar
   ./screenlocker
   ./redshift
-  #./betterlockscreen #TODO: fix screen locker
+  ./betterlockscreen #TODO: fix screen locker
   ./udiskie
   more
 ]

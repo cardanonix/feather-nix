@@ -6,8 +6,8 @@ let
   pkill             = "${pkgs.procps}/bin/pkill";
   home              = "/home/bismuth";
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  config            = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
-  #config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
+  #config            = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
+  config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
   node_socket_path  = "/Cardano/mainnet/db/node.socket";
   db_path           = "/Cardano/mainnet/db";
   #noderun           = "${cardanoNodePkgs.cardano-node}/bin/cardano-node";
