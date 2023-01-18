@@ -206,6 +206,9 @@ myCardanoCli   = "sleep 20m && alacritty --hold -e node_check"
 appLauncher    = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c    = "playerctl --player=spotify,%any " <> c
 
+calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
+emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
+
 
 -- for working with string literals in the terminal
 -- human readable directories into Haskell friendly ones for use in terminal
@@ -276,6 +279,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Bash Terminal"   (modm .|. controlMask,  xK_b      ) $ spawn myBashTerminal   
     , key "Zsh Terminal"    (modm .|. controlMask,  xK_z      ) $ spawn myZshTerminal    
     , key "Apps (Rofi)"     (0, xF86XK_LaunchA                ) $ spawn appLauncher
+    , key "Calc (Rofi)"     (modm .|. shiftMask  , xK_c       ) $ spawn calcLauncher
+    , key "Emojis (Rofi)"   (modm .|. shiftMask  , xK_m       ) $ spawn emojiPicker
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"

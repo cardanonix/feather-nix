@@ -86,6 +86,7 @@ let
     cmatrix              # dorky terminal matrix effect
     nyancat              # the famous rainbow cat!  
     ponysay              # for sweet Audrey
+    cowsay               # cowsay fortune teller with random images
     pipes                # pipes vis in terminal
 
     #  Security

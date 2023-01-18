@@ -7,6 +7,10 @@ let
     inherit fish-bobthefish-theme fish-keytool-completions;
   };
 
+  cowsayOverlay = f: p: {
+    cowsay = inputs.cowsay.packages.${system}.cowsay;
+  };
+
   nautilusOverlay = f: p: {
     nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
   };
@@ -17,6 +21,7 @@ let
     config.allowUnfree = true;
 
     overlays = [
+      cowsayOverlay
       fishOverlay
       nautilusOverlay
       nurpkgs.overlay
