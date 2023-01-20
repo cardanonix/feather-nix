@@ -15,6 +15,16 @@ let
     nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
   };
 
+/*   
+  haskellnixOverlay = f: p: {
+    nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
+  };
+
+  iohkNixOverlay = f: p: {
+    nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
+  }; 
+*/
+
   pkgs = import nixpkgs {
     inherit system;
 

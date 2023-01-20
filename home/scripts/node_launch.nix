@@ -13,12 +13,13 @@ let
   #noderun           = "${cardanoNodePkgs.cardano-node}/bin/cardano-node";
   #noderun           = "/nix/store/3ypdm0z5rjvk0q1wnabvi2vxhiwdsl4m-cardano-node-exe-cardano-node-1.35.4/bin/cardano-node run";
   #noderun           = "./cardano-node";
+  cowsay            = "${pkgs.cowsay}/bin/cowsay";
 in
 pkgs.writeShellScriptBin "node_launch" ''
   if [ "$(${pgrep} cardano-node)" ]; then
-      ${pkill} -f cardano-node && sleep 10s && cardano-node run --config ${home}${config} --database-path ${home}${db_path} --topology ${topology} --host-addr 0.0.0.0 --port 3001 --socket-path ${home}${node_socket_path}      +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
+      ${cowsay} "Killing Node!" && ${pkill} -f cardano-node && sleep 10s && ${cowsay} "Node Relaunching!" && cardano-node run --config ${home}${config} --database-path ${home}${db_path} --topology ${topology} --host-addr 0.0.0.0 --port 3001 --socket-path ${home}${node_socket_path}      +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
   else
-      cardano-node run --config ${home}${config} --database-path ${home}${db_path} --topology ${topology} --host-addr 0.0.0.0 --port 3001 --socket-path ${home}${node_socket_path}      +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
+      ${cowsay} "Node Launching!" && cardano-node run --config ${home}${config} --database-path ${home}${db_path} --topology ${topology} --host-addr 0.0.0.0 --port 3001 --socket-path ${home}${node_socket_path}      +RTS -N2 -I0 -A16m -qg -qb --disable-delayed-os-memory-return -RTS
   fi
 ''
 

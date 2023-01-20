@@ -4,6 +4,7 @@
   dark-reader              = "eimadpbcbfnmbkopoojfekhnkhdbieeh";
   github-dark-theme        = "odkdlljoangmamjilkamahebpkgpeacp";
   google-translate         = "aapbdbdomjkkjkaonfhkkikfgjllcleb";
+  chatgpt-for-google       = "jgjaeacdkonaoafenlfkkkmbaopkbilf";
 
 # Fuck Elon Musk
   nitter-redirect          = "mohaicophfnifehkkkdbcejkflmgfkof";

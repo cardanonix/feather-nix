@@ -8,11 +8,12 @@ let
   node_socket_path  = "/Cardano/mainnet/db/node.socket";
   db_path           = "/Cardano/mainnet/db";
   cardano-cli       = "./cardano-cli";
+  cowsay            = "${pkgs.cowsay}/bin/cowsay";
   #cli-path          = "/cardano_local/cardano-node/cardano-cli-build/bin";
 in
 pkgs.writeShellScriptBin "node_check" ''
     if [ "$(${pgrep} cardano-node)" ]; then
-      echo "Populating Path Variables:"
+      ${cowsay} "Populating Path Variables:"
       export CARDANO_TOPOLOGY="${home}${topology}"
       export CARDANO_CONFIG="${home}${config}"
       export CARDANO_NODE_SOCKET_PATH=${home}${node_socket_path}

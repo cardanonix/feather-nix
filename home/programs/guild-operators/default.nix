@@ -1,12 +1,20 @@
-{ pkgs, ... }:
+/* { pkgs, ... }:
 
 let
-  # obtained via `autorandr --fingerprint`
-  # obtained via `autorandr --fingerprint`
-  #msiOptixId = "00ffffffffffff003669a23d010101011c1d010380462778eef8c5a556509e26115054bfef80714f81c08100814081809500b300a9404dd000a0f0703e8030203500bc862100001e000000fd001e4b1f873c000a202020202020000000fc004d4147333231435552560a2020000000ff0044413241303139323830303430012c020346f153010203040510111213141f2021225d5e5f616023091707830100006d030c001000383c20006003020167d85dc401788003e40f000006e305e301e60607015c5c0004740030f2705a80b0588a00bc862100001e565e00a0a0a0295030203500bc862100001e1b2150a051001e3048883500bc862100001e0000002f";
-  #tongfangId = "00ffffffffffff004d10c31400000000091d0104a522137807de50a3544c99260f5054000000010101010101010101010101010101011a3680a070381d403020350058c210000018000000fd00303c42420d010a202020202020000000100000000000000000000000000000000000fc004c513135364d314a5730310a20006b";
-  #bismuthId = "00ffffffffffff004cd8000101000000081c010380331d782ed945a2554da027125054bfef80b300a9409500904081808140714f0101023a801871382d40582c4500501d7400001e011d007251d01e206e285500c48e2100001e000000fd00184c0f531201000a2020202020000000fc00534658324b382034544f3200000147020328f44d901f041305142021220312071623097f07830100006a030c001400b82d0f0800e200cf023a801871382d40582c4500501d7400001e011d007251d01e206e285500c48e2100001e011d8018711c1620582c2500c48e2100009e8c0ad08a20e02d10103e9600138e2100001800000000000000000000000000000073";
-  #notify = "${pkgs.libnotify}/bin/notify-send";
+  CNODEBIN = "/nix/store/q95b52ssb56x0m8gr1msyab7vnfck3bn-cardano-node-exe-cardano-node-1.36.0/bin/cardano-node";             # Override automatic detection of cardano-node executable
+  CCLI = "/nix/store/c4fw2qdsn4izygig458hjdz9fs102lxc-cardano-cli-exe-cardano-cli-1.36.0/bin/cardano-cli";                  # Override automatic detection of cardano-cli executable
+  CNCLI = "/home/$USER/cardano_local/guild-operators/scripts/cnode-helper-scripts/";                       # Override automatic detection of executable (https://github.com/AndrewWestberg/cncli)
+  CNODE_HOME = "/home/$USER/cardano_local/cardano-node/";                        # Override default CNODE_HOME path (defaults to /opt/cardano/cnode)
+  CNODE_PORT = 3001;                                        # Set node port
+  CONFIG = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";               # Override automatic detection of node config path
+  SOCKET = "${CNODE_HOME}state-node-mainnet/node.socket";            # Override automatic detection of path to socket
+  TOPOLOGY = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";           # Override default topology.json path
+  LOG_DIR = "${CNODE_HOME}/logs";                           # Folder where your logs will be sent to (must pre-exist)
+  DB_DIR = "${CNODE_HOME}/db";                              # Folder to store the cardano-node blockchain db
+  #UPDATE_CHECK="Y"                                       # Check for updates to scripts, it will still be prompted before proceeding (Y|N).
+  TMP_DIR = "/tmp/cnode";                                   # Folder to hold temporary files in the various scripts, each script might create additional subfolders
+  USE_EKG = "N";                                            # Use EKG metrics from the node instead of Prometheus. Prometheus metrics yield slightly better performance but can be unresponsive at times (default EKG)
+
 
 in
 {
@@ -29,3 +37,18 @@ in
     };      
   }
 }
+
+
+
+
+{ pkgs, ... }:
+
+{
+  guild.configFile."i3blocks/config".source = ./env;
+  home.file.".env".text = ''
+      set auto-load safe-path /nix/store
+  '';
+}
+#This will create symlink $XDG_CONFIG_HOME/i3blocks/config and ~/.gdbinit
+
+ */

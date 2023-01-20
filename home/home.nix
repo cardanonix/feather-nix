@@ -42,7 +42,7 @@ let
     ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
     md-toc               # generate ToC in markdown files
-    openjdk
+    adoptopenjdk-bin
     obsidian             # note taking/mind mapping
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences
