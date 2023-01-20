@@ -1,4 +1,4 @@
-/* { pkgs, ... }:
+{ pkgs, ... }:
 
 let
   CNODEBIN = "/nix/store/q95b52ssb56x0m8gr1msyab7vnfck3bn-cardano-node-exe-cardano-node-1.36.0/bin/cardano-node";             # Override automatic detection of cardano-node executable
@@ -26,7 +26,7 @@ in
         environment = "testnet";
         priority = "1";
         fingerprint = {
-        cardanoID = ${nodeIdentifier}
+        cardanoID = ${nodeIdentifier};
         };
 
         config = {
@@ -35,20 +35,5 @@ in
         };
       };
     };      
-  }
+  };
 }
-
-
-
-
-{ pkgs, ... }:
-
-{
-  guild.configFile."i3blocks/config".source = ./env;
-  home.file.".env".text = ''
-      set auto-load safe-path /nix/store
-  '';
-}
-#This will create symlink $XDG_CONFIG_HOME/i3blocks/config and ~/.gdbinit
-
- */
