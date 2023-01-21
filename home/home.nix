@@ -123,16 +123,15 @@ let
     eog            # image viewer
     evince         # pdf reader
     gucharmap      # gnome character map (for font creation) 
-    #nautilus # file manager
 
     # file manager overlay
+    #nautilus # file manager
     pkgs.nautilus-gtk3
     #pkgs.nautilus-bin
     #pkgs.nautilus-patched
   ];
 
   haskellPkgs = with pkgs.haskellPackages; [
-    #brittany               # code formatter (broken because of Multistate 0.8.0.4)
     cabal2nix               # convert cabal projects to nix
     cabal-install           # package manager
     ghc                     # compiler
