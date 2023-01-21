@@ -35,6 +35,9 @@ import           XMonad.Actions.SpawnOn                ( manageSpawn
                                                        , spawnOn
                                                        )
 import           XMonad.Actions.WithAll                ( killAll )
+import           XMonad.Actions.CopyWindow             ( killAllOtherCopies
+                                                       , copyToAll
+                                                       )
 import           XMonad.Hooks.EwmhDesktops             ( ewmh
                                                        , ewmhFullscreen
                                                        )
@@ -332,6 +335,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Increase size"   (modm              , xK_s         ) $ withFocused (keysResizeWindow (10,10) (1,1))
     , key "Decr  abs size"  (modm .|. shiftMask, xK_d         ) $ withFocused (keysAbsResizeWindow (-10,-10) (1024,752))
     , key "Incr  abs size"  (modm .|. shiftMask, xK_s         ) $ withFocused (keysAbsResizeWindow (10,10) (1024,752))
+    , key "Always Visible"  (modm              , xK_v         ) $ windows copyToAll
+    , key "Kill Copies"     (modm .|. shiftMask, xK_v         ) $ killAllOtherCopies
     ] ^++^
   keySet "Workspaces"
     [ key "Next"            (modm              , xK_period    ) nextWS'
@@ -340,11 +345,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ++ switchWsById
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
-  toggleStruts = togglePolybar >> sendMessage ToggleStruts
+  toggleStruts = togglePolybar >> sendMessage ToggleStruts|
   keySet s ks = subtitle s : ks
   key n k a = (k, addName n a)
   action m = if m == shiftMask then "Move to " else "Switch to "
-  -- mod-[1..9]: Switch to workspace N | mod-shift-[1..9]: Move client to workspace N
+-- mod-[1..9]: Switch to workspace N | 
+-- mod-shift-[1..9]: Move client to workspace N
   switchWsById =
     [ key (action m <> show i) (m .|. modm, k) (windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
@@ -355,6 +361,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key (action m <> show sc) (m .|. modm, k) (screenWorkspace sc >>= flip whenJust (windows . f))
         | (k, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m)  <- [(W.view, 0), (W.shift, shiftMask)]]
+
+
 
 ----------- Cycle through workspaces one by one but filtering out NSP (scratchpads) -----------
 
@@ -369,9 +377,10 @@ filterOutNSP =
   in  g <$> getSortByIndex
 
 
+
+
 ------------------------------------------------------------------------
--- Mouse bindings: default actions bound to mouse events
---
+-- Mouse bindings: default actions bound to mouse events----------------
 myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 
     -- mod-button1, Set the window to floating mode and move by dragging
