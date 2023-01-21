@@ -37,6 +37,7 @@ import           XMonad.Actions.SpawnOn                ( manageSpawn
 import           XMonad.Actions.WithAll                ( killAll )
 import           XMonad.Actions.CopyWindow             ( killAllOtherCopies
                                                        , copyToAll
+                                                       , kill1
                                                        )
 import           XMonad.Hooks.EwmhDesktops             ( ewmh
                                                        , ewmhFullscreen
@@ -318,7 +319,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Disable CapsLock"       (modm             , xK_F9  ) $ spawn "setxkbmap -option ctrl:nocaps"
     ] ^++^
   keySet "Windows"
-    [ key "Close focused"   (modm              , xK_BackSpace ) kill
+    [ key "Close focused"   (modm              , xK_BackSpace ) kill1
     , key "Close all in ws" (modm .|. shiftMask, xK_BackSpace ) killAll
     , key "Refresh size"    (modm              , xK_n         ) refresh
     , key "Focus next"      (modm              , xK_j         ) $ windows W.focusDown

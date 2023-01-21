@@ -6,5 +6,4 @@
       set auto-load safe-path /nix/store
   '';
 }
-#This will create symlink $XDG_CONFIG_HOME/betterlockscreen and ~/.betterlockscreenrc
 
