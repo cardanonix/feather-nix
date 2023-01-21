@@ -345,7 +345,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ++ switchWsById
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
-  toggleStruts = togglePolybar >> sendMessage ToggleStruts|
+  toggleStruts = togglePolybar >> sendMessage ToggleStruts
   keySet s ks = subtitle s : ks
   key n k a = (k, addName n a)
   action m = if m == shiftMask then "Move to " else "Switch to "
