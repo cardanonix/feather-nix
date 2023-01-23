@@ -99,10 +99,10 @@ let
 
   cpuHungryPkgs = with pkgs; [
     vlc                  # media player
-    darktable            # raw photo manipulation and grading
+    #darktable            # raw photo manipulation and grading
     mpv                  # media player
     #kodi                 # media player  
-    gimp                 # gnu image manipulation program
+    #gimp                 # gnu image manipulation program (I started using gimp 2.99 which is causing problems with this one)
     blender              # 3D computer graphics software tool set
     krita                # image editor (supposedly better than gimp)
     mkvtoolnix           # tools for encoding MKV files, etc
