@@ -71,12 +71,14 @@ in
       python3Packages.ipython
       srm
     ];
-    cardanoPackages = [
+/*     cardanoPackages = [
       inputs.cardano-node.packages.x86_64-linux.cardano-node
       inputs.cardano-node.packages.x86_64-linux.cardano-cli
-    ];
+
+    ]; */
+
   in {
-    systemPackages = basePackages ++ cardanoPackages;
+    systemPackages = basePackages;
 /*     variables = {
       CARDANO_NODE_SOCKET_PATH = config.services.cardano-node.socketPath;
     }; */
@@ -104,6 +106,10 @@ in
     };
     
     #flatpak.enable = true;
+    
+    cardano-node = with inputs.cardano-node.nixosModules; {
+      cardano-node.enable = true;
+    }; 
 
     # Yubikey smart card mode (CCID) and OTP mode (udev)
     pcscd.enable = true;
@@ -206,7 +212,7 @@ in
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "harryprayiv" "bismuth" ];
+      trusted-users = [ "root" "bismuth" ];
       
       experimental-features = ["nix-command" "flakes"];
       
