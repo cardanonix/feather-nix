@@ -13,9 +13,10 @@ in
 imports = [
   inputs.cardano-node.nixosModules.cardano-node
 ];
+
   config.services.cardano-node = {
-    systemdSocketActivation = true;
     enable = true;
+    #systemdSocketActivation = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;          
     environment = "mainnet";
     useNewTopology = true;
