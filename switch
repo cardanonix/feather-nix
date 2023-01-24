@@ -16,11 +16,11 @@ rebuild_home_edp() {
 }
 
 eval_home_edp() {
-  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
 }
 
 eval_traced_home_edp() {
-  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
 }
 
 rebuild_home_uhd() {
@@ -89,7 +89,7 @@ restart_X() {
 
 collect_ALL_garbage() {
   sudo nix-collect-garbage -d
-  nix-collect garbage -d
+  nix-collect-garbage -d
   nix-store --gc
   echo "your royal file system is clean!"
 }
@@ -129,5 +129,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , 'restart-x', 'update-fish', 'system' , or 'vm'";;
+    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
 esac
