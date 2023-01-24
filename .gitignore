@@ -1,5 +1,6 @@
 nixos/home/result
 result
+generated-plutus-scripts
 .vscode/
 .vscode/settings.json
 .direnv/

@@ -2,14 +2,9 @@
 
 let
 
-  cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
-    cardano-node
-  ];
-
   browser = "${pkgs.brave}/bin/brave";
+  
   terminal = "${pkgs.alacritty}/bin/alacritty";
-
-
 
   openCalendar = "${pkgs.xfce.orage}/bin/orage";
 

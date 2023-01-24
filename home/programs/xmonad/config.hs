@@ -213,6 +213,7 @@ playerctl c    = "playerctl --player=spotify,%any " <> c
 
 calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
+--spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
 
 
 -- for working with string literals in the terminal
@@ -286,6 +287,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Apps (Rofi)"     (0, xF86XK_LaunchA                ) $ spawn appLauncher
     , key "Calc (Rofi)"     (modm .|. shiftMask  , xK_c       ) $ spawn calcLauncher
     , key "Emojis (Rofi)"   (modm .|. shiftMask  , xK_m       ) $ spawn emojiPicker
+    -- , key "Spotlight (Rofi)"(modm .|. shiftMask  , xK_0       ) $ spawn spotlight
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"

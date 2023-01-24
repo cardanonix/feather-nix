@@ -11,21 +11,19 @@ in
 
 { 
 imports = [
-  inputs.cardano-node.nixosModule
+  inputs.cardano-node.nixosModules.cardano-node
 ];
-  systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
-  services.config.cardano-node = {
-      enable = true;
-      package = inputs.cardano-node.packages.x86_64-linux.cardano-node;          
-      #environment = "mainnet";
-      #useNewTopology = true;
-      topology = "${topology}";
-      nodeConfigFile = "${home}${config}";
-      databasePath = "${home}${db_path}";
-      socketPath = "${home}${node_socket_path}";
-      #nodeId = "bismuthian Test!!!";
-      #rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
-      systemdSocketActivation = true;
+  config.services.cardano-node = {
+    systemdSocketActivation = true;
+    enable = true;
+    package = inputs.cardano-node.packages.x86_64-linux.cardano-node;          
+    environment = "mainnet";
+    useNewTopology = true;
+    topology = "${topology}";
+    nodeConfigFile = "${home}${config}";
+    databasePath = "${home}${db_path}";
+    socketPath = "${home}${node_socket_path}";
+    rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
+    #nodeId = "bismuthian Test!!!";
   };
 }

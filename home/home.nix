@@ -143,20 +143,27 @@ let
     ihaskell-blaze 
   ];
 
-  cardanoNodePkgs = with inputs.cardano-node.packages.x86_64-linux; [
-    #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
-    #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
-    cardano-node
+  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [
+    bech32
+    cabalProjectRegenerate
     cardano-cli
-    cardano-submit-api 
-    cardano-tracer 
-    bech32 
-    locli  
+    cardano-node
+    cardano-node-chairman
+    cardano-ping
+    cardano-submit-api
+    cardano-testnet
+    cardano-topology
+    cardano-tracer
+    chain-sync-client-with-ledger-state
     db-analyser
-    /*plutus-example
-      error (ignored): error: end of string reached
-      error: the path '~/.gitconfig' can not be resolved in pure mode 
-    */
+    db-converter
+    db-synthesizer
+    ledger-state
+    locli
+    plutus-example
+    scan-blocks
+    scan-blocks-pipelined
+    tx-generator
   ];
 
   rustPkgs = with pkgs; [
@@ -189,7 +196,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ cpuHungryPkgs ++ cardanoNodePkgs ++ rustPkgs ++ homePkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ cpuHungryPkgs ++ rustPkgs ++ homePkgs ++ cardanoPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
@@ -207,6 +214,8 @@ in
   
   # restart services on change
   systemd.user.startServices = "sd-switch";
+  # systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
+  # systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
 
   xsession.numlock.enable = true;
   

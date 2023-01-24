@@ -15,9 +15,26 @@ rebuild_home_edp() {
   activateHM
 }
 
+eval_home_edp() {
+  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+}
+
+eval_traced_home_edp() {
+  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+}
+
 rebuild_home_uhd() {
   nix build .#homeConfigurations.bismuth-uhd.activationPackage
   activateHM
+}
+
+
+eval_home_uhd() {
+  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --show-trace
+}
+
+eval_traced_home_uhd() {
+  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --show-trace
 }
 
 rebuild_system() {
@@ -81,8 +98,16 @@ collect_ALL_garbage() {
 case $1 in
   "edp")
     rebuild_home_edp;;
+  "edpEval")
+    eval_home_edp;;
+  "edptEval")
+    eval_traced_home_edp;;
   "uhd")
     rebuild_home_uhd;;
+  "uddEval")
+    eval_home_uhd;;
+  "uhdtEval")
+    eval_traced_home_uhd;;
   "restart-x")
     restart_X;;
   "update-fish")
@@ -104,5 +129,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp', 'uhd', 'restart-x', 'update-fish', 'system', 'intelTower' , 'intelTowerFULL' , 'intelNUC' , 'intelTowerFULL' , 'scratchBuild', 'trashPanda', or 'vm'";;
+    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , 'restart-x', 'update-fish', 'system' , or 'vm'";;
 esac

@@ -1,30 +1,91 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
-let
-  # obtained via `autorandr --fingerprint`
-  # obtained via `autorandr --fingerprint`
-  #msiOptixId = "00ffffffffffff003669a23d010101011c1d010380462778eef8c5a556509e26115054bfef80714f81c08100814081809500b300a9404dd000a0f0703e8030203500bc862100001e000000fd001e4b1f873c000a202020202020000000fc004d4147333231435552560a2020000000ff0044413241303139323830303430012c020346f153010203040510111213141f2021225d5e5f616023091707830100006d030c001000383c20006003020167d85dc401788003e40f000006e305e301e60607015c5c0004740030f2705a80b0588a00bc862100001e565e00a0a0a0295030203500bc862100001e1b2150a051001e3048883500bc862100001e0000002f";
-  #tongfangId = "00ffffffffffff004d10c31400000000091d0104a522137807de50a3544c99260f5054000000010101010101010101010101010101011a3680a070381d403020350058c210000018000000fd00303c42420d010a202020202020000000100000000000000000000000000000000000fc004c513135364d314a5730310a20006b";
-  #bismuthId = "00ffffffffffff004cd8000101000000081c010380331d782ed945a2554da027125054bfef80b300a9409500904081808140714f0101023a801871382d40582c4500501d7400001e011d007251d01e206e285500c48e2100001e000000fd00184c0f531201000a2020202020000000fc00534658324b382034544f3200000147020328f44d901f041305142021220312071623097f07830100006a030c001400b82d0f0800e200cf023a801871382d40582c4500501d7400001e011d007251d01e206e285500c48e2100001e011d8018711c1620582c2500c48e2100009e8c0ad08a20e02d10103e9600138e2100001800000000000000000000000000000073";
-  #notify = "${pkgs.libnotify}/bin/notify-send";
-
-in
 {
-/*   programs.cardano-node = {
-    enable = true;
-
-    profiles = {
-      "mainnet_Relay" = {
-        environment = "testnet";
-        priority = "1";
-        fingerprint = {
-        cardanoID = ${nodeIdentifier}
-        };
-      };
-      config = {
-          enable = true;
-          rate = "normal";
-      };
-    };
-  };  */     
+ cardanoPackages = with inputs.cardano-node.packages.x86_64-linux; [
+    #all-profiles-json
+    
+    #alonzo-purple/node
+    #alonzo-purple/submit-api
+    bech32
+    #benchmarks/cardano-tracer/cardano-tracer-bench
+    #benchmarks/trace-dispatcher/trace-dispatcher-bench
+    #benchmarks/tx-generator/tx-generator-bench
+    cabalProjectRegenerate
+    cardano-cli
+    cardano-node
+    cardano-node-chairman
+    cardano-ping
+    cardano-submit-api
+    cardano-testnet
+    cardano-topology
+    cardano-tracer
+    chain-sync-client-with-ledger-state
+    checkCabalProject
+    #checks/cardano-api/cardano-api-test
+    #checks/cardano-cli/cardano-cli-golden
+    #checks/cardano-cli/cardano-cli-test
+    #checks/cardano-node-chairman/chairman-tests
+    #checks/cardano-node/cardano-node-test
+    #checks/cardano-submit-api/unit
+    #checks/cardano-testnet/cardano-testnet-tests
+    #checks/cardano-tracer/cardano-tracer-test
+    #checks/hlint
+    #checks/locli/test-locli
+    #checks/nixosTests/cardanoNodeEdge
+    #checks/trace-dispatcher/trace-dispatcher-test
+    #checks/trace-forward/test
+    #checks/trace-resources/trace-resources-test
+    #checks/tx-generator/tx-generator-test
+    db-analyser
+    db-converter
+    db-synthesizer
+    #demo-acceptor
+    #demo-forwarder
+    #dockerImage/node
+    #dockerImage/node/load
+    #dockerImage/submit-api
+    #dockerImage/submit-api/load
+    #dockerImages/push
+    ledger-state
+    locli
+    mainnet/node
+    mainnet/submit-api
+    marlowe-pioneers/node
+    marlowe-pioneers/submit-api
+    p2p/node
+    p2p/submit-api
+    plutus-example
+    preprod/node
+    #preprod/submit-api
+    #preview/node
+    #preview/submit-api
+    scan-blocks
+    scan-blocks-pipelined
+    #shelley_qa/node
+    #shelley_qa/submit-api
+    #sre/node
+    #sre/submit-api
+    #staging/node
+    #staging/submit-api
+    #stake-credential-history
+    #testnet/node
+    #testnet/submit-api
+    #tests/cardano-api/cardano-api-test
+    #tests/cardano-cli/cardano-cli-golden
+    #tests/cardano-cli/cardano-cli-test
+    #tests/cardano-node-chairman/chairman-tests
+    #tests/cardano-node/cardano-node-test
+    #tests/cardano-submit-api/unit
+    #tests/cardano-testnet/cardano-testnet-tests
+    #tests/cardano-tracer/cardano-tracer-test
+    #tests/locli/test-locli
+    #tests/trace-dispatcher/trace-dispatcher-test
+    #tests/trace-forward/test
+    #tests/trace-resources/trace-resources-test
+    #tests/tx-generator/tx-generator-test
+    #trace-dispatcher-examples
+    tx-generator
+    #vasil-dev/node
+    #vasil-dev/submit-api
+  ];
 }

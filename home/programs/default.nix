@@ -58,6 +58,7 @@ in
   ./autorandr
   ./browsers/firefox.nix
   ./browsers/brave.nix
+  #./cardano-node
   ./dconf
   ./git
   ./fish
