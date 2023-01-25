@@ -159,7 +159,7 @@ in
     font-awesome          # awesome fonts
     material-design-icons # fonts with glyphs
     xfce.orage            # lightweight calendar
-    inputs.cardano-node.packages.x86_64-linux.cardano-node
+    # inputs.cardano-node.packages.x86_64-linux.cardano-node
   ];
   
   services.polybar = {

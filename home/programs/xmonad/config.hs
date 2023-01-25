@@ -129,8 +129,8 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#372716" -- # dark brown (372716d)
-  , focusedBorderColor = "#E0964B" -- yellowish orange
+  , normalBorderColor  = "#372716" -- #dark brown (372716)  
+  , focusedBorderColor = "#6F590A" -- yellowish orange is E0964B and 0033ad is Cardano Blue
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -261,6 +261,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
     , key "Youtube"         (modm .|. controlMask,  xK_y      ) $ spawnOn webWs "brave --app=https://youtube.com/"
+    , key "Private Browser" (modm .|. controlMask,  xK_p      ) $ spawnOn webWs "brave --incognito"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights

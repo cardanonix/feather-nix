@@ -1,4 +1,4 @@
-{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 16 }:
+{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 20 }:
 
 let
   bar = ''
@@ -55,7 +55,7 @@ let
     inherit = bar/main
 
     tray-position = none
-    modules-left = nixos xmonad 
+    modules-left = cardano xmonad 
     modules-right = mpris clickable-date
     enable-ipc = true
   '';
