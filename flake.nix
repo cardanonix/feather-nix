@@ -45,7 +45,7 @@
     # Fish shell
 
     fish-bobthefish-theme = {
-      url = github:gvolpe/theme-bobthefish;
+      url = github:harryprayiv/theme-bobthefish;
       flake = false;
     };
 

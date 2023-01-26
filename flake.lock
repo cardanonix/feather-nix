@@ -2766,13 +2766,13 @@
       "locked": {
         "lastModified": 1640180970,
         "narHash": "sha256-9uuM5fwWl98uDrTHet4MdVpRZYLIQfW0HOfTxGb2o5o=",
-        "owner": "gvolpe",
+        "owner": "harryprayiv",
         "repo": "theme-bobthefish",
         "rev": "e4418e8a7de9fbd6b5053a9b9009aa84a48398cd",
         "type": "github"
       },
       "original": {
-        "owner": "gvolpe",
+        "owner": "harryprayiv",
         "repo": "theme-bobthefish",
         "type": "github"
       }
@@ -4913,11 +4913,11 @@
         "utils": "utils_21"
       },
       "locked": {
-        "lastModified": 1674511629,
-        "narHash": "sha256-e2sc2Pv6z3aLuqXrunGvoKAfOABbWV31txgboIro+GE=",
+        "lastModified": 1674556204,
+        "narHash": "sha256-HCRmkZsq01h2Evch08zpgE9jeHdMtGdT1okWotyvuhY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "12d43fd40a7658976c18eaa05bba62b6045e5b3e",
+        "rev": "c59f0eac51da91c6989fd13a68e156f63c0e60b6",
         "type": "github"
       },
       "original": {
@@ -8496,11 +8496,11 @@
     },
     "nixpkgs_19": {
       "locked": {
-        "lastModified": 1674211260,
-        "narHash": "sha256-xU6Rv9sgnwaWK7tgCPadV6HhI2Y/fl4lKxJoG2+m9qs=",
+        "lastModified": 1674459583,
+        "narHash": "sha256-L0UZl/u2H3HGsrhN+by42c5kNYeKtdmJiPzIRvEVeiM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5ed481943351e9fd354aeb557679624224de38d5",
+        "rev": "1b1f50645af2a70dc93eae18bfd88d330bfbcf7f",
         "type": "github"
       },
       "original": {
@@ -8849,11 +8849,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1674525977,
-        "narHash": "sha256-iSMYTvexjnzwn6rYBgz7rXUxo0dVeXWCtt6n1mmLXFs=",
+        "lastModified": 1674675980,
+        "narHash": "sha256-ADKU4NVBlfSTaA72UEikhjR4ZUzBDAXKN1tdsj4Kt6Y=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "e8e9405c0246ccd1a5a9822f1f5254af25ae39e6",
+        "rev": "88ead35b837f13f16225add777ba246d13505b29",
         "type": "github"
       },
       "original": {
