@@ -57,7 +57,7 @@ let
     rnix-lsp             # nix lsp server
     simple-scan          # scanner gui
     simplescreenrecorder # screen recorder gui
-    tex2nix              # texlive expressions for documents
+    #tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
     ungoogled-chromium   # chrome without the Goog 
@@ -166,9 +166,14 @@ let
     tx-generator
   ];
 
+  cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
+    cncli
+  ];
+   
+
   rustPkgs = with pkgs; [
     rustc
-    cargo
+    #cargo
     rustfmt
     rust-analyzer
     clippy

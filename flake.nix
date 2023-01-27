@@ -21,20 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    haskellNix = {
-      url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
-      # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    cncli.url = "github:AndrewWestberg/cncli";
-
-
-    iohkNix = {
-      url = "github:input-output-hk/iohk-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-flake = {
       url = github:gvolpe/neovim-flake;
       # neovim-flake pushes its binaries to the cache using its own nixpkgs version
@@ -52,6 +38,25 @@
     fish-keytool-completions = {
       url = github:ckipp01/keytool-fish-completions;
       flake = false;
+    };
+
+#______Cardano-Related Inputs
+    cncli.url = "github:cardano-community/cncli";
+
+    rust-nix = {
+      url = "github:input-output-hk/rust.nix/work";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    haskellNix = {
+      url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
+      # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    iohkNix = {
+      url = "github:input-output-hk/iohk-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
      # Cardano Node
@@ -73,8 +78,10 @@
       url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
     }; */
 
-    # Github Markdown ToC generator
+#______Cardano-Related Inputs End ________________
 
+
+    # Github Markdown ToC generator
     gh-md-toc = {
       url = github:ekalinin/github-markdown-toc;
       flake = false;

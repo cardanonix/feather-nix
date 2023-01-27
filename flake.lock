@@ -2407,15 +2407,15 @@
         "utils": "utils_20"
       },
       "locked": {
-        "lastModified": 1656100187,
-        "narHash": "sha256-GEU6sFGv/w7xM1IhRicrbXsZao7tO6i9n2ZsLM1zjb0=",
-        "owner": "AndrewWestberg",
+        "lastModified": 1672667046,
+        "narHash": "sha256-kjAw8BwRnhgTdEuw2mP2xcjaMjfBfU/g0xsR5jzws8E=",
+        "owner": "cardano-community",
         "repo": "cncli",
-        "rev": "b7ab33c4a3f764757cdda1793f4abe1b24052f5b",
+        "rev": "95bfba3fc7f959b8e589ec35446887263ccbdcc0",
         "type": "github"
       },
       "original": {
-        "owner": "AndrewWestberg",
+        "owner": "cardano-community",
         "repo": "cncli",
         "type": "github"
       }
@@ -8849,11 +8849,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1674675980,
-        "narHash": "sha256-ADKU4NVBlfSTaA72UEikhjR4ZUzBDAXKN1tdsj4Kt6Y=",
+        "lastModified": 1674701870,
+        "narHash": "sha256-C5eaowZAZr4tNfynqQzq6cW7WVdw//N9hAtYxjJopQQ=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "88ead35b837f13f16225add777ba246d13505b29",
+        "rev": "b57955d6208a699651001eb616852424e31c550b",
         "type": "github"
       },
       "original": {
@@ -9937,6 +9937,7 @@
         "nixpkgs": "nixpkgs_19",
         "nixpkgs-nautilus-gtk3": "nixpkgs-nautilus-gtk3",
         "nurpkgs": "nurpkgs",
+        "rust-nix": "rust-nix_2",
         "tex2nix": "tex2nix"
       }
     },
@@ -9969,6 +9970,27 @@
         "owner": "input-output-hk",
         "repo": "rust.nix",
         "rev": "e2d4e8e5225739c4607614f98f60d2667c794558",
+        "type": "github"
+      },
+      "original": {
+        "owner": "input-output-hk",
+        "ref": "work",
+        "repo": "rust.nix",
+        "type": "github"
+      }
+    },
+    "rust-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1617363019,
+        "narHash": "sha256-w9VUHPPndNPGPSumta4cEhhRQBUL1jMxiZmZtwYY8JU=",
+        "owner": "input-output-hk",
+        "repo": "rust.nix",
+        "rev": "2fd5fce3ec67e6915cb79cbf132f023e147b31ba",
         "type": "github"
       },
       "original": {
