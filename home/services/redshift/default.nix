@@ -9,7 +9,7 @@
     };
     temperature = {
       day = 5680;
-      night = 2000;
+      night = 2700;
     };
     provider = "manual";
     latitude = 42.4363258;
