@@ -45,7 +45,7 @@ rebuild_system() {
 
 rebuild_intelTower() {
   sudo nixos-rebuild switch --flake .#intelTower --impure
-  nix build .#homeConfigurations.bismuth-edp.activationPackage
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
   activateHM 
 }
 
@@ -53,7 +53,7 @@ rebuild_intelTower_withUpdate() {
   nix flake update 
   ##export NIXPKGS_ALLOW_BROKEN=1
   sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
+  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure --show-trace 
   activateHM 
 }
 

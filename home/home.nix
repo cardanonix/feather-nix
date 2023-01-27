@@ -33,7 +33,7 @@ let
     insomnia             # rest client with graphql support
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
-    libreoffice          # office suite
+    #libreoffice          # office suite
     libnotify            # notify-send command4
     betterlockscreen     # fast lockscreen based on i3lock
     niv                  # painless dependencies for Nix projects
