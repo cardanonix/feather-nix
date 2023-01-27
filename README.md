@@ -8,18 +8,22 @@ My current — and always evolving — NixOS configuration files, home-manager, 
 
 ## Web Workspace
 ![Web Workspace](imgs/screenshotWs/webWs.png)
-## Open Source Software Workspace
-![Open Source Software Workspace](imgs/screenshotWs/ossWs.png)
+## Misc Workspace
+![Misc Workspace](imgs/screenshotWs/mscWs.png)
 ## Music Workspace
 ![Music Workspace](imgs/screenshotWs/musWs.png)
-## Developer Workspace
-![Developer Workspace](imgs/screenshotWs/devWs.png)
+## VsCodium Workspace
+![VsCodium Workspace](imgs/screenshotWs/vscWs.png)
 ## Communications Workspace
 ![Communications Workspace](imgs/screenshotWs/comWs.png)
 ## Stake Pool Workspace
 ![Stake Pool Workspace](imgs/screenshotWs/spoWs.png)
+## Dev Workspace
+![Dev Workspace](imgs/screenshotWs/devWs.png)
 ## Security Workspace
 ![Security Workspace](imgs/screenshotWs/secWs.png)
+## Virtual Machine Workspace
+![Virtual Workspace](imgs/screenshotWs/vmsWs.png)
 
 ## Programs
 
