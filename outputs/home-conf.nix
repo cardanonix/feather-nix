@@ -38,7 +38,6 @@ let
       cowsayOverlay
       fishOverlay
       nautilusOverlay
-      gnomeOverlay
       nurpkgs.overlay
       neovim-flake.overlays.${system}.default
       (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
@@ -46,7 +45,6 @@ let
       (import ../home/overlays/protonvpn-gui)
       (import ../home/overlays/ranger)
       (import ../home/overlays/nautilus)
-      (import ../home/overlays/gnome)
     ];
   };
 
