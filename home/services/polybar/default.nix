@@ -18,6 +18,7 @@ let
     font4 = 5;
     font5 = 10;
     font6 = 18;
+    font7 = 12;
   };
 
   mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
@@ -126,7 +127,7 @@ let
     label-maxlen = 10
 
     interval = 120
-    format =   <label>
+    format = "%{T8} %{T3}<label>"
     format-padding = 0
     click-left = ${openCardanoSubreddit} 
   '';
@@ -138,7 +139,7 @@ let
     exec = ${cnodeScript}/bin/cnode
 
     interval = 5
-    format = "%{T6}<label>"
+    format = "%{T7}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0
     click-left = "${terminal} --hold -e ${launchScript}/bin/node_launch"

@@ -1,4 +1,4 @@
-{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 20 }:
+{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 18 , font7 ? 12  }:
 
 let
   bar = ''
@@ -44,6 +44,8 @@ let
     font-5 = FlagsWorldColor:size=${toString font5}:antialias=false;3
     ; Larger font size for crypto bar fill icons
     font-6 = cryptofont:style=Medium:size=${toString font6};3
+    ; Smaller font size for crypto bar fill icons
+    font-7 = cryptofont:style=Medium:size=${toString font7};3
 
     ;font-5 = "MaterialIcons:size=40;0"
     ;font-6 = Font Awesome 5 Free:style=Solid:pixelsize=20;3
