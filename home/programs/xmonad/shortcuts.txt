@@ -1,3 +1,6 @@
+My Xmonad Shortcuts List
+
+
 "DarkerWarm"                                     MonBrightnessDown
 "BrighterWarm"                                   MonBrightnessUp
 "BrighterBlue"                                   mod , MonBrightnessUp
@@ -70,6 +73,6 @@
 
 "Switch to workspace N"                          mod-[1..9]:  | 
 "Move client to workspace N"                     mod-shift-[1..9]: 
-"Move window to workspace N"                     mod-shift-ctrl-[1..9]: 
+"Copy window to workspace N"                     mod-shift-ctrl-[1..9]: 
 "Switch to physical/Xinerama screens 1, 2, or 3" mod-{w,e,r}, 
 "Move client to screen 1, 2, or 3"               mod-shift-{w,e,r} 

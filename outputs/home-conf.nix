@@ -15,15 +15,19 @@ let
     nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
   };
 
-/*   
-  haskellnixOverlay = f: p: {
+  gnomeOverlay = f: p: {
+    gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
+  };
+
+   
+/*   haskellnixOverlay = f: p: {
     nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
   };
 
   iohkNixOverlay = f: p: {
     nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
   }; 
-*/
+ */
 
   pkgs = import nixpkgs {
     inherit system;
@@ -34,6 +38,7 @@ let
       cowsayOverlay
       fishOverlay
       nautilusOverlay
+      gnomeOverlay
       nurpkgs.overlay
       neovim-flake.overlays.${system}.default
       (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
@@ -41,6 +46,7 @@ let
       (import ../home/overlays/protonvpn-gui)
       (import ../home/overlays/ranger)
       (import ../home/overlays/nautilus)
+      (import ../home/overlays/gnome)
     ];
   };
 
