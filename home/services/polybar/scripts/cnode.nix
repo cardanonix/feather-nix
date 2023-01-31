@@ -5,7 +5,7 @@ let
 in
   pkgs.writeShellScriptBin "cnode" ''
     if [ "$(${pgrep} cardano-node)" ]; then
-        echo ""
+        echo ""
     else
         echo "轢"
     fi

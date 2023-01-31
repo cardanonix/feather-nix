@@ -17,8 +17,8 @@ let
     font3 = 14;
     font4 = 5;
     font5 = 10;
-    font6 = 18;
-    font7 = 12;
+    font6 = 16;
+    font7 = 11;
   };
 
   mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
@@ -112,7 +112,7 @@ let
     label-maxlen = 3
 
     interval = 43200
-    format =   <label>
+    format =  <label>
     format-padding = 1
     click-left = ${openFearandGreed} 
   '';
@@ -127,7 +127,7 @@ let
     label-maxlen = 10
 
     interval = 120
-    format = "%{T8} %{T3}<label>"
+    format = "%{T8}%{T-} <label>"
     format-padding = 0
     click-left = ${openCardanoSubreddit} 
   '';
