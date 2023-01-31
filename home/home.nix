@@ -173,10 +173,11 @@ let
 
   rustPkgs = with pkgs; [
     rustc
-    #cargo
+    cargo
     rustfmt
     rust-analyzer
     clippy
+    pkg-config
   ];
 
 in
