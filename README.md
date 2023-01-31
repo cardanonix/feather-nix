@@ -50,7 +50,7 @@ The `home.nix` file contains details about all the software I use, but here's a 
 ## Cardano Font
 ![Cardano Custom Typeface Building](imgs/screenshotWs/cardano_logo_collection.png)
 
-I am currently in the process of building a font containing many of the logos in the Cardano ecosystem:
+I am currently in the process of building [cardanofont: a font containing many of the logos in the Cardano ecosystem](https://github.com/Cardano-on-Nix/cardanofont) and incorporating it into my config.
 ![Full Screen Image](imgs/screenshotWs/fontCreation.png)
 
 
