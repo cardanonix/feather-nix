@@ -90,7 +90,7 @@ restart_X() {
 collect_ALL_garbage() {
   sudo nix-collect-garbage -d
   nix-collect-garbage -d
-  nix-store --gc
+  sudo nix-store --gc
   echo "your royal file system is clean!"
 }
 
