@@ -70,7 +70,7 @@ font-4 = Iosevka Nerd Font:style=Medium:size=7;3
 ; Smaller font size for shorter spaces
 font-5 = Iosevka Nerd Font:style=Medium:size=7;3
 ; Smaller font size for shorter spaces
-font-6 = cryptofont:style=Medium:size=15;3
+font-6 = cardanofont:style=Medium:size=15;3
 
 ;font-0 = "Font Awesome 5 Free:style=Solid:pixelsize=18;0"
 ;font-1 = "MaterialIcons:size=18;0"
