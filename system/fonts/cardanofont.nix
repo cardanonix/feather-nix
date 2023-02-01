@@ -10,3 +10,4 @@ stdenv.mkDerivation {
     install -D $src $out/share/fonts/truetype/cardanofont.ttf
   '';
 }
+

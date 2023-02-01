@@ -147,7 +147,7 @@ in
       font-awesome
       myfonts.flags-world-color
       myfonts.icomoon-feather
-      myfonts.cryptofont
+      myfonts.cardanofont
       hasklig
       ipaexfont
       noto-fonts-cjk
