@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, cardano-node, system, callPackage, ... }:
+{ config, pkgs, inputs, stdenv, ... }:
 
 let
   home              = "/home/bismuth";
@@ -8,12 +8,11 @@ let
   config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
 
 in
-
 { 
 imports = [
-  inputs.cardano-node.nixosModules.cardano-node
-];
-
+    inputs.cardano-node.nixosModules.cardano-node
+  ];
+  
   config.services.cardano-node = {
     enable = true;
     #systemdSocketActivation = true;

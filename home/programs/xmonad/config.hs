@@ -104,6 +104,7 @@ import           XMonad.Util.Run                       ( safeSpawn
                                                        )
 import           XMonad.Util.SpawnOnce                 ( spawnOnce )
 import           XMonad.Util.WorkspaceCompare          ( getSortByIndex )
+import           XMonad.Util.XSelection                ( safePromptSelection )
 
 import qualified Control.Exception                     as E
 import qualified Data.Map                              as M
@@ -259,9 +260,10 @@ showKeybindings xs =
  -- I used "xev" to figure out exactly what key I was pressing to make many of these 
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
-    [ key "Slack"           (modm                , xK_F2      ) $ spawnOn comWs "slack"
-    , key "Youtube"         (modm .|. controlMask,  xK_y      ) $ spawnOn webWs "brave --app=https://youtube.com/"
-    , key "Private Browser" (modm .|. controlMask,  xK_p      ) $ spawnOn webWs "brave --incognito"
+    [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
+    , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
+    , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
+    , key "Launch MPV + url"(modm .|. controlMask, xF86XK_AudioPlay ) $ safePromptSelection "mpv"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
@@ -459,7 +461,7 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled ||| full)
+     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full)
      mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled)
      vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| doubletiled ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )

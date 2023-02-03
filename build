@@ -38,7 +38,7 @@ build_ci_home() {
 }
 
 build_ci_system() {
-  nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
+  nix build .#nixosConfigurations.intelTower.config.system.build.toplevel --show-trace
   #nix build .#nixosConfigurations.intelNUC.config.system.build.toplevel
   #nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel
 }

@@ -37,6 +37,7 @@ My Xmonad Shortcuts List
 "Screen recorder"                                mod .|. control , r
 "Spotify"                                        mod .|. control , s
 "Mpv"                                            mod .|. control , m
+"Launch MPV + url"                              modm .|. control,  AudioPlay
 "Gimp"                                           mod .|. control , i
 "Kodi"                                           mod .|. control , k
 "Slack"                                          mod , F2
