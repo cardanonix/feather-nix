@@ -263,7 +263,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
-    , key "Launch MPV + url"(modm .|. controlMask, xF86XK_AudioPlay ) $ safePromptSelection "mpv"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
@@ -311,7 +310,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
     , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
-    , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ runScratchpadApp mpv
+    , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ safePromptSelection "mpv"
     , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
     , key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
     ] ^++^
