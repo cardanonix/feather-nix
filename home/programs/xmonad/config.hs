@@ -216,23 +216,6 @@ calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
 
-
--- for working with string literals in the terminal
--- human readable directories into Haskell friendly ones for use in terminal
-toStringLiteral :: String -> String
-toStringLiteral = concatMap escape
-  where escape c
-          | c == ' ' = "\\ "
-          | c `elem` "([\\" = '\\' : [c]
-          | isPrint c = [c]
-          | otherwise = '\\' : show (ord c)
-          
-currentMovieDir = toStringLiteral "/home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In the Mood for Love (2000) [x265_10b_1800x1080_2.4 Mbps_AAC-5.1_lOVE].mkv" 
---mpvCmd = $"mpv " ++ currentMovieDir
-mpvCmd = "mpv /home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In\\ the\\ Mood\\ for\\ Love\\ \\(2000\\)\\ \\[x265_10b_1800x1080_2.4\\ Mbps_AAC-5.1_lOVE\\].mkv"
---mpvCmd = "mpv /home/bismuth/video/_Unsorted/torrents/Complete/ToRename/In the Mood for Love (2000) [x265_10b_1800x1080_2.4 Mbps_AAC-5.1_lOVE].mkv"
-
-
 -- Hue Lighting Junk
 lghtLvl l b   = "hue light " <> l <> " brightness " <> b
 lghtOff l     = "hue light " <> l <> " off"
@@ -429,19 +412,20 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid           = gapSpaced 3 $ Grid False
-     grid_strict    = GridRatio grid_ratio False 
-     tiled          = gapSpaced 3 $ Tall nmaster delta golden_ratio
-     doubletiled    = gapSpaced 0 $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap    = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     tiled_spaced   = gapSpaced 10 $ Tall nmaster delta ratio
-     column3_og     = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
-     video_tile     = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
-     full           = gapSpaced 3 Full
-     fuller         = gapSpaced 0 Full
-     column3        = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral   = gapSpaced 3 $ spiral golden_ratio
-     silverSpiral   = gapSpaced 3 $ spiralWithDir East CCW ratio
+     grid                    = gapSpaced 3 $ Grid False
+     grid_strict_portrait    = GridRatio grid_portrait False 
+     grid_strict_landscape   = GridRatio grid_landscape False 
+     tiled                   = gapSpaced 3 $ Tall nmaster delta golden_ratio
+     doubletiled             = gapSpaced 0 $ Tall nmasterTwo delta golden_ratio
+     tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
+     tiled_spaced            = gapSpaced 10 $ Tall nmaster delta ratio
+     column3_og              = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
+     video_tile              = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
+     full                    = gapSpaced 3 Full
+     fuller                  = gapSpaced 0 Full
+     column3                 = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral            = gapSpaced 3 $ spiral golden_ratio
+     silverSpiral            = gapSpaced 3 $ spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -450,20 +434,21 @@ myLayout =
      -- Default proportions of screen occupied by master pane
      ratio          = 1/2
      golden_ratio   = 1/1.618033988749894e0
-     grid_ratio     = 3/4
+     grid_portrait     = 3/4
+     grid_landscape    = 4/3
 
      -- Percent of screen to increment by when resizing panes
-     delta   = 3/100
+     delta   = 2/100
 
      -- Gaps bewteen windows
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full)
-     mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict ||| grid_strict ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid)
+     mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled)
-     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| doubletiled ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
      devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
@@ -535,7 +520,6 @@ btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gru
 virtbox   = ClassApp "VirtualBox Machine"   "VBoxManage startvm 'plutusVM_bismuth'"
 calendar  = ClassApp "Orage"                "orage"
 discord   = TitleApp "Discord"              "brave --app=https://discord.com/app"  --under construction
---youtube   = TitleApp "Youtube"              "brave --app=https://youtube.com/app"  --under construction
 cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
@@ -548,7 +532,7 @@ pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
-mpv       = ClassApp "Mpv"                  mpvCmd 
+mpv       = ClassApp "Mpv"                  "mpv" 
 kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
@@ -573,8 +557,9 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
     [ isInstance calendar                      -?> doCalendarFloat
     , match [ virtbox
             ]                                  -?> tileAbove
+    , match [ mpv
+            ]                                  -?> tileAbove
     , match [ vlc
-            , mpv
             , keepass
             ]                                  -?> tileBelow
     , match [ audacious
