@@ -4325,11 +4325,11 @@
         "utils": "utils_37"
       },
       "locked": {
-        "lastModified": 1672667046,
-        "narHash": "sha256-kjAw8BwRnhgTdEuw2mP2xcjaMjfBfU/g0xsR5jzws8E=",
+        "lastModified": 1675370486,
+        "narHash": "sha256-h7DiZg4DVcIVxX+kUwCTpJF1/8VMajJOgYFIdpns/nA=",
         "owner": "cardano-community",
         "repo": "cncli",
-        "rev": "95bfba3fc7f959b8e589ec35446887263ccbdcc0",
+        "rev": "62007d02b0bca02a31d5183e8fffb71f9551de74",
         "type": "github"
       },
       "original": {
@@ -8688,11 +8688,11 @@
         "utils": "utils_38"
       },
       "locked": {
-        "lastModified": 1675303228,
-        "narHash": "sha256-dHJbFg7gTuTyEUdJoNDp6l2bac6HXAT/bz9cVEqL+Uw=",
+        "lastModified": 1675595366,
+        "narHash": "sha256-WoQkwaaoZqrhWpIrMxA+2j8CgxgyvjHzCyEZAQu06rQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4a958524903e6019f5f69a23e0c0f16e5af01eb0",
+        "rev": "9621e9ab80a038cd11c7cfcae4df46a59d62b16a",
         "type": "github"
       },
       "original": {
@@ -10234,11 +10234,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1674063615,
-        "narHash": "sha256-xz/+7zO/O+2XrnxoFOjyEc72Sdy2ieQLpDq78XG15oI=",
+        "lastModified": 1675397182,
+        "narHash": "sha256-uVqKdtxUDSbLJfaHEs+t+wc9K4iMfPVmcYF5psbK4rI=",
         "owner": "input-output-hk",
         "repo": "iohk-nix",
-        "rev": "ccd5bf7d8168a0452d9ec504ea1b559ada7752df",
+        "rev": "03a6755865b7461b3b75dc34c3dd2d5e74920196",
         "type": "github"
       },
       "original": {
@@ -11551,7 +11551,6 @@
         "onedark": "onedark",
         "plenary-nvim": "plenary-nvim",
         "promise-async": "promise-async",
-        "registers": "registers",
         "rosepine": "rosepine",
         "rust-tools": "rust-tools",
         "sqls-nvim": "sqls-nvim",
@@ -11559,19 +11558,19 @@
         "todo-comments": "todo-comments",
         "tokyonight": "tokyonight",
         "tree-sitter-scala": "tree-sitter-scala",
+        "tree-sitter-typescript": "tree-sitter-typescript",
         "trouble": "trouble",
         "ts-build": "ts-build",
         "vim-plantuml": "vim-plantuml",
-        "vim-scala": "vim-scala",
         "vim-vsnip": "vim-vsnip",
         "which-key": "which-key"
       },
       "locked": {
-        "lastModified": 1675345496,
-        "narHash": "sha256-1I+w8J/1TWNPEhxgA8HhpnzOhiZ/awDzoIXy/RAJ7Po=",
+        "lastModified": 1675611578,
+        "narHash": "sha256-wchEVGhu80RHmksOg9I8MyIxayqTds3b90fHB3tj6SI=",
         "owner": "gvolpe",
         "repo": "neovim-flake",
-        "rev": "ff1ca30389d4f874cdc8e36b882c7f6d13ee1840",
+        "rev": "eb14a55690558699c37187e01e20758974beaa10",
         "type": "github"
       },
       "original": {
@@ -15248,11 +15247,11 @@
     },
     "nixpkgs_34": {
       "locked": {
-        "lastModified": 1675183161,
-        "narHash": "sha256-Zq8sNgAxDckpn7tJo7V1afRSk2eoVbu3OjI1QklGLNg=",
+        "lastModified": 1675545634,
+        "narHash": "sha256-TbQeQcM5TA/wIho6xtzG+inUfiGzUXi8ewwttiQWYJE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e1e1b192c1a5aab2960bf0a0bd53a2e8124fa18e",
+        "rev": "0591d6b57bfeb55dfeec99a671843337bc2c3323",
         "type": "github"
       },
       "original": {
@@ -15763,11 +15762,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1675325243,
-        "narHash": "sha256-KdvpDpvM1SnXQAmjtA/PWjIEaOl5MU9nRuO66W9JP44=",
+        "lastModified": 1675637118,
+        "narHash": "sha256-n8nFKQ2a3bboj9KfmfOIoGeL5brViJcvpr5s3Jbdi8Q=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d2540a896eba1945c76d90b9b95648036efb6134",
+        "rev": "f5959c49540becedb9c5103195c3145a11751070",
         "type": "github"
       },
       "original": {
@@ -15923,11 +15922,11 @@
     "nvim-neoclip": {
       "flake": false,
       "locked": {
-        "lastModified": 1673318732,
-        "narHash": "sha256-dkonuajW5WIAb0SjIgNV3/VrwEe/ffyvrkGkRJ7/kQA=",
+        "lastModified": 1673910599,
+        "narHash": "sha256-Yi/6mODdS2Ote5/zumzcUzkhDbQ3m9jUvxT+jZ/+UqA=",
         "owner": "AckslD",
         "repo": "nvim-neoclip.lua",
-        "rev": "e112a0bfaf137bcc0df361a4bad98bc21657ae2c",
+        "rev": "5b9286a40ea2020352280caeb713515badb03d99",
         "type": "github"
       },
       "original": {
@@ -17487,22 +17486,6 @@
         "type": "github"
       }
     },
-    "registers": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1671111037,
-        "narHash": "sha256-puQwsmi07lLgBDvo7lqHH+sr4ePzgrStD+4Zqya6VUg=",
-        "owner": "tversteeg",
-        "repo": "registers.nvim",
-        "rev": "667ae447d2c7efb64461a2c58f5311d1248cdb5f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tversteeg",
-        "repo": "registers.nvim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "cardano-node": "cardano-node",
@@ -18340,6 +18323,22 @@
         "type": "github"
       }
     },
+    "tree-sitter-typescript": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674574592,
+        "narHash": "sha256-cpOAtfvlffS57BrXaoa2xa9NUYw0AsHxVI8PrcpgZCQ=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-typescript",
+        "rev": "5d20856f34315b068c41edaee2ac8a100081d259",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-typescript",
+        "type": "github"
+      }
+    },
     "trouble": {
       "flake": false,
       "locked": {
@@ -18996,22 +18995,6 @@
       "original": {
         "owner": "aklt",
         "repo": "plantuml-syntax",
-        "type": "github"
-      }
-    },
-    "vim-scala": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1641291049,
-        "narHash": "sha256-lUj+6DGyCvWyu/fIz15saQoIWkG/w6HAmjCG7VmVOvk=",
-        "owner": "gvolpe",
-        "repo": "vim-scala",
-        "rev": "7379894b48df6b677788a75b8f04632e717102a8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gvolpe",
-        "repo": "vim-scala",
         "type": "github"
       }
     },
