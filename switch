@@ -104,7 +104,7 @@ case $1 in
     eval_traced_home_edp;;
   "uhd")
     rebuild_home_uhd;;
-  "uddEval")
+  "uhdEval")
     eval_home_uhd;;
   "uhdtEval")
     eval_traced_home_uhd;;

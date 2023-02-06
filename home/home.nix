@@ -111,7 +111,6 @@ let
     mlt                  # kdenlive uses the MLT framework to process all video operations
     mediainfo            # additional package for kdenlive
     inkscape
-    fontforge
   ];
 
   homePkgs = with pkgs; [
@@ -127,6 +126,7 @@ let
     # file manager overlay
     #nautilus # file manager
     pkgs.nautilus-gtk3
+    pkgs.fontforge-gtk
     #pkgs.nautilus-bin
     #pkgs.nautilus-patched
   ];
@@ -220,8 +220,6 @@ in
   
   # restart services on change
   systemd.user.startServices = "sd-switch";
-  # systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  # systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
 
   xsession.numlock.enable = true;
   
