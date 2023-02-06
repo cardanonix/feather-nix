@@ -88,20 +88,6 @@ in
   programs.firefox = {
     enable = true;
 
-    extensions = with addons; [
-      bitwarden
-      darkreader
-      # auto-accepts cookies, use only with privacy-badger & ublock-origin
-      i-dont-care-about-cookies
-      languagetool
-      link-cleaner
-      privacy-badger
-      to-deepl
-      ublock-origin
-      unpaywall
-      vimium
-    ];
-
     package = pkgs.firefox-beta-bin;
 
     profiles = {
@@ -109,6 +95,19 @@ in
         id = 0;
         settings = sharedSettings;
         userChrome = disableWebRtcIndicator;
+        extensions = with addons; [
+          bitwarden
+          darkreader
+          # auto-accepts cookies, use only with privacy-badger & ublock-origin
+          i-dont-care-about-cookies
+          languagetool
+          link-cleaner
+          privacy-badger
+          to-deepl
+          ublock-origin
+          unpaywall
+          vimium
+        ];
       };
 
       chatroulette = {
