@@ -91,7 +91,8 @@ collect_ALL_garbage() {
   sudo nix-collect-garbage -d
   nix-collect-garbage -d
   sudo nix-store --gc
-  echo "your royal file system is clean!"
+  echo ""
+  echo "Your royal file system is clean."
 }
 
 
