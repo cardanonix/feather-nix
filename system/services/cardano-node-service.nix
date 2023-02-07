@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, cardano-node, ... }: 
 
-with lib;
+with inputs.cardano-node.nixosModules.cardano-node;
 
 let
   home              = "/home/bismuth";
@@ -10,9 +10,7 @@ let
   nodeconfig        = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
 in
 { 
-  # imports = [ inputs.cardano-node.nixosModules.cardano-node ];
-  config = with inputs.cardano-node.nixosModules.cardano-node; {
-  cardano-node = {
+  config.services.cardano-node = {
       enable = true;
       package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
       systemdSocketActivation = true;
@@ -25,5 +23,4 @@ in
       rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
       #nodeId = "bismuthian Test!!!";
     };
-  };
 }

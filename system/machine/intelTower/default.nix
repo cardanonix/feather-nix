@@ -29,6 +29,14 @@ with lib;
     interfaces.eth0.useDHCP = true;
   };
 
+    # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+      virt-manager
+      inputs.cardano-node.packages.x86_64-linux.cardano-node
+      inputs.cardano-node.packages.x86_64-linux.cardano-cli
+    ];
+
   services.sysprof.enable = true;
 
   nix.settings.cores = 4;
@@ -119,10 +127,6 @@ with lib;
         dates = "weekly";
       };
     };
-
-    virtualbox.host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
+    libvirtd.enable = true;
   };
 }

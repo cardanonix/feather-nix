@@ -52,38 +52,6 @@ in
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment = let
-    basePackages = with pkgs; [
-      alacritty
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      wget
-      git
-      brave
-      git-crypt
-      gnupg
-      firejail
-      dnsutils
-      screen
-      jq
-      pinentry
-      python3Packages.ipython
-      srm
-    ];
-/*     cardanoPackages = [
-      inputs.cardano-node.packages.x86_64-linux.cardano-node
-      inputs.cardano-node.packages.x86_64-linux.cardano-cli
-
-    ]; */
-
-  in {
-    systemPackages = basePackages;
-/*     variables = {
-      CARDANO_NODE_SOCKET_PATH = config.services.cardano-node.socketPath;
-    }; */
-  };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -137,6 +105,22 @@ in
       #});
     };
   };
+  environment.systemPackages = with pkgs; [
+      alacritty
+      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      wget
+      git
+      brave
+      git-crypt
+      gnupg
+      firejail
+      dnsutils
+      screen
+      jq
+      pinentry
+      python3Packages.ipython
+      srm
+    ]; 
 
   # Making fonts accessible to applications.
   fonts = {
