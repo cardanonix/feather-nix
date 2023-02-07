@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
+
+with lib;
 
 {
-  imports =  [
-    # Hardware scan
+  imports = [
+    #../.././services/cardano-node-service.nix
     ./hardware-configuration.nix
   ];
 

@@ -1,4 +1,8 @@
-{ config, pkgs, lib, inputs, ... }: let
+{ config, pkgs, lib, inputs, cardano-node, ... }: 
+
+with lib;
+
+let
   home              = "/home/bismuth";
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
   node_socket_path  = "/Cardano/mainnet/db/node.socket";
@@ -7,7 +11,7 @@
 in
 { 
   # imports = [ inputs.cardano-node.nixosModules.cardano-node ];
-  services = with inputs.cardano-node.nixosModules.cardano-node; {
+  config = with inputs.cardano-node.nixosModules.cardano-node; {
   cardano-node = {
       enable = true;
       package = inputs.cardano-node.packages.x86_64-linux.cardano-node;

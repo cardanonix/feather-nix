@@ -124,7 +124,6 @@ Inputs:
 ├───fish-keytool-completions: github:ckipp01/keytool-fish-completions/dcb24bae7b8437e1e1210b00b7172841a26d6573
 ├───gh-md-toc: github:ekalinin/github-markdown-toc/661b5c5111f47174e2d9092c8d76867e5a1f249d
 ├───home-manager: github:nix-community/home-manager/54245e1820caabd8a0b53ce4d47e4d0fefe04cd4
-├───homeage: github:jordanisaacs/homeage/02bfe4ca06962d222e522fff0240c93946b20278
 ├───neovim-flake: github:gvolpe/neovim-flake/7cf22b0e4bab8935615339ab7c3be4215471896b
 ├───nixpkgs: github:NixOS/nixpkgs/9813adc7f7c0edd738c6bdd8431439688bb0cb3d
 ├───nixpkgs-nautilus-gtk3: github:NixOS/nixpkgs/37bd39839acf99c5b738319f42478296f827f274

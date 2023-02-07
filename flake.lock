@@ -8701,26 +8701,6 @@
         "type": "github"
       }
     },
-    "homeage": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1669234151,
-        "narHash": "sha256-TwT87E3m2TZLgwYJESlype14HxUOrRGojPM5C2akrMg=",
-        "owner": "jordanisaacs",
-        "repo": "homeage",
-        "rev": "02bfe4ca06962d222e522fff0240c93946b20278",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jordanisaacs",
-        "repo": "homeage",
-        "type": "github"
-      }
-    },
     "hop": {
       "flake": false,
       "locked": {
@@ -15762,11 +15742,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1675698287,
-        "narHash": "sha256-YvtoiSaB1cQPRI3R6xgmHErS2cWS1E21CMYuEW7EQaQ=",
+        "lastModified": 1675712704,
+        "narHash": "sha256-SrX7TxtZgitaMEqrkFWjhLIQDP8K35Up00416pNGjXs=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "333fc42800261343d45a0a16fc72bcbec6672dd1",
+        "rev": "d6355001dfde853628d686982d93fcac8f3a47af",
         "type": "github"
       },
       "original": {
@@ -17498,7 +17478,6 @@
         "gh-md-toc": "gh-md-toc",
         "haskellNix": "haskellNix_37",
         "home-manager": "home-manager",
-        "homeage": "homeage",
         "iohkNix": "iohkNix_37",
         "neovim-flake": "neovim-flake",
         "nixpkgs": "nixpkgs_34",

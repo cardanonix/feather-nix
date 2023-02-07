@@ -54,9 +54,7 @@ let
   };
 
   imports = [
-    homeage.homeManagerModules.homeage
     neovim-flake.nixosModules.${system}.hm
-    #cardano-flake.nixosModules.systemd.services.cardano-node
     ../home/home.nix
   ];
 

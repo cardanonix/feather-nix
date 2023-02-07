@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    homeage = {
-      url = github:jordanisaacs/homeage;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-flake = {
       url = github:gvolpe/neovim-flake;
       # neovim-flake pushes its binaries to the cache using its own nixpkgs version
