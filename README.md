@@ -4,7 +4,9 @@ nix-config for 'intelTower'
 [![CI Home](https://github.com/harryprayiv/nix-config/workflows/Home/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
 [![CI System](https://github.com/harryprayiv/nix-config/workflows/NixOS/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
 
-My current — and always evolving — NixOS configuration files, home-manager, neovim, etc.
+My current evolving NixOS Cardano SPO/dev environment with full configuration files, home-manager, neovim, etc. 
+
+My intent is to fork and strip this config down to share a collection of rolling, accurate, canonical Cardano dev/SPO/ecosystem configurations in one place. 
 
 ## Web Workspace
 ![Web Workspace](imgs/screenshotWs/webWs.png)
