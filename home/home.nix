@@ -169,7 +169,16 @@ let
   cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
     cncli
   ];
-   
+
+  pythonExt = p: with p; [
+    pandas
+    requests
+    pip
+  ];
+
+  pythonPkgs = with pkgs ++ pythonExt; [
+    (pkgs.python3.withPackages pythonExt)
+  ];
 
   rustPkgs = with pkgs; [
     rustc
@@ -179,6 +188,8 @@ let
     clippy
     pkg-config
   ];
+
+
 
 in
 
@@ -202,7 +213,14 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs ++ cpuHungryPkgs ++ rustPkgs ++ homePkgs ++ cardanoPkgs; 
+    packages = defaultPkgs ++ 
+            gnomePkgs ++ 
+            haskellPkgs ++
+            cpuHungryPkgs ++
+            rustPkgs ++
+            homePkgs ++
+            pythonPkgs ++
+            cardanoPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
