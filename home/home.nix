@@ -218,7 +218,6 @@ in
             ++ cpuHungryPkgs
             ++ rustPkgs
             ++ homePkgs
-            ++ cardanoPkgs
             ++ pythonPkgs; 
 
     sessionVariables = {
