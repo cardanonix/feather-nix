@@ -213,14 +213,14 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ 
-            gnomePkgs ++ 
-            haskellPkgs ++
-            cpuHungryPkgs ++
-            rustPkgs ++
-            homePkgs ++
-            pythonPkgs ++
-            cardanoPkgs; 
+    packages = defaultPkgs 
+            ++ gnomePkgs 
+            ++ haskellPkgs
+            ++ cpuHungryPkgs
+            ++ rustPkgs
+            ++ homePkgs
+            ++ pythonPkgs
+            ++ cardanoPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";

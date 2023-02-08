@@ -445,7 +445,7 @@ myLayout =
      gapSpaced g = spacing g . myGaps g
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid)
+     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
      mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled)
      vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
