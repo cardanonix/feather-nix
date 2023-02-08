@@ -1,5 +1,6 @@
 { config, lib, pkgs, stdenv, cardano-node, inputs, ... }:
 {
+  inherit inputs;
   home.packages = with inputs.cardano-node.packages.x86_64-linux; [
     bech32
     cabalProjectRegenerate
