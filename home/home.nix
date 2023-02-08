@@ -79,8 +79,8 @@ let
     element-desktop      # matrix client
     discord              # discord app (breaks often)
     tdesktop             # telegram messaging client
-    slack                # messaging client
-    tootle               # mastodon client of choice
+    slack                # slack messaging client
+    tootle               # mastodon client
 
     #  Ricing
     cmatrix              # dorky terminal matrix effect
@@ -143,7 +143,11 @@ let
     ihaskell-blaze 
   ];
 
-  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [
+  cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
+    cncli
+  ];
+
+  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [     
     bech32
     cabalProjectRegenerate
     cardano-cli
@@ -164,11 +168,7 @@ let
     scan-blocks
     scan-blocks-pipelined
     tx-generator
-  ];
-
-  cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
-    cncli
-  ];
+    ];
 
   pythonExt = p: with p; [
     pandas
@@ -188,7 +188,6 @@ let
     clippy
     pkg-config
   ];
-
 
 
 in
@@ -219,8 +218,8 @@ in
             ++ cpuHungryPkgs
             ++ rustPkgs
             ++ homePkgs
-            ++ pythonPkgs
-            ++ cardanoPkgs; 
+            ++ cardanoPkgs
+            ++ pythonPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
