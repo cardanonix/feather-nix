@@ -33,8 +33,6 @@ with lib;
   # $ nix search wget
   environment.systemPackages = with pkgs; [
       virt-manager
-      inputs.cardano-node.packages.x86_64-linux.cardano-node
-      inputs.cardano-node.packages.x86_64-linux.cardano-cli
     ];
 
   services.sysprof.enable = true;

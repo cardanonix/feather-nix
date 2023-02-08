@@ -14,7 +14,8 @@ in
       inputs.cardano-node.packages.x86_64-linux.cardano-node
       inputs.cardano-node.packages.x86_64-linux.cardano-cli
   ];
-
+  users.groups.cardano-node.gid = 1002;
+  
   config.services.cardano-node = {
       enable = true;
       package = inputs.cardano-node.packages.x86_64-linux.cardano-node;

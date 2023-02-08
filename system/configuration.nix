@@ -75,10 +75,6 @@ in
     
     #flatpak.enable = true;
     
-    # cardano-node = with inputs.cardano-node.nixosModules; {
-    #   cardano-node.enable = true;
-    # }; 
-
     # Yubikey smart card mode (CCID) and OTP mode (udev)
     pcscd.enable = true;
     udev.packages = [ pkgs.yubikey-personalization ];
@@ -118,7 +114,6 @@ in
       screen
       jq
       pinentry
-      python3Packages.ipython
       srm
     ]; 
 
@@ -154,7 +149,7 @@ in
   };
 
   users.groups.plugdev = {};
-  users.groups.cardano-node.gid = 1002;
+
   
   security = {
     # Yubikey login & sudo
