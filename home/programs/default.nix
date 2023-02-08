@@ -63,7 +63,7 @@ in
   ./git
   ./fish
   ./neofetch
-  #./neovim-ide
+  ./neovim-ide
   ./orage
   ./rofi
   ./signal

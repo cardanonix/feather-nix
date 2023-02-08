@@ -15,7 +15,6 @@ in
           multiple-cursors
           vim-mergetool
           vim-repeat
-          vim-surround
         ];
         neovim.package = pkgs.neovim-nightly;
         lsp = {
@@ -40,7 +39,7 @@ in
           rust.enable = false;
           dhall = true;
           elm = true;
-          haskell = true;
+          haskell = false;
           sql = false;
           python = false;
           clang = false;
@@ -83,6 +82,7 @@ in
           hideDotFiles = false;
           hideFiles = [ "node_modules" ".cache" ];
         };
+        neoclip.enable = true;
         hop.enable = true;
         todo.enable = true;
         tabline.nvimBufferline.enable = true;
@@ -103,6 +103,9 @@ in
           type = "nerdcommenter";
         };
         shortcuts = {
+          enable = true;
+        };
+        surround = {
           enable = true;
         };
         telescope = {
