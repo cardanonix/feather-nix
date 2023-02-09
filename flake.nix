@@ -36,6 +36,19 @@
     };
 
 #______Cardano-Related Inputs
+
+    nix.url = "github:NixOS/nix/2.12.0";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    
+    # fenix.url = "github:nix-community/fenix";
+    # deploy.url = "github:input-output-hk/deploy-rs";
+    # deploy.inputs.nixpkgs.follows = "fenix/nixpkgs";
+    # deploy.inputs.fenix.follows = "fenix";
+    # styx.url = "github:disassembler/styx";    
+    # vivarium.url = "github:nrdxp/vivarium";
+
     cncli.url = "github:cardano-community/cncli";
 
     rust-nix = {
