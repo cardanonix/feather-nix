@@ -104,10 +104,8 @@
       flake = false;
     };
 
-    # LaTeX stuff
-
-    tex2nix = {
-      url = github:Mic92/tex2nix;
+    statix = {
+      url = github:nerdypepper/statix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
