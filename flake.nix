@@ -28,7 +28,6 @@
     };
 
     # Fish shell
-
     fish-bobthefish-theme = {
       url = github:harryprayiv/theme-bobthefish;
       flake = false;
@@ -41,16 +40,18 @@
 
 #______Cardano-Related Inputs
 
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # fenix.url = "github:nix-community/fenix";
-    # deploy.url = "github:input-output-hk/deploy-rs";
-    # deploy.inputs.nixpkgs.follows = "fenix/nixpkgs";
-    # deploy.inputs.fenix.follows = "fenix";
-    # styx.url = "github:disassembler/styx";    
-    # vivarium.url = "github:nrdxp/vivarium";
+    fenix.url = "github:nix-community/fenix";
 
+    deploy = {
+      url = "github:input-output-hk/deploy-rs";
+      inputs.nixpkgs.follows = "fenix/nixpkgs";
+      inputs.fenix.follows = "fenix";
+    };
     cncli.url = "github:cardano-community/cncli";
 
     rust-nix = {
@@ -58,6 +59,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    #IOG Cardano-Haskell-Packages
+    CHaP = {
+      url = "github:input-output-hk/cardano-haskell-packages?ref=repo";
+      flake = false;
+    };
+    #not sure how this is different than CHaP but ::shrugs::
     haskellNix = {
       url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
@@ -76,12 +83,12 @@
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
 
-    ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
-    cardano-node-workbench = {
-      url = "github:input-output-hk/cardano-node/8762a10efe3f9f97939e3cb05edaf04250456702";
-      # This is to avoid circular import (TODO: remove this workbench pin entirely using materialization):
-      inputs.membench.url = "github:input-output-hk/empty-flake";
-    };
+    # ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
+    # cardano-node-workbench = {
+    #   url = "github:input-output-hk/cardano-node/8762a10efe3f9f97939e3cb05edaf04250456702";
+    #   # This is to avoid circular import (TODO: remove this workbench pin entirely using materialization):
+    #   inputs.membench.url = "github:input-output-hk/empty-flake";
+    # };
 
          # Cardano Wallet
     cardano-wallet = {
