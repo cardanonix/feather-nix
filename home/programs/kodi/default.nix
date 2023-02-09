@@ -1,9 +1,9 @@
-/* { pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.kodi = {
-    enable = true;
-    withPackages (exts: [ exts.amber-skin ])
+    enable = false;
+    # withPackages (exts: [ exts.amber-skin ]);
     settings.videolibrary = { 
       showemptytvshows = "true"; 
       recentlyaddeditems = "100";
@@ -23,4 +23,3 @@
     };
   };
 } 
-*/
