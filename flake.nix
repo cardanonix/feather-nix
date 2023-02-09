@@ -69,9 +69,9 @@
     };
 
          # Cardano Wallet
-/*     cardano-wallet = {
+    cardano-wallet = {
       url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
-    }; */
+    };
 
 #______Cardano-Related Inputs End ________________
 

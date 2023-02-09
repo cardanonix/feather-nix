@@ -223,7 +223,7 @@ in
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
-      CARDANO_NODE_SOCKET_PATH = "/Cardano/mainnet/db/node.socket";
+      CARDANO_NODE_SOCKET_PATH = "/home/bismuth/Cardano/mainnet/db/node.socket";
     };
 
     pointerCursor = { 
