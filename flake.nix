@@ -123,14 +123,22 @@
           inherit inputs system;
         }
       );
+      
       nixosConfigurations = (
         import ./outputs/nixos-conf.nix {
           inherit inputs system;
         }
       );
+
       packages.${system} = {
         inherit (ci) metals metals-updater;
       };
+
+      devShell.${system} = (
+        import ./outputs/devShell.nix {
+          inherit inputs system nixpkgs;
+        }
+      );
 
       checks.${system} =
         let
