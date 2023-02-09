@@ -1,19 +1,9 @@
 { inputs, system, ... }:
 
-with inputs;
-
 let
-  pkgs = import nixpkgs {
-    inherit system;
-
-    config.allowUnfree = true;
-
-    overlays = [
-      neovim-flake.overlays.${system}.default
-    ];
-  };
+  pkgs = inputs.nixpkgs.legacyPackages.${system};
 in
-{
-  metals = pkgs.callPackage ../home/programs/neovim-ide/metals.nix { };
-  metals-updater = pkgs.callPackage ../home/programs/neovim-ide/update-metals.nix { };
+pkgs.mkShell {
+  name = "installation-shell";
+  buildInputs = with pkgs; [ wget s-tar ];
 }
