@@ -9,7 +9,7 @@
 
     nixpkgs-nautilus-gtk3.url = github:NixOS/nixpkgs?ref=37bd398;
 
-    nix.url = "github:NixOS/nix/2.12.0";
+    nix.url = "github:NixOS/nix/2.13.2";
     
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
