@@ -114,11 +114,11 @@
     let system = "x86_64-linux";
     in
     {
-/*    devShellsConfigurations = (
-        import ./outputs/devShells-conf.nix {
-          inherit inputs system;
+    devShell.${system} = (
+        import ./outputs/devShell.nix {
+          inherit inputs system nixpkgs;
         }
-      ); */
+      ); 
 
       homeConfigurations = (
         import ./outputs/home-conf.nix {
