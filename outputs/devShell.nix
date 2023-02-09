@@ -1,4 +1,4 @@
-{ system, nixpkgs }:
+{ inputs, system, nixpkgs }:
 
 let
   pkgs = nixpkgs.legacyPackages.${system};
