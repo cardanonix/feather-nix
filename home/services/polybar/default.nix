@@ -17,8 +17,8 @@ let
     font3 = 14;
     font4 = 5;
     font5 = 10;
-    font6 = 16;
-    font7 = 11;
+    font6 = 14;
+    font7 = 8;
   };
 
   mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
@@ -109,10 +109,10 @@ let
     exec = ${fgindexScript}/bin/fngi
     
 
-    label-maxlen = 3
+    label-maxlen = 20
 
     interval = 43200
-    format =  <label>
+    format = <label>
     format-padding = 1
     click-left = ${openFearandGreed} 
   '';
@@ -127,7 +127,7 @@ let
     label-maxlen = 10
 
     interval = 120
-    format = "%{T8}%{T-} <label>"
+    format = "%{T7}%{T-} <label>"
     format-padding = 0
     click-left = ${openCardanoSubreddit} 
   '';
