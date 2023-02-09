@@ -123,7 +123,7 @@
           inherit inputs system;
         }
       );
-      
+
       nixosConfigurations = (
         import ./outputs/nixos-conf.nix {
           inherit inputs system;
@@ -136,7 +136,7 @@
 
       devShell.${system} = (
         import ./outputs/devShell.nix {
-          inherit inputs system nixpkgs;
+          inherit inputs system;
         }
       );
 
