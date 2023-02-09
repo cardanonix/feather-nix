@@ -110,7 +110,7 @@
     };
   };
 
-  outputs = inputs:
+  outputs = inputs @ { self, nixpkgs, nurpkgs, home-manager, tex2nix }:
     let system = "x86_64-linux";
     in
     {
