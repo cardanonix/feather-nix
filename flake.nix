@@ -9,6 +9,10 @@
 
     nixpkgs-nautilus-gtk3.url = github:NixOS/nixpkgs?ref=37bd398;
 
+    nix.url = "github:NixOS/nix/2.12.0";
+    
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     nurpkgs.url = github:nix-community/NUR;
 
     home-manager = {
@@ -37,11 +41,9 @@
 
 #______Cardano-Related Inputs
 
-    nix.url = "github:NixOS/nix/2.12.0";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # fenix.url = "github:nix-community/fenix";
     # deploy.url = "github:input-output-hk/deploy-rs";
     # deploy.inputs.nixpkgs.follows = "fenix/nixpkgs";
