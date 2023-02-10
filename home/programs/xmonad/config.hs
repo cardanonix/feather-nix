@@ -295,7 +295,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
     , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ safePromptSelection "mpv"
     , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
-    , key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
+    --, key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
@@ -519,7 +519,6 @@ audacious = ClassApp "Audacious"            "audacious"
 btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gruvbox --default_widget_type proc"
 virtbox   = ClassApp "VirtualBox Machine"   "VBoxManage startvm 'plutusVM_bismuth'"
 calendar  = ClassApp "Orage"                "orage"
-discord   = TitleApp "Discord"              "brave --app=https://discord.com/app"  --under construction
 cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
@@ -603,7 +602,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, vlc, mpv, gimp, kodi, keepass, virtbox ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, gimp, virtbox ]
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -663,7 +662,7 @@ projects =
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ runScratchpadApp keepass
+            , projectStartHook = Just $ do spawn "keepassxc"
             }
   , Project { projectName      = vmsWs
             , projectDirectory = "~/"

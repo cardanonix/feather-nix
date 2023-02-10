@@ -107,13 +107,18 @@ let
     type = custom/script
 
     exec = ${fgindexScript}/bin/fngi
-    
-
+  
     label-maxlen = 20
 
     interval = 43200
-    format = <label>
     format-padding = 1
+
+    format =  <label><ramp>
+
+
+    ramp-0 = %{F#999}<label>%{F-}
+    ramp-1 = %{F#900}<label>%{F-}
+    ramp-50 = %{F#F00}<label>%{F-}
     click-left = ${openFearandGreed} 
   '';
 
