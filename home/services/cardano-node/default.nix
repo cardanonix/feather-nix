@@ -34,7 +34,7 @@ let
 in
 {
   # imports = [ inputs.cardano-node.nixosModules ];
-  cardano-node = with inputs.cardano-node.nixosModules; {
+  services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;
