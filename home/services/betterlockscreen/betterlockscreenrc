@@ -1,6 +1,6 @@
 display_on=0
 span_image=false
-lock_timeout=240
+lock_timeout=1
 fx_list=(dim blur dimblur pixel color)
 dim_level=1
 blur_level=1
