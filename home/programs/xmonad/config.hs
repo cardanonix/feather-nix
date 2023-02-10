@@ -545,7 +545,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   isRole              = stringProperty "WM_WINDOW_ROLE"
   tileBelow           = insertPosition Below Newer
   tileAbove           = insertPosition Above Newer
-  doVideoFloat        = doFloatAbsRect 0 0 600 300
+  doVideoFloat        = doFloatAbsRect 240 720 600 300
   doCalendarFloat     = customFloating (W.RationalRect (11 / 15) (1 / 48) (1 / 4) (1 / 8))
   manageScratchpads = namedScratchpadManageHook scratchpads
   anyOf :: [Query Bool] -> Query Bool
@@ -556,17 +556,14 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
     [ isInstance calendar                      -?> doCalendarFloat
     , match [ virtbox
             ]                                  -?> tileAbove
-    , match [ mpv
+    , match [ keepass
+            , mpv
             ]                                  -?> tileAbove
-    , match [ vlc
-            , keepass
-            ]                                  -?> tileBelow
     , match [ audacious
             , eog
             , nautilus
             , office
             , pavuctrl
-            , kodi
             , scr
             ]                                  -?> doCenterFloat
     , match [ btm
@@ -602,7 +599,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, gimp, virtbox ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, gimp, mpv, virtbox ]
 
 ------------------------------------------------------------------------
 -- Workspaces
