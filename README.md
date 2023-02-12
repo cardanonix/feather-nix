@@ -33,6 +33,7 @@ The `home.nix` file contains details about all the software I use, but here's a 
 
 | Type           | Program      |
 | :------------- | :----------: |
+| Crypto Node    | [Cardano Node](https://github.com/input-output-hk/cardano-node) |
 | Editor #1      | [VsCodium](https://vscodium.com/) |
 | Editor #2      | [NeoVim](https://neovim.io/) |
 | Launcher       | [Rofi](https://github.com/davatorium/rofi) |
