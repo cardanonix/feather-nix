@@ -38,6 +38,22 @@
       flake = false;
     };
 
+    # Github Markdown ToC generator
+    gh-md-toc = {
+      url = github:ekalinin/github-markdown-toc;
+      flake = false;
+    };
+
+    statix = {
+      url = github:nerdypepper/statix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    cowsay = {
+      url = github:snowfallorg/cowsay;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 #______Cardano-Related Inputs
 
     sops-nix = {
@@ -64,7 +80,7 @@
       url = "github:input-output-hk/cardano-haskell-packages?ref=repo";
       flake = false;
     };
-    #not sure how this is different than CHaP but ::shrugs::
+
     haskellNix = {
       url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
@@ -76,62 +92,158 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     # Cardano Node
     cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=8762a10efe3f9f97939e3cb05edaf04250456702";
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
 
-    # ## This pin is to prevent workbench-produced geneses being regenerated each time the node is bumped.
     # cardano-node-workbench = {
     #   url = "github:input-output-hk/cardano-node/8762a10efe3f9f97939e3cb05edaf04250456702";
     #   # This is to avoid circular import (TODO: remove this workbench pin entirely using materialization):
     #   inputs.membench.url = "github:input-output-hk/empty-flake";
     # };
 
-         # Cardano Wallet
     cardano-wallet = {
       url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
-    };
-
-#______Cardano-Related Inputs End ________________
-
-
-    # Github Markdown ToC generator
-    gh-md-toc = {
-      url = github:ekalinin/github-markdown-toc;
-      flake = false;
-    };
-
-    statix = {
-      url = github:nerdypepper/statix;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    cowsay = {
-      url = github:snowfallorg/cowsay;
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = inputs:
     let 
-      system = "x86_64-linux";
-      ci = import ./outputs/ci.nix { inherit inputs system; };
       inherit (inputs.nixpkgs.lib) mapAttrs;
+      inherit inputs;
+      system = "x86_64-linux";
+
+      ci = with inputs system; (
+        let
+        pkgs = import nixpkgs {
+          config.allowUnfree = true;
+
+          overlays = [
+            neovim-flake.overlays.${system}.default
+          ];
+        };
+      in
+      {
+        metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix { };
+        metals-updater = pkgs.callPackage ./home/programs/neovim-ide/update-metals.nix { };
+      });
+
     in
     rec
     {
-      homeConfigurations = (
-        import ./outputs/home-conf.nix {
-          inherit inputs system;
+      homeConfigurations = with inputs; (
+        let
+          fishOverlay = f: p: {
+            inherit fish-bobthefish-theme fish-keytool-completions;
+          };
+
+          cowsayOverlay = f: p: {
+            cowsay = inputs.cowsay.packages.${system}.cowsay;
+          };
+
+          nautilusOverlay = f: p: {
+            nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
+          };
+
+          gnomeOverlay = f: p: {
+            gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
+          };
+
+          pkgs = import nixpkgs {
+            inherit system;
+
+            config.allowUnfree = true;
+
+            overlays = [
+              cowsayOverlay
+              fishOverlay
+              nautilusOverlay
+              nurpkgs.overlay
+              neovim-flake.overlays.${system}.default
+              (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
+              ((import ./home/overlays/md-toc) { inherit (inputs) gh-md-toc; })
+              (import ./home/overlays/protonvpn-gui)
+              (import ./home/overlays/ranger)
+              (import ./home/overlays/nautilus)
+            ];
+          };
+
+          nur = import nurpkgs {
+            inherit pkgs;
+            nurpkgs = pkgs;
+          };
+
+          imports = [
+            neovim-flake.nixosModules.${system}.hm
+            ./home/home.nix
+          ];
+
+          mkHome = { ultraHD ? false }: (
+            home-manager.lib.homeManagerConfiguration rec {
+              inherit pkgs;
+
+              extraSpecialArgs = {
+                inherit ultraHD inputs;
+                addons = nur.repos.rycee.firefox-addons;
+              };
+
+              modules = [{ inherit imports; }];
+            }
+          );
+        in
+        {
+          bismuth-edp = mkHome { ultraHD = false; };
+          bismuth-uhd = mkHome { ultraHD = true; };
+
         }
       );
-
       nixosConfigurations = (
-        import ./outputs/nixos-conf.nix {
-          inherit inputs system;
+        let
+          inherit (inputs.nixpkgs.lib) nixosSystem;
+
+          libx = import ./lib { inherit (inputs.nixpkgs) lib; };
+
+          lib = inputs.nixpkgs.lib.extend (_: _: {
+            inherit (libx) secretManager;
+          });
+
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [
+                "xrdp-0.9.9"
+              ];
+            };
+          };
+        in
+        { 
+          intelTower = nixosSystem {
+            inherit lib pkgs system;
+            specialArgs = { inherit inputs; };
+            modules = [
+              ./system/machine/intelTower
+              ./system/configuration.nix
+            ];
+          };
+          intelNUC = nixosSystem {
+            inherit lib pkgs system;
+            specialArgs = { inherit inputs; };
+            modules = [
+              ./system/machine/intelNUC
+              ./system/configuration.nix
+            ];
+          };
+          plutusVM = nixosSystem {
+            inherit lib pkgs system;
+            specialArgs = { inherit inputs; };
+            modules = [
+              ./system/machine/plutusVM
+              ./system/configuration.nix
+            ];
+          };
         }
       );
 
@@ -140,8 +252,14 @@
       };
 
       devShell.${system} = (
-        import ./outputs/devShell.nix {
-          inherit inputs system;
+        { inputs, system, ... }:
+
+        let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        in
+        pkgs.mkShell {
+          name = "installation-shell";
+          buildInputs = with pkgs; [ wget s-tar ];
         }
       );
 
