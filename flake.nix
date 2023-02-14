@@ -1,6 +1,7 @@
 {
   description = "harryprayiv's Home Manager & NixOS configurations";
-
+  
+  # Inputs are how Nix can use code from outside the flake during evaluation.
   inputs = {
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -109,6 +110,7 @@
     };
   };
 
+  # Outputs are the public-facing interface to the flake.
   outputs = inputs:
     let 
       inherit (inputs.nixpkgs.lib) mapAttrs;

@@ -56,6 +56,11 @@ rebuild_intelTower_withUpdate() {
   activateHM 
 }
 
+eval_intelTower() {
+  nix eval --raw .#intelTower --impure
+}
+
+
 # was necessary to purge substitutes caches (saving for future use) 
 rebuild_scratchBuild() {
   nix flake update 
@@ -118,6 +123,8 @@ case $1 in
     rebuild_intelTower;;
   "intelTowerFULL")
     rebuild_intelTower_withUpdate;;
+  "intelTowerEval")
+    eval_intelTower;;
   "intelNUC")
     rebuild_intelNUC;;
   "intelNUCFULL")  
@@ -129,5 +136,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
+    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
 esac
