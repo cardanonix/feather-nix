@@ -76,9 +76,6 @@ Here is an overview of the folders' structure:
 │  ├── services
 │  └── themes
 ├── imgs
-├── outputs
-│  ├── home-conf.nix
-│  └── nixos-conf.nix
 └── system
    ├── cachix
    ├── cachix.nix
@@ -93,7 +90,6 @@ Here is an overview of the folders' structure:
 - `flake.nix`: home and system configurations.
 - `home`: all the user programs, services and dotfiles.
 - `imgs`: screenshots and other images.
-- `outputs`: the Home Manager and NixOS flake outputs.
 - `system`: the NixOS configuration, settings for different laptops and window managers.
 
 ## Install

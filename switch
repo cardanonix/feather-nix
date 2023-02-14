@@ -16,7 +16,7 @@ rebuild_home_edp() {
 }
 
 eval_home_edp() {
-  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
+  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --impure
 }
 
 eval_traced_home_edp() {
@@ -30,11 +30,11 @@ rebuild_home_uhd() {
 
 
 eval_home_uhd() {
-  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --show-trace
+  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --impure
 }
 
 eval_traced_home_uhd() {
-  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --show-trace
+  nix eval --raw .#homeConfigurations.bismuth-uhd.activationPackage --show-trace --impure
 }
 
 rebuild_system() {
@@ -51,13 +51,12 @@ rebuild_intelTower() {
 
 rebuild_intelTower_withUpdate() {
   nix flake update 
-  ##export NIXPKGS_ALLOW_BROKEN=1
   sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
   nix build .#homeConfigurations.bismuth-edp.activationPackage --impure --show-trace 
   activateHM 
 }
 
-# was necessary to purge substitutes caches 
+# was necessary to purge substitutes caches (saving for future use) 
 rebuild_scratchBuild() {
   nix flake update 
   sudo nixos-rebuild switch --flake .#intelTower --impure --option build-use-substitutes false --show-trace
