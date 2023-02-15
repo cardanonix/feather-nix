@@ -1,4 +1,6 @@
-{ config, pkgs, inputs, lib, stdenv, ... }:
+{ config, pkgs, inputs, lib, system, stdenv, ... }:
+
+
 let
   inherit (inputs) cardano-node;
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
@@ -7,7 +9,6 @@ let
   nodeconfig        = "/home/bismuth/Cardano/mainnet/configuration/cardano/mainnet-config.json";
 in
 {
-  # imports = [ inputs.cardano-node.nixosModules ];
   services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;

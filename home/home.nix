@@ -168,7 +168,7 @@ let
     scan-blocks
     scan-blocks-pipelined
     tx-generator
-    ];
+  ];
 
   pythonExt = p: with p; [
     pandas
