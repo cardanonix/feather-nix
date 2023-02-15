@@ -224,8 +224,10 @@
         { 
           intelTower = nixosSystem {
             inherit lib pkgs system;
+            # inherit (inputs.cardano-node.packages.${pkgs.system}) cardano-node;
             specialArgs = { inherit inputs; };
             modules = [
+              inputs.cardano-node.nixosModules.cardano-node
               ./system/machine/intelTower
               ./system/configuration.nix
             ];
@@ -234,6 +236,7 @@
             inherit lib pkgs system;
             specialArgs = { inherit inputs; };
             modules = [
+              inputs.cardano-node.nixosModules.cardano-node
               ./system/machine/intelNUC
               ./system/configuration.nix
             ];
@@ -242,6 +245,7 @@
             inherit lib pkgs system;
             specialArgs = { inherit inputs; };
             modules = [
+              inputs.cardano-node.nixosModules.cardano-node
               ./system/machine/plutusVM
               ./system/configuration.nix
             ];
