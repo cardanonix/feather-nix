@@ -4,9 +4,10 @@
 
 let
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  node_socket_path  = "/media/cardano-node/db-mainnet/node.socket";
-  db_path           = "/media/cardano-node/db-mainnet";
   nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
+  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
+  db_path           = "/var/lib/cardano-node/db-mainnet";
+
 
 in
 {   
