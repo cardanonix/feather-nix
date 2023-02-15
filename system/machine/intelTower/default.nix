@@ -4,9 +4,22 @@ with lib;
 
 {
   imports = [
-    #../.././services/cardano-node
+    ../.././services/cardano-node
     ./hardware-configuration.nix
   ];
+
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.bismuth = {
+      isNormalUser = true;
+      home = "/home/bismuth";
+      uid = 1002;
+      description = "Harry Pray IV";
+      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" ];
+      shell = pkgs.fish;
+      # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
+  };
+
+  users.groups.plugdev = {};
 
  # Use the systemd-boot EFI boot loader.
   boot = {
@@ -28,6 +41,8 @@ with lib;
     interfaces.eno1.useDHCP = true;
     interfaces.eth0.useDHCP = true;
   };
+
+
 
     # List packages installed in system profile. To search, run:
   # $ nix search wget

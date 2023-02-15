@@ -21,6 +21,19 @@
       };
     };
 
+      # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.bismuth = {
+      isNormalUser = true;
+      home = "/home/bismuth";
+      uid = 1002;
+      description = "Harry Pray IV";
+      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" ];
+      shell = pkgs.fish;
+      # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
+  };
+
+  users.groups.plugdev = {};
+
   networking = {
     hostName = "plutusVM"; # Define your hostname.
     interfaces.eno1.useDHCP = true;
