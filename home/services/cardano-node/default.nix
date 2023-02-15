@@ -9,7 +9,7 @@ let
   nodeconfig        = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
 in
 {   
-  config.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+  systemd.user.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
       enable = true;
       package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
       systemdSocketActivation = true;

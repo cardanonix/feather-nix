@@ -2,11 +2,11 @@
 
 let
   pgrep             = "${pkgs.busybox}/bin/pgrep";
-  home              = "/home/bismuth";
+  # home              = "/home/bismuth";
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
   config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
-  node_socket_path  = "/Cardano/mainnet/db/node.socket";
-  db_path           = "/Cardano/mainnet/db";
+  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
+  db_path           = "/var/lib/cardano-node/db-mainnet";
   cardano-cli       = "./cardano-cli";
   cowsay            = "${pkgs.cowsay}/bin/cowsay";
   #cli-path          = "/cardano_local/cardano-node/cardano-cli-build/bin";
@@ -14,12 +14,12 @@ in
 pkgs.writeShellScriptBin "node_check" ''
     if [ "$(${pgrep} cardano-node)" ]; then
       ${cowsay} "Populating Path Variables:"
-      export CARDANO_TOPOLOGY="${home}${topology}"
-      export CARDANO_CONFIG="${home}${config}"
-      export CARDANO_NODE_SOCKET_PATH=${home}${node_socket_path}
-      export CARDANO_DB_PATH="${home}${db_path}"
+      export CARDANO_TOPOLOGY="${topology}"
+      export CARDANO_CONFIG="${config}"
+      export CARDANO_NODE_SOCKET_PATH=${node_socket_path}
+      export CARDANO_DB_PATH="${db_path}"
       echo "Repopulating Path Variables:"
-      echo "cardano-node app executable: ${home}${cardano-cli} Make This DECLARATIVE" && echo "node socket path: ${home}${node_socket_path}" && echo "database path: ${home}${db_path}" && echo "config file: ${home}${config}" && echo "topology: ${home}${topology}"
+      echo "cardano-node app executable: ${cardano-cli} Make This DECLARATIVE" && echo "node socket path: ${node_socket_path}" && echo "database path: ${home}${db_path}" && echo "config file: ${home}${config}" && echo "topology: ${home}${topology}"
       echo ""
       echo ""
       echo "cli version:"
