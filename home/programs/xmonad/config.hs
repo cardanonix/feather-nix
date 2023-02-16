@@ -207,7 +207,7 @@ myZshTerminal = "alacritty --hold -e zsh"
 
 delayTerminal  = "sleep 2s && alacritty"
 myGuildView    = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-myCardanoNode  = "alacritty -o font.size=5 -e node_launch"
+myCardanoNode  = "alacritty -o font.size=5 -e node_toggle"
 myCardanoCli   = "sleep 20m && alacritty --hold -e node_check"
 appLauncher    = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c    = "playerctl --player=spotify,%any " <> c

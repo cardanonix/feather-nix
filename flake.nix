@@ -137,6 +137,7 @@
     {
       homeConfigurations = with inputs; (
         let
+          inherit (inputs) cardano-node;
           fishOverlay = f: p: {
             inherit fish-bobthefish-theme fish-keytool-completions;
           };
@@ -153,12 +154,17 @@
             gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
           };
 
+          # cardanoOverlay = f: p: {
+          #   cardano = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
+          # };
+
           pkgs = import nixpkgs {
             inherit system;
 
             config.allowUnfree = true;
 
             overlays = [
+              # cardanoOverlay
               cowsayOverlay
               fishOverlay
               nautilusOverlay
@@ -178,6 +184,7 @@
           };
 
           imports = [
+            # inputs.cardano-node.nixosModules.cardano-node
             neovim-flake.nixosModules.${system}.hm
             ./home/home.nix
           ];
@@ -224,16 +231,16 @@
         { 
           intelTower = nixosSystem {
             inherit lib pkgs system;
-            # inherit (inputs.cardano-node.packages.${pkgs.system}) cardano-node;
             specialArgs = { inherit inputs; };
             modules = [
               inputs.cardano-node.nixosModules.cardano-node
+              inputs.cardano-wallet.nixosModules.cardano-wallet
               ./system/machine/intelTower
               ./system/configuration.nix
             ];
           };
           intelNUC = nixosSystem {
-            inherit lib pkgs system;
+            inherit lib inputs pkgs system;
             specialArgs = { inherit inputs; };
             modules = [
               inputs.cardano-node.nixosModules.cardano-node

@@ -50,15 +50,15 @@ let
   mods1  = builtins.readFile ./modules.ini;
   mods2  = builtins.readFile ./user_modules.ini;
 
-  bluetoothScript = pkgs.callPackage ./scripts/bluetooth.nix {};
-  klsScript       = pkgs.callPackage ../../scripts/keyboard-layout-switch.nix { inherit pkgs; };
-  monitorScript   = pkgs.callPackage ./scripts/monitor.nix {};
-  mprisScript     = pkgs.callPackage ./scripts/mpris.nix {};
-  networkScript   = pkgs.callPackage ./scripts/network.nix {};
-  fgindexScript   = pkgs.callPackage ./scripts/fngi.nix {};
-  adaScript       = pkgs.callPackage ./scripts/ada.nix {};
-  cnodeScript     = pkgs.callPackage ./scripts/cnode.nix {};
-  launchScript    = pkgs.callPackage ../../scripts/node_launch.nix { inherit inputs pkgs config; };
+  bluetoothScript   = pkgs.callPackage ./scripts/bluetooth.nix {};
+  klsScript         = pkgs.callPackage ../../scripts/keyboard-layout-switch.nix { inherit pkgs; };
+  monitorScript     = pkgs.callPackage ./scripts/monitor.nix {};
+  mprisScript       = pkgs.callPackage ./scripts/mpris.nix {};
+  networkScript     = pkgs.callPackage ./scripts/network.nix {};
+  fgindexScript     = pkgs.callPackage ./scripts/fngi.nix {};
+  adaScript         = pkgs.callPackage ./scripts/ada.nix {};
+  cnodeStatusScript = pkgs.callPackage ./scripts/cnodeStatus.nix {};
+  cnodeToggleScript = pkgs.callPackage ../../scripts/node_toggle.nix { inherit inputs pkgs config; };
 
   bctl = ''
     [module/bctl]
@@ -110,7 +110,7 @@ let
   
     label-maxlen = 20
 
-    interval = 43200
+    interval = 10800
     format-padding = 1
 
     format =  <label><ramp>
@@ -137,17 +137,17 @@ let
     click-left = ${openCardanoSubreddit} 
   '';
 
-  cnode = ''
-    [module/cnode]
+  cnodeStatus = ''
+    [module/cnodeStatus]
     type = custom/script
 
-    exec = ${cnodeScript}/bin/cnode
+    exec = ${cnodeStatusScript}/bin/cnodeStatus
 
-    interval = 5
+    interval = 4
     format = "%{T7}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0
-    click-left = "${terminal} --hold -e ${launchScript}/bin/node_launch"
+    click-left = "${terminal} --hold -e ${cnodeToggleScript}/bin/node_toggle"
   '';
 
   xmonad = ''
@@ -158,7 +158,7 @@ let
     tail = true
   '';
 
-  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnode;
+  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnodeStatus;
 in
 {
   home.packages = with pkgs; [

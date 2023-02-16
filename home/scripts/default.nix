@@ -6,7 +6,7 @@ let
       hms           = pkgs.callPackage ./switcher.nix { inherit config pkgs; };
       kls           = pkgs.callPackage ./keyboard-layout-switch.nix { inherit pkgs; };
       szp           = pkgs.callPackage ./show-zombie-parents.nix { inherit pkgs; };
-      node_launch   = pkgs.callPackage ./node_launch.nix { inherit config pkgs; };
+      node_toggle   = pkgs.callPackage ./node_toggle.nix { inherit config pkgs; };
       node_check    = pkgs.callPackage ./node_check.nix { inherit config pkgs; };
       hue_tools     = pkgs.callPackage ./hue_tools.nix { inherit pkgs; };
       mru           = pkgs.callPackage ./mru.nix { inherit config pkgs; };
@@ -19,7 +19,7 @@ let
           gen-ssh-key       # generate ssh key and add it to the system
           kls               # switch keyboard layout
           szp               # show zombie parents
-          node_launch       # launch cardano-node
+          node_toggle       # launch cardano-node
           node_check        # cardano node monitor script
           hue_tools         # tools for interacting with hue lights
           mru               # repo download

@@ -9,11 +9,12 @@ let
   # node_socket_path  = "/Cardano/mainnet/db/node.socket";
   # db_path           = "/Cardano/mainnet/db";
   cowsay            = "${pkgs.cowsay}/bin/cowsay";
+  systemctl         = "/run/current-system/sw/bin/systemctl";
 in
-pkgs.writeShellScriptBin "node_launch" ''
+pkgs.writeShellScriptBin "node_toggle" ''
   if [ "$(${pgrep} cardano-node)" ]; then
-      echo "Killing Node!" && systemctl reload-or-restart cardano-node.service
+      echo "Killing Node!" && ${systemctl} stop cardano-node.service
   else
-      echo "Node Launching!" && systemctl start cardano-node.service
+      echo "Node Launching!" && ${systemctl} reload-or-restart cardano-node.service
   fi
 ''

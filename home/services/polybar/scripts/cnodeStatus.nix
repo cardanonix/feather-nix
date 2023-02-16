@@ -3,10 +3,10 @@
 let
   pgrep           = "${pkgs.busybox}/bin/pgrep";
 in
-  pkgs.writeShellScriptBin "cnode" ''
+  pkgs.writeShellScriptBin "cnodeStatus" ''
     if [ "$(${pgrep} cardano-node)" ]; then
         echo ""
     else
-        echo "轢"
+        echo ""
     fi
 ''

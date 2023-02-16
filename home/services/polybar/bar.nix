@@ -68,7 +68,7 @@ let
     bottom = true
 
     tray-position = center
-    modules-left =  cnode fngi ada cpu temperature memory filesystem    
+    modules-left =  cnodeStatus fngi ada cpu temperature memory filesystem    
     modules-right = wired-network  clickable-keyboard pulseaudio powermenu
     enable-ipc = true
   '';
