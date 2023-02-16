@@ -15,6 +15,6 @@ pkgs.writeShellScriptBin "node_toggle" ''
   if [ "$(${pgrep} cardano-node)" ]; then
       echo "Killing Node!" && ${systemctl} stop cardano-node.service
   else
-      echo "Node Launching!" && ${systemctl} reload-or-restart cardano-node.service
+      echo "Node Launching!" && ${systemctl} start cardano-node.service
   fi
 ''
