@@ -9,12 +9,16 @@ with lib;
   ];
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.bismuth = {
+  users.users.bismuth = with inputs; {
       isNormalUser = true;
       home = "/home/bismuth";
       uid = 1002;
+      # packages = [
+      #   inputs.services.config.cardano-wallet.package
+      #   inputs.services.cardano-wallet.package
+      #   ];
       description = "Harry Pray IV";
-      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" ];
+      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" "cardano-wallet" ];
       shell = pkgs.fish;
       # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };

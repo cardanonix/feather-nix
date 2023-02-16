@@ -3,6 +3,7 @@ let
   };
 in
 [
-  ./cardano-node   # TODO: fix cardano node service
+  ./cardano-node
+  ./cardano-wallet
   more
 ]
