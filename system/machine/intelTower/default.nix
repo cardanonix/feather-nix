@@ -83,13 +83,7 @@ with lib;
     { device = "192.168.1.212:/volume2/Cardano";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
-    };
-
-  fileSystems."/var/lib/cardano-node/db-mainnet" =
-    { device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-      options = [ "x-systemd.automount" "noauto" ];
-      fsType = "nfs";
-    };  
+    }; 
 
   fileSystems."/home/bismuth/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
