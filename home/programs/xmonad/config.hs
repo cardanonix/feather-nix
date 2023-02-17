@@ -205,12 +205,12 @@ myTerminal     = "alacritty"
 myBashTerminal = "alacritty --hold -e bash"
 myZshTerminal = "alacritty --hold -e zsh"
 
-delayTerminal  = "sleep 2s && alacritty"
-myGuildView    = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-myCardanoNode  = "alacritty -o font.size=5 -e node_toggle"
-myCardanoCli   = "sleep 20m && alacritty --hold -e node_check"
-appLauncher    = "rofi -modi drun,ssh,window -show drun -show-icons"
-playerctl c    = "playerctl --player=spotify,%any " <> c
+delayTerminal      = "sleep 2s && alacritty"
+myGuildView        = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
+cnodeStatus  = "alacritty -o font.size=5 -e systemctl status cardano-node"
+myCardanoCli       = "sleep 20m && alacritty --hold -e node_check"
+appLauncher        = "rofi -modi drun,ssh,window -show drun -show-icons"
+playerctl c        = "playerctl --player=spotify,%any " <> c
 
 calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
@@ -635,7 +635,7 @@ projects =
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/nix-config.git/intelTower/"
+            , projectDirectory = "~/plutus/nix-config.git/flattened/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
                                            
@@ -645,17 +645,17 @@ projects =
             , projectStartHook = Just $ do spawn "com.github.bleakgrey.tootle"
                                            spawn "element-desktop"
                                            spawn "discord"
-                                           --spawn "telegram-desktop"
-                                           --spawn "signal"
-                                           --spawn "slack"
+                                           spawn "telegram-desktop"
+                                           spawn "signal"
+                                           spawn "slack"
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
-            , projectStartHook = Just $ do spawn myCardanoNode
+            , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn myTerminal 
+            , projectStartHook = Just $ do spawn cnodeStatus
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
