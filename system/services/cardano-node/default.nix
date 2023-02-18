@@ -20,8 +20,26 @@ let
 in
 {   
   # nixpkgs.overlays = [ cardano-node.overlay ];
-  environment.systemPackages = with pkgs; [
-      inputs.cardano-node.packages.x86_64-linux.cardano-cli
+  environment.systemPackages = with inputs.cardano-node.packages.x86_64-linux; [
+    # bech32
+    # cabalProjectRegenerate
+    cardano-cli
+    # cardano-node-chairman
+    # cardano-ping
+    # cardano-submit-api
+    # cardano-testnet
+    # cardano-topology
+    # cardano-tracer
+    # chain-sync-client-with-ledger-state
+    # db-analyser
+    # db-converter
+    # db-synthesizer
+    # ledger-state
+    # locli
+    # plutus-example
+    # scan-blocks
+    # scan-blocks-pipelined
+    # tx-generator
   ];
 
   services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
