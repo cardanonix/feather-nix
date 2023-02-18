@@ -10,7 +10,8 @@ let
 in
 {   
   # nixpkgs.overlays = [ cardano-node.overlay ];
-  systemd.users.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+  # config.systemd.user.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+  config.systemd.user.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;

@@ -184,7 +184,6 @@
           };
 
           imports = [
-            # inputs.cardano-node.nixosModules.cardano-node
             neovim-flake.nixosModules.${system}.hm
             ./home/home.nix
           ];

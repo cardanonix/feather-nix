@@ -3,7 +3,7 @@ let
   };
 in
 [
-  ./cardano-node
+  #./cardano-node
   #./cardano-wallet
   #./grafana
   #./prometheus
