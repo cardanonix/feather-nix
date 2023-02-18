@@ -20,8 +20,9 @@ with lib;
       description = "Harry Pray IV";
       extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" "cardano-wallet" ];
       shell = pkgs.fish;
-      # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
-  };
+      openssh.authorizedKeys.keys = [ "ssh-rsa 6KMdNoKm[...] bismuth@intelTower" ];
+  };                                               
+                                                                  
 
   users.groups.plugdev = {};
 
