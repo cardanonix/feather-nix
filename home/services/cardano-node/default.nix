@@ -13,7 +13,7 @@ let
 in
 {   
   # nixpkgs.overlays = [ cardano-node.overlay ];
-  systemd.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+  systemd.users.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
       enable = true;
       after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
       package = inputs.cardano-node.packages.x86_64-linux.cardano-node;

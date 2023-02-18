@@ -35,6 +35,7 @@ in
   # disable the firewall 
     firewall.enable = true;
     firewall.allowedTCPPorts = [ 3001 9090 3000 3100 12798 ];
+
     #firewall.allowedUDPPorts = [ ... ];
     
     #proxy.default = "http://user:password@proxy:port/";
