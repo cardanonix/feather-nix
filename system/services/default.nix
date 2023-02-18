@@ -4,8 +4,8 @@ let
 in
 [
   ./cardano-node
-  ./cardano-wallet
-  ./grafana
-  ./prometheus
+  #./cardano-wallet
+  #./grafana
+  #./prometheus
   more
 ]

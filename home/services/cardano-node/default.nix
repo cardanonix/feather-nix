@@ -10,7 +10,7 @@ let
 in
 {   
   # nixpkgs.overlays = [ cardano-node.overlay ];
-  systemd.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+  systemd.users.services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;
@@ -40,19 +40,19 @@ in
     # };  
   };
 
-  systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
+  # systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
+  # systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
 
-  environment.variables = {
-    CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
-  };
+  # environment.variables = {
+  #   CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
+  # };
 
   # NAS mount point (node will write to default location if this doesn't exist)
-  fileSystems."/var/lib/cardano-node/db-mainnet" = { 
-    device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-    options = [ "x-systemd.automount" "noauto" ];
-    fsType = "nfs";
-  }; 
+  # fileSystems."/var/lib/cardano-node/db-mainnet" = { 
+  #   device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
+  #   options = [ "x-systemd.automount" "noauto" ];
+  #   fsType = "nfs";
+  # }; 
 
-  users.groups.cardano-node.gid = 1002;
+  # users.groups.cardano-node.gid = 1002;
 }
