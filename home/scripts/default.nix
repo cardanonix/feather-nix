@@ -10,7 +10,7 @@ let
       node_check    = pkgs.callPackage ./node_check.nix { inherit config pkgs; };
       hue_tools     = pkgs.callPackage ./hue_tools.nix { inherit pkgs; };
       mru           = pkgs.callPackage ./mru.nix { inherit config pkgs; };
-      ai_completion = pkgs.callPackage ./ai_completion { inherit config pkgs; };
+      ai_completion = pkgs.callPackage ./ai_completion.nix { inherit config pkgs; };
     in
     {
       home.packages =
