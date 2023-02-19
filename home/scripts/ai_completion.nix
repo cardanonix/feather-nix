@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  prompt   = "How many mics do you rip on the daily?";
+  prompt   = "Write a beat poem about the complex relationship between knowing something and believing something in the style of William S. Burroughs.";
   api_key  = builtins.readFile /home/bismuth/plutus/Documents/Credentials/davinci_api_key.txt;
   curl     = "${pkgs.curl}/bin/curl";
   jq       = "${pkgs.jq}/bin/jq";
