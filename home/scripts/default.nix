@@ -10,7 +10,7 @@ let
       node_check    = pkgs.callPackage ./node_check.nix { inherit config pkgs; };
       hue_tools     = pkgs.callPackage ./hue_tools.nix { inherit pkgs; };
       mru           = pkgs.callPackage ./mru.nix { inherit config pkgs; };
-      #ipad-mirror   = pkgs.callPackage ./ipad_screen_mirror.nix { inherit config pkgs; };
+      ai_completion = pkgs.callPackage ./ai_completion { inherit config pkgs; };
     in
     {
       home.packages =
@@ -23,6 +23,7 @@ let
           node_check        # cardano node monitor script
           hue_tools         # tools for interacting with hue lights
           mru               # repo download
+          ai_completion      # repo download
           #hms             # custom home-manager switcher that considers the current DISPLAY
           #ipad-mirror
         ];

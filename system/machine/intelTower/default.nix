@@ -18,9 +18,18 @@ with lib;
       #   inputs.services.cardano-wallet.package
       #   ];
       description = "Harry Pray IV";
-      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" "cardano-wallet" ];
+      extraGroups  = [ 
+        "docker" 
+        "networkmanager" 
+        "wheel" 
+        "scanner" 
+        "lp"
+        "plugdev" 
+        "cardano-node" 
+        "cardano-wallet" 
+        ];
       shell = pkgs.fish;
-      openssh.authorizedKeys.keys = [ "ssh-rsa 6KMdNoKm[...] bismuth@intelTower" ];
+      openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
   };                                               
                                                                   
 
