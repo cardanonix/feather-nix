@@ -81,7 +81,7 @@ pkgs.writeShellScriptBin "personAI_translate" ''
     "prompt": "'"$full_prompt"'",
     "max_tokens": 1000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/\r$//' | ${sed} 's/\r$//g'
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/^\n\n//'
   ''
 
 
