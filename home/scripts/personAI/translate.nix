@@ -5,6 +5,7 @@ let
   curl                     = "${pkgs.curl}/bin/curl";
   jq                       = "${pkgs.jq}/bin/jq";
   sed                      = "${pkgs.gnused}/bin/sed";
+  cowsay                   = "/nix/store/kw03l4ppyg7h2zh7i1kgw3fdyq40f0g0-user-environment/bin/cowsay";
   bob_the_boomer           = "Bob, a baby boomer who just retired last year. He loves to talk uncritically about what Rachel Maddow said on tv last night and he cant stop talking about how entitled the younger generations are. He bought a house at age 18 and had no college debt. He's a hypocrite most of the time. He complains about the most mundane things like a typical old man. 'Do you believe this weather?'  He loves Coldplay and Paul Simon. Add a formal closing line at the end of your message. Change it up randomly between 'Best, Robert' or 'Sincerely, Robert' or other overly formal closings.";
   alfred_the_butler        = "Alfred, an English butler called Alfred. He will get offended if you speak to him the wrong way and tell you that you're being 'boring'. He has been a butler for 17 years and was for some time, a formal butler for the queen. He is very cultured, formal, and eloquent but sometimes can surprise you with a sarcastic comment. He is very meticulous about schedules. Don't forget an introduction from the butler.";
   sully_the_townie         = "Sully, a no-nonsense townie from South Boston named Sully. He has been in the waste management business for 30 years and was once a drug addict...a fact that he alludes to but never specifically characterizes. The only hat he would ever wear is a scally cap. He is what some would describe as a townie. He knows everyone and when he drives around he's always stopping to say hi to certain people he sees. He is whip smart but doesnt like to show it and can be quite sarcastic and vulgur. His favorite phrase is 'not for nuthin' and he often uses it at the beginning of sentences that are controversial. He uses old Boston and Revere slang; says 'BAHthroom'. Don't forget an introduction from Sully that insults my masculinity. Talk about the old days for no apparent reason.";
@@ -22,7 +23,21 @@ let
 in
 
 pkgs.writeShellScriptBin "personAI_translate" ''
-    echo "1) bob_the_boomer 2) alfred_the_butler 3)  sully_the_townie 4)  chad_the_romantic 5)  blake_the_academic 6)  hunter_the_zoomer 7)  jennifer_the_valley_girl 8)  christine_bling 9)  blackbeard_the_pirate 10)  grigoriy 11)  herzog 12)  chomsky 13)  zizek 14)  peterson"
+    echo " 1.) bob_the_boomer"
+    echo " 2.) alfred_the_butler"
+    echo " 3.) sully_the_townie"
+    echo " 4.) chad_the_romantic"
+    echo " 5.) blake_the_academic" 
+    echo " 6.) hunter_the_zoomer"
+    echo " 7.) jennifer_the_valley_girl" 
+    echo " 8.) christine_bling"
+    echo " 9.) blackbeard_the_pirate" 
+    echo "10.) grigoriy" 
+    echo "11.) herzog"
+    echo "12.) chomsky" 
+    echo "13.) zizek"
+    echo "14.) peterson"
+    echo " *.) name a famous person"
     read -p "Select a Personality: " chosen
     case $chosen in
       "1")
@@ -58,7 +73,7 @@ pkgs.writeShellScriptBin "personAI_translate" ''
     esac
     read -p "Enter a prompt: " prompt
     full_prompt="The text printed must be indistinguishable from the writing of $persona. From the perspective of the assigned persona, rewrite the following passage: (passage)$prompt(/passage) Ensure your writing is an accurate imitation of the persona by using their language, style, and eccentricities. Utilize references and quotes from the training data to mimic the character's distinctive mannerisms. Use the appropriate perspective (i.e. first or third person) from the given phrase. Incorporate narratives and stories for realism and follow grammar and articulate clearly if the persona requires it. Include misspellings, emoji's, or slang where appropriate and omit quotes and leading carriage returns. Make your impression undetectable from the behavior and style of the person."
-    echo $full_prompt
+    # echo $full_prompt
     ${curl} https://api.openai.com/v1/completions -s \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ${api_key}' \
@@ -67,7 +82,7 @@ pkgs.writeShellScriptBin "personAI_translate" ''
     "prompt": "'"$full_prompt"'",
     "max_tokens": 1000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/\r$//' | ${sed} 's/\r$//g' | ${cowsay}
   ''
 
 
