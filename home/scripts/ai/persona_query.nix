@@ -21,7 +21,7 @@ let
   peterson                 = "pseudo-psychologist Dr. Jordan Peterson. Peterson is known to use complex and circuitous logic to try and prove that men should be misogynists.  He often writes in the form of an essay and is known to incorporate references to lobsters. He rambles on and on about how much better alpha males are than anyone else. He loves to pretend to be an expert on topics that he has absolutely bo authority on. He likes to try and get people to agree that totalitarianism is the natural way of the world.";
 in
 
-pkgs.writeShellScriptBin "aipt" ''
+pkgs.writeShellScriptBin "aipq" ''
     echo " 1.) bob_the_boomer"
     echo " 2.) alfred_the_butler"
     echo " 3.) sully_the_townie"
