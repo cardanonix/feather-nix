@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
+
 let
-  # imports                  = ./personas.nix;
   api_key                  = builtins.readFile /home/bismuth/plutus/Documents/Credentials/davinci_api_key.txt;
   curl                     = "${pkgs.curl}/bin/curl";
   jq                       = "${pkgs.jq}/bin/jq";
@@ -22,48 +22,53 @@ let
 in
 
 pkgs.writeShellScriptBin "personAI_translate" ''
-    echo bob_the_boomer/alfred_the_butler/sully_the_townie/chad_the_romantic/blake_the_academic/hunter_the_zoomer/jennifer_the_valley_girl/christine_bling/blackbeard_the_pirate/grigoriy/herzog/chomsky/zizek/peterson
-    read -p "Select a Personality: " persona
-    case $persona in
-      "bob_the_boomer")
-        echo ${bob_the_boomer};;
-      "alfred_the_butler")
-        echo ${alfred_the_butler};;
-      "sully_the_townie")
-        echo ${sully_the_townie};;
-      "chad_the_romantic")
-        echo ${chad_the_romantic};;
-      "blake_the_academic")
-        echo ${blake_the_academic};;
-      "hunter_the_zoomer")
-        echo ${hunter_the_zoomer};;
-      "jennifer_the_valley_girl")
-        echo ${jennifer_the_valley_girl};;
-      "christine_bling")
-        echo ${christine_bling};;
-      "blackbeard_the_pirate")
-        echo ${blackbeard_the_pirate};;
-      "grigoriy")
-        echo ${grigoriy};;
-      "herzog")
-        echo ${herzog};;
-      "chomsky")
-        echo ${chomsky};;
-      "zizek")
-        echo ${zizek};;
-      "peterson")
-        echo ${peterson};;
+    echo "1) bob_the_boomer 2) alfred_the_butler 3)  sully_the_townie 4)  chad_the_romantic 5)  blake_the_academic 6)  hunter_the_zoomer 7)  jennifer_the_valley_girl 8)  christine_bling 9)  blackbeard_the_pirate 10)  grigoriy 11)  herzog 12)  chomsky 13)  zizek 14)  peterson"
+    read -p "Select a Personality: " chosen
+    case $chosen in
+      "1")
+        persona="${bob_the_boomer}";;
+      "2")
+        persona="${alfred_the_butler}";;
+      "3")
+        persona="${sully_the_townie}";;
+      "4")
+        persona="${chad_the_romantic}";;
+      "5")
+        persona="${blake_the_academic}";;
+      "6")
+        persona="${hunter_the_zoomer}";;
+      "7")
+        persona="${jennifer_the_valley_girl}";;
+      "8")
+        persona="${christine_bling}";;
+      "9")
+        persona="${blackbeard_the_pirate}";;
+      "10")
+        persona="${grigoriy}";;
+      "11")
+        persona="${herzog}";;
+      "12")
+        persona="${chomsky}";;
+      "13")
+        persona="${zizek}";;
+      "14")
+        persona="${peterson}";;
       *)
-        echo You entered a custom motherfucker!
+        persona="$chosen";;
     esac
-    # read -p "Enter a prompt: " prompt
-    # ${curl} https://api.openai.com/v1/completions \
-    # -H 'Content-Type: application/json' \
-    # -H 'Authorization: Bearer ${api_key}' \
-    # -d '{
-    # "model": "text-davinci-003",
-    # "prompt": "'"$prompt"'",
-    # "max_tokens": 1000,
-    # "temperature": 0
-    # }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
+    read -p "Enter a prompt: " prompt
+    full_prompt="The text printed must be indistinguishable from the writing of $persona. From the perspective of the assigned persona, rewrite the following passage: (passage)$prompt(/passage) Ensure your writing is an accurate imitation of the persona by using their language, style, and eccentricities. Utilize references and quotes from the training data to mimic the character's distinctive mannerisms. Use the appropriate perspective (i.e. first or third person) from the given phrase. Incorporate narratives and stories for realism and follow grammar and articulate clearly if the persona requires it. Include misspellings, emoji's, or slang where appropriate and omit quotes and leading carriage returns. Make your impression undetectable from the behavior and style of the person."
+    echo $full_prompt
+    ${curl} https://api.openai.com/v1/completions -s \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer ${api_key}' \
+    -d '{
+    "model": "text-davinci-003",
+    "prompt": "'"$full_prompt"'",
+    "max_tokens": 1000,
+    "temperature": 0
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
   ''
+
+
+
