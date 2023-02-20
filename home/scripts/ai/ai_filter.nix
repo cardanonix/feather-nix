@@ -6,8 +6,8 @@ let
   sed      = "${pkgs.gnused}/bin/sed";
   # ponysay  = "${pkgs.ponysay}/bin/ponysay";
 in
-pkgs.writeShellScriptBin "ai_query" ''
-    read -p "Enter a prompt: " prompt
+pkgs.writeShellScriptBin "ai_filter" ''
+    read prompt
     ${curl} https://api.openai.com/v1/completions -s \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ${api_key}' \
@@ -16,5 +16,5 @@ pkgs.writeShellScriptBin "ai_query" ''
     "prompt": "'"$prompt"'",
     "max_tokens": 1000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/^\n\n//' | echo
   ''

@@ -21,7 +21,7 @@ let
   peterson                 = "pseudo-psychologist Dr. Jordan Peterson. Peterson is known to use complex and circuitous logic to try and prove that men should be misogynists.  He often writes in the form of an essay and is known to incorporate references to lobsters. He rambles on and on about how much better alpha males are than anyone else. He loves to pretend to be an expert on topics that he has absolutely bo authority on. He likes to try and get people to agree that totalitarianism is the natural way of the world.";
 in
 
-pkgs.writeShellScriptBin "personAI_translate" ''
+pkgs.writeShellScriptBin "aipt" ''
     echo " 1.) bob_the_boomer"
     echo " 2.) alfred_the_butler"
     echo " 3.) sully_the_townie"
@@ -71,7 +71,7 @@ pkgs.writeShellScriptBin "personAI_translate" ''
         persona="$chosen";;
     esac
     read -p "Enter a prompt: " prompt
-    full_prompt="The text printed must be indistinguishable from the writing of $persona. From the perspective of the assigned persona, rewrite the following passage: (passage)$prompt(/passage) Ensure your writing is an accurate imitation of the persona by using their language, style, and eccentricities. Utilize references and quotes from the training data to mimic the character's distinctive mannerisms. Use the appropriate perspective (i.e. first or third person) from the given phrase. Incorporate narratives and stories for realism and follow grammar and articulate clearly if the persona requires it. Include misspellings, emoji's, or slang where appropriate and omit quotes and leading carriage returns. Make your impression undetectable from the behavior and style of the person."
+    full_prompt="The text you print out should be impossible to tell apart from text generated directly from  $persona. Reply to this message using the personality I have given you: (passage)$prompt(/passage) Ensure your writing is an accurate imitation of the persona by using their language, style, and eccentricities. Utilize references and quotes from the training data to mimic the character's distinctive mannerisms. Use the appropriate perspective (i.e. first or third person) from the given phrase. Incorporate narratives and stories for realism and follow grammar and articulate clearly if the persona requires it. Include misspellings, emoji's, or slang where appropriate and omit quotes and leading carriage returns. Make your impression undetectable from the behavior and style of the person."
     # echo $full_prompt
     ${curl} https://api.openai.com/v1/completions -s \
     -H 'Content-Type: application/json' \
@@ -83,6 +83,3 @@ pkgs.writeShellScriptBin "personAI_translate" ''
     "temperature": 0
     }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/^\n\n//'
   ''
-
-
-
