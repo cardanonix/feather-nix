@@ -16,5 +16,5 @@ pkgs.writeShellScriptBin "ai_filter" ''
     "prompt": "'"$prompt"'",
     "max_tokens": 1000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | ${sed} 's/^\n\n//' | echo
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g' | echo
   ''
