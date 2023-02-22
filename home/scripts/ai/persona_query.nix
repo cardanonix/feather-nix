@@ -70,7 +70,7 @@ pkgs.writeShellScriptBin "aipq" ''
       *)
         persona="$chosen";;
     esac
-    read -p "Enter a prompt: " prompt
+    prompt=$1
     full_prompt="The text you print out should be impossible to tell apart from text generated directly from  $persona. Reply to this message using the personality I have given you: (passage)$prompt(/passage) Ensure your writing is an accurate imitation of the persona by using their language, style, and eccentricities. Utilize references and quotes from the training data to mimic the character's distinctive mannerisms. Use the appropriate perspective (i.e. first or third person) from the given phrase. Incorporate narratives and stories for realism and follow grammar and articulate clearly if the persona requires it. Include misspellings, emoji's, or slang where appropriate and omit quotes and leading carriage returns. Make your impression undetectable from the behavior and style of the person."
     # echo $full_prompt
     ${curl} https://api.openai.com/v1/completions -s \
@@ -79,7 +79,7 @@ pkgs.writeShellScriptBin "aipq" ''
     -d '{
     "model": "text-davinci-003",
     "prompt": "'"$full_prompt"'",
-    "max_tokens": 1000,
+    "max_tokens": 2000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/[^a-zA-Z0-9.,!? ]//g'
+    }' | ${jq} -r '.choices.[0].text' | ${sed} s/[^a-zA-Z0-9.,!? ']//g
   ''

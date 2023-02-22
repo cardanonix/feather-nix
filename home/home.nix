@@ -36,7 +36,6 @@ let
     #libreoffice          # office suite
     libnotify            # notify-send command4
     betterlockscreen     # fast lockscreen based on i3lock
-    niv                  # painless dependencies for Nix projects
     ncdu                 # disk space info (a better du)
     nfs-utils            # utilities for NFS
     ngrok                # secure tunneling to localhost
@@ -99,7 +98,7 @@ let
 
   cpuHungryPkgs = with pkgs; [
     vlc                  # media player
-    darktable            # raw photo manipulation and grading
+    #darktable            # raw photo manipulation and grading
     mpv                  # media player
     #kodi                 # media player  
     gimp                 # gnu image manipulation program (I started using gimp 2.99 which is causing problems with this one)

@@ -7,14 +7,14 @@ let
   # ponysay  = "${pkgs.ponysay}/bin/ponysay";
 in
 pkgs.writeShellScriptBin "ai_query" ''
-    read -p "Enter a prompt: " prompt
+    prompt=$1
     ${curl} https://api.openai.com/v1/completions -s \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ${api_key}' \
     -d '{
     "model": "text-davinci-003",
     "prompt": "'"$prompt"'",
-    "max_tokens": 1000,
+    "max_tokens": 2000,
     "temperature": 0
-    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | s/[^a-zA-Z0-9.,!? ']//g
   ''

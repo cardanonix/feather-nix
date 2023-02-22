@@ -192,7 +192,6 @@ in
       "https://cache.nixos.org/"
       "https://cache.iog.io"      
       "https://niv.cachix.org" #TODO: get this niv stuff setup properly
-      "https://cache.zw3rk.com"
       #"https://static-haskell-nix.cachix.org"
       ];
       trusted-public-keys = [
@@ -200,7 +199,6 @@ in
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
       "niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM=" 
-      "loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk="
       #TODO: static haskell: https://github.com/nh2/static-haskell-nix
       #"static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
       ];
