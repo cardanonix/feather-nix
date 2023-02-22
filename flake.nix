@@ -39,6 +39,10 @@
       flake = false;
     };
 
+    unison-nix = {
+      url = github:ceedubs/unison-nix;
+    };
+
     # Github Markdown ToC generator
     gh-md-toc = {
       url = github:ekalinin/github-markdown-toc;

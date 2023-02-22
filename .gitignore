@@ -4,3 +4,4 @@ generated-plutus-scripts
 .vscode/
 .vscode/settings.json
 .direnv/
+.unisonHistory

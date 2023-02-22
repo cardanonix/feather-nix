@@ -14,7 +14,7 @@ pkgs.writeShellScriptBin "ai_query" ''
     -d '{
     "model": "text-davinci-003",
     "prompt": "'"$prompt"'",
-    "max_tokens": 2000,
+    "max_tokens": 3000,
     "temperature": 0
     }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
   ''

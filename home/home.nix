@@ -188,6 +188,10 @@ let
     pkg-config
   ];
 
+  unisonPkgs = with inputs.unison-nix.packages.x86_64-linux; [
+    ucm
+    vim-unison
+  ];
 
 in
 
@@ -217,6 +221,7 @@ in
             ++ cpuHungryPkgs
             ++ rustPkgs
             ++ homePkgs
+            ++ unisonPkgs
             ++ pythonPkgs; 
 
     sessionVariables = {
