@@ -61,9 +61,6 @@ in
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
-  users.extraGroups.vboxusers.members = [ "bismuth" ];
-
   services = {
     # Mount MTP devices
     gvfs.enable = true;
@@ -191,16 +188,11 @@ in
       substituters = [
       "https://cache.nixos.org/"
       "https://cache.iog.io"      
-      "https://niv.cachix.org" #TODO: get this niv stuff setup properly
-      #"https://static-haskell-nix.cachix.org"
       ];
       trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM=" 
-      #TODO: static haskell: https://github.com/nh2/static-haskell-nix
-      #"static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
       ];
     };
   };

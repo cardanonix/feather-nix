@@ -13,10 +13,6 @@ with lib;
       isNormalUser = true;
       home = "/home/bismuth";
       uid = 1002;
-      # packages = [
-      #   inputs.services.config.cardano-wallet.package
-      #   inputs.services.cardano-wallet.package
-      #   ];
       description = "Harry Pray IV";
       extraGroups  = [ 
         "docker" 
@@ -32,7 +28,6 @@ with lib;
       openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
   };                                               
                                                                   
-
   users.groups.plugdev = {};
 
  # Use the systemd-boot EFI boot loader.

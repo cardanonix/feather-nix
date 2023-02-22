@@ -74,18 +74,20 @@ in
     # scan-blocks-pipelined
     # tx-generator
   ];
+
+  users.groups.cardano-node.gid = 10016;
   
   environment.variables = {
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
   };
 
   # # NAS mount point (node will write to default location if this doesn't exist)
-  # fileSystems."/var/lib/cardano-node/db-mainnet" = { 
+  # fileSystems."/home/bismuth/Cardano/cardano-node/db-mainnet" = { 
   #   device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
   #   options = [ "x-systemd.automount" "noauto" ];
   #   fsType = "nfs";
   # }; 
 
-  users.groups.cardano-node.gid = 10016;
+
   
 }

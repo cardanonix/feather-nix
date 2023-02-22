@@ -39,9 +39,6 @@
       flake = false;
     };
 
-    unison-nix = {
-      url = github:ceedubs/unison-nix;
-    };
 
     # Github Markdown ToC generator
     gh-md-toc = {
@@ -79,6 +76,9 @@
       url = "github:input-output-hk/rust.nix/work";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    unison-nix.url = github:ceedubs/unison-nix;
+
 
     #IOG Cardano-Haskell-Packages
     CHaP = {
