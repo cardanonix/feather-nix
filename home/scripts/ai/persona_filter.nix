@@ -80,5 +80,5 @@ pkgs.writeShellScriptBin "aipf" ''
     "prompt": "'"$full_prompt"'",
     "max_tokens": 2000,
     "temperature": 0
-    }' | ${jq} -r '.choices.[0].text' | ${sed} s/[^a-zA-Z0-9.,!? ']//g
+    }' | ${jq} '.choices' | ${jq} -r '.[0].text' | ${sed} 's/"//g'
   ''
