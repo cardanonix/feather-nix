@@ -188,9 +188,17 @@
           };
 
           imports = [
+            #inputs.cardano-node.nixosModules.cardano-node
+            #inputs.cardano-wallet.nixosModules.cardano-wallet
             neovim-flake.nixosModules.${system}.hm
             ./home/home.nix
           ];
+
+          # imports = [
+          #   neovim-flake.nixosModules.${system}.hm
+          #   ./home/slim/home.nix
+          # ];
+
 
           mkHome = { ultraHD ? false }: (
             home-manager.lib.homeManagerConfiguration rec {
@@ -200,14 +208,30 @@
                 inherit ultraHD inputs;
                 addons = nur.repos.rycee.firefox-addons;
               };
-
               modules = [{ inherit imports; }];
+            }
+          );
+          
+          mkSlimHome = { ultraHD ? false }: (
+            home-manager.lib.homeManagerConfiguration rec {
+              inherit pkgs;
+
+              extraSpecialArgs = {
+                inherit ultraHD inputs;
+                addons = nur.repos.rycee.firefox-addons;
+              };
+              modules = [
+                ((import ./home/slim/home.nix))
+                neovim-flake.nixosModules.${system}.hm
+              ];
             }
           );
         in
         {
-          bismuth-edp = mkHome { ultraHD = false; };
-          bismuth-uhd = mkHome { ultraHD = true; };
+          
+          bismuth-lvm = mkSlimHome { ultraHD = false; };
+          bismuth-edp = mkHome     { ultraHD = false; };
+          bismuth-uhd = mkHome      { ultraHD = true; };
 
         }
       );

@@ -10,6 +10,11 @@ activateHM() {
   #hm-changes-report
 }
 
+rebuild_home_lvm() {
+  nix build .#homeConfigurations.bismuth-lvm.activationPackage --show-trace --impure
+  activateHM
+}
+
 rebuild_home_edp() {
   nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
   activateHM
@@ -101,6 +106,8 @@ collect_ALL_garbage() {
 
 
 case $1 in
+  "lvm")
+    rebuild_home_lvm;;
   "edp")
     rebuild_home_edp;;
   "edpEval")
@@ -136,5 +143,5 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
+    echo "expected 'lvm/edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
 esac

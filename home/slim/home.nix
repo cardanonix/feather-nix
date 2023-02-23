@@ -1,12 +1,12 @@
 { config, lib, pkgs, stdenv, inputs, ... }:
 
 let
-  username = "bismuth";
+  username = "vm";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
   # workaround to open a URL in a new tab in the specific firefox profile
-  work-browser = pkgs.callPackage ./programs/browsers/work.nix {};
+  work-browser = pkgs.callPackage .././programs/browsers/work.nix {};
 
   defaultPkgs = with pkgs; [
     aalib                # make ASCI text 
@@ -200,11 +200,11 @@ in
   programs.home-manager.enable = true;
 
   imports = builtins.concatMap import [
-    ./modules
-    ./programs
-    ./scripts
-    ./services
-    ./themes
+    .././modules
+    .././programs
+    .././scripts
+    .././services
+    .././themes
   ];
 
   xdg = {
