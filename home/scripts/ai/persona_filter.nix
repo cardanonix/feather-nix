@@ -16,6 +16,7 @@ pkgs.writeShellScriptBin "aipf" ''
     echo " 5.) Blake the Academic        12.) Noam Chomsky" 
     echo " 6.) Hunter the Zoomer         13.) Slavoj Žižek"
     echo " 7.) Jennifer the Valley Girl  14.) Jordan the idiot Peterson"
+    echo "                               15.) Paul from HR"    
     echo "" 
     echo " or *.) name a famous person" 
     read -p "Select a Personality: " chosen
@@ -48,6 +49,8 @@ pkgs.writeShellScriptBin "aipf" ''
         persona="${personas.zizek}";;
       "14")
         persona="${personas.peterson}";;
+      "15")
+        persona="${personas.paul_from_hr}";;
       *)
         persona="$chosen";;
     esac
