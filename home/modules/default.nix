@@ -2,5 +2,7 @@
   #./megasync.nix
   ./signal.nix
   ./spotify.nix
-  #./cardano-node.nix
+  #./cardano-node
+  #./cardano-wallet
+  #./grafana
 ]
