@@ -10,16 +10,16 @@ let
 in
 
 pkgs.writeShellScriptBin "aipq" ''
-    echo " 1.) Bob the Boomer             8.) Christine Bling"
-    echo " 2.) Alfred the Butler          9.) Blackbeard the Pirate"
-    echo " 3.) Sully the Townie          10.) Grigoriy the Bear Wrestler"
-    echo " 4.) Chad the Romantic         11.) Warner Herzog"
-    echo " 5.) Blake the Academic        12.) Noam Chomsky" 
-    echo " 6.) Hunter the Zoomer         13.) Slavoj Žižek"
-    echo " 7.) Jennifer the Valley Girl  14.) Jordan the idiot Peterson"
-    echo "                               15.) Paul from HR"
+    echo " 1.) Bob the Boomer             9.) Christine Bling"
+    echo " 2.) Alfred the Butler         10.) Blackbeard the Pirate"
+    echo " 3.) Sully the Townie          11.) Grigoriy the Bear Wrestler"
+    echo " 4.) Chad the Romantic         12.) Warner Herzog"
+    echo " 5.) Blake the Academic        13.) Noam Chomsky" 
+    echo " 6.) Hunter the Zoomer         14.) Slavoj Žižek"
+    echo " 7.) Jennifer the Valley Girl  15.) Jordan Peterson"
+    echo " 8.) Paul from HR              16.) Thich Nhat Hanh"
     echo "" 
-    echo " or *.) name a famous person" 
+    echo " *.) name a famous person" 
     read -p "Select a Personality: " chosen
     case $chosen in
       "1")
@@ -37,21 +37,23 @@ pkgs.writeShellScriptBin "aipq" ''
       "7")
         persona="${personas.jennifer_the_valley_girl}";;
       "8")
-        persona="${personas.christine_bling}";;
-      "9")
-        persona="${personas.blackbeard_the_pirate}";;
-      "10")
-        persona="${personas.grigoriy}";;
-      "11")
-        persona="${personas.herzog}";;
-      "12")
-        persona="${personas.chomsky}";;
-      "13")
-        persona="${personas.zizek}";;
-      "14")
-        persona="${personas.peterson}";;
-      "15")
         persona="${personas.paul_from_hr}";;
+      "9")
+        persona="${personas.christine_bling}";;
+      "10")
+        persona="${personas.blackbeard_the_pirate}";;
+      "12")
+        persona="${personas.grigoriy}";;
+      "13")
+        persona="${personas.herzog}";;
+      "13")
+        persona="${personas.chomsky}";;
+      "14")
+        persona="${personas.zizek}";;
+      "15")
+        persona="${personas.peterson}";;
+      "16")
+        persona="${personas.thich_nhat_nanh}";;
       *)
         persona="$chosen";;
     esac
