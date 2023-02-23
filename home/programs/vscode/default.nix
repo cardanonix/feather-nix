@@ -42,7 +42,6 @@ in
           arrterian.nix-env-selector
           jnoortheen.nix-ide
           gruntfuggly.todo-tree
-          #hoovercj.haskell-linter
         ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             publisher = "mrded";
@@ -60,15 +59,12 @@ in
         "terminal.integrated.defaultProfile.linux" = "${bash}";
         "terminal.integrated.copyOnSelection" = true;
         "nix.enableLanguageServer" = true;
-        "haskell.manageHLS" = "HLS";
-        # "haskell.hlsExecutablePath" = "${hls}";
-        "haskell.hlintExecutablePath" = "${hlint}";
         "explorer.confirmDelete" = false;
         "git.autofetch" = true;
         "git.autoStash" = true;
         "explorer.confirmDragAndDrop" = false;
         "git.enableCommitSigning" = true;
-        "editor.minimap.enabled" = false;
+        "editor.minimap.enabled" = true;
         "diffEditor.ignoreTrimWhitespace" = false;
         "window.autoDetectColorScheme" = true;
     };
