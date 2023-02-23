@@ -12,7 +12,7 @@ in
 pkgs.writeShellScriptBin "aipq" ''
     echo " 1.) Bob the Boomer             9.) Christine Bling"
     echo " 2.) Alfred the Butler         10.) Blackbeard the Pirate"
-    echo " 3.) Sully the Townie          11.) Grigoriy the Bear Wrestler"
+    echo " 3.) Sully the Townie          11.) Zangief the Bear Wrestler"
     echo " 4.) Chad the Romantic         12.) Warner Herzog"
     echo " 5.) Blake the Academic        13.) Noam Chomsky" 
     echo " 6.) Hunter the Zoomer         14.) Slavoj Žižek"
@@ -43,7 +43,7 @@ pkgs.writeShellScriptBin "aipq" ''
       "10")
         persona="${personas.blackbeard_the_pirate}";;
       "12")
-        persona="${personas.grigoriy}";;
+        persona="${personas.zangief}";;
       "13")
         persona="${personas.herzog}";;
       "13")
