@@ -9,21 +9,15 @@ let
 in
 
 pkgs.writeShellScriptBin "aipf" ''
-    echo " 1.) bob_the_boomer"
-    echo " 2.) alfred_the_butler"
-    echo " 3.) sully_the_townie"
-    echo " 4.) chad_the_romantic"
-    echo " 5.) blake_the_academic" 
-    echo " 6.) hunter_the_zoomer"
-    echo " 7.) jennifer_the_valley_girl" 
-    echo " 8.) christine_bling"
-    echo " 9.) blackbeard_the_pirate" 
-    echo "10.) grigoriy" 
-    echo "11.) herzog"
-    echo "12.) chomsky" 
-    echo "13.) zizek"
-    echo "14.) peterson"
-    echo " *.) name a famous person"
+    echo " 1.) Bob the Boomer             8.) Christine Bling"
+    echo " 2.) Alfred the Butler          9.) Blackbeard the Pirate"
+    echo " 3.) Sully the Townie          10.) Grigoriy the Bear Wrestler"
+    echo " 4.) Chad the Romantic         11.) Warner Herzog"
+    echo " 5.) Blake the Academic        12.) Noam Chomsky" 
+    echo " 6.) Hunter the Zoomer         13.) Slavoj Žižek"
+    echo " 7.) Jennifer the Valley Girl  14.) Jordan the idiot Peterson"
+    echo "" 
+    echo " or *.) name a famous person" 
     read -p "Select a Personality: " chosen
     case $chosen in
       "1")
