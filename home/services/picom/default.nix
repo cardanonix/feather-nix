@@ -17,7 +17,7 @@
     fadeDelta = 5;
     vSync = true;
     shadow = true;
-    shadowOpacity = 0.85;
+    shadowOpacity = 0.95;
     shadowExclude = [
           "bounding_shaped && !rounded_corners"
     ];

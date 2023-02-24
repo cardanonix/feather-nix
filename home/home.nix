@@ -79,7 +79,8 @@ let
     discord              # discord app (breaks often)
     tdesktop             # telegram messaging client
     slack                # slack messaging client
-    tootle               # mastodon client
+    # tootle               # mastodon client
+    tokodon
 
     #  Ricing
     cmatrix              # dorky terminal matrix effect

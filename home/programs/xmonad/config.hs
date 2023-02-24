@@ -498,6 +498,7 @@ doFloatAbsRect x y width height = do
 -- WM_CLASS(STRING) = "keepassxc", "KeePassXC"
 -- WM_CLASS(STRING) = "discord.com__app", "Brave-browser"
 -- WM_CLASS(STRING) = "mstdn.social__home", "Brave-browser"
+-- WM_CLASS(STRING) = "tokodon", "tokodon"
 -- xprop | grep WM_RESOURCE
 -- and click on the client you're interested in.
 --
@@ -524,7 +525,7 @@ eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
 gimp      = ClassApp "Gimp"                 "gimp"
 keepass   = ClassApp "KeePassXC"            "keepassxc"
-mastodon  = TitleApp "Mastodon"             "com.github.bleakgrey.tootle" --under construction
+-- mastodon  = TitleApp "Mastodon"          "tokodon"
 nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
@@ -642,7 +643,7 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "com.github.bleakgrey.tootle"
+            , projectStartHook = Just $ do spawn "tokodon"
                                            spawn "element-desktop"
                                            spawn "discord"
                                            spawn "telegram-desktop"
