@@ -21,6 +21,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nix-colors = {
+    #   url = "github:misterio77/nix-colors";
+    # };
+
     neovim-flake = {
       url = github:Cardano-on-Nix/neovim-flake;
       # neovim-flake pushes its binaries to the cache using its own nixpkgs version
