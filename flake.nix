@@ -163,7 +163,7 @@
           };
 
           # cardanoOverlay = f: p: {
-          #   cardano = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
+          #   cardano = inputs.cardano-node.packages.${system}.cardano-node;;
           # };
 
           pkgs = import nixpkgs {
