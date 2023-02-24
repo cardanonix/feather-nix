@@ -216,7 +216,7 @@
             }
           );
           
-          mkSlimHome = { ultraHD ? false }: (
+          mkSlim = { ultraHD ? false }: (
             home-manager.lib.homeManagerConfiguration rec {
               inherit pkgs;
 
@@ -225,7 +225,7 @@
                 addons = nur.repos.rycee.firefox-addons;
               };
               modules = [
-                ((import ./home/slim/home.nix))
+                ((import ./slim/home.nix))
                 neovim-flake.nixosModules.${system}.hm
               ];
             }
@@ -233,9 +233,9 @@
         in
         {
           
-          bismuth-lvm = mkSlimHome { ultraHD = false; };
-          bismuth-edp = mkHome     { ultraHD = false; };
-          bismuth-uhd = mkHome      { ultraHD = true; };
+          vm-home     = mkSlim { ultraHD = false; };
+          bismuth-edp = mkHome { ultraHD = false; };
+          bismuth-uhd = mkHome { ultraHD = true; };
 
         }
       );

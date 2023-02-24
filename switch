@@ -11,7 +11,7 @@ activateHM() {
 }
 
 rebuild_home_lvm() {
-  nix build .#homeConfigurations.bismuth-lvm.activationPackage --show-trace --impure
+  nix build .#homeConfigurations.vm-home.activationPackage --show-trace --impure
   activateHM
 }
 

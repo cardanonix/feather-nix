@@ -5,8 +5,8 @@ let
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
 
-  # workaround to open a URL in a new tab in the specific firefox profile
-  work-browser = pkgs.callPackage .././programs/browsers/work.nix {};
+  # # workaround to open a URL in a new tab in the specific firefox profile
+  # work-browser = pkgs.callPackage .././programs/browsers/work.nix {};
 
   defaultPkgs = with pkgs; [
     aalib                # make ASCI text 
@@ -94,28 +94,9 @@ let
     gnupg                # Security ##
     ledger-live-desktop  # Ledger Nano X Support for NixOS
     bitwarden-cli        # command-line client for the password manager
+    mr
   ];
 
-  cpuHungryPkgs = with pkgs; [
-    vlc                  # media player
-    #darktable            # raw photo manipulation and grading
-    mpv                  # media player
-    #kodi                 # media player  
-    gimp                 # gnu image manipulation program (I started using gimp 2.99 which is causing problems with this one)
-    #blender              # 3D computer graphics software tool set
-    krita                # image editor (supposedly better than gimp)
-    mkvtoolnix           # tools for encoding MKV files, etc
-    filebot              # batch renaming
-    kdenlive             # super nice video editor
-    mlt                  # kdenlive uses the MLT framework to process all video operations
-    mediainfo            # additional package for kdenlive
-    inkscape
-  ];
-
-  homePkgs = with pkgs; [
-    hue-cli              # lights for my residence
-    mr                   # mass github actions
-  ];
 
   gnomePkgs = with pkgs.gnome; [
     eog            # image viewer
@@ -142,69 +123,17 @@ let
     ihaskell-blaze 
   ];
 
-  cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
-    cncli
-  ];
-
-  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [     
-    bech32
-    cabalProjectRegenerate
-    cardano-cli
-    cardano-node
-    cardano-node-chairman
-    cardano-ping
-    cardano-submit-api
-    cardano-testnet
-    cardano-topology
-    cardano-tracer
-    chain-sync-client-with-ledger-state
-    db-analyser
-    db-converter
-    db-synthesizer
-    ledger-state
-    locli
-    plutus-example
-    scan-blocks
-    scan-blocks-pipelined
-    tx-generator
-  ];
-
-  pythonExt = p: with p; [
-    pandas
-    requests
-    pip
-    numpy
-  ];
-
-  pythonPkgs = with pkgs ++ pythonExt; [
-    (pkgs.python3.withPackages pythonExt)
-  ];
-
-  rustPkgs = with pkgs; [
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
-    pkg-config
-  ];
-
-  unisonPkgs = with inputs.unison-nix.packages.x86_64-linux; [
-    ucm
-    vim-unison
-  ];
-
 in
 
 {
   programs.home-manager.enable = true;
 
   imports = builtins.concatMap import [
-    .././modules
-    .././programs
-    .././scripts
-    .././services
-    .././themes
+    ./modules
+    ./programs
+    ./scripts
+    ./services
+    ./themes
   ];
 
   xdg = {
@@ -218,12 +147,7 @@ in
 
     packages = defaultPkgs 
             ++ gnomePkgs 
-            ++ haskellPkgs
-            ++ cpuHungryPkgs
-            ++ rustPkgs
-            ++ homePkgs
-            ++ unisonPkgs
-            ++ pythonPkgs; 
+            ++ haskellPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
