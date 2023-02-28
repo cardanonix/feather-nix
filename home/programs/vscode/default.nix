@@ -69,15 +69,23 @@ in
         "window.autoDetectColorScheme" = false;
         # "workbench.statusBar.visible" = false;
         "workbench.colorCustomizations" = {
-          "statusBar.background" = "#25211B";
-          "statusBar.noFolderBackground" = "#25211B";
-          "statusBar.debuggingBackground" = "#25211B";
-          "editor.background" = "#25211B";
-          "statusBarItem.remoteBackground" = "#25211B";
+          # "[Tomorrow Night Blue]" = "{}";
+          "statusBar.background" = "#252422";
+          "statusBar.noFolderBackground" = "#1F1E1C";
+          "statusBar.debuggingBackground" = "#1F1E1C";
+          "editor.background" = "#1F1E1C";
+          "statusBarItem.remoteBackground" = "#1F1E1C";
           "mergeEditor.change.background" = "#627A92";
-          "tab.inactiveBackground" = "#1F1E1C"; #bad!
-          "sideBar.background" = "#1F1E1C";
-          "sideBar.dropBackground" = "#1F1E1C"; 
+          "tab.inactiveBackground" = "#252422"; #bad!
+          "sideBar.background" = "#252422";
+          "sideBar.dropBackground" = "#252422"; 
+          "input.background" =  "#252422";
+          "banner.background" = "#252422";
+          "minimap.background" = "#252422";
+          "menu.background" =  "#252422";
+          "menu.selectionBackground" =  "#252422";
+          "icon.foreground" = "#FFFFFF";
+          "statusBarItem.prominentBackground" = "#252422";
         };
     };
   };
