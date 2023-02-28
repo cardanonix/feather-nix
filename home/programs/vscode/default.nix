@@ -68,15 +68,14 @@ in
         "diffEditor.ignoreTrimWhitespace" = false;
         "window.autoDetectColorScheme" = false;
         # "workbench.statusBar.visible" = false;
-        "workbench.colorCustomizations" = {
-          # "[Tomorrow Night Blue]" = "{}";
+        "workbench.colorCustomizations" = { #ugly right now
           "statusBar.background" = "#252422";
           "statusBar.noFolderBackground" = "#1F1E1C";
           "statusBar.debuggingBackground" = "#1F1E1C";
           "editor.background" = "#1F1E1C";
           "statusBarItem.remoteBackground" = "#1F1E1C";
           "mergeEditor.change.background" = "#627A92";
-          "tab.inactiveBackground" = "#252422"; #bad!
+          "tab.inactiveBackground" = "#252422";
           "sideBar.background" = "#252422";
           "sideBar.dropBackground" = "#252422"; 
           "input.background" =  "#252422";
