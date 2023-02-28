@@ -66,7 +66,19 @@ in
         "git.enableCommitSigning" = true;
         "editor.minimap.enabled" = true;
         "diffEditor.ignoreTrimWhitespace" = false;
-        "window.autoDetectColorScheme" = true;
+        "window.autoDetectColorScheme" = false;
+        # "workbench.statusBar.visible" = false;
+        "workbench.colorCustomizations" = {
+          "statusBar.background" = "#25211B";
+          "statusBar.noFolderBackground" = "#25211B";
+          "statusBar.debuggingBackground" = "#25211B";
+          "editor.background" = "#25211B";
+          "statusBarItem.remoteBackground" = "#25211B";
+          "mergeEditor.change.background" = "#627A92";
+          "tab.inactiveBackground" = "#1F1E1C"; #bad!
+          "sideBar.background" = "#1F1E1C";
+          "sideBar.dropBackground" = "#1F1E1C"; 
+        };
     };
   };
 }

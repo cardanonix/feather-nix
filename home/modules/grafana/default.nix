@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, inputs, ... }:
+{ config, lib, pkgs,  inputs, ... }:
 
 {
   services.config.grafana = {
