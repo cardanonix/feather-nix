@@ -7,5 +7,6 @@ in
   #./cardano-wallet
   #./grafana
   #./prometheus
+  ./ledger
   more
 ]
