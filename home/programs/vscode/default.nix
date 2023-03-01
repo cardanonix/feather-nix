@@ -75,6 +75,7 @@ in
           "editor.background" = "#1F1E1C";
           "statusBarItem.remoteBackground" = "#1F1E1C";
           "mergeEditor.change.background" = "#627A92";
+          "mergeEditor.change.word.background" = "#252422";
           "tab.inactiveBackground" = "#252422";
           "sideBar.background" = "#252422";
           "sideBar.dropBackground" = "#252422"; 

@@ -6,7 +6,7 @@
       scheme = "Mylight";
       author = "Harry Pray IV";
       base00 = "25211B";
-      base01 = "65A6AD";
+      base01 = "4C94DB";
       base02 = "85A256";
       base03 = "A2743F";
       base04 = "627A92";
