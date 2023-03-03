@@ -70,6 +70,7 @@ let
     python3Packages.ipython
     srm
     pinentry
+    niv
 
     # Work Stuff
     work-browser
