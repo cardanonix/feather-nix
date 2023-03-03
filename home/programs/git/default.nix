@@ -68,7 +68,7 @@ in
       "*.jvmopts"      # should be local to every project
     ];
     signing = {
-      key = "0xAAF9795E393B4DA0";
+      key = "AAF9795E393B4DA0";
       signByDefault = true;
     };
     userEmail = "harryprayiv@gmail.com";

@@ -64,7 +64,7 @@ in
         "git.autoStash" = true;
         "explorer.confirmDragAndDrop" = false;
         "git.enableCommitSigning" = true;
-        "editor.minimap.enabled" = true;
+        "editor.minimap.enabled" = false;
         "diffEditor.ignoreTrimWhitespace" = false;
         "window.autoDetectColorScheme" = false;
         # "workbench.statusBar.visible" = false;
