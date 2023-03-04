@@ -42,9 +42,9 @@ pkgs.writeShellScriptBin "aipq" ''
         persona="${personas.christine_bling}";;
       "10")
         persona="${personas.blackbeard_the_pirate}";;
-      "12")
+      "11")
         persona="${personas.zangief}";;
-      "13")
+      "12")
         persona="${personas.herzog}";;
       "13")
         persona="${personas.chomsky}";;
