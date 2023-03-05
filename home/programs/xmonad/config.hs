@@ -207,7 +207,7 @@ myZshTerminal = "alacritty --hold -e zsh"
 
 delayTerminal      = "sleep 2s && alacritty"
 myGuildView        = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-cnodeStatus  = "alacritty -o font.size=5 -e systemctl status cardano-node"
+cnodeStatus        = "alacritty --hold -o font.size=5 -e systemctl status cardano-node"
 myCardanoCli       = "sleep 20m && alacritty --hold -e node_check"
 appLauncher        = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c        = "playerctl --player=spotify,%any " <> c
@@ -412,20 +412,21 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid                    = gapSpaced 5 $ Grid False
+     grid                    = gapSpaced gapSize $ Grid False
      grid_strict_portrait    = GridRatio grid_portrait False 
      grid_strict_landscape   = GridRatio grid_landscape False 
-     tiled                   = gapSpaced 5 $ Tall nmaster delta golden_ratio
-     doubletiled             = gapSpaced 2 $ Tall nmasterTwo delta golden_ratio
+     tiled                   = gapSpaced gapSize $ Tall nmaster delta golden_ratio
+     doubletiled             = gapSpaced gapSize $ Tall nmasterTwo delta golden_ratio
      tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     tiled_spaced            = gapSpaced 10 $ Tall nmaster delta ratio
-     column3_og              = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
-     video_tile              = gapSpaced 4 $ Mirror (Tall 1 (1/50) (3/5))
-     full                    = gapSpaced 4 Full
-     fuller                  = gapSpaced 1 Full
-     column3                 = gapSpaced 4 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral            = gapSpaced 4 $ spiral golden_ratio
-     silverSpiral            = gapSpaced 4 $ spiralWithDir East CCW ratio
+     tiled_spaced            = gapSpaced gapSize $ Tall nmaster delta ratio
+     column3_og              = gapSpaced gapSize $ ThreeColMid 1 (3/100) (1/2)
+     video_tile              = gapSpaced gapSize $ Mirror (Tall 1 (1/50) (3/5))
+     full                    = gapSpaced 0 Full
+     fuller                  = gapSpaced 0 Full
+     column3                 = gapSpaced gapSize $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral            = gapSpaced gapSize $ spiral golden_ratio
+     silverSpiral            = gapSpaced gapSize $ spiralWithDir East CCW ratio
+     dynamicGaps             = gapSpaced gapSize $ spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -439,16 +440,18 @@ myLayout =
 
      -- Percent of screen to increment by when resizing panes
      delta   = 2/100
-
+   
      -- Gaps bewteen windows
+     gapSize = 10
+
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
-
-     gapIncrement = (gapSpaced ++)
+     
+    --  gapIncrement = mkToggle (gapSize (++))
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
-     mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled)
      vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
@@ -655,7 +658,7 @@ projects =
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
-            , projectStartHook = Just $ do spawn myTerminal
+            , projectStartHook = Just $ do spawn cnodeStatus
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/Cardano/git/gimbalabs/plutus-starter/"
