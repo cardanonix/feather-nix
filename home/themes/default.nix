@@ -7,8 +7,8 @@ let themes =
         package = pkgs.gruvbox-dark-icons-gtk;
       };
       theme = {
-        name = "Nordic";
-        package = pkgs.nordic;
+        name = "Qogir-Dark";
+        package = pkgs.qogir-theme;
       };
     };
   };

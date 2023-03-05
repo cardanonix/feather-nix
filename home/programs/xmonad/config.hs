@@ -130,7 +130,7 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#A2743F" -- #dark brown (372716)  
+  , normalBorderColor  = "#32343d" -- #neutral gray
   , focusedBorderColor = "#6C99B8" -- nice blue
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
@@ -240,7 +240,7 @@ showKeybindings xs =
     windows $ W.greedyView webWs     -- switch to webWs
 
 
- -- I used "xev" to figure out exactly what key I was pressing to make many of these 
+ -- use "xev" to figure out exactly what key you are pressing
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
@@ -412,20 +412,20 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid                    = gapSpaced 3 $ Grid False
+     grid                    = gapSpaced 5 $ Grid False
      grid_strict_portrait    = GridRatio grid_portrait False 
      grid_strict_landscape   = GridRatio grid_landscape False 
-     tiled                   = gapSpaced 3 $ Tall nmaster delta golden_ratio
-     doubletiled             = gapSpaced 0 $ Tall nmasterTwo delta golden_ratio
+     tiled                   = gapSpaced 5 $ Tall nmaster delta golden_ratio
+     doubletiled             = gapSpaced 2 $ Tall nmasterTwo delta golden_ratio
      tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
      tiled_spaced            = gapSpaced 10 $ Tall nmaster delta ratio
      column3_og              = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
-     video_tile              = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
-     full                    = gapSpaced 3 Full
-     fuller                  = gapSpaced 0 Full
-     column3                 = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral            = gapSpaced 3 $ spiral golden_ratio
-     silverSpiral            = gapSpaced 3 $ spiralWithDir East CCW ratio
+     video_tile              = gapSpaced 4 $ Mirror (Tall 1 (1/50) (3/5))
+     full                    = gapSpaced 4 Full
+     fuller                  = gapSpaced 1 Full
+     column3                 = gapSpaced 4 $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral            = gapSpaced 4 $ spiral golden_ratio
+     silverSpiral            = gapSpaced 4 $ spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -444,6 +444,8 @@ myLayout =
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
 
+     gapIncrement = (gapSpaced ++)
+
      -- Per workspace layout
      webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
      mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
@@ -457,6 +459,8 @@ myLayout =
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
+
+
 
 
 -- Defining Rectangles using absolute points (https://gist.github.com/tkf/1343015)
@@ -636,10 +640,9 @@ projects =
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/nix-config.git/flattened/"
+            , projectDirectory = "~/plutus/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
-                                           
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
@@ -655,8 +658,9 @@ projects =
             , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn cnodeStatus
+            , projectDirectory = "~/Cardano/git/gimbalabs/plutus-starter/"
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
