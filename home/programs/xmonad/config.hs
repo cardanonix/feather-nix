@@ -65,7 +65,10 @@ import           XMonad.Hooks.ManageHelpers            ( (-?>)
 import           XMonad.Hooks.UrgencyHook              ( UrgencyHook(..)
                                                        , withUrgencyHook
                                                        )
-import           XMonad.Layout.Gaps                    ( gaps )
+import           XMonad.Layout.Gaps                    ( GapSpec(..)
+                                                       , gaps 
+                                                       , setGaps 
+                                                       )
 import           XMonad.Layout.MultiToggle             ( Toggle(..)
                                                        , mkToggle
                                                        , single
@@ -110,6 +113,7 @@ import qualified Control.Exception                     as E
 import qualified Data.Map                              as M
 import qualified XMonad.StackSet                       as W
 import qualified XMonad.Util.NamedWindows              as W
+import qualified XMonad.Util.ExtensibleState           as XS  -- Custom State
 
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
@@ -117,6 +121,7 @@ import qualified Data.Set                              as S
 import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
+
 
 
 main :: IO ()
@@ -148,6 +153,30 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 myStartupHook = startupHook def
+
+-- -- Dyanamic Gaps?!?!?!?!?!?!
+-- newtype GapState = GapIndex Int deriving Show
+-- instance ExtensionClass GapState where
+--   initialValue = GapIndex 0
+
+-- myGaps :: [GapSpec]
+-- myGaps = [ [(L,0),(R,0),(U,0),(D,0)] -- you do have to specify all directions
+--           , [(L,5),(R,5),(U,5),(D,5)]
+--           , [(L,10),(R,10),(U,10),(D,10)]
+--           , [(L,20),(R,20),(U,20),(D,20)]
+--           , [(L,30),(R,30),(U,0),(D,0)]
+--           , [(L,0),(R,30),(U,0),(D,0)]
+--           , [(L,30),(R,0),(U,0),(D,0)] 
+--           , [(L,70),(R,10),(U,30),(D,30)]
+--           , [(L,10),(R,70),(U,20),(D,20)] ]
+
+-- cycleGaps :: X()
+-- cycleGaps = do
+--   (GapIndex idx) <- XS.gets $ \(GapIndex i) -> 
+--     let n = if i >= length myGaps - 1 then 0 else i+1 in GapIndex n
+--   sendMessage (setGaps $ myGaps !! idx)
+--   XS.put $ GapIndex idx
+-- --Dynamic Gaps End
 
 -- original idea: https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
@@ -277,6 +306,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
+    -- , key "GapSwitch"       (modm              , xK_g         ) cycleGaps 
     , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
