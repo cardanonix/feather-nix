@@ -66,6 +66,8 @@ import           XMonad.Hooks.UrgencyHook              ( UrgencyHook(..)
                                                        , withUrgencyHook
                                                        )
 import           XMonad.Layout.Gaps                    ( GapSpec(..)
+                                                       , GapMessage (IncGap, DecGap)
+                                                       , weakModifyGaps
                                                        , gaps 
                                                        , setGaps 
                                                        )
@@ -78,8 +80,8 @@ import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
 import           XMonad.Layout.Spacing                 ( SpacingModifier(..)
                                                        , spacing
-                                                       , incWindowSpacing
-                                                       , decWindowSpacing
+                                                       , incScreenWindowSpacing
+                                                       , decScreenWindowSpacing
                                                        )
 import           XMonad.Layout.HintedGrid
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
@@ -286,8 +288,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
-    , key "GapInc"          (modm              , xK_g         ) $ incWindowSpacing 1 
-    , key "GapDec"          (modm .|. shiftMask, xK_g         ) $ decWindowSpacing 1 
+    , key "GapInc"          (modm              , xK_g                         ) $ incScreenWindowSpacing 1 
+    , key "GapDec"          (modm .|. shiftMask, xK_g                         ) $ decScreenWindowSpacing 1 
+    -- , key "BorderInc"       (modm .|. controlMask, xK_g                       ) $ sendMessage weakModifyGaps 1 
+    -- , key "BorderDec"       (modm .|. controlMask .|. shiftMask, xK_g         ) $ weakModifyGaps halveHor)
     , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
