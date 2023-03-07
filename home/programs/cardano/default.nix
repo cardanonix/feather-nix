@@ -1,6 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 let 
-
   cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
     cncli
   ];
@@ -31,5 +30,5 @@ let
 in 
 
 {
-  home.packages = cardanoPkgs; 
+  home.packages = cardanoPkgs ++ cncliPkgs; 
 }

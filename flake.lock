@@ -2455,16 +2455,17 @@
         "utils": "utils_21"
       },
       "locked": {
-        "lastModified": 1677257797,
-        "narHash": "sha256-HUoJr2K77U9kIRv3R/cUs/OwVAzl5o8ryOwWvxakBus=",
+        "lastModified": 1677420745,
+        "narHash": "sha256-3bJna1h4DCj1A9Gl2eOzT0zPousPczIDp9HNxdbviW0=",
         "owner": "cardano-community",
         "repo": "cncli",
-        "rev": "a92c643b165687cbdfb16de6e76fc5ae4b38bd5c",
+        "rev": "751407fd390f06867b99666348a3332f0ec4b694",
         "type": "github"
       },
       "original": {
         "owner": "cardano-community",
         "repo": "cncli",
+        "rev": "751407fd390f06867b99666348a3332f0ec4b694",
         "type": "github"
       }
     },
@@ -10158,11 +10159,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1678150106,
-        "narHash": "sha256-fX6BSxmTE4Ly65oUc/L8jZ7it1iLKnzfMenV8QQEBBA=",
+        "lastModified": 1678154784,
+        "narHash": "sha256-5IjPBitmGOgOJ1Dw/Upn2eA2kF37Uo1n3XNTZvLruvY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d3758ce272e76ba56ae1c35a1d827b7728b08432",
+        "rev": "be416214f85a73f018a888de210eb9ae88df437b",
         "type": "github"
       },
       "original": {

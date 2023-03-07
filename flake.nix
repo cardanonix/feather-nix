@@ -43,7 +43,6 @@
       flake = false;
     };
 
-
     # Github Markdown ToC generator
     gh-md-toc = {
       url = github:ekalinin/github-markdown-toc;
@@ -74,7 +73,10 @@
       inputs.nixpkgs.follows = "fenix/nixpkgs";
       inputs.fenix.follows = "fenix";
     };
-    cncli.url = "github:cardano-community/cncli";
+    
+    cncli = {
+      url = "github:cardano-community/cncli?rev=751407fd390f06867b99666348a3332f0ec4b694";
+    };
 
     rust-nix = {
       url = "github:input-output-hk/rust.nix/work";
@@ -101,7 +103,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cardano-node = {
+    cardano-node = {                            
       url = "github:input-output-hk/cardano-node?rev=8762a10efe3f9f97939e3cb05edaf04250456702";
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
