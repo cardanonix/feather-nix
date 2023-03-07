@@ -37,6 +37,7 @@ in
       ] ++ map (loadAfter [ "cab404.vscode-direnv" ]) (
         with pkgs.vscode-extensions; [
           mkhl.direnv
+          bbenoist.nix
           haskell.haskell
           justusadam.language-haskell
           arrterian.nix-env-selector
