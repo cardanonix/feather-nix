@@ -76,7 +76,11 @@ import           XMonad.Layout.MultiToggle             ( Toggle(..)
 import           XMonad.Layout.MultiToggle.Instances   ( StdTransformers(NBFULL) )
 import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
-import           XMonad.Layout.Spacing                 ( spacing )
+import           XMonad.Layout.Spacing                 ( SpacingModifier(..)
+                                                       , spacing
+                                                       , incWindowSpacing
+                                                       , decWindowSpacing
+                                                       )
 import           XMonad.Layout.HintedGrid
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
 import           XMonad.Layout.Spiral
@@ -153,30 +157,6 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 myStartupHook = startupHook def
-
--- -- Dyanamic Gaps?!?!?!?!?!?!
--- newtype GapState = GapIndex Int deriving Show
--- instance ExtensionClass GapState where
---   initialValue = GapIndex 0
-
--- myGaps :: [GapSpec]
--- myGaps = [ [(L,0),(R,0),(U,0),(D,0)] -- you do have to specify all directions
---           , [(L,5),(R,5),(U,5),(D,5)]
---           , [(L,10),(R,10),(U,10),(D,10)]
---           , [(L,20),(R,20),(U,20),(D,20)]
---           , [(L,30),(R,30),(U,0),(D,0)]
---           , [(L,0),(R,30),(U,0),(D,0)]
---           , [(L,30),(R,0),(U,0),(D,0)] 
---           , [(L,70),(R,10),(U,30),(D,30)]
---           , [(L,10),(R,70),(U,20),(D,20)] ]
-
--- cycleGaps :: X()
--- cycleGaps = do
---   (GapIndex idx) <- XS.gets $ \(GapIndex i) -> 
---     let n = if i >= length myGaps - 1 then 0 else i+1 in GapIndex n
---   sendMessage (setGaps $ myGaps !! idx)
---   XS.put $ GapIndex idx
--- --Dynamic Gaps End
 
 -- original idea: https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
@@ -306,7 +286,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
-    -- , key "GapSwitch"       (modm              , xK_g         ) cycleGaps 
+    , key "GapInc"          (modm              , xK_g         ) $ incWindowSpacing 1 
+    , key "GapDec"          (modm .|. shiftMask, xK_g         ) $ decWindowSpacing 1 
     , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
@@ -456,7 +437,7 @@ myLayout =
      column3                 = gapSpaced gapSize $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral            = gapSpaced gapSize $ spiral golden_ratio
      silverSpiral            = gapSpaced gapSize $ spiralWithDir East CCW ratio
-     dynamicGaps             = gapSpaced gapSize $ spiralWithDir East CCW ratio
+     dynamicGaps             = spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -476,6 +457,15 @@ myLayout =
 
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
+
+    --  indexedGaps =       [ (spacing 0   . myGaps 0)
+    --                      , (spacing 5   . myGaps 5)
+    --                      , (spacing 10  . myGaps 10)
+    --                      , (spacing 22  . myGaps 22)
+    --                      , (spacing 50  . myGaps 30)
+    --                      , (spacing 100 . myGaps 45)
+    --                      , (spacing 0   . myGaps 200)
+    --                      ]
      
     --  gapIncrement = mkToggle (gapSize (++))
 

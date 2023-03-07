@@ -30,5 +30,5 @@ let
 in 
 
 {
-  home.packages = cardanoPkgs ++ cncliPkgs; 
+  home.packages = cardanoPkgs; 
 }
