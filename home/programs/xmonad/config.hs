@@ -288,10 +288,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
-    , key "GapInc"          (modm              , xK_g                         ) $ incScreenWindowSpacing 1 
-    , key "GapDec"          (modm .|. shiftMask, xK_g                         ) $ decScreenWindowSpacing 1 
-    -- , key "BorderInc"       (modm .|. controlMask, xK_g                       ) $ sendMessage weakModifyGaps 1 
-    -- , key "BorderDec"       (modm .|. controlMask .|. shiftMask, xK_g         ) $ weakModifyGaps halveHor)
+    , key "GapInc"          (modm              , xK_g         ) $ incScreenWindowSpacing 2 
+    , key "GapDec"          (modm .|. shiftMask, xK_g         ) $ decScreenWindowSpacing 2 
+    -- , key "BorderInc"       (modm .|. controlMask, xK_g               ) $ sendMessage weakModifyGaps 1 
+    -- , key "BorderDec"       (modm .|. controlMask .|. shiftMask, xK_g ) $ weakModifyGaps halveHor)
     , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
