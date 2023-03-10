@@ -121,6 +121,7 @@ import qualified XMonad.StackSet                       as W
 import qualified XMonad.Util.NamedWindows              as W
 import qualified XMonad.Util.ExtensibleState           as XS  -- Custom State
 
+
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
 import qualified Data.Set                              as S
@@ -212,6 +213,35 @@ polybarHook dbus =
 
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
+--- Dynamic Gaps implementation
+
+-- Gaps between windows
+gapSize = 10
+
+-- --  myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
+-- gapSpaced g = spacing g . myGaps[GapIndex]
+
+newtype GapState = GapIndex Int deriving Show
+instance ExtensionClass GapState where
+  initialValue = GapIndex 0
+
+myGaps :: [GapSpec]
+myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all directions
+         , [(R,2),(L,2),(U,2),(D,2)]
+         , [(R,0),(L,0),(U,0),(D,0)]
+         , [(R,20),(L,20),(U,20),(D,20)]
+         , [(R,0),(L,0),(U,0),(D,50)]
+         , [(R,0),(L,0),(U,50),(D,0)]
+         , [(R,10),(L,10),(U,20),(D,20)] ]
+
+cycleGaps :: X()
+cycleGaps = do
+  (GapIndex idx) <- XS.gets $ \(GapIndex i) -> 
+    let n = if i >= length myGaps - 1 then 0 else i+1 in GapIndex n
+  sendMessage (setGaps $ myGaps !! idx)
+  XS.put $ GapIndex idx
+
+
 myTerminal     = "alacritty"
 myBashTerminal = "alacritty --hold -e bash"
 myZshTerminal = "alacritty --hold -e zsh"
@@ -287,13 +317,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
-    [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
-    , key "GapInc"          (modm              , xK_g         ) $ incScreenWindowSpacing 2 
-    , key "GapDec"          (modm .|. shiftMask, xK_g         ) $ decScreenWindowSpacing 2 
-    -- , key "BorderInc"       (modm .|. controlMask, xK_g               ) $ sendMessage weakModifyGaps 1 
-    -- , key "BorderDec"       (modm .|. controlMask .|. shiftMask, xK_g ) $ weakModifyGaps halveHor)
-    , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
-    , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
+    [ key "Next"            (modm                 , xK_space   ) $ sendMessage NextLayout
+    , key "SpaceInc"        (modm                 , xK_g       ) $ incScreenWindowSpacing 2 
+    , key "SpaceDec"        (modm .|. shiftMask   , xK_g       ) $ decScreenWindowSpacing 2 
+    , key "BorderSwitch"    (modm                 , xK_u       ) cycleGaps 
+    , key "Reset"           (modm .|. shiftMask   , xK_space   ) $ setLayout (XMonad.layoutHook conf)
+    , key "Fullscreen"      (modm                  , xK_f      ) $ sendMessage (Toggle NBFULL)
     ] ^++^
   keySet "Polybar"
     [ key "Toggle"          (modm              , xK_equal     ) togglePolybar
@@ -427,21 +456,21 @@ myLayout =
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid                    = gapSpaced gapSize $ Grid False
-     grid_strict_portrait    = GridRatio grid_portrait False 
-     grid_strict_landscape   = GridRatio grid_landscape False 
-     tiled                   = gapSpaced gapSize $ Tall nmaster delta golden_ratio
-     doubletiled             = gapSpaced gapSize $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     tiled_spaced            = gapSpaced gapSize $ Tall nmaster delta ratio
-     column3_og              = gapSpaced gapSize $ ThreeColMid 1 (3/100) (1/2)
-     video_tile              = gapSpaced gapSize $ Mirror (Tall 1 (1/50) (3/5))
-     full                    = gapSpaced 0 Full
-     fuller                  = gapSpaced 0 Full
-     column3                 = gapSpaced gapSize $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral            = gapSpaced gapSize $ spiral golden_ratio
-     silverSpiral            = gapSpaced gapSize $ spiralWithDir East CCW ratio
-     dynamicGaps             = spiralWithDir East CCW ratio
+     grid                    = spacing gapSize . gaps (head myGaps) $ Grid False
+     grid_strict_portrait    = spacing gapSize . gaps (head myGaps) $ GridRatio grid_portrait False 
+     grid_strict_landscape   = spacing gapSize . gaps (head myGaps) $ GridRatio grid_landscape False 
+     tiled                   = spacing gapSize . gaps (head myGaps) $ Tall nmaster delta golden_ratio
+     doubletiled             = spacing gapSize . gaps (head myGaps) $ Tall nmasterTwo delta golden_ratio
+     tiled_nogap             = spacing 0 . gaps (myGaps !! 2) $ Tall nmaster delta golden_ratio
+     tiled_spaced            = spacing 0 . gaps (myGaps !! 3) $ Tall nmaster delta ratio
+     column3_og              = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (3/100) (1/2)
+     video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
+     full                    = Full
+     fuller                  = spacing 0 . gaps (myGaps !! 2) $ Full
+     column3                 = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
+     silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
+     dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -455,23 +484,6 @@ myLayout =
 
      -- Percent of screen to increment by when resizing panes
      delta   = 2/100
-   
-     -- Gaps bewteen windows
-     gapSize = 10
-
-     myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
-     gapSpaced g = spacing g . myGaps g
-
-    --  indexedGaps =       [ (spacing 0   . myGaps 0)
-    --                      , (spacing 5   . myGaps 5)
-    --                      , (spacing 10  . myGaps 10)
-    --                      , (spacing 22  . myGaps 22)
-    --                      , (spacing 50  . myGaps 30)
-    --                      , (spacing 100 . myGaps 45)
-    --                      , (spacing 0   . myGaps 200)
-    --                      ]
-     
-    --  gapIncrement = mkToggle (gapSize (++))
 
      -- Per workspace layout
      webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
@@ -685,7 +697,7 @@ projects =
             , projectStartHook = Just $ do spawn cnodeStatus
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/Cardano/git/gimbalabs/plutus-starter/"
+            , projectDirectory = "~/Cardano/git/cardanonix/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
