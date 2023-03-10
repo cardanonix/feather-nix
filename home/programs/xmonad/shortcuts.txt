@@ -26,6 +26,9 @@ My Xmonad Shortcuts List
 "Emojis (Rofi)"                                  mod .|. shift , m
 "Lock screen"                                    mod .|. control  , l
 "Next"                                           mod , space
+"SpaceInc"                                       mod , g 
+"SpaceDec"                                       mod .|. shift , g 
+"Switch Gap Index"                               mod , u 
 "Reset"                                          mod .|. shift , space
 "Fullscreen"                                     mod , f
 "Toggle Polybar"                                 mod , equal
