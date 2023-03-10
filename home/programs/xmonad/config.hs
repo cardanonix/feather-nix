@@ -231,9 +231,10 @@ myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all direction
          , [(R,2),(L,2),(U,2),(D,2)]
          , [(R,20),(L,20),(U,20),(D,20)]
          , [(R,25),(L,25),(U,25),(D,25)]
-         , [(R,0),(L,0),(U,0),(D,0)]
-         , [(R,10),(L,10),(U,20),(D,20)] 
-         , [(R,0),(L,0),(U,200),(D,200)]         
+         , [(R,30),(L,30),(U,30),(D,30)]
+         , [(R,40),(L,40),(U,40),(D,40)] 
+         , [(R,0),(L,0),(U,100),(D,100)] 
+         , [(R,0),(L,0),(U,0),(D,0)]         
          ]
 
 cycleGaps :: X()
@@ -463,12 +464,12 @@ myLayout =
      grid_strict_landscape   = spacing gapSize . gaps (head myGaps) $ GridRatio grid_landscape False 
      tiled                   = spacing gapSize . gaps (head myGaps) $ Tall nmaster delta golden_ratio
      doubletiled             = spacing gapSize . gaps (head myGaps) $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = spacing 0 . gaps (myGaps !! 5) $ Tall nmaster delta golden_ratio
+     tiled_nogap             = spacing 0 . gaps (myGaps !! 8) $ Tall nmaster delta golden_ratio
      tiled_spaced            = spacing 0 . gaps (myGaps !! 3) $ Tall nmaster delta ratio
      column3_og              = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (3/100) (1/2)
      video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
      full                    = Full
-     fuller                  = spacing 0 . gaps (myGaps !! 5) $ Full
+     fuller                  = spacing 0 . gaps (myGaps !! 8) $ Full
      column3                 = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
      silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
