@@ -39,7 +39,7 @@ My Xmonad Shortcuts List
 "Files"                                          mod .|. control , f
 "Screen recorder"                                mod .|. control , r
 "Spotify"                                        mod .|. control , s
-"Open Mpv with url from clipboard"               mod .|. control , m
+"Open Mpv with url from clipboard...no ads!"     mod .|. control , m
 "Gimp"                                           mod .|. control , i
 "Kodi"                                           mod .|. control , k
 "Slack"                                          mod , F2
