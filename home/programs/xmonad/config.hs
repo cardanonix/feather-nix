@@ -323,7 +323,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Next"            (modm                 , xK_space   ) $ sendMessage NextLayout
     , key "SpaceInc"        (modm                 , xK_g       ) $ incScreenWindowSpacing 2 
     , key "SpaceDec"        (modm .|. shiftMask   , xK_g       ) $ decScreenWindowSpacing 2 
-    , key "BorderSwitch"    (modm                 , xK_u       ) cycleGaps 
+    , key "BorderSwitch"    (modm                 , xK_b       ) cycleGaps 
     , key "Reset"           (modm .|. shiftMask   , xK_space   ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm                  , xK_f      ) $ sendMessage (Toggle NBFULL)
     ] ^++^
@@ -346,7 +346,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
-    [ key "Toggle status bar gap"  (modm              , xK_b  ) toggleStruts
+    [ key "Toggle status bar gap"  (modm .|. shiftMask, xK_b  ) toggleStruts
     , key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q  ) $ io exitSuccess
     , key "Restart XMonad"         (modm              , xK_q  ) $ spawn "xmonad --recompile; xmonad --restart"
     , key "Capture entire screen"  (modm          , xK_Print  ) $ spawn "flameshot full -p ~/Pictures/flameshot/"
@@ -470,7 +470,7 @@ myLayout =
      video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
      full                    = Full
      fuller                  = spacing 0 . gaps (myGaps !! 8) $ Full
-     column3                 = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (33/100) (1/2)
+     column3                 = spacing 2 . gaps (myGaps !! 2) $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
      silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio

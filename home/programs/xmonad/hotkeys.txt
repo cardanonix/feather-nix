@@ -28,7 +28,7 @@ My Xmonad Shortcuts List
 "Next"                                           mod , space
 "SpaceInc"                                       mod , g 
 "SpaceDec"                                       mod .|. shift , g 
-"Switch Gap Index"                               mod , u 
+"Switch Gap Index"                               mod , b 
 "Reset"                                          mod .|. shift , space
 "Fullscreen"                                     mod , f
 "Toggle Polybar"                                 mod , equal
@@ -45,7 +45,7 @@ My Xmonad Shortcuts List
 "Slack"                                          mod , F2
 "Youtube"                                        mod .|. control , y
 
-"Toggle status bar gap"                          mod , b
+"Toggle status bar gap"                          mod .|. shift , b
 "Logout (quit XMonad)"                           mod .|. shift , q
 "Restart XMonad"                                 mod , q
 "Capture entire screen"                          mod , Print
