@@ -233,7 +233,11 @@ myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all direction
          , [(R,25),(L,25),(U,25),(D,25)]
          , [(R,30),(L,30),(U,30),(D,30)]
          , [(R,40),(L,40),(U,40),(D,40)] 
-         , [(R,0),(L,0),(U,100),(D,100)] 
+         , [(R,0),(L,0),(U,100),(D,100)]
+         , [(R,500),(L,0),(U,0),(D,0)] 
+         , [(R,0),(L,500),(U,0),(D,0)] 
+         , [(R,0),(L,0),(U,400),(D,0)] 
+         , [(R,0),(L,0),(U,0),(D,400)] 
          , [(R,0),(L,0),(U,0),(D,0)]         
          ]
 
@@ -290,6 +294,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
+    , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
@@ -334,8 +339,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
     ] ^++^
   keySet "Scratchpads"
-    [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
-    , key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
+    [ key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
@@ -360,7 +364,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Focus next"      (modm              , xK_j         ) $ windows W.focusDown
     , key "Focus previous"  (modm              , xK_k         ) $ windows W.focusUp
     , key "Focus master"    (modm              , xK_m         ) $ windows W.focusMaster
-    , key "Swap master"     (modm              , xK_Return    ) $ windows W.swapMaster
+    , key "Swap master"     (modm              , xK_Return    ) $ windows W.swapMasterH
     , key "Swap next"       (modm .|. shiftMask, xK_j         ) $ windows W.swapDown
     , key "Swap previous"   (modm .|. shiftMask, xK_k         ) $ windows W.swapUp
     , key "Shrink master"   (modm              , xK_h         ) $ sendMessage Shrink
@@ -464,12 +468,12 @@ myLayout =
      grid_strict_landscape   = spacing gapSize . gaps (head myGaps) $ GridRatio grid_landscape False 
      tiled                   = spacing gapSize . gaps (head myGaps) $ Tall nmaster delta golden_ratio
      doubletiled             = spacing gapSize . gaps (head myGaps) $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = spacing 0 . gaps (myGaps !! 8) $ Tall nmaster delta golden_ratio
+     tiled_nogap             = spacing 0 . gaps (myGaps !! 12) $ Tall nmaster delta golden_ratio
      tiled_spaced            = spacing 0 . gaps (myGaps !! 3) $ Tall nmaster delta ratio
      column3_og              = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (3/100) (1/2)
      video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
      full                    = Full
-     fuller                  = spacing 0 . gaps (myGaps !! 8) $ Full
+     fuller                  = spacing 0 . gaps (myGaps !! 12) $ Full
      column3                 = spacing 2 . gaps (myGaps !! 2) $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
      silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio

@@ -53,6 +53,7 @@ in
         ]
       );
     userSettings = {
+        "editor.fontSize" = "13";
         "update.mode" = "none";
         "window.zoomLevel" = "-2";
         "terminal.explorerKind" = "external";
