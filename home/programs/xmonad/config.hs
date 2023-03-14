@@ -454,6 +454,7 @@ myLayout =
     . webLayout
     . mscLayout
     . devLayout   
+    . scdLayout   
     . spoLayout
     . vmsLayout
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
@@ -495,6 +496,7 @@ myLayout =
      vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
+     scdLayout = onWorkspace scdWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
      vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
@@ -655,12 +657,13 @@ musWs = "mus"
 vscWs = "vsc"
 comWs = "com"
 spoWs = "spo"
+scdWs = "scd"
 devWs = "dev"
 secWs = "sec"
 vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
+myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, scdWs, secWs, vmsWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -699,6 +702,11 @@ projects =
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/plutus/workspace/devWs/"
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
+            }
+  , Project { projectName      = scdWs
+            , projectDirectory = "~/Cardano/git/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }

@@ -97,27 +97,6 @@ let
     bitwarden-cli        # command-line client for the password manager
   ];
 
-  cpuHungryPkgs = with pkgs; [
-    vlc                  # media player
-    #darktable            # raw photo manipulation and grading
-    mpv                  # media player
-    #kodi                 # media player  
-    gimp                 # gnu image manipulation program (I started using gimp 2.99 which is causing problems with this one)
-    #blender              # 3D computer graphics software tool set
-    krita                # image editor (supposedly better than gimp)
-    mkvtoolnix           # tools for encoding MKV files, etc
-    filebot              # batch renaming
-    kdenlive             # super nice video editor
-    mlt                  # kdenlive uses the MLT framework to process all video operations
-    mediainfo            # additional package for kdenlive
-    inkscape
-  ];
-
-  homePkgs = with pkgs; [
-    hue-cli              # lights for my residence
-    mr                   # mass github actions
-  ];
-
   gnomePkgs = with pkgs.gnome; [
     eog            # image viewer
     evince         # pdf reader
@@ -143,26 +122,6 @@ let
     ihaskell-blaze 
   ];
 
-  pythonExt = p: with p; [
-    pandas
-    requests
-    pip
-    numpy
-  ];
-
-  pythonPkgs = with pkgs ++ pythonExt; [
-    (pkgs.python3.withPackages pythonExt)
-  ];
-
-  rustPkgs = with pkgs; [
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
-    pkg-config
-  ];
-
 in
 
 {
@@ -185,13 +144,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs 
-            ++ gnomePkgs 
-            ++ haskellPkgs
-            ++ cpuHungryPkgs
-            ++ rustPkgs
-            ++ homePkgs
-            ++ pythonPkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
