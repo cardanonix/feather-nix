@@ -247,6 +247,10 @@ cycleGaps = do
 
 
 myTerminal     = "alacritty"
+
+terminalWithCommand :: String -> String
+terminalWithCommand cmd = "alacritty -o shell.program=fish -o shell.args=['-C " <> cmd <> "']"
+
 myBashTerminal = "alacritty --hold -e bash"
 myZshTerminal = "alacritty --hold -e zsh"
 
@@ -361,7 +365,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Focus next"      (modm              , xK_j         ) $ windows W.focusDown
     , key "Focus previous"  (modm              , xK_k         ) $ windows W.focusUp
     , key "Focus master"    (modm              , xK_m         ) $ windows W.focusMaster
-    , key "Swap master"     (modm              , xK_Return    ) $ windows W.swapMasterH
+    , key "Swap master"     (modm              , xK_Return    ) $ windows W.swapMaster
     , key "Swap next"       (modm .|. shiftMask, xK_j         ) $ windows W.swapDown
     , key "Swap previous"   (modm .|. shiftMask, xK_k         ) $ windows W.swapUp
     , key "Shrink master"   (modm              , xK_h         ) $ sendMessage Shrink
@@ -664,24 +668,23 @@ myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
 projects :: [Project]
 projects =
   [ Project { projectName      = webWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/webWs/"
             , projectStartHook = Just $ do spawn "brave"
             }
   , Project { projectName      = mscWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/mscWs/"
             , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = musWs
-            , projectDirectory = "~/music/"
+            , projectDirectory = "~/plutus/musWs/"
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/nix-config.git/intelTower/"
-            , projectStartHook = Just $ do spawn "codium -n ."
-                                           spawn delayTerminal 
+            , projectDirectory = "~/plutus/vscWs/nix-config.git/intelTower/"
+            , projectStartHook = Just $ do spawn (terminalWithCommand "codium .")
             }
   , Project { projectName      = comWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/comWs/"
             , projectStartHook = Just $ do spawn "tokodon"
                                            spawn "element-desktop"
                                            spawn "discord"
@@ -690,20 +693,20 @@ projects =
                                            spawn "slack"
             }
   , Project { projectName      = spoWs
-            , projectDirectory = "/home/bismuth/cardano_local/"
+            , projectDirectory = "~/plutus/spoWs/"
             , projectStartHook = Just $ do spawn cnodeStatus
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/Cardano/git/cardanonix/"
+            , projectDirectory = "~/plutus/devWs/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
   , Project { projectName      = secWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/secWs/"
             , projectStartHook = Just $ do spawn "keepassxc"
             }
   , Project { projectName      = vmsWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/vmsWs/"
             , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]
