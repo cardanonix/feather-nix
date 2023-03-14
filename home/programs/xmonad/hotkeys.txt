@@ -44,6 +44,8 @@ My Xmonad Shortcuts List
 "Kodi"                                           mod .|. control , k
 "Slack"                                          mod , F2
 "Youtube"                                        mod .|. control , y
+"Home Page w/App"                                mod .|. control , a
+
 
 "Toggle status bar gap"                          mod .|. shift , b
 "Logout (quit XMonad)"                           mod .|. shift , q
