@@ -668,23 +668,24 @@ myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
 projects :: [Project]
 projects =
   [ Project { projectName      = webWs
-            , projectDirectory = "~/plutus/webWs/"
+            , projectDirectory = "~/plutus/workspace/webWs/"
             , projectStartHook = Just $ do spawn "brave"
             }
   , Project { projectName      = mscWs
-            , projectDirectory = "~/plutus/mscWs/"
+            , projectDirectory = "~/plutus/workspace/mscWs/"
             , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = musWs
-            , projectDirectory = "~/plutus/musWs/"
+            , projectDirectory = "~/plutus/workspace/musWs/"
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/vscWs/nix-config.git/intelTower/"
-            , projectStartHook = Just $ do spawn (terminalWithCommand "codium .")
+            , projectDirectory = "~/plutus/workspace/vscWs/nix-config.git/intelTower/"
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
             }
   , Project { projectName      = comWs
-            , projectDirectory = "~/plutus/comWs/"
+            , projectDirectory = "~/plutus/workspace/comWs/"
             , projectStartHook = Just $ do spawn "tokodon"
                                            spawn "element-desktop"
                                            spawn "discord"
@@ -693,20 +694,20 @@ projects =
                                            spawn "slack"
             }
   , Project { projectName      = spoWs
-            , projectDirectory = "~/plutus/spoWs/"
-            , projectStartHook = Just $ do spawn cnodeStatus
+            , projectDirectory = "~/plutus/workspace/spoWs/"
+            , projectStartHook = Just $ do spawn (terminalWithCommand "systemctl status cardano-node")
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/plutus/devWs/"
+            , projectDirectory = "~/plutus/workspace/devWs/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
   , Project { projectName      = secWs
-            , projectDirectory = "~/plutus/secWs/"
+            , projectDirectory = "~/plutus/workspace/secWs/"
             , projectStartHook = Just $ do spawn "keepassxc"
             }
   , Project { projectName      = vmsWs
-            , projectDirectory = "~/plutus/vmsWs/"
+            , projectDirectory = "~/plutus/workspace/vmsWs/"
             , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]
