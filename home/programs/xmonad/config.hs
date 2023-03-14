@@ -218,9 +218,6 @@ myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 -- Gaps between windows
 gapSize = 10
 
--- --  myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
--- gapSpaced g = spacing g . myGaps[GapIndex]
-
 newtype GapState = GapIndex Int deriving Show
 instance ExtensionClass GapState where
   initialValue = GapIndex 0
@@ -402,8 +399,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
         | (k, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m)  <- [(W.view, 0), (W.shift, shiftMask)]]
 
-
-
 ----------- Cycle through workspaces one by one but filtering out NSP (scratchpads) -----------
 
 nextWS' = switchWS Next
@@ -415,9 +410,6 @@ switchWS dir =
 filterOutNSP =
   let g f xs = filter (\(W.Workspace t _ _) -> t /= "NSP") (f xs)
   in  g <$> getSortByIndex
-
-
-
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events----------------
@@ -505,8 +497,6 @@ myLayout =
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
-
-
 
 
 -- Defining Rectangles using absolute points (https://gist.github.com/tkf/1343015)
