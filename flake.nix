@@ -104,7 +104,7 @@
     };
 
     cardano-node = {                            
-      url = "github:input-output-hk/cardano-node?rev=8762a10efe3f9f97939e3cb05edaf04250456702";
+      url = "github:input-output-hk/cardano-node?rev=07b0c71d2e6662aec4389ec282a7e91f68c3d85f";
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
