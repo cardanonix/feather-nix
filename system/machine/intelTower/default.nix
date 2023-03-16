@@ -131,7 +131,6 @@ with lib;
       };
     };
     xserver = {
-      desktopManager.wallpaper = "../../../imgs/wallpapers/longboat01_yanoi_plutus.JPG";
       xrandrHeads = [
         { output = "HDMI-2";
           primary = true;
