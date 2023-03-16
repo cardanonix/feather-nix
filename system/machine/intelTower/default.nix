@@ -27,8 +27,8 @@ with lib;
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
   };                        
-
-    config.services.xserver.desktopManager.wallpaper = "../../../imgs/wallpapers/longboat01_yanoi_plutus.JPG";
+  
+  services.xserver.desktopManager.wallpaper = "../../../imgs/wallpapers/longboat01_yanoi_plutus.JPG";
   # config.services.xserver.desktopManager.wallpaper = {
   #   mode = "fill";
   #   # combineScreens = false;
