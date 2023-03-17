@@ -49,7 +49,7 @@ rebuild_system() {
 }
 
 rebuild_intelTower() {
-  sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
+  sudo nixos-rebuild switch --flake .#intelTower --impure --extra-experimental-features ca-derivations --show-trace 
   nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
   activateHM 
 }
@@ -104,12 +104,27 @@ collect_ALL_garbage() {
   echo "Your royal file system is clean."
 }
 
-HEIGHT=20
-WIDTH=60
-CHOICE_HEIGHT=10
-BACKTITLE="Nix-Config TUI"
-TITLE="Build Options"
-MENU="Choose an option:"
+PS3='Please enter your choice: '
+
+options=("Rebuild Home (LVM)" 
+        "Rebuild Home (EDP)" 
+        "Evaluate Home (EDP)" 
+        "Evaluate Home (EDP) with trace" 
+        "Rebuild Home (UHD)" 
+        "Evaluate Home (UHD)" 
+        "Evaluate Home (UHD) with trace" 
+        "Restart X11" 
+        "Update fish" 
+        "Rebuild System" 
+        "Rebuild IntelTower" 
+        "Rebuild IntelTower with update" 
+        "Evaluate IntelTower" 
+        "Rebuild IntelNUC" 
+        "Rebuild IntelNUC with update" 
+        "Rebuild Scratch Build" 
+        "Collect All Garbage" 
+        "Rebuild VM" 
+        "Quit")
 
 case $1 in
   "lvm")
@@ -149,38 +164,105 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
+    echo "expected 'lvm/edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
+esac
 
-
-
-BUILD_TYPE=(1 "Evaluate"
-         2 "Rebuild"
-         3 "Maintenance"
-         5 "Exit")
-
-MAINTENANCE_TYPE=(1 "Restart X Window"
-         2 "Update Fish"
-         3 "Trash Panda"
-         4 "Scratch Build"
-         5 "Exit")
-
-
-
-
-
-BUILD_SET=(1 "Home"
-         2 "System"
-         3 "Exit")
-
-HOME_TYPE=(1 "LVM"
-         2 "EDP"
-         3 "UHD"
-         4 "Exit")
-
-MACHINE=(1 "Intel Tower"
-         2 "Intel NUC"
-         3 "UHD"
-         4 "UHD"
-         5 "UHD"         
-         6 "UHD"
-         7 "UHD"
-         8 "Exit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Rebuild Home (LVM)")
+            echo "Rebuilding Home (LVM)..."
+            rebuild_home_lvm
+            break
+            ;;
+        "Rebuild Home (EDP)")
+            echo "Rebuilding Home (EDP)..."
+            rebuild_home_edp
+            break
+            ;;
+        "Evaluate Home (EDP)")
+            echo "Evaluating Home (EDP)..."
+            eval_home_edp
+            break
+            ;;
+        "Evaluate Home (EDP) with trace")
+            echo "Evaluating Home (EDP) with trace..."
+            eval_traced_home_edp
+            break
+            ;;
+        "Rebuild Home (UHD)")
+            echo "Rebuilding Home (UHD)..."
+            rebuild_home_uhd
+            break
+            ;;
+        "Evaluate Home (UHD)")
+            echo "Evaluating Home (UHD)..."
+            eval_home_uhd
+            break
+            ;;
+        "Evaluate Home (UHD) with trace")
+            echo "Evaluating Home (UHD) with trace..."
+            eval_traced_home_uhd
+            break
+            ;;
+        "Restart X11")
+            echo "Restarting X11..."
+            restart_X
+            break
+            ;;
+        "Update fish")
+            echo "Updating fish..."
+            fish -c fish_update_completions
+            break
+            ;;
+        "Rebuild System")
+            echo "Rebuilding System..."
+            rebuild_system
+            break
+            ;;
+        "Rebuild IntelTower")
+            echo "Rebuilding IntelTower..."
+            rebuild_intelTower
+            break
+            ;;
+        "Rebuild IntelTower with update")
+            echo "Rebuilding IntelTower with update..."
+            rebuild_intelTower_withUpdate
+            break
+            ;;
+        "Evaluate IntelTower")
+            echo "Evaluating IntelTower..."
+            eval_intelTower
+            break
+            ;;
+        "Rebuild IntelNUC")
+            echo "Rebuilding IntelNUC..."
+            rebuild_intelNUC
+            break
+            ;;
+        "Rebuild IntelNUC with update")
+            echo "Rebuilding IntelNUC with update..."
+            rebuild_intelNUC_withUpdate
+            break
+            ;;
+        "Rebuild Scratch Build")
+            echo "Rebuilding Scratch Build..."
+            rebuild_scratchBuild
+            break
+            ;;
+        "Collect All Garbage")
+            echo "Collecting All Garbage..."
+            collect_ALL_garbage
+            break
+            ;;
+        "Rebuild VM")
+            echo "Rebuilding VM..."
+            rebuild_vm
+            break
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
