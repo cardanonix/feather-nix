@@ -83,9 +83,9 @@ in
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
   };
 
-  fileSystems."/var/lib/cardano-node/db-mainnet" = { 
-    device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-    options = [ "x-systemd.automount" "multi-user.target" ];
+  fileSystems."/var/lib/cardano-node" = { 
+    device = "192.168.1.212:/volume2/cardano-node";
+    options = [ "x-systemd.automount" ];
     fsType = "nfs";
   }; 
   
