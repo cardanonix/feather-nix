@@ -53,7 +53,7 @@ in
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
   systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
   
-  nixpkgs.overlays = [ cardano-node.overlay ];
+  nixpkgs.overlays = [ inputs.cardano-node.overlay ];
   
   environment.systemPackages = with inputs.cardano-node.packages.x86_64-linux; [
     # bech32
