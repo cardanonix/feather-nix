@@ -5,14 +5,19 @@ let
     requests
     pip
     numpy
+    packaging
   ];
 
   pythonPkgs = with pkgs ++ pythonExt; [
     (pkgs.python3.withPackages pythonExt)
   ];
 
+  pythonStuff = with pkgs; [
+    poetry
+  ];
+
 in 
 
 {
-  home.packages = pythonPkgs; 
+  home.packages = pythonPkgs ++ pythonStuff; 
 }

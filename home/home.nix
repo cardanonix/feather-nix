@@ -120,6 +120,7 @@ let
     nix-tree                # visualize nix dependencies
     ihaskell
     ihaskell-blaze 
+    pkgs.zlib
   ];
 
 in

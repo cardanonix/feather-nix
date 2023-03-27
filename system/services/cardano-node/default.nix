@@ -12,10 +12,11 @@ TODO: Grafana
 TODO: Cardano Wallet
 */
 let
-  # topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  # nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
-  # node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
-  # db_path           = "/var/lib/cardano-node/db-mainnet";
+  topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
+  nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
+  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
+  db_path           = "/var/lib/cardano-node/db-mainnet";
+
 
 in
 {   
@@ -26,11 +27,11 @@ in
     environment = "mainnet";
     environments = inputs.cardano-node.environments.x86_64-linux;
     rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
+    topology = "${topology}";
+    nodeConfigFile = "${nodeconfig}";
+    databasePath = "${db_path}";
+    socketPath = "${node_socket_path}";
     # useNewTopology = true;
-    # topology = "${topology}";
-    # nodeConfigFile = "${nodeconfig}";
-    # databasePath = "${db_path}";
-    # socketPath = "${node_socket_path}";
     # nodeId = 2;
     # extraNodeConfig = {
     #   hasPrometheus = [ "::" 12798 ];
@@ -51,7 +52,8 @@ in
   
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
   systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
-    # nixpkgs.overlays = [ cardano-node.overlay ];
+  
+  nixpkgs.overlays = [ cardano-node.overlay ];
   
   environment.systemPackages = with inputs.cardano-node.packages.x86_64-linux; [
     # bech32
@@ -81,13 +83,10 @@ in
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
   };
 
-  # # NAS mount point (node will write to default location if this doesn't exist)
-  # fileSystems."/home/bismuth/Cardano/cardano-node/db-mainnet" = { 
-  #   device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-  #   options = [ "x-systemd.automount" "noauto" ];
-  #   fsType = "nfs";
-  # }; 
-
-
+  fileSystems."/var/lib/cardano-node/db-mainnet" = { 
+    device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
+    options = [ "x-systemd.automount" "multi-user.target" ];
+    fsType = "nfs";
+  }; 
   
 }
