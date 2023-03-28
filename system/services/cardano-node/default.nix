@@ -51,7 +51,7 @@ in
   };
   
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
+  systemd.services.cardano-node.after = lib.mkForce [ "/var/lib/cardano-node.mount" "network-online.target" "cardano-node.socket" ];
   
   nixpkgs.overlays = [ inputs.cardano-node.overlay ];
   
@@ -83,8 +83,8 @@ in
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
   };
 
-  fileSystems."/var/lib/cardano-node" = { 
-    device = "192.168.1.212:/volume2/cardano-node";
+  fileSystems."/var/lib/cardano-node/db-mainnet" = { 
+    device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
     options = [ "x-systemd.automount" ];
     fsType = "nfs";
   }; 
