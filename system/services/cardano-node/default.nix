@@ -14,8 +14,8 @@ TODO: Cardano Wallet
 let
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
   nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
-  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
-  db_path           = "/var/lib/cardano-node/db-mainnet";
+  node_socket_path  = "/home/bismuth/Cardano/cardano-node/db-mainnet/node.socket";
+  db_path           = "/home/bismuth/Cardano/cardano-node/db-mainnet";
 
 
 in
@@ -51,7 +51,7 @@ in
   };
   
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  systemd.services.cardano-node.after = lib.mkForce [ "/var/lib/cardano-node.mount" "network-online.target" "cardano-node.socket" ];
+  systemd.services.cardano-node.after = lib.mkForce [ "/home/bismuth/Cardano.mount" "network-online.target" "cardano-node.socket" ];
   
   nixpkgs.overlays = [ inputs.cardano-node.overlay ];
   
@@ -80,13 +80,8 @@ in
   users.groups.cardano-node.gid = 10016;
   
   environment.variables = {
-    CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
+    CARDANO_NODE_SOCKET_PATH = "/home/bismuth/Cardano/cardano-node/db-mainnet/node.socket";
   };
 
-  fileSystems."/var/lib/cardano-node/db-mainnet" = { 
-    device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-    options = [ "x-systemd.automount" ];
-    fsType = "nfs";
-  }; 
   
 }
