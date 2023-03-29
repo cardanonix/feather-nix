@@ -17,10 +17,17 @@ let
   node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
   db_path           = "/var/lib/cardano-node/db-mainnet";
 
+  # signingKey_path = "";
+  # delegationCertificate_path = "";
+  # kesKey_path = "";
+  # vrfKey_path = "";
+  # opCert_path = "";
+
 
 in
 {   
   services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
+    instances = 2;
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;
@@ -47,6 +54,18 @@ in
     #     ]
     #   ];
     # };
+    
+    # isProducer = true;
+    
+    # Byron signing/delegation
+    # signingKey = ${signingKey_path};
+    # delegationCertificate = ${delegationCertificate_path};
+
+    # # Shelley kes/vrf keys and operation cert
+    # kesKey = ${kesKey_path};
+    # vrfKey = ${vrfKey_path};
+    # operationalCertificate = ${opCert_path};
+
   };
   
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
