@@ -166,9 +166,6 @@ in
     };
 
     package = pkgs.nixUnstable;
-    # extraOptions = ''
-    #   experimental-features = ca-derivations
-    # '';
 
     # Flakes settings
     # package = pkgs.nixVersions.stable;
