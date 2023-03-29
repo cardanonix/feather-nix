@@ -7,7 +7,7 @@
         addr = "127.0.0.1";
         port = 3001;
         # Grafana needs to know on which domain and URL it's running:
-        domain = "your.domain";
+        domain = "harryprayiv.bismuth/grafana";
         rootUrl = "https://harryprayiv.bismuth/grafana/"; # Not needed if it is `https://your.domain/`
   };
   # nginx reverse proxy

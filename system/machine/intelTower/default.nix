@@ -30,7 +30,7 @@ with lib;
                                                                   
   users.groups.plugdev = {};
 
- # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
@@ -51,9 +51,7 @@ with lib;
     interfaces.eth0.useDHCP = true;
   };
 
-
-
-    # List packages installed in system profile. To search, run:
+  # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
       virt-manager
@@ -89,7 +87,7 @@ with lib;
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     }; 
-
+  
   fileSystems."/home/bismuth/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
       options = [ "x-systemd.automount" "noauto" ];

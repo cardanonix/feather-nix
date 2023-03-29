@@ -165,9 +165,15 @@ in
       options   = "--delete-older-than 7d";
     };
 
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = ca-derivations
+    '';
+
     # Flakes settings
-    package = pkgs.nixVersions.stable;
+    # package = pkgs.nixVersions.stable;
     registry.nixpkgs.flake = inputs.nixpkgs;
+    
 
     settings = {
       # Automate `nix store --optimise`
@@ -176,6 +182,7 @@ in
       # Required by Cachix to be used as non-root user
       trusted-users = [ "root" "bismuth" ];
       
+      # extra-experimental-features  = [ "ca-derivations" ];
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
       
