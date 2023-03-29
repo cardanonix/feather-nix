@@ -150,7 +150,7 @@ in
     
   nixpkgs.config = {
     allowUnfree = true;
-    contentAddressedByDefault = true;
+    # contentAddressedByDefault = true;
     permittedInsecurePackages = [
       "xrdp-0.9.9"
     ];
@@ -166,9 +166,9 @@ in
     };
 
     package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = ca-derivations
-    '';
+    # extraOptions = ''
+    #   experimental-features = ca-derivations
+    # '';
 
     # Flakes settings
     # package = pkgs.nixVersions.stable;
@@ -182,7 +182,7 @@ in
       # Required by Cachix to be used as non-root user
       trusted-users = [ "root" "bismuth" ];
       
-      # extra-experimental-features  = [ "ca-derivations" ];
+      extra-experimental-features  = [ "ca-derivations" ];
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
       
