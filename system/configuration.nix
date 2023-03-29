@@ -165,10 +165,8 @@ in
       options   = "--delete-older-than 7d";
     };
 
-    package = pkgs.nixUnstable;
-
     # Flakes settings
-    # package = pkgs.nixVersions.stable;
+    package = pkgs.nixUnstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
     
 
