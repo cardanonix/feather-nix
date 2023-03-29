@@ -12,8 +12,8 @@ TODO: Grafana
 TODO: Cardano Wallet
 */
 let
-  topology          = "/nix/store/7hzpwf4im499m8zw8xx9qnxxvimzs0b9-topology.yaml";
-  nodeconfig        = "/nix/store/0kb8wn3r0f50y2vjrxr7594jdc1gkas3-config-0-0.json";
+  topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
+  nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
   node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
   db_path           = "/var/lib/cardano-node/db-mainnet";
 
@@ -31,7 +31,6 @@ in
     # nodeConfigFile = "${nodeconfig}";
     # databasePath = "${db_path}";
     # socketPath = "${node_socket_path}";
-    useNewTopology = true;
     # nodeId = 2;
     # extraNodeConfig = {
     #   hasPrometheus = [ "::" 12798 ];
@@ -52,7 +51,7 @@ in
   
   systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
   systemd.services.cardano-node = {
-    after = lib.mkForce [ "network-online.target" "cardano-node.socket" "cardano-node.mount" ];
+    after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
   };
 
   
@@ -83,11 +82,10 @@ in
   # users.groups.cardano-node.gid = 10016;
   # users.groups.cardano-cli.gid = 10016;
 
-  fileSystems."/var/lib/cardano-node" = { 
-    device = "192.168.1.212:/volume2/cardano-node";
-    options = [ "x-systemd.automount" "multi-user.target" ];
-    fsType = "nfs";
-  };
+  # fileSystems."/var/lib/cardano-node" = { 
+  #   device = "192.168.1.212:/volume2/cardano-node";
+  #   fsType = "nfs";
+  # };
 
 
   environment.variables = {

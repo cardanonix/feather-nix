@@ -150,7 +150,7 @@ in
     
   nixpkgs.config = {
     allowUnfree = true;
-    # contentAddressedByDefault = true;
+    contentAddressedByDefault = true;
     permittedInsecurePackages = [
       "xrdp-0.9.9"
     ];
