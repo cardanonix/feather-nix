@@ -4,7 +4,7 @@ with lib;
 
 {
   imports = [
-    ../.././services/cardano-node
+    ../.././services
     ./hardware-configuration.nix
   ];
 
