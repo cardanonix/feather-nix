@@ -1,31 +1,24 @@
-nix-config for 'intelTower'
+## Cardano 'nix-config' Repository 
+
+![LockScreen](imgs/wallpapers/longboat01_yanoi_plutus.JPG)
+![Cardano Custom Typeface Building](imgs/screenshotWs/cardano_logo_collection.png)
+
+[![CI Home](https://github.com/cardanonix/nix-config/workflows/Home/badge.svg)](https://github.com/cardanonix/nix-config/actions)
+[![CI System](https://github.com/cardanonix/nix-config/workflows/NixOS/badge.svg)](https://github.com/cardanonix/nix-config/actions)
+
 ==========
 
-[![CI Home](https://github.com/harryprayiv/nix-config/workflows/Home/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
-[![CI System](https://github.com/harryprayiv/nix-config/workflows/NixOS/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
+A repository of evolving NixOS Cardano SPO/dev environments with full configuration files, home-manager, neovim, etc. 
 
-My current evolving NixOS Cardano SPO/dev environment with full configuration files, home-manager, neovim, etc. 
+## Objectives: 
 
-My intent is to fork and strip this config down to share a collection of rolling, accurate, canonical Cardano dev/SPO/ecosystem configurations in one place. 
+1. to make onboarding as smooth, effortless, and foolproof as possible. 
 
-## Web Workspace
-![Web Workspace](imgs/screenshotWs/webWs.png)
-## Misc Workspace
-![Misc Workspace](imgs/screenshotWs/mscWs.png)
-## Music Workspace
-![Music Workspace](imgs/screenshotWs/musWs.png)
-## VsCodium Workspace
-![VsCodium Workspace](imgs/screenshotWs/vscWs.png)
-## Communications Workspace
-![Communications Workspace](imgs/screenshotWs/comWs.png)
-## Stake Pool Workspace
-![Stake Pool Workspace](imgs/screenshotWs/spoWs.png)
-## Dev Workspace
-![Dev Workspace](imgs/screenshotWs/devWs.png)
-## Security Workspace
-![Security Workspace](imgs/screenshotWs/secWs.png)
-## Virtual Machine Workspace
-![Virtual Workspace](imgs/screenshotWs/vmsWs.png)
+2. provide a single source of canonical, Nix-based Cardano configurations that are deterministic; this will be a source of truth for Nix/Cardano-related projects.
+
+3. actively port each non-Nix-enabled Cardano-related component into this configuration
+
+4. to make the Nix way more accessible to the Cardano developer community and encourage them to use flake-based development environments and modular, repeatable approaches.
 
 ## Programs
 
@@ -50,15 +43,29 @@ The `home.nix` file contains details about all the software I use, but here's a 
 | Terminal Font  | [JetBrainsMono](https://www.jetbrains.com/lp/mono/) |
 
 ## Cardano Font
-![Cardano Custom Typeface Building](imgs/screenshotWs/cardano_logo_collection.png)
-
-I am currently in the process of building [cardanofont: a font containing many of the logos in the Cardano ecosystem](https://github.com/Cardano-on-Nix/cardanofont) and incorporating it into my config.
+I am currently in the process of building [cardanofont: a font containing many of the logos in the Cardano ecosystem](https://github.com/cardanonix/cardanofont) and incorporating it into my config.
 ![Full Screen Image](imgs/screenshotWs/fontCreation.png)
+
+## Web Workspace
+![Web Workspace](imgs/screenshotWs/webWs.png)
+## Misc Workspace
+![Misc Workspace](imgs/screenshotWs/mscWs.png)
+## VsCodium Workspace
+![VsCodium Workspace](imgs/screenshotWs/vscWs.png)
+## Communications Workspace
+![Communications Workspace](imgs/screenshotWs/comWs.png)
+## Stake Pool Workspace
+![Stake Pool Workspace](imgs/screenshotWs/spoWs.png)
+## Dev Workspace
+![Dev Workspace](imgs/screenshotWs/devWs.png)
+## Security Workspace
+![Security Workspace](imgs/screenshotWs/secWs.png)
+## Virtual Machine Workspace
+![Virtual Workspace](imgs/screenshotWs/vmsWs.png)
 
 
 ## Structure
 
-Here is an overview of the folders' structure:
 
 ```
 .
@@ -66,6 +73,16 @@ Here is an overview of the folders' structure:
 ├── flake.nix
 ├── flake.lock
 ├── home
+│  ├── config.nix
+│  ├── home.nix
+│  ├── modules
+│  ├── overlays
+│  ├── programs
+│  ├── scripts
+│  ├── secrets
+│  ├── services
+│  └── themes
+├── slim
 │  ├── config.nix
 │  ├── home.nix
 │  ├── modules
@@ -89,6 +106,7 @@ Here is an overview of the folders' structure:
 - `build`: the build and installation script.
 - `flake.nix`: home and system configurations.
 - `home`: all the user programs, services and dotfiles.
+- `slim`: bare bones user programs, services with dotfiles.
 - `imgs`: screenshots and other images.
 - `system`: the NixOS configuration, settings for different laptops and window managers.
 
@@ -97,9 +115,11 @@ Here is an overview of the folders' structure:
 You can have a look at the available flake outputs before getting started.
 
 ```console
-$ nix flake show github:harryprayiv/nix-config
-github:harryprayiv/nix-config/
+$ nix flake show github:cardanonix/nix-config
+github:cardanonix/nix-config/
 ├───homeConfigurations: unknown
+    ├───bismuth: Home Manager configuration
+    └───slim: Lightweight Home Manager configuration
 └───nixosConfigurations
     ├───intelNUC: NixOS configuration
     ├───intelTower: NixOS configuration
@@ -109,27 +129,36 @@ github:harryprayiv/nix-config/
 As well as all the declared flake inputs.
 
 ```console
-$ nix flake metadata github:harryprayiv/nix-config
-Resolved URL:  github:harryprayiv/nix-config
-Locked URL:    github:harryprayiv/nix-config/69c395a7f8b0911f431c6a081024205bdb042d88
-Description:   harryprayiv's Home Manager & NixOS configurations
-Path:          /nix/store/a1m0kmyrrrpraj8x7jcjdvyr8dgj4xh6-source
-Revision:      69c395a7f8b0911f431c6a081024205bdb042d88
-Last modified: 2023-01-06 16:27:31
+$ nix flake metadata github:cardanonix/nix-config
+Resolved URL:  github:cardanonix/nix-config
+Locked URL:    github:cardanonix/nix-config/a05a12570772dc5295143f1eda9bad7014bbd581
+Description:   cardanonix's Home Manager & NixOS configurations
+Path:          /nix/store/bj3rp240rldzcbhm6yc0q1vmxckzspb7-source
+Revision:      a05a12570772dc5295143f1eda9bad7014bbd581
+Last modified: 2023-02-24 12:18:39
 Inputs:
 
-├───fish-bobthefish-theme: github:gvolpe/theme-bobthefish/e4418e8a7de9fbd6b5053a9b9009aa84a48398cd
+├───CHaP: github:input-output-hk/cardano-haskell-packages/49edea9f38a113d7137d095111e4e6523c5bdeed
+├───cardano-node: github:input-output-hk/cardano-node/8762a10efe3f9f97939e3cb05edaf04250456702
+├───cncli: github:cardano-community/cncli/a92c643b165687cbdfb16de6e76fc5ae4b38bd5c
+├───deploy: github:input-output-hk/deploy-rs/4da8eb9fc3e611adf4bbe8c8df5b1fc604c4f906
+├───fish-bobthefish-theme: github:cardanonix/theme-bobthefish/e4418e8a7de9fbd6b5053a9b9009aa84a48398cd
 ├───fish-keytool-completions: github:ckipp01/keytool-fish-completions/dcb24bae7b8437e1e1210b00b7172841a26d6573
+├───flake-utils: github:numtide/flake-utils/3db36a8b464d0c4532ba1c7dda728f4576d6d073
 ├───gh-md-toc: github:ekalinin/github-markdown-toc/661b5c5111f47174e2d9092c8d76867e5a1f249d
-├───home-manager: github:nix-community/home-manager/54245e1820caabd8a0b53ce4d47e4d0fefe04cd4
-├───neovim-flake: github:gvolpe/neovim-flake/7cf22b0e4bab8935615339ab7c3be4215471896b
-├───nixpkgs: github:NixOS/nixpkgs/9813adc7f7c0edd738c6bdd8431439688bb0cb3d
+├───haskellNix: github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb
+├───home-manager: github:nix-community/home-manager/4295fdfa6b0005c32f2e1f0b732faf5810c1bc7f
+├───iohkNix: github:input-output-hk/iohk-nix/82e833b60c47bf0f352443879af1766712e9ca6f
+├───neovim-flake: github:Cardano-on-Nix/neovim-flake/b1db271c1effc8fe12ec5f8003a70d1a0b5a9824
+├───nix: github:NixOS/nix/435a16b5556f4171b4204a3f65c9dedf215f168c
+├───nixos-hardware: github:NixOS/nixos-hardware/2d44015779cced4eec9df5b8dab238b9f6312cb2
+├───nixpkgs: github:NixOS/nixpkgs/988cc958c57ce4350ec248d2d53087777f9e1949
 ├───nixpkgs-nautilus-gtk3: github:NixOS/nixpkgs/37bd39839acf99c5b738319f42478296f827f274
-├───nurpkgs: github:nix-community/NUR/f147ac90edce3f61ca8bb5f883400267a1057987
-├───tex2nix: github:Mic92/tex2nix/9ec1c0cd8eecf938f4954c53755c4564679486d9
-├───haskellNix: github:input-output-hk/haskell.nix/895435f1893db0ff3666f25ed7d6c92c78673322
-├───iohkNix: github:input-output-hk/iohk-nix/ca3d466ed36011bcc14290c6d36c503eb03eb71b
-└───cardano-node: github:input-output-hk/cardano-node/f75ed7755dc3ed77fd53c1cbbec6bf8a4f15a1b2
+├───nurpkgs: github:nix-community/NUR/9bde3171aeb5954b7955fcb09b231f53caf76b54
+├───rust-nix: github:input-output-hk/rust.nix/2fd5fce3ec67e6915cb79cbf132f023e147b31ba
+├───sops-nix: github:Mic92/sops-nix/2c5828439d718a6cddd9a511997d9ac7626a4aff
+├───statix: github:nerdypepper/statix/3c7136a23f444db252a556928c1489869ca3ab4e
+└───unison-nix: github:ceedubs/unison-nix/cf10749d64b84307f42b2ba3f8f27aaa2a34fd50
 ```
 
 ### NixOS
@@ -137,7 +166,7 @@ Inputs:
 The full home configuration is not yet fully automated but the NixOS configuration can be installed by running the following command.
 
 ```console
-$ nixos-rebuild switch --flake github:harryprayiv/nix-config#intelTower
+$ nixos-rebuild switch --flake github:cardanonix/nix-config#intelTower
 ```
 
 Beware that the `hardware-configuration.nix` file is the result of the hardware scan of the specific machine and might not be suitable for yours.
@@ -147,7 +176,7 @@ Beware that the `hardware-configuration.nix` file is the result of the hardware 
 A fresh install requires the creation of certain directories so this has not been automated yet (see `build` script file). However, if you omit those steps, the entire HM configuration can also be built as any other flake.
 
 ```console
-$ nix build github:harryprayiv/nix-config#homeConfigurations.bismuth-edp.activationPackage
+$ nix build github:cardanonix/nix-config#homeConfigurations.bismuth-edp.activationPackage
 $ result/activate
 ```
 
@@ -156,7 +185,7 @@ $ result/activate
 On a fresh NixOS installation, run the following commands.
 
 ```console
-$ nix flake clone github:harryprayiv/nix-config --dest /choose/a/path
+$ nix flake clone github:cardanonix/nix-config --dest /choose/a/path
 $ nix run nixpkgs#git-crypt unlock
 $ ./build fresh-install # requires sudo
 ```
