@@ -3,10 +3,11 @@ let
   };
 in
 [
-  #./cardano-node
+  ./cardano-node
+  # ./openvpn
   #./cardano-wallet
   #./grafana
   #./prometheus
-  ./ledger
+  # ./ledger
   more
 ]
