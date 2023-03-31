@@ -70,6 +70,7 @@ let
     python3Packages.ipython
     srm
     pinentry
+    niv
 
     # Work Stuff
     work-browser
@@ -87,7 +88,6 @@ let
     nyancat              # the famous rainbow cat!  
     ponysay              # for sweet Audrey
     cowsay               # cowsay fortune teller with random images
-    pipes                # pipes vis in terminal
 
     #  Security
     rage                 # encryption tool for secrets management
@@ -95,27 +95,6 @@ let
     gnupg                # Security ##
     ledger-live-desktop  # Ledger Nano X Support for NixOS
     bitwarden-cli        # command-line client for the password manager
-  ];
-
-  cpuHungryPkgs = with pkgs; [
-    vlc                  # media player
-    #darktable            # raw photo manipulation and grading
-    mpv                  # media player
-    #kodi                 # media player  
-    gimp                 # gnu image manipulation program (I started using gimp 2.99 which is causing problems with this one)
-    #blender              # 3D computer graphics software tool set
-    krita                # image editor (supposedly better than gimp)
-    mkvtoolnix           # tools for encoding MKV files, etc
-    filebot              # batch renaming
-    kdenlive             # super nice video editor
-    mlt                  # kdenlive uses the MLT framework to process all video operations
-    mediainfo            # additional package for kdenlive
-    inkscape
-  ];
-
-  homePkgs = with pkgs; [
-    hue-cli              # lights for my residence
-    mr                   # mass github actions
   ];
 
   gnomePkgs = with pkgs.gnome; [
@@ -141,58 +120,7 @@ let
     nix-tree                # visualize nix dependencies
     ihaskell
     ihaskell-blaze 
-  ];
-
-  cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
-    cncli
-  ];
-
-  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [     
-    bech32
-    cabalProjectRegenerate
-    cardano-cli
-    cardano-node
-    cardano-node-chairman
-    cardano-ping
-    cardano-submit-api
-    cardano-testnet
-    cardano-topology
-    cardano-tracer
-    chain-sync-client-with-ledger-state
-    db-analyser
-    db-converter
-    db-synthesizer
-    ledger-state
-    locli
-    plutus-example
-    scan-blocks
-    scan-blocks-pipelined
-    tx-generator
-  ];
-
-  pythonExt = p: with p; [
-    pandas
-    requests
-    pip
-    numpy
-  ];
-
-  pythonPkgs = with pkgs ++ pythonExt; [
-    (pkgs.python3.withPackages pythonExt)
-  ];
-
-  rustPkgs = with pkgs; [
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
-    pkg-config
-  ];
-
-  unisonPkgs = with inputs.unison-nix.packages.x86_64-linux; [
-    ucm
-    vim-unison
+    pkgs.zlib
   ];
 
 in
@@ -217,14 +145,7 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs 
-            ++ gnomePkgs 
-            ++ haskellPkgs
-            ++ cpuHungryPkgs
-            ++ rustPkgs
-            ++ homePkgs
-            ++ unisonPkgs
-            ++ pythonPkgs; 
+    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";

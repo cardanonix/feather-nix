@@ -65,8 +65,11 @@ in
   ./neofetch
   ./neovim-ide
   ./orage
+  ./python
   ./rofi
+  ./rust
   ./signal
+  ./towerPkgs
   ./xmonad
   ./vscode
   ./yubikey

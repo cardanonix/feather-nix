@@ -49,7 +49,7 @@ rebuild_system() {
 }
 
 rebuild_intelTower() {
-  sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
+  sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace 
   nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
   activateHM 
 }

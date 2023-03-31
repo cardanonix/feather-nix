@@ -3,25 +3,26 @@
 let
   home              = "/home/bismuth";
   topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  config            = "/Cardano/mainnet/configuration/cardano/mainnet-config.json";
-  node_socket_path  = "/Cardano/mainnet/db/node.socket";
-  db_path           = "/Cardano/mainnet/db";
+  config        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";  
+  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
+  db_path           = "/var/lib/cardano-node/db-mainnet";
+
   cardano-cli       = "./cardano-cli";
   cli-path          = "/cardano_local/cardano-node/cardano-cli-build/bin";
-  dapp_address ="addr1qyk6kp3egk5458dfckjmtfrvjx59l78gx7wqjfpgrf9ga9pnmye2vcqtz6kqk3yc6fje4rkwmwh9fy469n7uhl5kc6aqece446";
-  dapp_coll ="addr1qyf0vwvkgfhdmrva5jmkttux752eemqe53psyr4hpjpt6qfnmye2vcqtz6kqk3yc6fje4rkwmwh9fy469n7uhl5kc6aqsqlpyw";
+  dapp_address      = "addr1qyk6kp3egk5458dfckjmtfrvjx59l78gx7wqjfpgrf9ga9pnmye2vcqtz6kqk3yc6fje4rkwmwh9fy469n7uhl5kc6aqece446";
+  dapp_coll         = "addr1qyf0vwvkgfhdmrva5jmkttux752eemqe53psyr4hpjpt6qfnmye2vcqtz6kqk3yc6fje4rkwmwh9fy469n7uhl5kc6aqsqlpyw";
 in
   pkgs.writeShellScriptBin "node_gen_json" ''
   #!/run/current-system/sw/bin/bash
   
   echo "Repopulating Path Variables:"
-  CARDANO_TOPOLOGY="${home}${topology}"
-  CARDANO_CONFIG="${home}${config}"
-  CARDANO_NODE_SOCKET_PATH=${home}${node_socket_path}
-  CARDANO_DB_PATH="${home}${db_path}"
+  CARDANO_TOPOLOGY="${topology}"
+  CARDANO_CONFIG="${config}"
+  CARDANO_NODE_SOCKET_PATH=${node_socket_path}
+  CARDANO_DB_PATH="${db_path}"
   cd ${home}${cli-path}
   echo "Repopulating Path Variables:"
-  echo "cardano-node app executable: ${home}${cardano-cli} Make This DECLARATIVE" && echo "node socket path: ${home}${node_socket_path}" && echo "database path: ${home}${db_path}" && echo "config file: ${home}${config}" && echo "topology: ${home}${topology}"
+  echo "cardano-node app executable: ${cardano-cli}" && echo "node socket path: ${node_socket_path}" && echo "database path: ${db_path}" && echo "config file: ${config}" && echo "topology: ${topology}"
   echo ""
   echo ""
   echo "cli version:"

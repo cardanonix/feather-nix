@@ -2,7 +2,9 @@ let
   more = {
     services = {
       flameshot.enable = true;
+      lorri.enable = true;
     };
+
   };
 in
 [

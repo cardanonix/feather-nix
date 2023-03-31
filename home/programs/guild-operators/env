@@ -7,13 +7,13 @@
 ######################################
 
 #USESYSVARS="N"                                         # Whether to use environment variable from shell session for CNODE_HOME
-CNODEBIN="${HOME}/.nix-profile/bin/cardano-node"       # Override automatic detection of cardano-node executable
+CNODEBIN="/nix/store/k8ap2rqijr86n2p0kfayjqwcd3zn8s8h-cardano-node-exe-cardano-node-1.35.5/bin/cardano-node"       # Override automatic detection of cardano-node executable
 CCLI="${HOME}/.nix-profile/bin/cardano-cli"            # Override automatic detection of cardano-cli executable
 CNCLI="${HOME}/.nix-profile/bin/cncli"                 # Override automatic detection of executable (https://github.com/AndrewWestberg/cncli)
 CNODE_HOME = "/home/$USER/cardano_local/cardano-node/"; # Override default CNODE_HOME path (defaults to /opt/cardano/cnode)
 CNODE_PORT=3001                                        # Set node port
-CONFIG="${HOME}/Cardano/mainnet/configuration/cardano/mainnet-config.json"               # Override automatic detection of node config path
-SOCKET="${HOME}/Cardano/mainnet/db/node.socket"        # Override automatic detection of path to socket
+CONFIG="/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json"               # Override automatic detection of node config path
+SOCKET="/var/lib/cardano-node/db-mainnet/node.socket"        # Override automatic detection of path to socket
 TOPOLOGY="/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml"           # Override default topology.json path
 #LOG_DIR="${CNODE_HOME}/logs"                           # Folder where your logs will be sent to (must pre-exist)
 DB_DIR="${HOME}/Cardano/mainnet/db"                    # Folder to store the cardano-node blockchain db

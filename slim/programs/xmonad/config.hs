@@ -65,7 +65,10 @@ import           XMonad.Hooks.ManageHelpers            ( (-?>)
 import           XMonad.Hooks.UrgencyHook              ( UrgencyHook(..)
                                                        , withUrgencyHook
                                                        )
-import           XMonad.Layout.Gaps                    ( gaps )
+import           XMonad.Layout.Gaps                    ( GapSpec(..)
+                                                       , gaps 
+                                                       , setGaps 
+                                                       )
 import           XMonad.Layout.MultiToggle             ( Toggle(..)
                                                        , mkToggle
                                                        , single
@@ -110,6 +113,7 @@ import qualified Control.Exception                     as E
 import qualified Data.Map                              as M
 import qualified XMonad.StackSet                       as W
 import qualified XMonad.Util.NamedWindows              as W
+import qualified XMonad.Util.ExtensibleState           as XS  -- Custom State
 
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
@@ -117,6 +121,7 @@ import qualified Data.Set                              as S
 import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
+
 
 
 main :: IO ()
@@ -130,8 +135,8 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#372716" -- #dark brown (372716)  
-  , focusedBorderColor = "#64aeff" -- yellowish orange is E0964B and 64aeff is the color of Cardano logo
+  , normalBorderColor  = "#32343d" -- #neutral gray
+  , focusedBorderColor = "#6C99B8" -- nice blue
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
   , manageHook         = myManageHook
@@ -148,6 +153,30 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 myStartupHook = startupHook def
+
+-- -- Dyanamic Gaps?!?!?!?!?!?!
+-- newtype GapState = GapIndex Int deriving Show
+-- instance ExtensionClass GapState where
+--   initialValue = GapIndex 0
+
+-- myGaps :: [GapSpec]
+-- myGaps = [ [(L,0),(R,0),(U,0),(D,0)] -- you do have to specify all directions
+--           , [(L,5),(R,5),(U,5),(D,5)]
+--           , [(L,10),(R,10),(U,10),(D,10)]
+--           , [(L,20),(R,20),(U,20),(D,20)]
+--           , [(L,30),(R,30),(U,0),(D,0)]
+--           , [(L,0),(R,30),(U,0),(D,0)]
+--           , [(L,30),(R,0),(U,0),(D,0)] 
+--           , [(L,70),(R,10),(U,30),(D,30)]
+--           , [(L,10),(R,70),(U,20),(D,20)] ]
+
+-- cycleGaps :: X()
+-- cycleGaps = do
+--   (GapIndex idx) <- XS.gets $ \(GapIndex i) -> 
+--     let n = if i >= length myGaps - 1 then 0 else i+1 in GapIndex n
+--   sendMessage (setGaps $ myGaps !! idx)
+--   XS.put $ GapIndex idx
+-- --Dynamic Gaps End
 
 -- original idea: https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
@@ -207,7 +236,7 @@ myZshTerminal = "alacritty --hold -e zsh"
 
 delayTerminal      = "sleep 2s && alacritty"
 myGuildView        = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-cnodeStatus  = "alacritty -o font.size=5 -e systemctl status cardano-node"
+cnodeStatus        = "alacritty --hold -o font.size=5 -e systemctl status cardano-node"
 myCardanoCli       = "sleep 20m && alacritty --hold -e node_check"
 appLauncher        = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c        = "playerctl --player=spotify,%any " <> c
@@ -215,16 +244,7 @@ playerctl c        = "playerctl --player=spotify,%any " <> c
 calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
-
--- Hue Lighting Junk
-lghtLvl l b   = "hue light " <> l <> " brightness " <> b
-lghtOff l     = "hue light " <> l <> " off"
-lghtOn  l     = "hue light " <> l <> " on"
-blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off "
 screenLocker  = "betterlockscreen -l dim"
-darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
-chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
-coldLights    = "hue light 3 concentrate && hue light 14 concentrate && hue light 17 concentrate && hue light 8 concentrate && hue light 5 concentrate && hue light 6 pink && hue light 9 concentrate"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -240,18 +260,13 @@ showKeybindings xs =
     windows $ W.greedyView webWs     -- switch to webWs
 
 
- -- I used "xev" to figure out exactly what key I was pressing to make many of these 
+ -- use "xev" to figure out exactly what key you are pressing
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
     ] ^++^
-  keySet "Lights"
-    [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
-    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
-    , key "BrighterBlue"    (modm, xF86XK_MonBrightnessUp     ) $ spawn coldLights
-    ] ^++^    
   keySet "Audio"
     [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
     , key "Lower volume"    (0, xF86XK_AudioLowerVolume            ) $ spawn "amixer -q set Master 3%-"
@@ -277,6 +292,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
+    -- , key "GapSwitch"       (modm              , xK_g         ) cycleGaps 
     , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
     , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
     ] ^++^
@@ -287,15 +303,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
     ] ^++^
   keySet "Scratchpads"
-    [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
-    , key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
+    [ key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
-    , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
-    , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ safePromptSelection "mpv"
-    , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
-    --, key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
@@ -401,59 +412,42 @@ myLayout =
   avoidStruts
     . smartBorders
     . fullScreenToggle
-    . comLayout
-    . vscLayout    
-    . musLayout     
     . webLayout
     . mscLayout
-    . devLayout   
+    . vscLayout
+    . comLayout
     . spoLayout
-    . vmsLayout
-    . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
+    . secLayout
+    . devLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid                    = gapSpaced 3 $ Grid False
-     grid_strict_portrait    = GridRatio grid_portrait False 
-     grid_strict_landscape   = GridRatio grid_landscape False 
-     tiled                   = gapSpaced 3 $ Tall nmaster delta golden_ratio
-     doubletiled             = gapSpaced 0 $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     tiled_spaced            = gapSpaced 10 $ Tall nmaster delta ratio
-     column3_og              = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
-     video_tile              = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
-     full                    = gapSpaced 3 Full
-     fuller                  = gapSpaced 0 Full
-     column3                 = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral            = gapSpaced 3 $ spiral golden_ratio
-     silverSpiral            = gapSpaced 3 $ spiralWithDir East CCW ratio
+     tiled   = gapSpaced 10 $ Tall nmaster delta ratio
+     full    = gapSpaced 5 Full
+     column3 = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
+     grid'   = gapSpaced 10 $ Grid
 
      -- The default number of windows in the master pane
      nmaster = 1
-     nmasterTwo = 2
 
-     -- Default proportions of screen occupied by master pane
-     ratio          = 1/2
-     golden_ratio   = 1/1.618033988749894e0
-     grid_portrait     = 3/4
-     grid_landscape    = 4/3
+     -- Default proportion of screen occupied by master pane
+     ratio   = 1/2
 
      -- Percent of screen to increment by when resizing panes
-     delta   = 2/100
+     delta   = 3/100
 
      -- Gaps bewteen windows
      myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
      gapSpaced g = spacing g . myGaps g
 
+
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
-     mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
-     musLayout = onWorkspace musWs (fuller ||| tiled)
-     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
-     comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
-     spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
-     devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
-     secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
-     vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
+     webLayout = onWorkspace webWs (tiled ||| full)
+     mscLayout = onWorkspace mscWs (column3 ||| full)
+     vscLayout = onWorkspace vscWs (grid' ||| full)
+     comLayout = onWorkspace comWs (full ||| tiled)
+     spoLayout = onWorkspace spoWs (grid' ||| full)
+     devLayout = onWorkspace devWs (grid' ||| full)
+     secLayout = onWorkspace secWs (grid' ||| full) 
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -518,22 +512,15 @@ data App
 
 audacious = ClassApp "Audacious"            "audacious"
 btm       = TitleApp "btm"                  "alacritty -t btm -e btm --color gruvbox --default_widget_type proc"
-virtbox   = ClassApp "VirtualBox Machine"   "VBoxManage startvm 'plutusVM_bismuth'"
 calendar  = ClassApp "Orage"                "orage"
 cmatrix   = TitleApp "cmatrix"              "alacritty cmatrix"
 eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
-gimp      = ClassApp "Gimp"                 "gimp"
 keepass   = ClassApp "KeePassXC"            "keepassxc"
--- mastodon  = TitleApp "Mastodon"          "tokodon"
 nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
-office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
 spotify   = ClassApp "Spotify"              "spotify"
-vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
-mpv       = ClassApp "Mpv"                  "mpv" 
-kodi      = ClassApp "Kodi"                 "kodi"
 vscodium  = ClassApp "VSCodium"             "vscodium"
 yad       = ClassApp "Yad"                  "yad --text-info --text 'XMonad'"
 
@@ -555,21 +542,15 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
   match = anyOf . fmap isInstance
   manageApps = composeOne
     [ isInstance calendar                      -?> doCalendarFloat
-    , match [ virtbox
-            ]                                  -?> tileAbove
     , match [ keepass
-            , mpv
             ]                                  -?> tileAbove
-    , match [ audacious
-            , eog
+    , match [ eog
             , nautilus
-            , office
             , pavuctrl
             , scr
             ]                                  -?> doCenterFloat
     , match [ btm
             , evince
-            , gimp
             ]                                  -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
     , resource =? "kdesktop"                   -?> doIgnore
@@ -600,23 +581,21 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, gimp, mpv, virtbox ]
+scratchpads = scratchpadApp <$> [ btm, nautilus, scr ]
 
 ------------------------------------------------------------------------
 -- Workspaces
 --
 webWs = "web"
 mscWs = "msc"
-musWs = "mus"
 vscWs = "vsc"
 comWs = "com"
 spoWs = "spo"
 devWs = "dev"
 secWs = "sec"
-vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
+myWS = [webWs, mscWs, vscWs, comWs, spoWs, devWs, secWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -631,40 +610,29 @@ projects =
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn myTerminal
             }
-  , Project { projectName      = musWs
-            , projectDirectory = "~/music/"
-            , projectStartHook = Just $ runScratchpadApp spotify
-            }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/nix-config.git/flattened/"
+            , projectDirectory = "~/plutus/nix-config.git/plutusVM/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
-                                           
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn "tokodon"
                                            spawn "element-desktop"
                                            spawn "discord"
-                                           spawn "telegram-desktop"
-                                           spawn "signal"
-                                           spawn "slack"
             }
   , Project { projectName      = spoWs
             , projectDirectory = "/home/bismuth/cardano_local/"
-            , projectStartHook = Just $ do spawn myTerminal
+            , projectStartHook = Just $ do spawn cnodeStatus
             }
   , Project { projectName      = devWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn cnodeStatus
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/"
             , projectStartHook = Just $ do spawn "keepassxc"
-            }
-  , Project { projectName      = vmsWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]
 

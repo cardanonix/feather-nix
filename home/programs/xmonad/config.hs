@@ -65,7 +65,12 @@ import           XMonad.Hooks.ManageHelpers            ( (-?>)
 import           XMonad.Hooks.UrgencyHook              ( UrgencyHook(..)
                                                        , withUrgencyHook
                                                        )
-import           XMonad.Layout.Gaps                    ( gaps )
+import           XMonad.Layout.Gaps                    ( GapSpec(..)
+                                                       , GapMessage (IncGap, DecGap)
+                                                       , weakModifyGaps
+                                                       , gaps 
+                                                       , setGaps 
+                                                       )
 import           XMonad.Layout.MultiToggle             ( Toggle(..)
                                                        , mkToggle
                                                        , single
@@ -73,7 +78,11 @@ import           XMonad.Layout.MultiToggle             ( Toggle(..)
 import           XMonad.Layout.MultiToggle.Instances   ( StdTransformers(NBFULL) )
 import           XMonad.Layout.NoBorders               ( smartBorders )
 import           XMonad.Layout.PerWorkspace            ( onWorkspace )
-import           XMonad.Layout.Spacing                 ( spacing )
+import           XMonad.Layout.Spacing                 ( SpacingModifier(..)
+                                                       , spacing
+                                                       , incScreenWindowSpacing
+                                                       , decScreenWindowSpacing
+                                                       )
 import           XMonad.Layout.HintedGrid
 import           XMonad.Layout.ThreeColumns            ( ThreeCol(..) )
 import           XMonad.Layout.Spiral
@@ -110,6 +119,8 @@ import qualified Control.Exception                     as E
 import qualified Data.Map                              as M
 import qualified XMonad.StackSet                       as W
 import qualified XMonad.Util.NamedWindows              as W
+import qualified XMonad.Util.ExtensibleState           as XS  -- Custom State
+
 
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
@@ -117,6 +128,7 @@ import qualified Data.Set                              as S
 import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
+
 
 
 main :: IO ()
@@ -130,7 +142,7 @@ main' dbus = xmonad . docks . ewmh . ewmhFullscreen . dynProjects . keybindings 
   , borderWidth        = 2
   , modMask            = myModMask
   , workspaces         = myWS
-  , normalBorderColor  = "#A2743F" -- #dark brown (372716)  
+  , normalBorderColor  = "#32343d" -- #neutral gray
   , focusedBorderColor = "#6C99B8" -- nice blue
   , mouseBindings      = myMouseBindings
   , layoutHook         = myLayout
@@ -201,13 +213,50 @@ polybarHook dbus =
 
 myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
 
+--- Dynamic Gaps implementation
+
+-- Gaps between windows
+gapSize = 10
+
+newtype GapState = GapIndex Int deriving Show
+instance ExtensionClass GapState where
+  initialValue = GapIndex 0
+
+myGaps :: [GapSpec]
+myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all directions
+         , [(R,5),(L,5),(U,5),(D,5)]
+         , [(R,2),(L,2),(U,2),(D,2)]
+         , [(R,20),(L,20),(U,20),(D,20)]
+         , [(R,25),(L,25),(U,25),(D,25)]
+         , [(R,30),(L,30),(U,30),(D,30)]
+         , [(R,40),(L,40),(U,40),(D,40)] 
+         , [(R,0),(L,0),(U,100),(D,100)]
+         , [(R,500),(L,0),(U,0),(D,0)] 
+         , [(R,0),(L,500),(U,0),(D,0)] 
+         , [(R,0),(L,0),(U,400),(D,0)] 
+         , [(R,0),(L,0),(U,0),(D,400)] 
+         , [(R,0),(L,0),(U,0),(D,0)]         
+         ]
+
+cycleGaps :: X()
+cycleGaps = do
+  (GapIndex idx) <- XS.gets $ \(GapIndex i) -> 
+    let n = if i >= length myGaps - 1 then 0 else i+1 in GapIndex n
+  sendMessage (setGaps $ myGaps !! idx)
+  XS.put $ GapIndex idx
+
+
 myTerminal     = "alacritty"
+
+terminalWithCommand :: String -> String
+terminalWithCommand cmd = "alacritty -o shell.program=fish -o shell.args=['-C " <> cmd <> "']"
+
 myBashTerminal = "alacritty --hold -e bash"
 myZshTerminal = "alacritty --hold -e zsh"
 
 delayTerminal      = "sleep 2s && alacritty"
 myGuildView        = "alacritty --hold -e ./guild-operators/scripts/cnode-helper-scripts/gLiveView.sh"
-cnodeStatus  = "alacritty -o font.size=5 -e systemctl status cardano-node"
+cnodeStatus        = "alacritty --hold -o font.size=5 -e systemctl status cardano-node"
 myCardanoCli       = "sleep 20m && alacritty --hold -e node_check"
 appLauncher        = "rofi -modi drun,ssh,window -show drun -show-icons"
 playerctl c        = "playerctl --player=spotify,%any " <> c
@@ -240,12 +289,13 @@ showKeybindings xs =
     windows $ W.greedyView webWs     -- switch to webWs
 
 
- -- I used "xev" to figure out exactly what key I was pressing to make many of these 
+ -- use "xev" to figure out exactly what key you are pressing
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
     [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
+    , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
     ] ^++^
   keySet "Lights"
     [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
@@ -276,9 +326,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
     ] ^++^
   keySet "Layouts"
-    [ key "Next"            (modm              , xK_space     ) $ sendMessage NextLayout
-    , key "Reset"           (modm .|. shiftMask, xK_space     ) $ setLayout (XMonad.layoutHook conf)
-    , key "Fullscreen"      (modm              , xK_f         ) $ sendMessage (Toggle NBFULL)
+    [ key "Next"            (modm                 , xK_space   ) $ sendMessage NextLayout
+    , key "SpaceInc"        (modm                 , xK_g       ) $ incScreenWindowSpacing 2 
+    , key "SpaceDec"        (modm .|. shiftMask   , xK_g       ) $ decScreenWindowSpacing 2 
+    , key "BorderSwitch"    (modm                 , xK_b       ) cycleGaps 
+    , key "Reset"           (modm .|. shiftMask   , xK_space   ) $ setLayout (XMonad.layoutHook conf)
+    , key "Fullscreen"      (modm                  , xK_f      ) $ sendMessage (Toggle NBFULL)
     ] ^++^
   keySet "Polybar"
     [ key "Toggle"          (modm              , xK_equal     ) togglePolybar
@@ -287,8 +340,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
     ] ^++^
   keySet "Scratchpads"
-    [ key "Audacious"       (modm .|. controlMask,  xK_a      ) $ runScratchpadApp audacious
-    , key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
+    [ key "bottom"          (0, xF86XK_LaunchB                ) $ runScratchpadApp btm
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
@@ -299,7 +351,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
-    [ key "Toggle status bar gap"  (modm              , xK_b  ) toggleStruts
+    [ key "Toggle status bar gap"  (modm .|. shiftMask, xK_b  ) toggleStruts
     , key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q  ) $ io exitSuccess
     , key "Restart XMonad"         (modm              , xK_q  ) $ spawn "xmonad --recompile; xmonad --restart"
     , key "Capture entire screen"  (modm          , xK_Print  ) $ spawn "flameshot full -p ~/Pictures/flameshot/"
@@ -351,8 +403,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
         | (k, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m)  <- [(W.view, 0), (W.shift, shiftMask)]]
 
-
-
 ----------- Cycle through workspaces one by one but filtering out NSP (scratchpads) -----------
 
 nextWS' = switchWS Next
@@ -364,9 +414,6 @@ switchWS dir =
 filterOutNSP =
   let g f xs = filter (\(W.Workspace t _ _) -> t /= "NSP") (f xs)
   in  g <$> getSortByIndex
-
-
-
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events----------------
@@ -407,25 +454,27 @@ myLayout =
     . webLayout
     . mscLayout
     . devLayout   
+    . scdLayout   
     . spoLayout
     . vmsLayout
     . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
-     grid                    = gapSpaced 3 $ Grid False
-     grid_strict_portrait    = GridRatio grid_portrait False 
-     grid_strict_landscape   = GridRatio grid_landscape False 
-     tiled                   = gapSpaced 3 $ Tall nmaster delta golden_ratio
-     doubletiled             = gapSpaced 0 $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = gapSpaced 0 $ Tall nmaster delta golden_ratio
-     tiled_spaced            = gapSpaced 10 $ Tall nmaster delta ratio
-     column3_og              = gapSpaced 10 $ ThreeColMid 1 (3/100) (1/2)
-     video_tile              = gapSpaced 2 $ Mirror (Tall 1 (1/50) (3/5))
-     full                    = gapSpaced 3 Full
-     fuller                  = gapSpaced 0 Full
-     column3                 = gapSpaced 3 $ ThreeColMid 1 (33/100) (1/2)
-     goldenSpiral            = gapSpaced 3 $ spiral golden_ratio
-     silverSpiral            = gapSpaced 3 $ spiralWithDir East CCW ratio
+     grid                    = spacing gapSize . gaps (head myGaps) $ Grid False
+     grid_strict_portrait    = spacing gapSize . gaps (head myGaps) $ GridRatio grid_portrait False 
+     grid_strict_landscape   = spacing gapSize . gaps (head myGaps) $ GridRatio grid_landscape False 
+     tiled                   = spacing gapSize . gaps (head myGaps) $ Tall nmaster delta golden_ratio
+     doubletiled             = spacing gapSize . gaps (head myGaps) $ Tall nmasterTwo delta golden_ratio
+     tiled_nogap             = spacing 0 . gaps (myGaps !! 12) $ Tall nmaster delta golden_ratio
+     tiled_spaced            = spacing 0 . gaps (myGaps !! 3) $ Tall nmaster delta ratio
+     column3_og              = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (3/100) (1/2)
+     video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
+     full                    = Full
+     fuller                  = spacing 0 . gaps (myGaps !! 12) $ Full
+     column3                 = spacing 2 . gaps (myGaps !! 2) $ ThreeColMid 1 (33/100) (1/2)
+     goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
+     silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
+     dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -440,17 +489,14 @@ myLayout =
      -- Percent of screen to increment by when resizing panes
      delta   = 2/100
 
-     -- Gaps bewteen windows
-     myGaps gap  = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
-     gapSpaced g = spacing g . myGaps g
-
      -- Per workspace layout
      webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
-     mscLayout = onWorkspace mscWs (doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     mscLayout = onWorkspace mscWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled)
      vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
+     scdLayout = onWorkspace scdWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
      vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
@@ -611,12 +657,13 @@ musWs = "mus"
 vscWs = "vsc"
 comWs = "com"
 spoWs = "spo"
+scdWs = "scd"
 devWs = "dev"
 secWs = "sec"
 vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
+myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, scdWs, secWs, vmsWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -624,25 +671,24 @@ myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, secWs, vmsWs]
 projects :: [Project]
 projects =
   [ Project { projectName      = webWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/workspace/webWs/"
             , projectStartHook = Just $ do spawn "brave"
             }
   , Project { projectName      = mscWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/workspace/mscWs/"
             , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = musWs
-            , projectDirectory = "~/music/"
+            , projectDirectory = "~/plutus/workspace/musWs/"
             , projectStartHook = Just $ runScratchpadApp spotify
             }
   , Project { projectName      = vscWs
-            , projectDirectory = "~/plutus/nix-config.git/flattened/"
+            , projectDirectory = "~/plutus/workspace/vscWs/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
-                                           
             }
   , Project { projectName      = comWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/workspace/comWs/"
             , projectStartHook = Just $ do spawn "tokodon"
                                            spawn "element-desktop"
                                            spawn "discord"
@@ -651,19 +697,25 @@ projects =
                                            spawn "slack"
             }
   , Project { projectName      = spoWs
-            , projectDirectory = "/home/bismuth/cardano_local/"
-            , projectStartHook = Just $ do spawn myTerminal
+            , projectDirectory = "~/plutus/workspace/spoWs/"
+            , projectStartHook = Just $ do spawn (terminalWithCommand "systemctl status cardano-node")
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn cnodeStatus
+            , projectDirectory = "~/plutus/workspace/devWs/"
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
+            }
+  , Project { projectName      = scdWs
+            , projectDirectory = "~/Cardano/git/"
+            , projectStartHook = Just $ do spawn "codium -n ."
+                                           spawn delayTerminal 
             }
   , Project { projectName      = secWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/workspace/secWs/"
             , projectStartHook = Just $ do spawn "keepassxc"
             }
   , Project { projectName      = vmsWs
-            , projectDirectory = "~/"
+            , projectDirectory = "~/plutus/workspace/vmsWs/"
             , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]

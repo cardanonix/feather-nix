@@ -4,7 +4,7 @@ with lib;
 
 {
   imports = [
-    ../.././services/cardano-node
+    ../.././services
     ./hardware-configuration.nix
   ];
 
@@ -26,11 +26,11 @@ with lib;
         ];
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
-  };                                               
+  };                                              
                                                                   
   users.groups.plugdev = {};
 
- # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
@@ -51,9 +51,7 @@ with lib;
     interfaces.eth0.useDHCP = true;
   };
 
-
-
-    # List packages installed in system profile. To search, run:
+  # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
       virt-manager
@@ -84,18 +82,12 @@ with lib;
       fsType = "nfs";
     };
 
-  # fileSystems."/var/lib/cardano-node/db-mainnet" = { 
-  #   device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
-  #   options = [ "x-systemd.automount" "noauto" ];
-  #   fsType = "nfs";
-  # }; 
-
   fileSystems."/home/bismuth/Cardano" =
     { device = "192.168.1.212:/volume2/Cardano";
       options = [ "x-systemd.automount" "noauto" ];
       fsType = "nfs";
     }; 
-
+  
   fileSystems."/home/bismuth/Programming" =
     { device = "192.168.1.212:/volume2/Programming";
       options = [ "x-systemd.automount" "noauto" ];

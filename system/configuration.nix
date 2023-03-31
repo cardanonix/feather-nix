@@ -99,6 +99,7 @@ in
       alacritty
       vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       wget
+      bc                   # required for Cardano Guild gLiveView
       git
       brave
       git-crypt
@@ -165,8 +166,9 @@ in
     };
 
     # Flakes settings
-    package = pkgs.nixVersions.stable;
+    package = pkgs.nixUnstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
+    
 
     settings = {
       # Automate `nix store --optimise`
@@ -175,6 +177,7 @@ in
       # Required by Cachix to be used as non-root user
       trusted-users = [ "root" "bismuth" ];
       
+      extra-experimental-features  = [ "ca-derivations" ];
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
       

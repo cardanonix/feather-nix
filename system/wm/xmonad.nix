@@ -15,6 +15,8 @@
     xserver = {
       enable = true;
 
+      # desktopManager.wallpaper = "../../../imgs/wallpapers/longboat01_yanoi_plutus.JPG";
+
       extraLayouts.us-custom = {
         description = "US layout with custom hyper keys";
         languages   = [ "eng" ];

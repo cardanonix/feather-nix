@@ -37,6 +37,7 @@ in
       ] ++ map (loadAfter [ "cab404.vscode-direnv" ]) (
         with pkgs.vscode-extensions; [
           mkhl.direnv
+          bbenoist.nix
           haskell.haskell
           justusadam.language-haskell
           arrterian.nix-env-selector
@@ -52,6 +53,7 @@ in
         ]
       );
     userSettings = {
+        "editor.fontSize" = "13";
         "update.mode" = "none";
         "window.zoomLevel" = "-2";
         "terminal.explorerKind" = "external";
@@ -64,28 +66,28 @@ in
         "git.autoStash" = true;
         "explorer.confirmDragAndDrop" = false;
         "git.enableCommitSigning" = true;
-        "editor.minimap.enabled" = true;
+        "editor.minimap.enabled" = false;
         "diffEditor.ignoreTrimWhitespace" = false;
         "window.autoDetectColorScheme" = false;
         # "workbench.statusBar.visible" = false;
         "workbench.colorCustomizations" = { #ugly right now
-          "statusBar.background" = "#252422";
-          "statusBar.noFolderBackground" = "#1F1E1C";
-          "statusBar.debuggingBackground" = "#1F1E1C";
-          "editor.background" = "#1F1E1C";
-          "statusBarItem.remoteBackground" = "#1F1E1C";
+          "statusBar.background" = "#282a33";
+          "statusBar.noFolderBackground" = "#32343d";
+          "statusBar.debuggingBackground" = "#32343d";
+          "editor.background" = "#32343d";
+          "statusBarItem.remoteBackground" = "#32343d";
           "mergeEditor.change.background" = "#627A92";
-          "mergeEditor.change.word.background" = "#252422";
-          "tab.inactiveBackground" = "#252422";
-          "sideBar.background" = "#252422";
-          "sideBar.dropBackground" = "#252422"; 
-          "input.background" =  "#252422";
-          "banner.background" = "#252422";
-          "minimap.background" = "#252422";
-          "menu.background" =  "#252422";
-          "menu.selectionBackground" =  "#252422";
+          "mergeEditor.change.word.background" = "#282a33";
+          "tab.inactiveBackground" = "#282a33";
+          "sideBar.background" = "#282a33";
+          "sideBar.dropBackground" = "#282a33"; 
+          "input.background" =  "#282a33";
+          "banner.background" = "#282a33";
+          "minimap.background" = "#282a33";
+          "menu.background" =  "#282a33";
+          "menu.selectionBackground" =  "#282a33";
           "icon.foreground" = "#FFFFFF";
-          "statusBarItem.prominentBackground" = "#252422";
+          "statusBarItem.prominentBackground" = "#282a33";
         };
     };
   };
