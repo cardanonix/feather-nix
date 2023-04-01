@@ -27,7 +27,7 @@ let
 in
 {   
   services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
-    instances = 2;
+    # instances = 2;
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;
