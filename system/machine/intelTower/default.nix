@@ -4,8 +4,9 @@ with lib;
 
 {
   imports = [
-    ../.././services/cardano-node/default.nix
     ./hardware-configuration.nix
+    ../.././services
+
   ];
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
