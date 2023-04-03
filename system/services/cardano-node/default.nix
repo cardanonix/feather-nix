@@ -1,28 +1,16 @@
 { config, pkgs, lib, inputs, ... }: 
 
-/*  
-some tweaks I will need to implement:
-TODO: make sure that the NAS is mounted before writing since I write to a NAS mounted to the same place as the node mounts by default  
-I'm assuming I just add something to "systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];"
-TODO: learn to either control scope or create a new user and group that my main user is part of as well.  
-Currently this systemd service is too confined in the system and I wish I could control it natively from the Home Manager part of my config
-TODO: gLIveView
-TODO: Prometheus
-TODO: Grafana
-TODO: Cardano Wallet
-*/
 let
-  topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
-  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
-  db_path           = "/var/lib/cardano-node/db-mainnet";
+  # topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
+  # nodeconfig        = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
+  # node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
+  # db_path           = "/var/lib/cardano-node/db-mainnet";
 
   # signingKey_path = "";
   # delegationCertificate_path = "";
   # kesKey_path = "";
   # vrfKey_path = "";
   # opCert_path = "";
-
 
 in
 {   
