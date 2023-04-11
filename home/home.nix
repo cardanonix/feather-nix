@@ -81,7 +81,7 @@ let
     tdesktop             # telegram messaging client
     slack                # slack messaging client
     # tootle               # mastodon client
-    tokodon
+
 
     #  Ricing
     cmatrix              # dorky terminal matrix effect
