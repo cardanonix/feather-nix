@@ -5,5 +5,6 @@ in
 {
   imports = [
     ./cardano-node
+    ./virtmanager
   ];
 }

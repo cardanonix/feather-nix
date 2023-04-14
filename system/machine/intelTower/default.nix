@@ -55,7 +55,7 @@ with lib;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      virt-manager
+      # virt-manager
     ];
 
   services.sysprof.enable = true;
@@ -137,17 +137,5 @@ with lib;
         { x = 1920; y = 1080; }
       ];
     };
-  };
-  
-    # Enable Docker & VirtualBox support.
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-    libvirtd.enable = true;
   };
 }
