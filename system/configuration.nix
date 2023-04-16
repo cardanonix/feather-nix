@@ -76,12 +76,6 @@ in
     # SSH daemon.
     sshd.enable = true;
 
-    # Enable CUPS to print documents.
-    printing = {
-      enable = true;
-      drivers = [ pkgs.brlaser ];
-    };
-
     xrdp = {
       enable = true;
       defaultWindowManager = "xmonad";
@@ -110,6 +104,7 @@ in
       jq
       pinentry
       srm
+      cups-brother-hll2375dw
     ]; 
 
   # Making fonts accessible to applications.
@@ -148,14 +143,6 @@ in
     '';
   };
     
-  nixpkgs.config = {
-    allowUnfree = true;
-    contentAddressedByDefault = true;
-    permittedInsecurePackages = [
-      "xrdp-0.9.9"
-    ];
-  };
-
   # Nix daemon config
   nix = {
     # Automate garbage collection

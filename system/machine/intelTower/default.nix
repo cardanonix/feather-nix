@@ -27,9 +27,23 @@ with lib;
         ];
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
-  };                                              
+  };                                     
                                                                   
   users.groups.plugdev = {};
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    contentAddressedByDefault = true;
+    permittedInsecurePackages = [
+      "xrdp-0.9.9"
+    ];
+  };
+
+  # Enable CUPS to print documents for my Brother printer.
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.brlaser ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {

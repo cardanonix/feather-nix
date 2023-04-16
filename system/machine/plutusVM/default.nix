@@ -1,10 +1,50 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
+
+with lib;
 
 {
-  imports =  [
-    # Hardware scan
+  imports = [
     ./hardware-configuration.nix
+    ../.././services
+
   ];
+
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.bismuth = with inputs; {
+      isNormalUser = true;
+      home = "/home/bismuth";
+      uid = 1002;
+      description = "Harry Pray IV";
+      extraGroups  = [ 
+        "docker" 
+        "networkmanager" 
+        "wheel" 
+        "scanner" 
+        "lp"
+        "plugdev" 
+        "cardano-node" 
+        "cardano-wallet" 
+  ];
+      shell = pkgs.fish;
+      openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@plutusVM" ];
+  };                                     
+
+  users.groups.plugdev = {};
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    contentAddressedByDefault = false;
+    permittedInsecurePackages = [
+      #"xrdp-0.9.9"
+    ];
+  };
+
+
+  # Enable CUPS to print documents for my Brother printer.
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.brlaser ];
+  };
 
  # Use the systemd-boot EFI boot loader.
   boot = {
@@ -21,23 +61,9 @@
       };
     };
 
-      # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.bismuth = {
-      isNormalUser = true;
-      home = "/home/bismuth";
-      uid = 1002;
-      description = "Harry Pray IV";
-      extraGroups  = [ "docker" "networkmanager" "wheel" "scanner" "lp" "plugdev" "cardano-node" ];
-      shell = pkgs.fish;
-      # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
-  };
-
-  users.groups.plugdev = {};
-
   networking = {
     hostName = "plutusVM"; # Define your hostname.
     interfaces.eno1.useDHCP = true;
-    #interfaces.eth0.useDHCP = true;
   };
 
 /*   swapDevices =
@@ -79,11 +105,6 @@
       fsType = "nfs";
     };
 
-/*   fileSystems."/home/bismuth/music" =
-    { device = "192.168.1.212:/volume2/music";
-      options = [ "x-systemd.automount" "noauto" ];
-      fsType = "nfs";
-    }; */
 
   services.xserver = {
     xrandrHeads = [
@@ -98,20 +119,5 @@
     resolutions = [
       { x = 1920; y = 1080; }
     ];
-  };
-      # Enable Docker & VirtualBox support.
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-
-    virtualbox.host = {
-      enable = false;
-      enableExtensionPack = false;
-    };
   };
 }
