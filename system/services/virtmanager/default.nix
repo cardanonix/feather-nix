@@ -23,7 +23,7 @@ in
 
   virtualisation.libvirtd.enable = true;
   
-  users.extraUsers.bismuth.extraGroups = [ "libvirtd" ];
+  users.extraUsers.bismuth.extraGroups = [ "libvirtd" "kvm" ];
 
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1
