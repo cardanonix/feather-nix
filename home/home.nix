@@ -71,6 +71,7 @@ let
     srm
     pinentry
     niv
+    sqlite
 
     # Work Stuff
     work-browser
