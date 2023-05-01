@@ -71,6 +71,19 @@ with lib;
   environment.systemPackages = with pkgs; [
       # virt-manager
     ];
+  
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  
+  # Half-hearted attempt to set environment variables for flatpak
+  # environment = {
+  #   XDG_DATA_DIRS = [
+  #                   "/usr/share"
+  #                   "/var/lib/flatpak/exports/share"
+  #                   "$HOME/.local/share/flatpak/exports/share"
+  #                   ];
+  # };
 
   services.sysprof.enable = true;
 
@@ -151,7 +164,5 @@ with lib;
         { x = 1920; y = 1080; }
       ];
     };
-    flatpak.enable = true;
   };
-  xdg.portal.enable = true;
 }
