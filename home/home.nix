@@ -72,6 +72,7 @@ let
     pinentry
     niv
     sqlite
+    scribus
 
     # Work Stuff
     work-browser

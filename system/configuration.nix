@@ -105,6 +105,8 @@ in
       pinentry
       srm
       cups-brother-hll2375dw
+      gparted
+      zip
     ]; 
 
   # Making fonts accessible to applications.
