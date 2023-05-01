@@ -10,7 +10,6 @@ let
 
   defaultPkgs = with pkgs; [
     aalib                # make ASCI text 
-    any-nix-shell        # fish support for nix shell
     arandr               # simple GUI for xrandr
     asciinema            # record the terminal
     audacious            # simple music player
@@ -23,7 +22,6 @@ let
     dmenu                # application launcher
     docker-compose       # docker manager
     dive                 # explore docker layers
-    drawio               # diagram design
     duf                  # disk usage/free utility
     exa                  # a better `ls`
     fd                   # "find" for files
@@ -33,7 +31,6 @@ let
     insomnia             # rest client with graphql support
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
-    #libreoffice          # office suite
     libnotify            # notify-send command4
     betterlockscreen     # fast lockscreen based on i3lock
     ncdu                 # disk space info (a better du)
@@ -42,7 +39,6 @@ let
     nix-index            # locate packages containing certain nixpkgs
     md-toc               # generate ToC in markdown files
     adoptopenjdk-bin
-    obsidian             # note taking/mind mapping
     pavucontrol          # pulseaudio volume control
     paprefs              # pulseaudio preferences
     pasystray            # pulseaudio systray
@@ -64,15 +60,9 @@ let
     yad                  # yet another dialog - fork of zenity
     xssproxy             # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
     xautolock            # autolock stuff
-    jupyter              # pyton jupyter notebooks
-    lorri                # needed for direnv
     ihp-new              # Haskell web framework (the Django of Haskell)
-    python3Packages.ipython
-    srm
-    pinentry
-    niv
-    sqlite
-    scribus
+    srm                  # a command-line compatible rm(1) which overwrites file contents before unlinking.
+    pinentry             # a small collection of dialog programs that allow GnuPG to read passphrases and PIN numbers in a secure manner
 
     # Work Stuff
     work-browser
@@ -82,7 +72,6 @@ let
     discord              # discord app (breaks often)
     tdesktop             # telegram messaging client
     slack                # slack messaging client
-    # tootle               # mastodon client
 
 
     #  Ricing

@@ -14,8 +14,13 @@ let
     kdenlive             # super nice video editor
     mlt                  # kdenlive uses the MLT framework to process all video operations
     mediainfo            # additional package for kdenlive
-    inkscape
-    kicad
+    inkscape             # absolutely essential for editing Typefaces and Fonts
+    kicad                # Leading Open circuit CAD software
+    scribus              # Open source alternative to Indesign and Quark
+    sqlite               # sql lite databse
+    drawio               # diagram design
+    obsidian             # note taking/mind mapping
+    #libreoffice          # office suite
   ];
 
   homePkgs = with pkgs; [

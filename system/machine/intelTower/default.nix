@@ -72,6 +72,8 @@ with lib;
       # virt-manager
     ];
 
+  services.flatpak.enable = true;
+
   services.sysprof.enable = true;
 
   nix.settings.cores = 4;

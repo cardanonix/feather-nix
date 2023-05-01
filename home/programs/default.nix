@@ -13,6 +13,11 @@ let
         nix-direnv.enable = true;
       };
 
+      niv.enable = true;
+      lorri.enable = true;                # needed for direnv
+      any-nix-shell.enable = true;        # fish support for nix shell
+
+
       fzf = {
         enable = true;
         enableFishIntegration = true;
