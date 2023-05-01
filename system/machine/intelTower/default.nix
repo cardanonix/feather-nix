@@ -72,8 +72,6 @@ with lib;
       # virt-manager
     ];
 
-  services.flatpak.enable = true;
-
   services.sysprof.enable = true;
 
   nix.settings.cores = 4;
@@ -153,5 +151,7 @@ with lib;
         { x = 1920; y = 1080; }
       ];
     };
+    flatpak.enable = true;
   };
+  xdg.portal.enable = true;
 }

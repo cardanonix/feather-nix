@@ -10,11 +10,12 @@ let
 
   defaultPkgs = with pkgs; [
     aalib                # make ASCI text 
+    any-nix-shell        # fish support for nix shell
+    niv
+    lorri                # needed for direnv
     arandr               # simple GUI for xrandr
     asciinema            # record the terminal
     audacious            # simple music player
-    binutils-unwrapped   # fixes the `ar` error required by cabal
-    bc                   # required for Cardano Guild gLiveView
     bottom               # alternative to htop & ytop
     cachix               # nix caching
     calibre              # e-book reader
@@ -60,7 +61,6 @@ let
     yad                  # yet another dialog - fork of zenity
     xssproxy             # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
     xautolock            # autolock stuff
-    ihp-new              # Haskell web framework (the Django of Haskell)
     srm                  # a command-line compatible rm(1) which overwrites file contents before unlinking.
     pinentry             # a small collection of dialog programs that allow GnuPG to read passphrases and PIN numbers in a secure manner
 
@@ -101,19 +101,6 @@ let
     #pkgs.nautilus-patched
   ];
 
-  haskellPkgs = with pkgs.haskellPackages; [
-    cabal2nix               # convert cabal projects to nix
-    cabal-install           # package manager
-    ghc                     # compiler
-    stack
-    haskell-language-server # haskell IDE (ships with ghcide)
-    hoogle                  # documentation
-    nix-tree                # visualize nix dependencies
-    ihaskell
-    ihaskell-blaze 
-    pkgs.zlib
-  ];
-
 in
 
 {
@@ -136,12 +123,11 @@ in
     inherit username homeDirectory;
     stateVersion = "22.11";
 
-    packages = defaultPkgs ++ gnomePkgs ++ haskellPkgs; 
+    packages = defaultPkgs ++ gnomePkgs; 
 
     sessionVariables = {
       DISPLAY = ":0";
       EDITOR = "nvim";
-      CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
     };
 
     pointerCursor = { 

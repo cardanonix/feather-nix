@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   CNODEBIN = "/nix/store/q95b52ssb56x0m8gr1msyab7vnfck3bn-cardano-node-exe-cardano-node-1.36.0/bin/cardano-node";             # Override automatic detection of cardano-node executable
@@ -15,9 +15,14 @@ let
   TMP_DIR = "/tmp/cnode";                                   # Folder to hold temporary files in the various scripts, each script might create additional subfolders
   USE_EKG = "N";                                            # Use EKG metrics from the node instead of Prometheus. Prometheus metrics yield slightly better performance but can be unresponsive at times (default EKG)
 
+  guildViewPkgs = with pkgs; [
+    bc                   # required for Cardano Guild gLiveView
+  ];
 
 in
 {
+  home.packages = guildViewPkgs; 
+
   programs.guild_op = {
     enable = true;
 

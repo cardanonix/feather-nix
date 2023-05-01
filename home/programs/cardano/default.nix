@@ -1,5 +1,10 @@
 { config, lib, pkgs, inputs, ... }:
-let 
+let
+
+  guildViewPkgs = with pkgs; [
+    bc                   # required for Cardano Guild gLiveView
+  ];
+
   cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
     cncli
   ];
@@ -30,5 +35,9 @@ let
 in 
 
 {
-  home.packages = cardanoPkgs; 
+  home.packages = cardanoPkgs ++ guildViewPkgs; 
+
+  home.sessionVariables = {
+    CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
+  };
 }
