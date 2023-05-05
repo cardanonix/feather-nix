@@ -127,7 +127,6 @@ in
   programs.fish.enable = true;
   programs.zsh.enable = true;
 
-  
   security = {
     # Yubikey login & sudo
     pam.yubico = {

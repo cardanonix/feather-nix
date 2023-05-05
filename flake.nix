@@ -16,14 +16,21 @@
 
     nurpkgs.url = github:nix-community/NUR;
 
+    # flatpak = {
+    #   url = "https://flathub.org/repo/flathub.flatpakrepo";
+    #   flake = false;
+    # };
+
+    # flathub = {
+    #   url = github:flathub/flathub;
+    #   # inputs.nixpkgs.follows = "flatpak/nixpkgs"; #????
+    #   flake = false;
+    # };
+
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # nix-colors = {
-    #   url = "github:misterio77/nix-colors";
-    # };
 
     neovim-flake = {
       url = github:Cardano-on-Nix/neovim-flake;
@@ -82,9 +89,6 @@
       url = "github:input-output-hk/rust.nix/work";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    unison-nix.url = github:ceedubs/unison-nix;
-
 
     #IOG Cardano-Haskell-Packages
     CHaP = {
