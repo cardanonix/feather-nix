@@ -66,6 +66,7 @@ in
   ./neofetch
   ./neovim-ide
   ./orage
+  ./purescript
   ./python
   ./rofi
   ./rust
