@@ -91,6 +91,7 @@ import           XMonad.Prompt                         ( XPConfig(..)
                                                        , amberXPConfig
                                                        , XPPosition(CenteredAt)
                                                        )
+import           XMonad.Layout.Reflect                 ( reflectHoriz )
 import           XMonad.Util.EZConfig                  ( mkNamedKeymap
                                                        , additionalKeys
                                                        , removeKeys                                                      
@@ -490,14 +491,14 @@ myLayout =
      delta   = 2/100
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
+     webLayout = onWorkspace webWs (tiled_nogap ||| reflectHoriz tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| reflectHoriz tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
      mscLayout = onWorkspace mscWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
-     musLayout = onWorkspace musWs (fuller ||| tiled)
-     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     musLayout = onWorkspace musWs (fuller ||| tiled ||| tiled_spaced ||| reflectHoriz tiled_spaced)
+     vscLayout = onWorkspace vscWs (reflectHoriz tiled ||| Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
      scdLayout = onWorkspace scdWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
-     devLayout = onWorkspace devWs (goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
+     devLayout = onWorkspace devWs (reflectHoriz tiled ||| goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
      vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
 

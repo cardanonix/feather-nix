@@ -4,14 +4,14 @@ let
   purescriptPkgs = with pkgs; [
     # purescript
     # purenix
-    # spago
+    spago
     nodejs
   ];
 
   hsklPkgs = with pkgs.haskellPackages; [
     purescript
     purenix
-    spago
+    # spago
     # purescript-bridge_0_15_0_0 #Generate PureScript data types from Haskell data types
     # yesod-purescript
     # hs2ps #translate haskell types to Purescript
