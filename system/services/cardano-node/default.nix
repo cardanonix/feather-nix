@@ -69,18 +69,18 @@ in
     cabalProjectRegenerate
     cardano-cli
     # cardano-node-chairman
-    cardano-ping
+    # cardano-ping
     cardano-submit-api
     cardano-testnet
     cardano-topology
     cardano-tracer
     chain-sync-client-with-ledger-state
     db-analyser
-    db-converter
+    # db-converter
     db-synthesizer
     ledger-state
     locli
-    plutus-example
+    # plutus-example
     scan-blocks
     scan-blocks-pipelined
     tx-generator

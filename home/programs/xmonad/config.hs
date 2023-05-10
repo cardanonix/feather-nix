@@ -293,7 +293,7 @@ showKeybindings xs =
  -- use "xev" to figure out exactly what key you are pressing
 myKeys conf@XConfig {XMonad.modMask = modm} =
   keySet "Applications"
-    [ key "Slack"           (modm                , xK_F2            ) $ spawnOn comWs "slack"
+    [ key "Mastodon"        (modm .|. controlMask, xK_t             ) $ spawnOn comWs "brave --app=https://mastodon.social/"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
     , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
@@ -491,10 +491,10 @@ myLayout =
      delta   = 2/100
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| reflectHoriz tiled_nogap ||| fuller ||| goldenSpiral ||| tiled_spaced ||| reflectHoriz tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
+     webLayout = onWorkspace webWs (tiled_nogap ||| reflectHoriz tiled_nogap ||| fuller ||| goldenSpiral ||| reflectHoriz  goldenSpiral ||| tiled_spaced ||| reflectHoriz tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
      mscLayout = onWorkspace mscWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| tiled ||| tiled_spaced ||| reflectHoriz tiled_spaced)
-     vscLayout = onWorkspace vscWs (reflectHoriz tiled ||| Mirror tiled_nogap ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     vscLayout = onWorkspace vscWs (Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
      scdLayout = onWorkspace scdWs (dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
@@ -690,12 +690,12 @@ projects =
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/plutus/workspace/comWs/"
-            , projectStartHook = Just $ do spawn "tokodon"
-                                           spawn "element-desktop"
+            , projectStartHook = Just $ do spawn "brave --app=https://mastodon.social/"
                                            spawn "discord"
                                            spawn "telegram-desktop"
                                            spawn "signal"
-                                           spawn "slack"
+                                          --  spawn "element-desktop"
+                                          --  spawn "slack"
             }
   , Project { projectName      = spoWs
             , projectDirectory = "~/plutus/workspace/spoWs/"
