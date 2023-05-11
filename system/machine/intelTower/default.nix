@@ -47,7 +47,8 @@ with lib;
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    # kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];

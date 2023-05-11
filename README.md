@@ -104,7 +104,7 @@ github:harryprayiv/nix-config/
 └───nixosConfigurations
     ├───intelNUC: NixOS configuration
     ├───intelTower: NixOS configuration
-    └───plutusVM: NixOS configuration
+    └───plutus_vm: NixOS configuration
 ```
 
 As well as all the declared flake inputs.

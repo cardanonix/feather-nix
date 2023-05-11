@@ -40,7 +40,7 @@ build_ci_home() {
 build_ci_system() {
   nix build .#nixosConfigurations.intelTower.config.system.build.toplevel --impure --show-trace
   nix build .#nixosConfigurations.intelNUC.config.system.build.toplevel --impure --show-trace
-  nix build .#nixosConfigurations.plutusVM.config.system.build.toplevel --impure --show-trace
+  nix build .#nixosConfigurations.plutus_vm.config.system.build.toplevel --impure --show-trace
 }
 
 fresh_install() {

@@ -285,12 +285,12 @@
               ./system/configuration.nix
             ];
           };
-          plutusVM = nixosSystem {
+          plutus_vm = nixosSystem {
             inherit lib pkgs system;
             specialArgs = { inherit inputs; };
             modules = [
               inputs.cardano-node.nixosModules.cardano-node
-              ./system/machine/plutusVM
+              ./system/machine/plutus_vm
               ./system/configuration.nix
             ];
           };
