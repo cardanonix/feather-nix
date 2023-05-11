@@ -59,14 +59,14 @@ with lib;
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       };
-    supportedFilesystems = [ "zfs" "nfs" "btrfs" ];
+    supportedFilesystems = [ "zfs" "btrfs" "nfs" ];
     zfs.forceImportRoot = false;
     };
 
 
   networking = {
     hostName = "intelTower"; # Define your hostname.
-    hostId = "e097dc6f"; # (for zfs) generated with: `head -c4 /dev/urandom | od -A none -t x4`
+    networking.hostId = "e097dc6f"; # (for zfs) generated with: `head -c4 /dev/urandom | od -A none -t x4`
     interfaces.eno1.useDHCP = true;
     interfaces.eth0.useDHCP = true;
   };
