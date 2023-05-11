@@ -131,7 +131,6 @@ import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
 
 
-
 main :: IO ()
 main = mkDbusClient >>= main'
 

@@ -1,3 +1,4 @@
+# An example dashboard config from Sam Leathers at IOG
 {
 services = {
   openssh = {

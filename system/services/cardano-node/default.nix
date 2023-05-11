@@ -15,17 +15,19 @@ let
 in
 {   
   services.cardano-node = with inputs.cardano-node.nixosModules.cardano-node; {
-    # instances = 2;
     enable = true;
     package = inputs.cardano-node.packages.x86_64-linux.cardano-node;
     systemdSocketActivation = true;
     environment = "mainnet";
     environments = inputs.cardano-node.environments.x86_64-linux;
     rtsArgs = [ "-N2" "-I0" "-A16m" "-qg" "-qb" "--disable-delayed-os-memory-return" ]; 
+
     # topology = "${topology}";
     # nodeConfigFile = "${nodeconfig}";
     # databasePath = "${db_path}";
     # socketPath = "${node_socket_path}";
+    
+    # instances = 2;
     # nodeId = 2;
     # extraNodeConfig = {
     #   hasPrometheus = [ "::" 12798 ];
@@ -68,19 +70,15 @@ in
     bech32
     cabalProjectRegenerate
     cardano-cli
-    # cardano-node-chairman
-    # cardano-ping
     cardano-submit-api
     cardano-testnet
     cardano-topology
     cardano-tracer
     chain-sync-client-with-ledger-state
     db-analyser
-    # db-converter
     db-synthesizer
     ledger-state
     locli
-    # plutus-example
     scan-blocks
     scan-blocks-pipelined
     tx-generator
