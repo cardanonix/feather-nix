@@ -14,9 +14,9 @@
       fsType = "ext4";
     };
 
-  fileSystems."/z_pool" =
-    { 
-      device = "/dev/disk/by-uuid/4210348493706516964";
-      fsType = "zfs";
-    };
+  # fileSystems."/z_pool" =
+  #   { 
+  #     device = "/dev/disk/by-uuid/4210348493706516964";
+  #     fsType = "zfs";
+  #   };
 }
