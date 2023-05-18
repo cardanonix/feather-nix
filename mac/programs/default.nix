@@ -17,7 +17,7 @@ let
       fzf = {
         enable = true;
         enableFishIntegration = true;
-        defaultCommand = "${pkgs.ripgrep}/bin/rg --files"; # FZF_DEFAULT_COMMAND
+        defaultCommand = "ripgrep/bin/rg --files"; # FZF_DEFAULT_COMMAND
         defaultOptions = [ "--height 20%" ]; # FZF_DEFAULT_OPTS
         fileWidgetCommand = "fd --type file --follow"; # FZF_CTRL_T_COMMAND
       };
@@ -106,19 +106,15 @@ let
         options = [ ];
       };
 
-      # programs with custom modules
-      #megasync.enable = true;
-      #discord.enable = true;
-      spotify.enable = false;
     };
   };
 in
 [
   ./alacritty
   # ./autorandr
-  ./browsers/firefox.nix
+  # ./browsers/firefox.nix
   ./browsers/brave.nix
-  ./cardano
+  # ./cardano
   ./dconf
   ./git
   ./fish
@@ -126,9 +122,9 @@ in
   ./neovim-ide
   ./orage
   # ./rofi
-  ./signal
+  # ./signal
   # ./xmonad
-  ./vscode
-  ./yubikey
+  # ./vscode
+  # ./yubikey
   more
 ]

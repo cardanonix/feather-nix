@@ -20,6 +20,15 @@ rebuild_home_edp() {
   activateHM
 }
 
+rebuild_home_mac() {
+  nix build .#homeConfigurations.mac.activationPackage --show-trace --impure
+  activateHM
+}
+
+eval_home_mac() {
+  nix eval --raw .#homeConfigurations.mac.activationPackage --impure
+}
+
 eval_home_edp() {
   nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --impure
 }

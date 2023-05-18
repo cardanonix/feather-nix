@@ -236,9 +236,23 @@
               ];
             }
           );
+          mkMac = { ultraHD ? false }: (
+            home-manager.lib.homeManagerConfiguration rec {
+              inherit pkgs;
+
+              extraSpecialArgs = {
+                inherit inputs;
+                addons = nur.repos.rycee.firefox-addons;
+              };
+              modules = [
+                ((import ./mac/home.nix))
+                neovim-flake.nixosModules.x86_64-darwin.hm
+              ];
+            }
+          );
         in
         {
-          
+          mac         = mkMac { ultraHD = false; };
           vm-home     = mkSlim { ultraHD = false; };
           bismuth-edp = mkHome { ultraHD = false; };
           bismuth-uhd = mkHome { ultraHD = true; };

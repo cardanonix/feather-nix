@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, inputs, ... }:
+{ config, lib, pkgs, stdenv, inputs, specialArgs, ... }:
 
 let
   username = "harryprayiv";
@@ -10,12 +10,15 @@ let
 
   defaultPkgs = with pkgs; [
     aalib                # make ASCI text 
+    bash
     any-nix-shell        # fish support for nix shell
     asciinema            # record the terminal
     binutils-unwrapped   # fixes the `ar` error required by cabal
     bc                   # required for Cardano Guild gLiveView
     cachix               # nix caching
     calibre              # e-book reader
+    curl                 # An old classic
+    dhall                # Exotic, Nix-like configuration language
     dconf2nix            # dconf (gnome) files to nix converter
     dmenu                # application launcher
     duf                  # disk usage/free utility
