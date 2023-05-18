@@ -3,11 +3,11 @@ let
     programs = {
       bat.enable = true;
 
-      broot = {
-        enable = true;
-        enableFishIntegration = true;
-        enableZshIntegration = true;
-      };
+      # broot = {
+      #   enable = true;
+      #   enableFishIntegration = true;
+      #   # enableZshIntegration = true;
+      # };
 
       direnv = {
         enable = true;
@@ -105,26 +105,21 @@ let
         enableFishIntegration = true;
         options = [ ];
       };
-
     };
   };
 in
 [
   ./alacritty
-  # ./autorandr
-  # ./browsers/firefox.nix
+  ./browsers/firefox.nix
   ./browsers/brave.nix
   # ./cardano
-  ./dconf
   ./git
   ./fish
   ./neofetch
+  ./guild-operators
+  # ./tmux
   ./neovim-ide
-  ./orage
-  # ./rofi
-  # ./signal
-  # ./xmonad
-  # ./vscode
+  ./vscode
   # ./yubikey
   more
 ]

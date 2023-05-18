@@ -241,7 +241,7 @@
               inherit pkgs;
 
               extraSpecialArgs = {
-                inherit inputs;
+                inherit ultraHD inputs;
                 addons = nur.repos.rycee.firefox-addons;
               };
               modules = [

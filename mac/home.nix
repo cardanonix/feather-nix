@@ -2,7 +2,7 @@
 
 let
   username = "harryprayiv";
-  homeDirectory = "/home/${username}";
+  homeDirectory = "/Users/${username}";
   configHome = "${homeDirectory}/.config";
 
   # # workaround to open a URL in a new tab in the specific firefox profile
@@ -45,18 +45,11 @@ let
     #tex2nix              # texlive expressions for documents
     tldr                 # summary of a man page
     tree                 # display files in a tree view
-    ungoogled-chromium   # chrome without the Goog 
-    xsel                 # clipboard support (also for neovim)
-    yad                  # yet another dialog - fork of zenity
-    jupyter              # pyton jupyter notebooks
     lorri                # needed for direnv
     ihp-new              # Haskell web framework (the Django of Haskell)
     python3Packages.ipython
     srm
     pinentry
-
-    # Work Stuff
-    work-browser
 
     #  Messaging and Social Networks
     # element-desktop      # matrix client
@@ -65,18 +58,11 @@ let
     # slack                # slack messaging client
     # tootle               # mastodon client
 
-    #  Ricing
-    # cmatrix              # dorky terminal matrix effect
-    # nyancat              # the famous rainbow cat!  
-    # ponysay              # for sweet Audrey
-    # cowsay               # cowsay fortune teller with random images
-    # pipes                # pipes vis in terminal
-
     #  Security
     rage                 # encryption tool for secrets management
     keepassxc            # Security ##
     gnupg                # Security ##
-    ledger-live-desktop  # Ledger Nano X Support for NixOS
+    # ledger-live-desktop  # Ledger Nano X Support for NixOS
     bitwarden-cli        # command-line client for the password manager
     mr
   ];
@@ -106,11 +92,6 @@ in
     # ./themes
   ];
 
-  xdg = {
-    inherit configHome;
-    enable = true;
-  };
-
   home = {
     inherit username homeDirectory;
     stateVersion = "22.11";
@@ -124,17 +105,10 @@ in
       TERMINAL = "alacritty";
       # CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";
     };
-
-    # pointerCursor = { 
-    #   name = "phinger-cursors"; 
-    #   package = pkgs.phinger-cursors; 
-    #   size = 25; 
-    #   gtk.enable = true; 
-    # };
   };
   
   # restart services on change
-  systemd.user.startServices = "sd-switch";
+  # systemd.user.startServices = "sd-switch";
 
   # xsession.numlock.enable = true;
   
