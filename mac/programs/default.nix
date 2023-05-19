@@ -110,15 +110,15 @@ let
 in
 [
   ./alacritty
-  ./browsers/firefox.nix
+  # ./browsers/firefox.nix
   ./browsers/brave.nix
   # ./cardano
   ./git
   ./fish
   ./neofetch
-  ./guild-operators
+  # ./guild-operators
   # ./tmux
-  ./neovim-ide
+  # ./neovim-ide
   ./vscode
   # ./yubikey
   more

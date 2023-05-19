@@ -53,6 +53,6 @@ in
     shellInit = fishConfig;
   };
 
-  xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
-  xdg.configFile."fish/functions/fish_prompt.fish".text = custom.prompt;
+  # xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
+  # xdg.configFile."fish/functions/fish_prompt.fish".text = custom.prompt;
 }

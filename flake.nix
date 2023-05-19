@@ -152,6 +152,7 @@
       homeConfigurations = with inputs; (
         let
           inherit (inputs) cardano-node;
+          
           fishOverlay = f: p: {
             inherit fish-bobthefish-theme fish-keytool-completions;
           };
@@ -221,7 +222,6 @@
               modules = [{ inherit imports; }];
             }
           );
-          
           mkSlim = { ultraHD ? false }: (
             home-manager.lib.homeManagerConfiguration rec {
               inherit pkgs;
@@ -242,11 +242,10 @@
 
               extraSpecialArgs = {
                 inherit ultraHD inputs;
-                addons = nur.repos.rycee.firefox-addons;
+                # addons = nur.repos.rycee.firefox-addons;
               };
               modules = [
                 ((import ./mac/home.nix))
-                neovim-flake.nixosModules.x86_64-darwin.hm
               ];
             }
           );
