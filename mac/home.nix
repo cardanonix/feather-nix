@@ -1,9 +1,11 @@
-{ config, lib, pkgs, stdenv, inputs, specialArgs, ... }:
+{ config, pkgs, ... }:
 
 let
   username = "harryprayiv";
   homeDirectory = "/Users/${username}";
   configHome = "${homeDirectory}/.config";
+  
+  specialArgs.ultraHD = false;
 
   # # workaround to open a URL in a new tab in the specific firefox profile
   # work-browser = pkgs.callPackage .././programs/browsers/work.nix {};
@@ -16,7 +18,7 @@ let
     binutils-unwrapped   # fixes the `ar` error required by cabal
     bc                   # required for Cardano Guild gLiveView
     cachix               # nix caching
-    calibre              # e-book reader
+    # calibre              # e-book reader
     curl                 # An old classic
     dhall                # Exotic, Nix-like configuration language
     dconf2nix            # dconf (gnome) files to nix converter
@@ -26,17 +28,17 @@ let
     fd                   # "find" for files
     glow                 # terminal markdown viewer
     hyperfine            # command-line benchmarking tool
-    insomnia             # rest client with graphql support
+    # insomnia             # rest client with graphql support
     jmtpfs               # mount mtp devices
     killall              # kill processes by name
     #libreoffice          # office suite
     ncdu                 # disk space info (a better du)
-    nfs-utils            # utilities for NFS
-    ngrok                # secure tunneling to localhost
+    # nfs-utils            # utilities for NFS
+    # ngrok                # secure tunneling to localhost
     nix-index            # locate packages containing certain nixpkgs
-    md-toc               # generate ToC in markdown files
+    # md-toc               # generate ToC in markdown files
 
-    obsidian             # note taking/mind mapping
+    # obsidian             # note taking/mind mapping
     prettyping           # a nicer ping
     ranger               # terminal file explorer
     ripgrep              # fast grep
@@ -83,7 +85,7 @@ in
 
 {
   programs.home-manager.enable = true;
-
+  
   imports = builtins.concatMap import [
     # ./modules
     ./programs
@@ -93,6 +95,7 @@ in
   ];
 
   home = {
+
     inherit username homeDirectory;
     stateVersion = "22.11";
 
