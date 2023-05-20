@@ -60,10 +60,10 @@ in
         "terminal.integrated.copyOnSelection" = true;
         "nix.enableLanguageServer" = true;
         "explorer.confirmDelete" = false;
-        "git.autofetch" = true;
-        "git.autoStash" = true;
+        # "git.autofetch" = true;
+        # "git.autoStash" = true;
         "explorer.confirmDragAndDrop" = false;
-        "git.enableCommitSigning" = true;
+        # "git.enableCommitSigning" = true;
         "editor.minimap.enabled" = true;
         "diffEditor.ignoreTrimWhitespace" = false;
         "window.autoDetectColorScheme" = true;

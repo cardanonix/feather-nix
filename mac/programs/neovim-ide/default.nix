@@ -115,10 +115,10 @@ in
           enable = true;
           glow.enable = true;
         };
-        git = {
-          enable = true;
-          gitsigns.enable = true;
-        };
+        # git = {
+        #   enable = true;
+        #   gitsigns.enable = true;
+        # };
         mind = {
           enable = true;
           # Documents dir is synced to the cloud
