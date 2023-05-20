@@ -63,7 +63,7 @@ let
     #  Security
     rage                 # encryption tool for secrets management
     keepassxc            # Security ##
-    gnupg                # Security ##
+    # gnupg                # Security ##
     # ledger-live-desktop  # Ledger Nano X Support for NixOS
     bitwarden-cli        # command-line client for the password manager
     mr

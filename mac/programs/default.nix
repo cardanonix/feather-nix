@@ -113,7 +113,7 @@ in
   # ./browsers/firefox.nix
   ./browsers/brave.nix
   # ./cardano
-  ./git
+  # ./git
   ./fish
   ./neofetch
   # ./guild-operators
