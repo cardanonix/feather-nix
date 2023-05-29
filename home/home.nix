@@ -27,7 +27,7 @@ let
     exa                  # a better `ls`
     fd                   # "find" for files
     glow                 # terminal markdown viewer
-    gnomecast            # chromecast local files
+    # gnomecast            # chromecast local files
     hyperfine            # command-line benchmarking tool
     insomnia             # rest client with graphql support
     jmtpfs               # mount mtp devices

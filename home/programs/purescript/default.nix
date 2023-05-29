@@ -6,6 +6,8 @@ let
     # purenix
     spago
     nodejs
+    nodePackages.purs-tidy
+    esbuild
   ];
 
   hsklPkgs = with pkgs.haskellPackages; [
