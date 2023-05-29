@@ -5,3 +5,4 @@ generated-plutus-scripts
 .vscode/settings.json
 .direnv/
 .unisonHistory
+*.qcow2
