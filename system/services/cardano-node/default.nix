@@ -63,7 +63,6 @@ in
     after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
   };
 
-  
   nixpkgs.overlays = [ inputs.cardano-node.overlay ];
   
   environment.systemPackages = with inputs.cardano-node.packages.x86_64-linux; [
@@ -86,12 +85,12 @@ in
 
   # users.groups.cardano-node.gid = 10016;
   # users.groups.cardano-cli.gid = 10016;
+  users.extraGroups.cardano-node.members = [ "bismuth" ];
 
   # fileSystems."/var/lib/cardano-node" = { 
   #   device = "192.168.1.212:/volume2/cardano-node";
   #   fsType = "nfs";
   # };
-
 
   environment.variables = {
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";

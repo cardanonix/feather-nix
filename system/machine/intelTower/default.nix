@@ -77,10 +77,23 @@ with lib;
   environment.systemPackages = with pkgs; [
       # virt-manager
     ];
-  
-  services.flatpak.enable = true;
+
+  # Enable Docker & VirtualBox support.
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+    # libvirtd.enable = true;
+  };
+
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  
+  services.flatpak.enable = true;
   
   # Half-hearted attempt to set environment variables for flatpak
   # environment = {
