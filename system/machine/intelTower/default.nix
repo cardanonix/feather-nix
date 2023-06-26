@@ -80,15 +80,21 @@ with lib;
 
   # Enable Docker & VirtualBox support.
   virtualisation = {
-    docker = {
+    # docker = {
+    #   enable = true;
+    #   autoPrune = {
+    #     enable = true;
+    #     dates = "weekly";
+    #   };
+    # };
+    podman = {
       enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
     # libvirtd.enable = true;
   };
+
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
