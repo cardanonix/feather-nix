@@ -55,6 +55,7 @@ rebuild_intelTower() {
 }
 
 rebuild_intelTower_withUpdate() {
+  ./home/scripts/pullrelease.sh
   nix flake update 
   sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
   nix build .#homeConfigurations.bismuth-edp.activationPackage --impure --show-trace 
