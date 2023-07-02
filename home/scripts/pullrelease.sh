@@ -19,7 +19,7 @@ LATEST_TAG=$(curl -s $RELEASES_API_URL | jq -r '.[0].tag_name')
 # Fetch the commit hash associated with the latest tag
 COMMIT_HASH=$(curl -s $TAGS_API_URL/$LATEST_TAG | jq -r '.object.sha')
 
-echo "The commit hash of the latest release ($LATEST_TAG) is $COMMIT_HASH"
+echo "The commit hash of the latest cardano-node release ($LATEST_TAG) is $COMMIT_HASH"
 
 # Escape COMMIT_HASH for use in sed
 ESCAPED_COMMIT_HASH=$(echo $COMMIT_HASH | sed 's/\//\\\//g')
@@ -27,4 +27,4 @@ ESCAPED_COMMIT_HASH=$(echo $COMMIT_HASH | sed 's/\//\\\//g')
 # Find the line with "cardano-node" and replace the commit hash
 sed -i.bak "/cardano-node = {/!b;n;s/\(url = \"github:input-output-hk\/cardano-node?rev=\).*\"/\1$ESCAPED_COMMIT_HASH\"/" $FLAKE_NIX_FILE
 
-echo "Updated flake.nix with the latest commit hash."
+echo "Updated inputs.cardano-node in flake.nix with the latest commit hash."
