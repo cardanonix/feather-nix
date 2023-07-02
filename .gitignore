@@ -6,3 +6,4 @@ generated-plutus-scripts
 .direnv/
 .unisonHistory
 *.qcow2
+flake.nix.bak
