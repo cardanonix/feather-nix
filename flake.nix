@@ -113,12 +113,6 @@
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     }; 
 
-    # cardano-node-workbench = {
-    #   url = "github:input-output-hk/cardano-node/8762a10efe3f9f97939e3cb05edaf04250456702";
-    #   # This is to avoid circular import (TODO: remove this workbench pin entirely using materialization):
-    #   inputs.membench.url = "github:input-output-hk/empty-flake";
-    # };
-
     cardano-wallet = {
       url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
     };
@@ -169,7 +163,7 @@
           };
 
           # cardanoOverlay = f: p: {
-          #   cardano = inputs.cardano-node.packages.${system}.cardano-node;;
+          #   cardano = inputs.cardano-node.packages.${system}.cardano-node;
           # };
 
           pkgs = import nixpkgs {
