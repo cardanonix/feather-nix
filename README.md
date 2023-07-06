@@ -168,7 +168,7 @@ The `build` script is only suitable for a fresh install customized to my persona
 
 ```console
 $ nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
-sudo result/bin/switch-to-configuration switch
+$ sudo result/bin/switch-to-configuration switch
 ```
 
 Or for Home Manager.
