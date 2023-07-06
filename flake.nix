@@ -82,7 +82,7 @@
     };
     
     cncli = {
-      url = "github:cardano-community/cncli?rev=751407fd390f06867b99666348a3332f0ec4b694";
+      url = "github:cardano-community/cncli?rev=e2c0409628b4a6ba1205ecae8729cb703cbc5c12";
     };
 
     rust-nix = {
@@ -97,7 +97,7 @@
     };
 
     haskellNix = {
-      url = "github:input-output-hk/haskell.nix/14f740c7c8f535581c30b1697018e389680e24cb";
+      url = "github:input-output-hk/haskell.nix/b90fbaa272a6d17ddc21164ca3056e1618feafcd";
       # workaround for nix 2.6.0 bug from here https://github.com/input-output-hk/haskell.nix/issues/1407
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -114,7 +114,7 @@
     }; 
 
     cardano-wallet = {
-      url = "github:input-output-hk/cardano-wallet?rev=bbf11d4feefd5b770fb36717ec5c4c5c112aca87";
+      url = "github:input-output-hk/cardano-wallet?rev=3f9055373c272a4d7b1f9f6bacc1df3b6dc906af";
     };
   };
 
