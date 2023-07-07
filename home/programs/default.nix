@@ -56,7 +56,7 @@ in
 [
   ./alacritty
   ./autorandr
-  ./browsers/firefox.nix
+  # ./browsers/firefox.nix
   ./browsers/brave.nix
   ./cardano
   ./dconf
