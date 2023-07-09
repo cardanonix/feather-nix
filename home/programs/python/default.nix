@@ -13,7 +13,7 @@ let
   ];
 
   pythonStuff = with pkgs; [
-    poetry
+    # poetry
     python3Packages.ipython
     jupyter              # pyton jupyter notebooks
   ];
