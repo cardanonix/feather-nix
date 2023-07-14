@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-
+#bullshit
 let
   alacritty  = "${pkgs.alacritty}/bin/alacritty";
   bash = "${pkgs.bash}/bin/bash";
