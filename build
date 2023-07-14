@@ -17,9 +17,7 @@ pre_home() {
 
   # Desktop pic
   mkdir -p $HOME/Pictures/
-  cp imgs/wallpapers/longboat01_yanoi_plutus.JPG $HOME/Pictures/
-
-  
+  cp imgs/longboat01_yanoi_plutus.JPG $HOME/Pictures/  
 }
 
 post_home() {

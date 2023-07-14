@@ -6,6 +6,11 @@ let
     pip
     numpy
     packaging
+    impacket
+    dsinternals
+    pypykatz
+    lsassy
+    ldapdomaindump
   ];
 
   pythonPkgs = with pkgs ++ pythonExt; [
@@ -13,7 +18,7 @@ let
   ];
 
   pythonStuff = with pkgs; [
-    # poetry
+    poetry
     python3Packages.ipython
     jupyter              # pyton jupyter notebooks
   ];

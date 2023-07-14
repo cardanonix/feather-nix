@@ -62,6 +62,7 @@ in
   ./dconf
   ./git
   ./fish
+  ./hacker-toolkit
   ./haskell
   ./neofetch
   ./neovim-ide
