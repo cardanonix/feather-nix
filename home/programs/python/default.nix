@@ -1,15 +1,15 @@
 { config, lib, pkgs, inputs, ... }:
 let 
   pythonExt = p: with p; [
-    pandas
-    requests
-    pip
-    numpy
-    packaging
-    impacket
-    dsinternals
-    pypykatz
-    lsassy
+    # pandas
+    # requests
+    # pip
+    # numpy
+    # packaging
+    # impacket
+    # dsinternals
+    # pypykatz
+    # lsassy
   ];
 
   pythonPkgs = with pkgs ++ pythonExt; [
@@ -17,7 +17,7 @@ let
   ];
 
   pythonStuff = with pkgs; [
-    poetry
+    # poetry
     python3Packages.ipython
     jupyter              # pyton jupyter notebooks
   ];

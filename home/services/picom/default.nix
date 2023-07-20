@@ -11,8 +11,12 @@
           round-borders = 2;
           blur-method = "dual_kawase";
           blur-strength = "5";
+          rounded-corners-exclude = [ "window_type *= 'dock'" ];
     };
-    opacityRules = [ "100:name *= 'i3lock'" ];
+    opacityRules = [ 
+      "100:name *= 'i3lock'" 
+      "100:window_type *= 'dock'"  
+      ];
     fade = true;
     fadeDelta = 5;
     vSync = true;
@@ -20,7 +24,7 @@
     shadowOpacity = 0.95;
     shadowExclude = [
           "bounding_shaped && !rounded_corners"
-    ];
+      ];
     package = pkgs.picom.overrideAttrs(o: {
       src = pkgs.fetchFromGitHub {
         repo = "picom";
