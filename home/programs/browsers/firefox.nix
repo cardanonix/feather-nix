@@ -12,7 +12,7 @@ let
 
   # DPI settings
   dpiSettings = {
-    "layout.css.devPixelsPerPx" = if ultraHD then "-1.0" else "0.7";
+    "layout.css.devPixelsPerPx" = if ultraHD then "-1.0" else "0.92";
   };
 
   # ~/.mozilla/firefox/PROFILE_NAME/prefs.js | user.js
@@ -33,7 +33,7 @@ let
 
     "browser.link.open_newwindow" = true;
 
-    "browser.search.region" = "PL";
+    "browser.search.region" = "US";
     "browser.search.widget.inNavBar" = true;
 
     "browser.shell.checkDefaultBrowser" = false;
@@ -107,6 +107,7 @@ in
           ublock-origin
           unpaywall
           vimium
+          keepassxc-browser
         ];
       };
 

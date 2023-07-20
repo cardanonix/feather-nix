@@ -64,7 +64,6 @@ in
   ./fish
   ./hacker-toolkit
   ./haskell
-  ./lemmy
   ./neofetch
   ./neovim-ide
   ./orage

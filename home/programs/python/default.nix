@@ -10,7 +10,6 @@ let
     dsinternals
     pypykatz
     lsassy
-    ldapdomaindump
   ];
 
   pythonPkgs = with pkgs ++ pythonExt; [
