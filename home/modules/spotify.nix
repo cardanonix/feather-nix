@@ -7,15 +7,11 @@ let
 
   package = pkgs.spotify;
 
-  ultraHDPackage = pkgs.symlinkJoin
-    {
-      name = "spotify";
-      paths = [ pkgs.spotify ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/spotify --add-flags "-force-device-scale-factor=1.4"
-      '';
-    };
+  ultraHDPackage = pkgs.spotify.override { deviceScaleFactor = 1.4; };
+  # See: https://github.com/NixOS/nixpkgs/issues/227449
+  hidpiPackage = pkgs.spotify.override {
+    callPackage = p: attrs: pkgs.callPackage p (attrs // { deviceScaleFactor = 1.4; });
+  };
 in
 {
   meta.maintainers = [ hm.maintainers.bismuth ];

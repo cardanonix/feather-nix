@@ -35,7 +35,6 @@ in
     git-crypt     # git files encryption
     hub           # github command-line client
     tig           # diff and commit view
-    
   ];
 
   programs.git = {
@@ -68,6 +67,7 @@ in
       "*.jvmopts"      # should be local to every project
     ];
     signing = {
+      gpgPath = "${pkgs.gnupg}/bin/gpg2";
       key = "AAF9795E393B4DA0";
       signByDefault = true;
     };
