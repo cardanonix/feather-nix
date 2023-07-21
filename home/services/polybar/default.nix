@@ -19,6 +19,7 @@ let
     font5 = 10;
     font6 = 14;
     font7 = 8;
+    font8 = 12;
   };
 
   mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
@@ -34,7 +35,7 @@ let
 
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
   openFearandGreed = "${xdgUtils}/bin/xdg-open https\\://alternative.me/crypto/fear-and-greed-index/";
-  openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://lemmy.world/c/cardano/";
+  openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://infosec.pub/c/cardano@lemmy.world/";
 
   mypolybar = pkgs.polybar.override {
     alsaSupport   = true;
@@ -112,12 +113,12 @@ let
     interval = 10800
     format-padding = 1
 
-    format =  <label><ramp>
+    format =  <label>
 
 
-    ramp-0 = %{F#999}<label>%{F-}
-    ramp-1 = %{F#900}<label>%{F-}
-    ramp-50 = %{F#F00}<label>%{F-}
+    # ramp-0 = %{F#999}<label>%{F-}
+    # ramp-1 = %{F#900}<label>%{F-}
+    # ramp-50 = %{F#F00}<label>%{F-}
     click-left = ${openFearandGreed} 
   '';
 

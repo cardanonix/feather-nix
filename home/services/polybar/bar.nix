@@ -1,4 +1,4 @@
-{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 18 , font7 ? 10  }:
+{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 18 , font7 ? 10 , font8 ? 10 }:
 
 let
   bar = ''
@@ -35,17 +35,22 @@ let
     ; Icons Fonts
     font-1 = icomoon\\-feather:style=Medium:size=${toString font1};3
     ; Powerline Glyphs
-    font-2 = Iosevka Nerd Font:style=Medium:size=${toString font2};3
+    ; font-2 = Iosevka Nerd Font:style=Medium:size=${toString font2};3
+    font-2 = FiraCode-Medium:style=Medium:size=${toString font2};3
     ; Larger font size for bar fill icons
-    font-3 = Iosevka Nerd Font:style=Medium:size=${toString font3};3
+    ;font-3 = Iosevka Nerd Font:style=Medium:size=${toString font3};3
+    font-3 = FiraCode-Medium:style=Medium:size=${toString font3};3
     ; Smaller font size for shorter spaces
-    font-4 = Iosevka Nerd Font:style=Medium:size=${toString font4};3
+    ; font-4 = Iosevka Nerd Font:style=Medium:size=${toString font4};3
+    font-4 = FiraCode-Medium:style=Medium:size=${toString font4};3
     ; Keyboard layout icons
     font-5 = FlagsWorldColor:size=${toString font5}:antialias=false;3
     ; Larger font size for crypto bar fill icons
     font-6 = cardanofont:style=Medium:size=${toString font6};3
     ; Smaller font size for crypto bar fill icons
     font-7 = cardanofont:style=Medium:size=${toString font7};3
+    ; Smaller font size for crypto bar fill icons
+    font-8 = FiraCode-Medium:style=Medium:size=${toString font8};3
 
     ;font-5 = "MaterialIcons:size=40;0"
     ;font-6 = Font Awesome 5 Free:style=Solid:pixelsize=20;3

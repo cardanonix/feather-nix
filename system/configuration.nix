@@ -117,10 +117,13 @@ in
       myfonts.flags-world-color
       myfonts.icomoon-feather
       myfonts.cardanofont
+      fira-code
+      fira-code-symbols
       hasklig
       ipaexfont
       noto-fonts-cjk
       noto-fonts-emoji
+      inconsolata
     ];
   };
   

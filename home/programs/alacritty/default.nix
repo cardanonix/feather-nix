@@ -1,7 +1,7 @@
 { pkgs, specialArgs, ... }:
 
 let
-  fontSize = if specialArgs.ultraHD then 10 else 8;
+  fontSize = if specialArgs.ultraHD then 12 else 10;
 in
 {
   programs.alacritty = {
@@ -9,7 +9,7 @@ in
     settings = {
       bell = {
         animation = "EaseOutExpo";
-        duration = 6;
+        duration = 10;
         color = "#ffffff";
       };
       colors = {
@@ -19,8 +19,12 @@ in
         };
       };
       font = {
+        # normal = {
+        #   family = "JetBrainsMono Nerd Font";
+        #   style = "Medium";
+        # };
         normal = {
-          family = "JetBrainsMono Nerd Font";
+          family = "FiraMono Nerd Font";
           style = "Medium";
         };
         size = fontSize;
