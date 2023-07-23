@@ -2,8 +2,8 @@
 let 
   pythonExt = p: with p; [
     # pandas
-    # requests
-    # pip
+    requests
+    pip
     # numpy
     # packaging
     # impacket
