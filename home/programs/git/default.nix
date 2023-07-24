@@ -3,7 +3,7 @@
 let
   gitConfig = {
     safe.directory = "*"; #potential safety issue on shared machines
-    gpg.program = "${pkgs.gnupg}/bin/gpg2";
+    # gpg.program = "${pkgs.gnupg}/bin/gpg2";
     core = {
       editor = "nvim";
       pager  = "diff-so-fancy | less --tabs=4 -RFX";

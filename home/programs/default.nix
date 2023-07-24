@@ -74,7 +74,7 @@ in
   ./signal
   ./towerPkgs
   ./xmonad
-  ./vscode
+  ./vscodium
   ./yubikey
   more
 ]
