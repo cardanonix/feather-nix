@@ -3,28 +3,28 @@
 let
   gitConfig = {
     safe.directory = "*"; #potential safety issue on shared machines
-    # gpg.program = "${pkgs.gnupg}/bin/gpg2";
-    core = {
-      editor = "nvim";
-      pager  = "diff-so-fancy | less --tabs=4 -RFX";
-    };
+    gpg.program = "${pkgs.gnupg}/bin/gpg2";
+    # core = {
+    #   editor = "nvim";
+    #   pager  = "diff-so-fancy | less --tabs=4 -RFX";
+    # };
     init.defaultBranch = "main";
-    merge = {
-      conflictStyle = "diff3";
-      tool          = "vim_mergetool";
-    };
-    mergetool."vim_mergetool" = {
-      cmd    = "nvim -f -c \"MergetoolStart\" \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"";
-      prompt = false;
-    };
+    # merge = {
+    #   conflictStyle = "diff3";
+    #   tool          = "vim_mergetool";
+    # };
+    # mergetool."vim_mergetool" = {
+    #   cmd    = "nvim -f -c \"MergetoolStart\" \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"";
+    #   prompt = false;
+    # };
     pull.rebase = false;
     push.autoSetupRemote = true;
-    url = {
-      "https://github.com/".insteadOf = "gh:";
-      "ssh://git@github.com".pushInsteadOf = "gh:";
-      "https://gitlab.com/".insteadOf = "gl:";
-      "ssh://git@gitlab.com".pushInsteadOf = "gl:";
-    };
+    # url = {
+    #   "https://github.com/".insteadOf = "gh:";
+    #   "ssh://git@github.com".pushInsteadOf = "gh:";
+    #   "https://gitlab.com/".insteadOf = "gl:";
+    #   "ssh://git@gitlab.com".pushInsteadOf = "gl:";
+    # };
   };
 
   rg = "${pkgs.ripgrep}/bin/rg";
@@ -75,3 +75,4 @@ in
     userName = "harryprayiv";
   };
 }
+

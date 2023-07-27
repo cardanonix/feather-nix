@@ -74,9 +74,12 @@ with lib;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-      # virt-manager
-    ];
+
+  environment.systemPackages = [inputs.alejandra.defaultPackage.${system}];
+  
+  # environment.systemPackages = with pkgs; [
+  #     # virt-manager
+  #   ];
 
   # Enable Docker & VirtualBox support.
   virtualisation = {
