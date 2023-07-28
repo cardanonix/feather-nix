@@ -1,17 +1,16 @@
 {
   description = "harryprayiv's Home Manager & NixOS configurations";
-  
+
   # Inputs are how Nix can use code from outside the flake during evaluation.
   inputs = {
-
     flake-utils.url = "github:numtide/flake-utils";
-    
+
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
     nixpkgs-nautilus-gtk3.url = github:NixOS/nixpkgs?ref=37bd398;
 
     nix.url = "github:NixOS/nix/2.13.2";
-    
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     nurpkgs.url = github:nix-community/NUR;
@@ -33,8 +32,8 @@
     };
 
     alejandra = {
-        url = "github:kamadorueda/alejandra/3.0.0";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:kamadorueda/alejandra/3.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     neovim-flake = {
@@ -71,7 +70,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-#______Cardano-Related Inputs
+    #______Cardano-Related Inputs
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -85,7 +84,7 @@
       inputs.nixpkgs.follows = "fenix/nixpkgs";
       inputs.fenix.follows = "fenix";
     };
-    
+
     cncli = {
       url = "github:cardano-community/cncli?rev=e2c0409628b4a6ba1205ecae8729cb703cbc5c12";
     };
@@ -112,11 +111,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cardano-node = {                            
+    cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=408d8ae10a2792ace3a822e312433960e47de4e9";
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
-    }; 
+    };
 
     cardano-wallet = {
       url = "github:input-output-hk/cardano-wallet?rev=3f9055373c272a4d7b1f9f6bacc1df3b6dc906af";
@@ -124,14 +123,13 @@
   };
 
   # Outputs are the public-facing interface to the flake.
-  outputs = inputs:
-    let 
-      inherit (inputs.nixpkgs.lib) mapAttrs;
-      inherit inputs;
-      system = "x86_64-linux";
+  outputs = inputs: let
+    inherit (inputs.nixpkgs.lib) mapAttrs;
+    inherit inputs;
+    system = "x86_64-linux";
 
-      ci = with inputs system; (
-        let
+    ci = with inputs system; (
+      let
         pkgs = import nixpkgs {
           config.allowUnfree = true;
 
@@ -139,184 +137,178 @@
             neovim-flake.overlays.${system}.default
           ];
         };
-      in
-      {
-        metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix { };
-        metals-updater = pkgs.callPackage ./home/programs/neovim-ide/update-metals.nix { };
-      });
+      in {
+        metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix {};
+        metals-updater = pkgs.callPackage ./home/programs/neovim-ide/update-metals.nix {};
+      }
+    );
+  in rec
+  {
+    homeConfigurations = with inputs; (
+      let
+        inherit (inputs) cardano-node;
+        fishOverlay = f: p: {
+          inherit fish-bobthefish-theme fish-keytool-completions;
+        };
 
-    in
-    rec
-    {
-      homeConfigurations = with inputs; (
-        let
-          inherit (inputs) cardano-node;
-          fishOverlay = f: p: {
-            inherit fish-bobthefish-theme fish-keytool-completions;
-          };
+        cowsayOverlay = f: p: {
+          cowsay = inputs.cowsay.packages.${system}.cowsay;
+        };
 
-          cowsayOverlay = f: p: {
-            cowsay = inputs.cowsay.packages.${system}.cowsay;
-          };
+        nautilusOverlay = f: p: {
+          nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
+        };
 
-          nautilusOverlay = f: p: {
-            nautilus-gtk3 = nixpkgs-nautilus-gtk3.legacyPackages.${system}.gnome.nautilus;
-          };
+        gnomeOverlay = f: p: {
+          gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
+        };
 
-          gnomeOverlay = f: p: {
-            gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
-          };
+        # cardanoOverlay = f: p: {
+        #   cardano = inputs.cardano-node.packages.${system}.cardano-node;
+        # };
 
-          # cardanoOverlay = f: p: {
-          #   cardano = inputs.cardano-node.packages.${system}.cardano-node;
-          # };
+        pkgs = import nixpkgs {
+          inherit system;
 
-          pkgs = import nixpkgs {
-            inherit system;
+          config.allowUnfree = true;
 
-            config.allowUnfree = true;
-
-            overlays = [
-              # cardanoOverlay
-              cowsayOverlay
-              fishOverlay
-              nautilusOverlay
-              nurpkgs.overlay
-              neovim-flake.overlays.${system}.default
-              (f: p: { tex2nix = tex2nix.defaultPackage.${system}; })
-              ((import ./home/overlays/md-toc) { inherit (inputs) gh-md-toc; })
-              (import ./home/overlays/protonvpn-gui)
-              (import ./home/overlays/ranger)
-              (import ./home/overlays/nautilus)
-            ];
-          };
-
-          nur = import nurpkgs {
-            inherit pkgs;
-            nurpkgs = pkgs;
-          };
-
-          imports = [
-            #inputs.cardano-node.nixosModules.cardano-node
-            #inputs.cardano-wallet.nixosModules.cardano-wallet
-            neovim-flake.nixosModules.${system}.hm
-            ./home/home.nix
+          overlays = [
+            # cardanoOverlay
+            cowsayOverlay
+            fishOverlay
+            nautilusOverlay
+            nurpkgs.overlay
+            neovim-flake.overlays.${system}.default
+            (f: p: {tex2nix = tex2nix.defaultPackage.${system};})
+            ((import ./home/overlays/md-toc) {inherit (inputs) gh-md-toc;})
+            (import ./home/overlays/protonvpn-gui)
+            (import ./home/overlays/ranger)
+            (import ./home/overlays/nautilus)
           ];
+        };
 
-          # imports = [
-          #   neovim-flake.nixosModules.${system}.hm
-          #   ./home/slim/home.nix
-          # ];
+        nur = import nurpkgs {
+          inherit pkgs;
+          nurpkgs = pkgs;
+        };
 
+        imports = [
+          #inputs.cardano-node.nixosModules.cardano-node
+          #inputs.cardano-wallet.nixosModules.cardano-wallet
+          neovim-flake.nixosModules.${system}.hm
+          ./home/home.nix
+        ];
 
-          mkHome = { ultraHD ? false }: (
-            home-manager.lib.homeManagerConfiguration rec {
-              inherit pkgs;
+        # imports = [
+        #   neovim-flake.nixosModules.${system}.hm
+        #   ./home/slim/home.nix
+        # ];
 
-              extraSpecialArgs = {
-                inherit ultraHD inputs;
-                addons = nur.repos.rycee.firefox-addons;
-              };
-              modules = [{ inherit imports; }];
-            }
-          );
-          
-          mkSlim = { ultraHD ? false }: (
-            home-manager.lib.homeManagerConfiguration rec {
-              inherit pkgs;
+        mkHome = {ultraHD ? false}: (
+          home-manager.lib.homeManagerConfiguration rec {
+            inherit pkgs;
 
-              extraSpecialArgs = {
-                inherit ultraHD inputs;
-                addons = nur.repos.rycee.firefox-addons;
-              };
-              modules = [
-                ((import ./slim/home.nix))
-                neovim-flake.nixosModules.${system}.hm
-              ];
-            }
-          );
-        in
-        {
-          
-          vm-home     = mkSlim { ultraHD = false; };
-          bismuth-edp = mkHome { ultraHD = false; };
-          bismuth-uhd = mkHome { ultraHD = true; };
-
-        }
-      );
-      nixosConfigurations = (
-        let
-          inherit (inputs.nixpkgs.lib) nixosSystem;
-
-          libx = import ./lib { inherit (inputs.nixpkgs) lib; };
-
-          lib = inputs.nixpkgs.lib.extend (_: _: {
-            inherit (libx) secretManager;
-          });
-
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              permittedInsecurePackages = [
-                "xrdp-0.9.9"
-              ];
+            extraSpecialArgs = {
+              inherit ultraHD inputs;
+              addons = nur.repos.rycee.firefox-addons;
             };
-          };
-        in
-        { 
-          intelTower = nixosSystem {
-            inherit lib pkgs system;
-            specialArgs = { inherit inputs; };
+            modules = [{inherit imports;}];
+          }
+        );
+
+        mkSlim = {ultraHD ? false}: (
+          home-manager.lib.homeManagerConfiguration rec {
+            inherit pkgs;
+
+            extraSpecialArgs = {
+              inherit ultraHD inputs;
+              addons = nur.repos.rycee.firefox-addons;
+            };
             modules = [
-              inputs.cardano-node.nixosModules.cardano-node
-              inputs.cardano-wallet.nixosModules.cardano-wallet
-              ./system/machine/intelTower
-              ./system/configuration.nix
+              (import ./slim/home.nix)
+              neovim-flake.nixosModules.${system}.hm
+            ];
+          }
+        );
+      in {
+        vm-home = mkSlim {ultraHD = false;};
+        bismuth-edp = mkHome {ultraHD = false;};
+        bismuth-uhd = mkHome {ultraHD = true;};
+      }
+    );
+    nixosConfigurations = (
+      let
+        inherit (inputs.nixpkgs.lib) nixosSystem;
+
+        libx = import ./lib {inherit (inputs.nixpkgs) lib;};
+
+        lib = inputs.nixpkgs.lib.extend (_: _: {
+          inherit (libx) secretManager;
+        });
+
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              "xrdp-0.9.9"
             ];
           };
-          intelNUC = nixosSystem {
-            inherit lib inputs pkgs system;
-            specialArgs = { inherit inputs; };
-            modules = [
-              inputs.cardano-node.nixosModules.cardano-node
-              ./system/machine/intelNUC
-              ./system/configuration.nix
-            ];
-          };
-          plutus_vm = nixosSystem {
-            inherit lib pkgs system;
-            specialArgs = { inherit inputs; };
-            modules = [
-              inputs.cardano-node.nixosModules.cardano-node
-              ./system/machine/plutus_vm
-              ./system/configuration.nix
-            ];
-          };
-        }
-      );
+        };
+      in {
+        intelTower = nixosSystem {
+          inherit lib pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.cardano-node.nixosModules.cardano-node
+            inputs.cardano-wallet.nixosModules.cardano-wallet
+            ./system/machine/intelTower
+            ./system/configuration.nix
+          ];
+        };
+        intelNUC = nixosSystem {
+          inherit lib inputs pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.cardano-node.nixosModules.cardano-node
+            ./system/machine/intelNUC
+            ./system/configuration.nix
+          ];
+        };
+        plutus_vm = nixosSystem {
+          inherit lib pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.cardano-node.nixosModules.cardano-node
+            ./system/machine/plutus_vm
+            ./system/configuration.nix
+          ];
+        };
+      }
+    );
 
-      packages.${system} = {
-        inherit (ci) metals metals-updater;
-      };
+    packages.${system} = {
+      inherit (ci) metals metals-updater;
+    };
 
-      devShell.${system} = (
-        { inputs, system, ... }:
-
-        let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
-        in
+    devShell.${system} = (
+      {
+        inputs,
+        system,
+        ...
+      }: let
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+      in
         pkgs.mkShell {
           name = "installation-shell";
-          buildInputs = with pkgs; [ wget s-tar ];
+          buildInputs = with pkgs; [wget s-tar];
         }
-      );
+    );
 
-      checks.${system} =
-        let
-          os = mapAttrs (_: c: c.config.system.build.toplevel) nixosConfigurations;
-          hm = mapAttrs (_: c: c.activationPackage) homeConfigurations;
-        in
-        os // hm;
-    };    
+    checks.${system} = let
+      os = mapAttrs (_: c: c.config.system.build.toplevel) nixosConfigurations;
+      hm = mapAttrs (_: c: c.activationPackage) homeConfigurations;
+    in
+      os // hm;
+  };
 }

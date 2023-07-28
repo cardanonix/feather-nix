@@ -1,14 +1,17 @@
-{ config, pkgs, specialArgs, inputs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  specialArgs,
+  inputs,
+  ...
+}: let
   browser = "${pkgs.brave}/bin/brave";
-  
+
   terminal = "${pkgs.alacritty}/bin/alacritty";
 
   openCalendar = "${pkgs.xfce.orage}/bin/orage";
 
-  uhdBar = pkgs.callPackage ./bar.nix { };
+  uhdBar = pkgs.callPackage ./bar.nix {};
 
   hdBar = pkgs.callPackage ./bar.nix {
     font0 = 10;
@@ -22,14 +25,20 @@ let
     font8 = 12;
   };
 
-  mainBar = if specialArgs.ultraHD then uhdBar else hdBar;
+  mainBar =
+    if specialArgs.ultraHD
+    then uhdBar
+    else hdBar;
 
   xdgUtils = pkgs.xdg-utils.overrideAttrs (
     old: {
-      nativeBuildInputs = old.nativeBuildInputs or [] ++ [ pkgs.makeWrapper ];
-      postInstall = old.postInstall + "\n" + ''
-        wrapProgram $out/bin/xdg-open --suffix PATH : /run/current-system/sw/bin --suffix BROWSER : ${browser}
-      '';
+      nativeBuildInputs = old.nativeBuildInputs or [] ++ [pkgs.makeWrapper];
+      postInstall =
+        old.postInstall
+        + "\n"
+        + ''
+          wrapProgram $out/bin/xdg-open --suffix PATH : /run/current-system/sw/bin --suffix BROWSER : ${browser}
+        '';
     }
   );
 
@@ -38,27 +47,27 @@ let
   openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://infosec.pub/c/cardano@lemmy.world/";
 
   mypolybar = pkgs.polybar.override {
-    alsaSupport   = true;
+    alsaSupport = true;
     githubSupport = true;
-    mpdSupport    = true;
-    pulseSupport  = true;
+    mpdSupport = true;
+    pulseSupport = true;
   };
 
   # theme adapted from: https://github.com/adi1090x/polybar-themes#-polybar-5
-  bars   = builtins.readFile ./bars.ini;
+  bars = builtins.readFile ./bars.ini;
   colors = builtins.readFile ./colors.ini;
-  mods1  = builtins.readFile ./modules.ini;
-  mods2  = builtins.readFile ./user_modules.ini;
+  mods1 = builtins.readFile ./modules.ini;
+  mods2 = builtins.readFile ./user_modules.ini;
 
-  bluetoothScript   = pkgs.callPackage ./scripts/bluetooth.nix {};
-  klsScript         = pkgs.callPackage ../../scripts/keyboard-layout-switch.nix { inherit pkgs; };
-  monitorScript     = pkgs.callPackage ./scripts/monitor.nix {};
-  mprisScript       = pkgs.callPackage ./scripts/mpris.nix {};
-  networkScript     = pkgs.callPackage ./scripts/network.nix {};
-  fgindexScript     = pkgs.callPackage ./scripts/fngi.nix {};
-  adaScript         = pkgs.callPackage ./scripts/ada.nix {};
+  bluetoothScript = pkgs.callPackage ./scripts/bluetooth.nix {};
+  klsScript = pkgs.callPackage ../../scripts/keyboard-layout-switch.nix {inherit pkgs;};
+  monitorScript = pkgs.callPackage ./scripts/monitor.nix {};
+  mprisScript = pkgs.callPackage ./scripts/mpris.nix {};
+  networkScript = pkgs.callPackage ./scripts/network.nix {};
+  fgindexScript = pkgs.callPackage ./scripts/fngi.nix {};
+  adaScript = pkgs.callPackage ./scripts/ada.nix {};
   cnodeStatusScript = pkgs.callPackage ./scripts/cnodeStatus.nix {};
-  cnodeToggleScript = pkgs.callPackage ../../scripts/node_toggle.nix { inherit inputs pkgs config; };
+  cnodeToggleScript = pkgs.callPackage ../../scripts/node_toggle.nix {inherit inputs pkgs config;};
 
   bctl = ''
     [module/bctl]
@@ -107,7 +116,7 @@ let
     type = custom/script
 
     exec = ${fgindexScript}/bin/fngi
-  
+
     label-maxlen = 20
 
     interval = 10800
@@ -119,7 +128,7 @@ let
     # ramp-0 = %{F#999}<label>%{F-}
     # ramp-1 = %{F#900}<label>%{F-}
     # ramp-50 = %{F#F00}<label>%{F-}
-    click-left = ${openFearandGreed} 
+    click-left = ${openFearandGreed}
   '';
 
   ada = ''
@@ -127,14 +136,14 @@ let
     type = custom/script
 
     exec = ${adaScript}/bin/ada
-    
+
 
     label-maxlen = 10
 
     interval = 120
     format = "%{T7}%{T-} <label>"
     format-padding = 0
-    click-left = ${openCardanoSublemmy} 
+    click-left = ${openCardanoSublemmy}
   '';
 
   cnodeStatus = ''
@@ -159,15 +168,14 @@ let
   '';
 
   customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnodeStatus;
-in
-{
+in {
   home.packages = with pkgs; [
-    font-awesome          # awesome fonts
+    font-awesome # awesome fonts
     material-design-icons # fonts with glyphs
-    xfce.orage            # lightweight calendar
+    xfce.orage # lightweight calendar
     # inputs.cardano-node.packages.x86_64-linux.cardano-node
   ];
-  
+
   services.polybar = {
     enable = true;
     package = mypolybar;

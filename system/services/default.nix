@@ -1,8 +1,7 @@
 let
   more = {
   };
-in
-{
+in {
   imports = [
     ./cardano-node
     ./virtmanager

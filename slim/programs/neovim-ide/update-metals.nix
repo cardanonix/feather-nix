@@ -1,6 +1,11 @@
-{ stdenv, system, curl, jq, ripgrep, writeShellScript }:
-
-let
+{
+  stdenv,
+  system,
+  curl,
+  jq,
+  ripgrep,
+  writeShellScript,
+}: let
   cl = "${curl}/bin/curl";
   rg = "${ripgrep}/bin/rg";
   file = "home/programs/neovim-ide/metals.nix";
@@ -35,15 +40,15 @@ let
     fi
   '';
 in
-stdenv.mkDerivation
-{
-  inherit name src;
+  stdenv.mkDerivation
+  {
+    inherit name src;
 
-  phases = [ "installPhase" "patchPhase" ];
+    phases = ["installPhase" "patchPhase"];
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cp $src $out/bin/${name}
-    chmod +x $out/bin/${name}
-  '';
-}
+    installPhase = ''
+      mkdir -p $out/bin
+      cp $src $out/bin/${name}
+      chmod +x $out/bin/${name}
+    '';
+  }

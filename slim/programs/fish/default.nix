@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   fzfConfig = ''
     set -x FZF_DEFAULT_OPTS "--preview='bat {} --color=always'" \n
     set -x SKIM_DEFAULT_COMMAND "rg --files || fd || find ."
@@ -14,24 +17,26 @@ let
     set -g theme_color_scheme solarized
   '';
 
-  custom = pkgs.callPackage ./plugins.nix { };
+  custom = pkgs.callPackage ./plugins.nix {};
 
   fenv = {
     inherit (pkgs.fishPlugins.foreign-env) src;
     name = "foreign-env";
   };
 
-  fishConfig = ''
-    bind \t accept-autosuggestion
-    set fish_greeting
-  '' + fzfConfig + themeConfig;
+  fishConfig =
+    ''
+      bind \t accept-autosuggestion
+      set fish_greeting
+    ''
+    + fzfConfig
+    + themeConfig;
 
   dc = "${pkgs.docker-compose}/bin/docker-compose";
-in
-{
+in {
   programs.fish = {
     enable = true;
-    plugins = [ custom.theme fenv ];
+    plugins = [custom.theme fenv];
     interactiveShellInit = ''
       eval (direnv hook fish)
       any-nix-shell fish --info-right | source

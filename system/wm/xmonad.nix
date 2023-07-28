@@ -1,16 +1,19 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.dconf.enable = true;
 
   services = {
     gnome.gnome-keyring.enable = true;
-    
+
     upower.enable = true;
 
     dbus = {
       enable = true;
-      packages = [ pkgs.dconf ];
+      packages = [pkgs.dconf];
     };
 
     xserver = {
@@ -20,7 +23,7 @@
 
       extraLayouts.us-custom = {
         description = "US layout with custom hyper keys";
-        languages   = [ "eng" ];
+        languages = ["eng"];
         symbolsFile = ./us-custom.xkb;
       };
 
@@ -48,7 +51,6 @@
 
       # does not work, setting it manually on start up
       xkbOptions = "ctrl:nocaps";
-
     };
   };
 

@@ -1,11 +1,15 @@
-{ config, lib, pkgs, inputs, ... }:
-let 
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
     cncli
   ];
 
-  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [     
+  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [
     bech32
     cabalProjectRegenerate
     cardano-cli
@@ -27,9 +31,6 @@ let
     scan-blocks-pipelined
     tx-generator
   ];
-
-in 
-
-{
-  home.packages = cardanoPkgs ++ cncliPkgs; 
+in {
+  home.packages = cardanoPkgs ++ cncliPkgs;
 }

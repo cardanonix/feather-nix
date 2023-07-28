@@ -1,24 +1,23 @@
-{ self
-, nixpkgs
-, sops-nix
-, inputs
-, nixos-hardware
-, cardano-node
-, nix
+{
+  self,
+  nixpkgs,
+  sops-nix,
+  inputs,
+  nixos-hardware,
+  cardano-node,
+  nix,
   #, cardano-db-sync
-, ...
-}:
-let
+  ...
+}: let
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
 
-  
   customModules = import ../modules/modules-list.nix;
   baseModules = [
     # make flake inputs accessiable in NixOS
-    { _module.args.inputs = inputs; }
+    {_module.args.inputs = inputs;}
     {
       imports = [
-        ({ pkgs, ... }: {
+        ({pkgs, ...}: {
           nix.nixPath = [
             "nixpkgs=${pkgs.path}"
           ];
@@ -28,7 +27,8 @@ let
             experimental-features = nix-command flakes
           '';
           documentation.info.enable = false;
-        })when
+        })
+        when
         #./modules/upgrade-diff.nix # TODO: look at these from Mic92
         #./modules/nix-daemon.nix
         #./modules/minimal-docs.nix
@@ -37,13 +37,14 @@ let
     }
   ];
   defaultModules = baseModules ++ customModules;
-in
-{
+in {
   sarov = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      cardano-node.nixosModules.cardano-node # no idea why this works here but not in sarov/configuration.nix
-      ./sarov/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        cardano-node.nixosModules.cardano-node # no idea why this works here but not in sarov/configuration.nix
+        ./sarov/configuration.nix
+      ];
   };
 }

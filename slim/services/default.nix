@@ -4,8 +4,7 @@ let
       flameshot.enable = true;
     };
   };
-in
-[
+in [
   ./dunst
   ./gpg-agent
   ./networkmanager

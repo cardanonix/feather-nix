@@ -1,5 +1,7 @@
-{ stdenv, lib }:
-
+{
+  stdenv,
+  lib,
+}:
 stdenv.mkDerivation {
   name = "cardanofont";
   src = ./cardanofont.ttf;
@@ -10,4 +12,3 @@ stdenv.mkDerivation {
     install -D $src $out/share/fonts/truetype/cardanofont.ttf
   '';
 }
-

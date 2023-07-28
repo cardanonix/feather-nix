@@ -1,25 +1,25 @@
-{ config, pkgs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  ...
+}: let
   personas = import ./personas.nix;
-  api_key                  = builtins.readFile /home/bismuth/plutus/Documents/Credentials/davinci_api_key.txt;
-  curl                     = "${pkgs.curl}/bin/curl";
-  jq                       = "${pkgs.jq}/bin/jq";
-  sed                      = "${pkgs.gnused}/bin/sed";
+  api_key = builtins.readFile /home/bismuth/plutus/Documents/Credentials/davinci_api_key.txt;
+  curl = "${pkgs.curl}/bin/curl";
+  jq = "${pkgs.jq}/bin/jq";
+  sed = "${pkgs.gnused}/bin/sed";
 in
-
-pkgs.writeShellScriptBin "aipq" ''
+  pkgs.writeShellScriptBin "aipq" ''
     echo " 1.) Bob the Boomer             9.) Christine Bling"
     echo " 2.) Alfred the Butler         10.) Blackbeard the Pirate"
     echo " 3.) Sully the Townie          11.) Zangief the Bear Wrestler"
     echo " 4.) Chad the Romantic         12.) Warner Herzog"
-    echo " 5.) Blake the Academic        13.) Noam Chomsky" 
+    echo " 5.) Blake the Academic        13.) Noam Chomsky"
     echo " 6.) Hunter the Zoomer         14.) Slavoj Žižek"
     echo " 7.) Jennifer the Valley Girl  15.) Jordan Peterson"
     echo " 8.) Paul from HR              16.) Thich Nhat Hanh"
-    echo "" 
-    echo " *.) name a famous person" 
+    echo ""
+    echo " *.) name a famous person"
     read -p "Select a Personality: " chosen
     case $chosen in
       "1")

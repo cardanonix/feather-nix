@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   gitConfig = {
     safe.directory = "*"; #potential safety issue on shared machines
     gpg.program = "${pkgs.gnupg}/bin/gpg2";
@@ -28,13 +30,12 @@ let
   };
 
   rg = "${pkgs.ripgrep}/bin/rg";
-in
-{
+in {
   home.packages = with pkgs.gitAndTools; [
     diff-so-fancy # git diff with colors
-    git-crypt     # git files encryption
-    hub           # github command-line client
-    tig           # diff and commit view
+    git-crypt # git files encryption
+    hub # github command-line client
+    tig # diff and commit view
   ];
 
   programs.git = {
@@ -42,7 +43,7 @@ in
     aliases = {
       amend = "commit --amend -m";
       fixup = "!f(){ git reset --soft HEAD~\${1} && git commit --amend -C HEAD; };f";
-      loc   = "!f(){ git ls-files | ${rg} \"\\.\${1}\" | xargs wc -l; };f"; # lines of code
+      loc = "!f(){ git ls-files | ${rg} \"\\.\${1}\" | xargs wc -l; };f"; # lines of code
       br = "branch";
       co = "checkout";
       st = "status";
@@ -61,10 +62,10 @@ in
       "*.metals.sbt"
       "*metals.sbt"
       "*.direnv"
-      "*.envrc"        # there is lorri, nix-direnv & simple direnv; let people decide
-      "*hie.yaml"      # ghcide files
+      "*.envrc" # there is lorri, nix-direnv & simple direnv; let people decide
+      "*hie.yaml" # ghcide files
       "*.mill-version" # used by metals
-      "*.jvmopts"      # should be local to every project
+      "*.jvmopts" # should be local to every project
     ];
     signing = {
       gpgPath = "${pkgs.gnupg}/bin/gpg2";
@@ -75,4 +76,3 @@ in
     userName = "harryprayiv";
   };
 }
-

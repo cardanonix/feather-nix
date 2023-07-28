@@ -1,16 +1,14 @@
-{ pkgs, ...}:
-
-let
-  pgrep             = "${pkgs.busybox}/bin/pgrep";
-  topology          = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
-  config            = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
-  node_socket_path  = "/var/lib/cardano-node/db-mainnet/node.socket";
-  db_path           = "/var/lib/cardano-node/db-mainnet";
-  cardano-cli       = "./cardano-cli";
+{pkgs, ...}: let
+  pgrep = "${pkgs.busybox}/bin/pgrep";
+  topology = "/nix/store/mb0zb61472xp1hgw3q9pz7m337rmfx7f-topology.yaml";
+  config = "/nix/store/4b0rmqn24w0yc2yvn33vlawwdxa3a71i-config-0-0.json";
+  node_socket_path = "/var/lib/cardano-node/db-mainnet/node.socket";
+  db_path = "/var/lib/cardano-node/db-mainnet";
+  cardano-cli = "./cardano-cli";
   # cowsay            = "${pkgs.cowsay}/bin/cowsay";
   #cli-path          = "/nix/store/w6mlv2czw4r9kadql0l62ivl1ly6s28m-system-path/bin/cardano-cli";
 in
-pkgs.writeShellScriptBin "node_check" ''
+  pkgs.writeShellScriptBin "node_check" ''
     if [ "$(${pgrep} cardano-node)" ]; then
       echo "Populating Path Variables:"
       export CARDANO_TOPOLOGY="${topology}"
@@ -38,4 +36,4 @@ pkgs.writeShellScriptBin "node_check" ''
     else
       echo "轢"
     fi
-''
+  ''

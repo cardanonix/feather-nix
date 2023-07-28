@@ -1,11 +1,11 @@
-{ pkgs ? import <nixpkgs> { } }:
+{pkgs ? import <nixpkgs> {}}:
 with pkgs;
-mkShell {
-  buildInputs = [
-    nixpkgs-fmt
-  ];
+  mkShell {
+    buildInputs = [
+      nixpkgs-fmt
+    ];
 
-  shellHook = ''
-    # ...
-  '';
-}
+    shellHook = ''
+      # ...
+    '';
+  }

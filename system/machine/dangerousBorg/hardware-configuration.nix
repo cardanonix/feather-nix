@@ -1,85 +1,83 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   fileSystems."/export/_FOOTAGE_ARCHIVE_" = {
     device = "/volume2/_FOOTAGE_ARCHIVE_";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/_STILLS_ARCHIVE_" = {
     device = "/volume2/_STILLS_ARCHIVE_";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/_Time_Machine_" = {
     device = "/volume2/_Time_Machine_";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/BUSINESS_AND_TAXES" = {
     device = "/volume2/BUSINESS_AND_TAXES";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/Cardano" = {
     device = "/volume2/Cardano";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/Client_Drive" = {
     device = "/volume2/Client_Drive";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/DOCUMENTS" = {
     device = "/volume2/DOCUMENTS";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/NetBackup" = {
     device = "/volume2/NetBackup";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/Programming" = {
     device = "/volume2/Programming";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/Transfers" = {
     device = "/volume2/Transfers";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/books" = {
     device = "/volume2/books";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/cardano-node" = {
     device = "/volume2/cardano-node";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/downloads" = {
     device = "/volume2/downloads";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/homes" = {
     device = "/volume2/homes";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/music" = {
     device = "/volume2/music";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/photo" = {
     device = "/volume2/photo";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/shared_photos" = {
     device = "/volume2/shared_photos";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/tester" = {
     device = "/volume2/tester";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/video" = {
     device = "/volume2/video";
-    options = [ "bind" ];
+    options = ["bind"];
   };
   fileSystems."/export/web" = {
     device = "/volume2/web";
-    options = [ "bind" ];
+    options = ["bind"];
   };
 
   services.nfs.server.enable = true;
@@ -108,5 +106,3 @@
   '';
   #hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
-
-

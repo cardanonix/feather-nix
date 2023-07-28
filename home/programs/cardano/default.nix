@@ -1,15 +1,19 @@
-{ config, lib, pkgs, inputs, ... }:
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   guildViewPkgs = with pkgs; [
-    bc                   # required for Cardano Guild gLiveView
+    bc # required for Cardano Guild gLiveView
   ];
 
   cncliPkgs = with inputs.cncli.packages.x86_64-linux; [
     cncli
   ];
 
-  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [     
+  cardanoPkgs = with inputs.cardano-node.packages.x86_64-linux; [
     bech32
     cabalProjectRegenerate
     cardano-cli
@@ -31,11 +35,8 @@ let
     scan-blocks-pipelined
     tx-generator
   ];
-
-in 
-
-{
-  home.packages = cardanoPkgs ++ guildViewPkgs; 
+in {
+  home.packages = cardanoPkgs ++ guildViewPkgs;
 
   home.sessionVariables = {
     CARDANO_NODE_SOCKET_PATH = "/var/lib/cardano-node/db-mainnet/node.socket";

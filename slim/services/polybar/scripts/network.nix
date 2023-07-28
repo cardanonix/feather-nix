@@ -1,18 +1,15 @@
-{ pkgs, ...}:
-
-let
+{pkgs, ...}: let
   ethtool = "${pkgs.ethtool}/bin/ethtool";
-  rg      = "${pkgs.ripgrep}/bin/rg";
-  wc      = "/run/current-system/sw/bin/wc";
+  rg = "${pkgs.ripgrep}/bin/rg";
+  wc = "/run/current-system/sw/bin/wc";
 
   # bismuth Tower
-  eth1  = "eno1";
+  eth1 = "eno1";
   wifi1 = "wlp1s0";
 
   # Dell XPS
-  eth2  = "enp62s0u1u3";
+  eth2 = "enp62s0u1u3";
   wifi2 = "wlp2s0";
-
 in
   pkgs.writeShellScriptBin "check-network" ''
     if [[ $1 = "eth" ]]; then

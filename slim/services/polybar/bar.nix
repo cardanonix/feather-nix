@@ -1,6 +1,14 @@
-{ font0 ? 16, font1 ? 18, font2 ? 40, font3 ? 28, font4 ? 7, font5 ? 16 , font6 ? 18 , font7 ? 10, font8 ? 16  }:
-
-let
+{
+  font0 ? 16,
+  font1 ? 18,
+  font2 ? 40,
+  font3 ? 28,
+  font4 ? 7,
+  font5 ? 16,
+  font6 ? 18,
+  font7 ? 10,
+  font8 ? 16,
+}: let
   bar = ''
     [bar/main]
     monitor = ''${env:MONITOR:HDMI-2}
@@ -59,7 +67,7 @@ let
     inherit = bar/main
 
     tray-position = none
-    modules-left = cardano xmonad 
+    modules-left = cardano xmonad
     modules-right = mpris clickable-date
     enable-ipc = true
   '';
@@ -70,9 +78,9 @@ let
     bottom = true
 
     tray-position = center
-    modules-left =  cnodeStatus fngi ada cpu temperature memory filesystem    
+    modules-left =  cnodeStatus fngi ada cpu temperature memory filesystem
     modules-right = wired-network  clickable-keyboard pulseaudio powermenu
     enable-ipc = true
   '';
 in
-bar + top + bottom
+  bar + top + bottom

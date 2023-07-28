@@ -1,6 +1,9 @@
-{ pkgs, lib, specialArgs, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  specialArgs,
+  ...
+}: let
   extra = ''
     set +x
     ${pkgs.util-linux}/bin/setterm -blank 0 -powersave off -powerdown 0
@@ -13,15 +16,17 @@ let
     ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-0 --mode 3840x2160 --rate 30.00
   '';
 
-  uhdExtra = if specialArgs.ultraHD then xrandrOps else "";
+  uhdExtra =
+    if specialArgs.ultraHD
+    then xrandrOps
+    else "";
 
   polybarOpts = ''
     ${pkgs.nitrogen}/bin/nitrogen --restore &
     ${pkgs.pasystray}/bin/pasystray &
     ${pkgs.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator &
   '';
-in
-{
+in {
   xresources.properties = {
     "Xft.dpi" = 110;
     "Xft.autohint" = 0;
@@ -34,14 +39,14 @@ in
   };
 
   home.packages = with pkgs; [
-    dialog                 # Dialog boxes on the terminal (to show key bindings)
-    networkmanager_dmenu   # networkmanager on dmenu
-    networkmanagerapplet   # networkmanager applet
-    nitrogen               # wallpaper manager
-    xcape                  # keymaps modifier
-    xorg.xkbcomp           # keymaps modifier
-    xorg.xmodmap           # keymaps modifier
-    xorg.xrandr            # display manager (X Resize and Rotate protocol)
+    dialog # Dialog boxes on the terminal (to show key bindings)
+    networkmanager_dmenu # networkmanager on dmenu
+    networkmanagerapplet # networkmanager applet
+    nitrogen # wallpaper manager
+    xcape # keymaps modifier
+    xorg.xkbcomp # keymaps modifier
+    xorg.xmodmap # keymaps modifier
+    xorg.xrandr # display manager (X Resize and Rotate protocol)
   ];
 
   xsession = {

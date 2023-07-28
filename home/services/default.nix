@@ -4,10 +4,8 @@ let
       flameshot.enable = true;
       lorri.enable = true;
     };
-
   };
-in
-[
+in [
   ./dunst
   ./gpg-agent
   ./networkmanager

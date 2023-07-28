@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  metals = pkgs.callPackage ./metals.nix { };
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  metals = pkgs.callPackage ./metals.nix {};
+in {
   programs.neovim-ide = {
     enable = true;
     settings = {
@@ -80,7 +82,7 @@ in
         filetree.nvimTreeLua = {
           enable = true;
           hideDotFiles = false;
-          hideFiles = [ "node_modules" ".cache" ];
+          hideFiles = ["node_modules" ".cache"];
         };
         neoclip.enable = true;
         hop.enable = true;

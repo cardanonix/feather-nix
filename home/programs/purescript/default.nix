@@ -1,6 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-let 
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   purescriptPkgs = with pkgs; [
     # purescript
     # purenix
@@ -20,9 +24,6 @@ let
     # dovetail #PureScript interpreter with a Haskell FFI
     # servant-purescript #Generate PureScript accessor functions for you servant API
   ];
-
-in 
-
-{
-  home.packages = purescriptPkgs ++ hsklPkgs; 
+in {
+  home.packages = purescriptPkgs ++ hsklPkgs;
 }

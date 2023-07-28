@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   xdg.configFile."orage/oragerc".text = ''
     [PARAMETERS]
     Timezone=America/NewYork

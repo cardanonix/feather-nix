@@ -1,5 +1,7 @@
-{ stdenv, lib }:
-
+{
+  stdenv,
+  lib,
+}:
 stdenv.mkDerivation {
   name = "flags-world-color-0.1";
   src = ./FlagsWorldColor.ttf;

@@ -32,49 +32,48 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-    # Nix daemon config
+  # Nix daemon config
   nix = {
     # Automate garbage collection
     gc = {
       automatic = true;
-      dates     = "weekly";
-      options   = "--delete-older-than 7d";
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
 
     # Flakes settings
     package = pkgs.nixUnstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
-    
 
     settings = {
       # Automate `nix store --optimise`
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "bismuth" ];
-      
-      extra-experimental-features  = [ "ca-derivations" ];
+      trusted-users = ["root" "bismuth"];
+
+      extra-experimental-features = ["ca-derivations"];
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
-      
+
       # Avoid unwanted garbage collection when using nix-direnv
-      keep-outputs          = true;
-      keep-derivations      = true;
+      keep-outputs = true;
+      keep-derivations = true;
 
       substituters = [
-      "https://cache.nixos.org/"
-      "https://cache.iog.io/"
-      "https://cache.ngi0.nixos.org/"    
+        "https://cache.nixos.org/"
+        "https://cache.iog.io/"
+        "https://cache.ngi0.nixos.org/"
       ];
       trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+        "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+        "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
       ];
     };
   };
-  
+
   nixpkgs.config = {
     # allowUnfree = true;
     contentAddressedByDefault = true;

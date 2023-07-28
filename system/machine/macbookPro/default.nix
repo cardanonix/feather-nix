@@ -1,36 +1,39 @@
-{ config, pkgs, lib, inputs, ... }:
-
-with lib;
-
 {
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+with lib; {
   imports = [
     ../.././services/cardano-node
     ./hardware-configuration.nix
   ];
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bismuth = with inputs; {
-      isNormalUser = true;
-      home = "/home/bismuth";
-      uid = 1002;
-      description = "Harry Pray IV";
-      extraGroups  = [ 
-        "docker" 
-        "networkmanager" 
-        "wheel" 
-        "scanner" 
-        "lp"
-        "plugdev" 
-        "cardano-node" 
-        "cardano-wallet" 
-        ];
-      shell = pkgs.fish;
-      openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3Nz[...] bismuth@intelTower" ];
-  };                                              
-                                                                  
+    isNormalUser = true;
+    home = "/home/bismuth";
+    uid = 1002;
+    description = "Harry Pray IV";
+    extraGroups = [
+      "docker"
+      "networkmanager"
+      "wheel"
+      "scanner"
+      "lp"
+      "plugdev"
+      "cardano-node"
+      "cardano-wallet"
+    ];
+    shell = pkgs.fish;
+    openssh.authorizedKeys.keys = ["ssh-rsa AAAAB3Nz[...] bismuth@intelTower"];
+  };
+
   users.groups.plugdev = {};
 
- # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader.
   boot = {
     # TODO: give this a look https://github.com/gilescope/dotgiles/blob/master/hardware-configuration.nix
     # and this https://github.com/jeremiehuchet/nixos-macbookpro/blob/master/configuration.nix
@@ -40,16 +43,16 @@ with lib;
     '';
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ ];
+      availableKernelModules = ["xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod"];
+      kernelModules = [];
     };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-      };
     };
+  };
 
   networking = {
     hostName = "intelTower"; # Define your hostname.
@@ -57,13 +60,11 @@ with lib;
     interfaces.eth0.useDHCP = true;
   };
 
-
-
-    # List packages installed in system profile. To search, run:
+  # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      virt-manager
-    ];
+    virt-manager
+  ];
 
   services.sysprof.enable = true;
 
@@ -79,10 +80,10 @@ with lib;
     enable = true;
     package = pkgs.pulseaudioFull;
   };
-  
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
-    ];
+
+  swapDevices = [
+    {device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac";}
+  ];
 
   # fileSystems."/home/bismuth/video" =
   #   { device = "192.168.1.212:/volume2/video";
@@ -90,17 +91,17 @@ with lib;
   #     fsType = "nfs";
   #   };
 
-  # # fileSystems."/var/lib/cardano-node/db-mainnet" = { 
+  # # fileSystems."/var/lib/cardano-node/db-mainnet" = {
   # #   device = "192.168.1.212:/volume2/cardano-node/db-mainnet";
   # #   options = [ "x-systemd.automount" "noauto" ];
   # #   fsType = "nfs";
-  # # }; 
+  # # };
 
   # fileSystems."/home/bismuth/Cardano" =
   #   { device = "192.168.1.212:/volume2/Cardano";
   #     options = [ "x-systemd.automount" "noauto" ];
   #     fsType = "nfs";
-  #   }; 
+  #   };
 
   # fileSystems."/home/bismuth/Programming" =
   #   { device = "192.168.1.212:/volume2/Programming";
@@ -131,9 +132,9 @@ with lib;
       nssmdns = true;
       enable = true;
       publish = {
-      enable = true;
-      userServices = true;
-      domain = true;
+        enable = true;
+        userServices = true;
+        domain = true;
       };
     };
     xserver = {
@@ -151,8 +152,8 @@ with lib;
       ];
     };
   };
-  
-    # Enable Docker & VirtualBox support.
+
+  # Enable Docker & VirtualBox support.
   virtualisation = {
     docker = {
       enable = true;
@@ -164,10 +165,8 @@ with lib;
     libvirtd.enable = true;
   };
 }
-
-
 #Reference file:
-/* 
+/*
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -351,7 +350,7 @@ with lib;
 
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
-  programs.zsh.enableSyntaxHighlighting = true;    
+  programs.zsh.enableSyntaxHighlighting = true;
   programs.zsh.interactiveShellInit = ''
     export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
 
@@ -366,4 +365,6 @@ with lib;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
-} */
+}
+*/
+

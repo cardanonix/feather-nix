@@ -1,9 +1,13 @@
-{ pkgs, specialArgs, ... }:
-
-let
-  fontSize = if specialArgs.ultraHD then 10 else 8;
-in
 {
+  pkgs,
+  specialArgs,
+  ...
+}: let
+  fontSize =
+    if specialArgs.ultraHD
+    then 10
+    else 8;
+in {
   programs.alacritty = {
     enable = true;
     settings = {

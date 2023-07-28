@@ -1,6 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-let 
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   rustPkgs = with pkgs; [
     rustc
     cargo
@@ -9,9 +13,6 @@ let
     clippy
     pkg-config
   ];
-
-in 
-
-{
-  home.packages = rustPkgs; 
+in {
+  home.packages = rustPkgs;
 }

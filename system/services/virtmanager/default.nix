@@ -1,29 +1,30 @@
-{ config, lib, pkgs, inputs, ... }:
-let 
-
-  virtPackages = with pkgs; [     
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
+  virtPackages = with pkgs; [
     virtmanager
-    qemu 
-    virt-viewer 
-    dnsmasq 
-    vde2 
-    bridge-utils 
+    qemu
+    virt-viewer
+    dnsmasq
+    vde2
+    bridge-utils
     # iproute2 # bridge-utils is deprecated in favor of iproute2
-    netcat-openbsd 
+    netcat-openbsd
     # python # I already have these in my sys config
     # python311Packages.pip # I already have these in my sys config
-    ebtables 
+    ebtables
     iptables
   ];
-
-in 
-
-{
-  environment.systemPackages =  virtPackages; 
+in {
+  environment.systemPackages = virtPackages;
 
   virtualisation.libvirtd.enable = true;
-  
-  users.extraUsers.bismuth.extraGroups = [ "libvirtd" "kvm" ];
+
+  users.extraUsers.bismuth.extraGroups = ["libvirtd" "kvm"];
 
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1

@@ -1,24 +1,33 @@
-{ config, lib, pkgs, specialArgs, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  specialArgs,
+  ...
+}:
+with lib; let
   cfg = config.programs.signal;
 
-  scaleFactor = if specialArgs.ultraHD then "2" else "1.5";
+  scaleFactor =
+    if specialArgs.ultraHD
+    then "2"
+    else "1.5";
 
   signal = pkgs.signal-desktop.overrideAttrs (old: {
-    preFixup = old.preFixup + ''
-      substituteInPlace $out/share/applications/signal-desktop.desktop \
-        --replace "--no-sandbox" "--use-tray-icon --force-device-scale-factor=${scaleFactor}"
-    '';
+    preFixup =
+      old.preFixup
+      + ''
+        substituteInPlace $out/share/applications/signal-desktop.desktop \
+          --replace "--no-sandbox" "--use-tray-icon --force-device-scale-factor=${scaleFactor}"
+      '';
   });
 
-  finalPackage = pkgs.symlinkJoin
+  finalPackage =
+    pkgs.symlinkJoin
     {
       name = "signal-desktop";
-      paths = [ signal ];
-      buildInputs = [ pkgs.makeWrapper ];
+      paths = [signal];
+      buildInputs = [pkgs.makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/signal-desktop \
           --add-flags "--use-tray-icon" \
@@ -27,16 +36,15 @@ let
     };
 
   jsonType = types.attrsOf types.anything;
-in
-{
-  meta.maintainers = [ hm.maintainers.bismuth ];
+in {
+  meta.maintainers = [hm.maintainers.bismuth];
 
   options.programs.signal = {
     enable = mkEnableOption "Privacy-focused messaging client";
 
     settings = mkOption {
       type = jsonType;
-      default = { };
+      default = {};
       example = literalExpression ''
         {
           window = {
@@ -57,11 +65,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ finalPackage ];
+    home.packages = [finalPackage];
 
-    xdg.configFile."Signal/ephemeral.json" = mkIf (cfg.settings != { }) {
-      text = generators.toJSON { } cfg.settings;
+    xdg.configFile."Signal/ephemeral.json" = mkIf (cfg.settings != {}) {
+      text = generators.toJSON {} cfg.settings;
     };
   };
 }
-

@@ -1,6 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-let 
-
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   hackerPkgs = with pkgs; [
     # Offensive Tools and Applications
     nmap
@@ -39,9 +43,6 @@ let
     proxychains-ng
     responder
   ];
-
-in 
-
-{
-  home.packages = hackerPkgs; 
+in {
+  home.packages = hackerPkgs;
 }

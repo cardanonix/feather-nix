@@ -1,15 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, inputs, ... }: let
-
-sops.defaultSopsFile = ./secrets.yaml;
-sops.secrets.pool_opcert = { };
-sops.secrets.pool_vrf_skey = { };
-sops.secrets.pool_kes_skey = { };
-in
-{ 
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.secrets.pool_opcert = {};
+  sops.secrets.pool_vrf_skey = {};
+  sops.secrets.pool_kes_skey = {};
+in {
   containers = {
     pool = {
       bindMounts = {
@@ -26,13 +29,20 @@ in
           isReadOnly = true;
         };
       };
-      bindMounts."/pool-keys" = { hostPath = "/var/leder-keys"; isReadOnly = false; };
+      bindMounts."/pool-keys" = {
+        hostPath = "/var/leder-keys";
+        isReadOnly = false;
+      };
       config = {
         services.cardano-node = {
           ipv6HostAddr = "::";
           topology = __toFile "topology.json" (__toJSON {
             Producers = [
-              { addr = "relay.valaam.lan.disasm.us"; port = 3001; valency = 1; }
+              {
+                addr = "relay.valaam.lan.disasm.us";
+                port = 3001;
+                valency = 1;
+              }
             ];
           });
           operationalCertificate = "/var/lib/cardano-node/opcert";
@@ -48,49 +58,53 @@ in
           chown cardano-node /var/lib/cardano-node/kes.skey
         '';
         systemd.services.cardano-node.serviceConfig.PermissionsStartOnly = true;
-
       };
     };
     relay = {
-      bindMounts."/run/cardano-node" = { hostPath = "/relay-run-cardano"; isReadOnly = false; };
+      bindMounts."/run/cardano-node" = {
+        hostPath = "/relay-run-cardano";
+        isReadOnly = false;
+      };
       config = {
         services.cardano-node = {
           ipv6HostAddr = "::";
           extraNodeConfig.TestEnableDevelopmentNetworkProtocols = true;
-          producers =  [
+          producers = [
             {
               accessPoints = [
-              {
-                address = "2a07:c700:0:503::1";
-                port = 1025;
-              }
-              {
-                address = "2a07:c700:0:505::1";
-                port = 6021;
-              }
-              {
-                address = "2600:1700:fb0:fd00::77";
-                port = 4564;
-              }
-              {
-                address = "testnet.weebl.me";
-                port = 3123;
-              }
-              {
-                address = "pool.valaam.lan.disasm.us";
-                port = 3001;
-              }
-            ];
+                {
+                  address = "2a07:c700:0:503::1";
+                  port = 1025;
+                }
+                {
+                  address = "2a07:c700:0:505::1";
+                  port = 6021;
+                }
+                {
+                  address = "2600:1700:fb0:fd00::77";
+                  port = 4564;
+                }
+                {
+                  address = "testnet.weebl.me";
+                  port = 3123;
+                }
+                {
+                  address = "pool.valaam.lan.disasm.us";
+                  port = 3001;
+                }
+              ];
               advertise = false;
               valency = 1;
             }
           ];
           publicProducers = [
             {
-              accessPoints = [{
-                address = "relays.vpc.cardano-testnet.iohkdev.io";
-                port = 3001;
-              }];
+              accessPoints = [
+                {
+                  address = "relays.vpc.cardano-testnet.iohkdev.io";
+                  port = 3001;
+                }
+              ];
               advertise = false;
             }
           ];
@@ -102,12 +116,16 @@ in
       hostAddress = "10.10.1.5";
       localAddress = "10.10.1.6";
       config = {
-        imports = [ pkgs'.cardanoDBSyncModule ];
+        imports = [pkgs'.cardanoDBSyncModule];
         services.cardano-node = {
           hostAddr = "10.10.1.6";
           topology = __toFile "topology.json" (__toJSON {
             Producers = [
-              { addr = "10.10.1.4"; port = 3001; valency = 1; }
+              {
+                addr = "10.10.1.4";
+                port = 3001;
+                valency = 1;
+              }
             ];
           });
         };

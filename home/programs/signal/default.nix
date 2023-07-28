@@ -1,6 +1,8 @@
-{ pkgs, specialArgs, ... }:
-
 {
+  pkgs,
+  specialArgs,
+  ...
+}: {
   programs.signal = {
     enable = true;
 

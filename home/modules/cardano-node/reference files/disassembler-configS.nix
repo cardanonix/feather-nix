@@ -1,22 +1,22 @@
-{ self
-, nixpkgs
-, sops-nix
-, inputs
-, nixos-hardware
-, cardano-node
-, nix
+{
+  self,
+  nixpkgs,
+  sops-nix,
+  inputs,
+  nixos-hardware,
+  cardano-node,
+  nix,
   #, cardano-db-sync
-, ...
-}:
-let
+  ...
+}: let
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
   customModules = import ../modules/modules-list.nix;
   baseModules = [
     # make flake inputs accessiable in NixOS
-    { _module.args.inputs = inputs; }
+    {_module.args.inputs = inputs;}
     {
       imports = [
-        ({ pkgs, ... }: {
+        ({pkgs, ...}: {
           nix.nixPath = [
             "nixpkgs=${pkgs.path}"
           ];
@@ -26,7 +26,8 @@ let
             experimental-features = nix-command flakes
           '';
           documentation.info.enable = false;
-        })when
+        })
+        when
         #./modules/upgrade-diff.nix # TODO: look at these from Mic92
         #./modules/nix-daemon.nix
         #./modules/minimal-docs.nix
@@ -35,60 +36,75 @@ let
     }
   ];
   defaultModules = baseModules ++ customModules;
-in
-{
+in {
   irkutsk = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      nixos-hardware.nixosModules.dell-xps-13-9380
-      ./irkutsk/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        nixos-hardware.nixosModules.dell-xps-13-9380
+        ./irkutsk/configuration.nix
+      ];
   };
   pskov = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      ./pskov/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        ./pskov/configuration.nix
+      ];
   };
   optina = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      ./optina/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        ./optina/configuration.nix
+      ];
   };
   portal = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      ./portal/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        ./portal/configuration.nix
+      ];
   };
   sarov = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      cardano-node.nixosModules.cardano-node # no idea why this works here but not in sarov/configuration.nix
-      ./sarov/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        cardano-node.nixosModules.cardano-node # no idea why this works here but not in sarov/configuration.nix
+        ./sarov/configuration.nix
+      ];
   };
   valaam = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      cardano-node.nixosModules.cardano-node
-      { _module.args.cardano-node = cardano-node; }
-      #cardano-db-sync.nixosModules.cardano-db-sync
-      ./valaam/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        cardano-node.nixosModules.cardano-node
+        {_module.args.cardano-node = cardano-node;}
+        #cardano-db-sync.nixosModules.cardano-db-sync
+        ./valaam/configuration.nix
+      ];
   };
   prod01 = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      ./prod01/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        ./prod01/configuration.nix
+      ];
   };
   prod03 = nixosSystem {
     system = "x86_64-linux";
-    modules = defaultModules ++ [
-      ./prod03/configuration.nix
-    ];
+    modules =
+      defaultModules
+      ++ [
+        ./prod03/configuration.nix
+      ];
   };
   installer = nixosSystem {
     system = "x86_64-linux";
@@ -98,8 +114,10 @@ in
   };
   airgap = nixosSystem {
     system = "x86_64-linux";
-    modules = baseModules ++ [
-      ./airgap/configuration.nix
-    ];
+    modules =
+      baseModules
+      ++ [
+        ./airgap/configuration.nix
+      ];
   };
 }

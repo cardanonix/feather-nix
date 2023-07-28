@@ -1,15 +1,18 @@
-{ config, pkgs, lib, inputs, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (inputs) cardano-node;
   #inherit (inputs) adawallet;
-in
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      #cardano-node.nixosModules.cardano-node
-    ];
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    #cardano-node.nixosModules.cardano-node
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -18,9 +21,9 @@ in
   nix = {
     settings.sandbox = true;
     settings.cores = 4;
-    settings.extra-sandbox-paths = [ "/etc/nsswitch.conf" "/etc/protocols" ];
-    settings.substituters = [ "https://cache.nixos.org" "https://hydra.iohk.io" ];
-    settings.trusted-public-keys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+    settings.extra-sandbox-paths = ["/etc/nsswitch.conf" "/etc/protocols"];
+    settings.substituters = ["https://cache.nixos.org" "https://hydra.iohk.io"];
+    settings.trusted-public-keys = ["hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -28,7 +31,7 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ cardano-node.overlay ];
+  nixpkgs.overlays = [cardano-node.overlay];
   networking = {
     hostName = "sarov";
     hostId = "d11ab455";
@@ -83,7 +86,10 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  programs.gnupg.agent = { enable = true; enableSSHSupport = false; };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = false;
+  };
 
   # List services that you want to enable:
   #
@@ -94,8 +100,8 @@ in
     systemdSocketActivation = true;
     environments = cardano-node.environments.x86_64-linux;
   };
-  systemd.sockets.cardano-node.partOf = [ "cardano-node.socket" ];
-  systemd.services.cardano-node.after = lib.mkForce [ "network-online.target" "cardano-node.socket" ];
+  systemd.sockets.cardano-node.partOf = ["cardano-node.socket"];
+  systemd.services.cardano-node.after = lib.mkForce ["network-online.target" "cardano-node.socket"];
   services.trezord.enable = true;
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
@@ -145,7 +151,7 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.root = {
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEPOLnk4+mWNGOXd309PPxal8wgMzKXHnn7Jbu/SpSUYEc1EmjgnrVBcR0eDxgDmGD9zJ69wEH/zLQLPWjaTusiuF+bqAM/x7z7wwy1nZ48SYJw3Q+Xsgzeb0nvmNsPzb0mfnpI6av8MTHNt+xOqDnpC5B82h/voQ4m5DGMQz60ok2hMeh+sy4VIvX5zOVTOFPQqFR6BGDwtALiP5PwMfyScYXlebWHhDRdX9B0j9t+cqiy5utBUsl4cIUInE0KW7Z8Kf6gIsmQnfSZadqI857kdozU3IbaLoJc1C6LyVjzPFyC4+KUC11BmemTGdCjwcoqEZ0k5XtJaKFXacYYXi1l5MS7VdfHldFDZmMEMvfJG/PwvXN4prfOIjpy1521MJHGBNXRktvWhlNBgI1NUQlx7rGmPZmtrYdeclVnnY9Y4HIpkhm0iEt/XUZTMQpXhedd1BozpMp0h135an4uorIEUQnotkaGDwZIV3mSL8x4n6V02Qe2CYvqf4DcCSBv7D91N3JplJJKt7vV4ltwrseDPxDtCxXrQfSIQd0VGmwu1D9FzzDOuk/MGCiCMFCKIKngxZLzajjgfc9+rGLZ94iDz90jfk6GF4hgF78oFNfPEwoGl0soyZM7960QdBcHgB5QF9+9Yd6QhCb/6+ENM9sz6VLdAY7f/9hj/3Aq0Lm4Q== samuel.leathers@iohk.io"
     ];
@@ -157,5 +163,4 @@ in
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "20.09"; # Did you read the comment?
-
 }

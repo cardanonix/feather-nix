@@ -1,5 +1,9 @@
-{ config, pkgs, callPackage, ... }: {
-
+{
+  config,
+  pkgs,
+  callPackage,
+  ...
+}: {
   services.redshift = {
     enable = true;
     settings.redshift = {
