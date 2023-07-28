@@ -75,7 +75,7 @@ with lib;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-  environment.systemPackages = [inputs.alejandra.defaultPackage.${system}];
+  environment.systemPackages = [inputs.alejandra.defaultPackage.x86_64-linux];
   
   # environment.systemPackages = with pkgs; [
   #     # virt-manager
