@@ -11,12 +11,7 @@
   };
 
   # fileSystems."/z_pool" = {
-  #   device = "/dev/disk/by-uuid/4210348493706516964";
+  #   device = "z_pool";
   #   fsType = "zfs";
   # };
-
-  fileSystems."/z_pool" = {
-    device = "z_pool";
-    fsType = "zfs";
-  };
 }
