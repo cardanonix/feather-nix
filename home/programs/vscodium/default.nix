@@ -60,6 +60,7 @@ in {
             arrterian.nix-env-selector
             jnoortheen.nix-ide
             gruntfuggly.todo-tree
+            kamadorueda.alejandra
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
