@@ -111,7 +111,7 @@ in
   fonts = {
     fontDir.enable = true;
     enableGhostscriptFonts = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       customFonts
       font-awesome
       myfonts.flags-world-color
