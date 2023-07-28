@@ -4,7 +4,7 @@
   pkgs,
   ...
 }:
-#bullshit
+#This is a hack that I've had to employ that gets everything loaded properly in direnv
 let
   alacritty = "${pkgs.alacritty}/bin/alacritty";
   bash = "${pkgs.bash}/bin/bash";
