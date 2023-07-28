@@ -62,7 +62,10 @@ with lib; {
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems = ["zfs" "nfs" "btrfs"];
-    zfs.forceImportRoot = false;
+    zfs = {
+      forceImportRoot = false;
+      # extraPools = ["zpool"];
+    };
   };
 
   networking = {
@@ -88,6 +91,7 @@ with lib; {
     #   autoPrune = {
     #     enable = true;
     #     dates = "weekly";
+    #     storageDriver = "zfs";
     #   };
     # };
     podman = {
@@ -95,7 +99,10 @@ with lib; {
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
-    # libvirtd.enable = true;
+    # libvirtd.enable = {
+    #   enable = true;
+    #   storageDriver = "zfs";
+    # };
   };
 
   xdg.portal.enable = true;
