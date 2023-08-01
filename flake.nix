@@ -7,6 +7,8 @@
 
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
+    stable.url = "github:NixOS/nixpkgs/nixos-23.05-small";
+
     nixpkgs-nautilus-gtk3.url = github:NixOS/nixpkgs?ref=37bd398;
 
     nix.url = "github:NixOS/nix/2.13.2";
