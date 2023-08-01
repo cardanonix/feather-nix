@@ -8,7 +8,7 @@
   pythonExt = p:
     with p; [
       # pandas
-      requests
+      # requests
       pip
       # numpy
       # packaging

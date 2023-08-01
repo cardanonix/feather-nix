@@ -18,7 +18,6 @@ in {
   xdg.configFile."${extDir}${x.eternl}.json".text = ext;
   xdg.configFile."${extDir}${x.nitter-redirect}.json".text = ext;
   xdg.configFile."${extDir}${x.mastodon-link}.json".text = ext;
-  xdg.configFile."${extDir}${x.chatgpt-for-google}.json".text = ext;
   xdg.configFile."${extDir}${x.lace}.json".text = ext;
   #xdg.configFile."${extDir}${x.yoroi}.json".text   = ext;
   #xdg.configFile."${extDir}${x.nami}.json".text   = ext;

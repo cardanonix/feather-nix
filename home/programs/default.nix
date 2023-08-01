@@ -46,10 +46,14 @@ let
         options = [];
       };
 
+      brave = {
+        enable = true;
+      };
+
       # programs with custom modules
       #megasync.enable = true;
       #discord.enable = true;
-      spotify.enable = true;
+      # spotify.enable = true;
     };
   };
 in [

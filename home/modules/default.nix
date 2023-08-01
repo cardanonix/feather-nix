@@ -1,6 +1,6 @@
 [
   ./signal.nix
-  ./spotify.nix
+  # ./spotify.nix
   #./cardano-node
   #./cardano-wallet
   #./grafana

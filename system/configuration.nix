@@ -95,7 +95,7 @@ in {
     wget
     bc # required for Cardano Guild gLiveView
     git
-    brave
+    # brave
     git-crypt
     gnupg
     firejail
