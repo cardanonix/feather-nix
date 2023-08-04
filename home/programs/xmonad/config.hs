@@ -270,11 +270,12 @@ lghtLvl l b   = "hue light " <> l <> " brightness " <> b
 lghtOff l     = "hue light " <> l <> " off"
 lghtOn  l     = "hue light " <> l <> " on"
 blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off "
-screenLocker  = "betterlockscreen -l dim"
+
 darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
 chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
 coldLights    = "hue light 3 concentrate && hue light 14 concentrate && hue light 17 concentrate && hue light 8 concentrate && hue light 5 concentrate && hue light 6 pink && hue light 9 concentrate"
 
+screenLocker  = "betterlockscreen -l dim"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
@@ -344,7 +345,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "GuildView"       (modm .|. controlMask,  xK_g      ) $ spawnOn spoWs myGuildView
     , key "Files"           (modm .|. controlMask,  xK_f      ) $ runScratchpadApp nautilus
     , key "Screen recorder" (modm .|. controlMask,  xK_r      ) $ runScratchpadApp scr
-    , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
+    -- , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
     , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ safePromptSelection "mpv"
     , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
     --, key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
@@ -576,7 +577,7 @@ nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
 pavuctrl  = ClassApp "Pavucontrol"          "pavucontrol"
 scr       = ClassApp "SimpleScreenRecorder" "simplescreenrecorder"
-spotify   = ClassApp "Spotify"              "spotify"
+-- spotify   = ClassApp "Spotify"              "spotify"
 vlc       = ClassApp "Vlc"                  "vlc --qt-minimal-view"
 mpv       = ClassApp "Mpv"                  "mpv" 
 kodi      = ClassApp "Kodi"                 "kodi"
@@ -646,7 +647,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, spotify, gimp, mpv, virtbox ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, gimp, mpv, virtbox ]
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -673,6 +674,7 @@ projects =
   [ Project { projectName      = webWs
             , projectDirectory = "~/plutus/workspace/webWs/"
             , projectStartHook = Just $ do spawn "brave"
+                                           spawn "brave --app=https://youtube.com/" 
             }
   , Project { projectName      = mscWs
             , projectDirectory = "~/plutus/workspace/mscWs/"
@@ -680,7 +682,7 @@ projects =
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/plutus/workspace/musWs/"
-            , projectStartHook = Just $ runScratchpadApp spotify
+            , projectStartHook = Just $ do spawn "brave --app=https://music.youtube.com/"
             }
   , Project { projectName      = vscWs
             , projectDirectory = "~/plutus/workspace/vscWs/nix-config.git/intelTower/"
@@ -692,7 +694,7 @@ projects =
             , projectStartHook = Just $ do spawn "brave --app=https://mastodon.social/"
                                            spawn "discord"
                                            spawn "telegram-desktop"
-                                           spawn "signal"
+                                           spawn "signal-desktop"
                                           --  spawn "element-desktop"
                                           --  spawn "slack"
             }

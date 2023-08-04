@@ -27,7 +27,7 @@
   ];
 
   homePkgs = with pkgs; [
-    hue-cli # lights for my residence
+    # hue-cli # lights for my residence
     mr # mass github actions
   ];
 in {

@@ -116,9 +116,6 @@ in {
     packages = with pkgs; [
       customFonts
       font-awesome
-      myfonts.flags-world-color
-      myfonts.icomoon-feather
-      myfonts.cardanofont
       fira-code
       fira-code-symbols
       hasklig
@@ -126,6 +123,10 @@ in {
       noto-fonts-cjk
       noto-fonts-emoji
       inconsolata
+      myfonts.flags-world-color
+      myfonts.icomoon-feather
+      myfonts.cardanofont
+      myfonts.monof55
     ];
   };
 

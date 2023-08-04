@@ -42,6 +42,7 @@
     adenum
     proxychains-ng
     responder
+    qFlipper
   ];
 in {
   home.packages = hackerPkgs;
