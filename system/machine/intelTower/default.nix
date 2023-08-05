@@ -9,7 +9,7 @@ with lib; {
   imports = [
     ./hardware-configuration.nix
     ../.././services
-    ../../../home/secrets/bismuth_intelTower.nix
+    ../../../secrets/bismuth_intelTower.nix
   ];
 
   nixpkgs.config = {

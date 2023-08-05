@@ -81,12 +81,6 @@ in {
       "terminal.integrated.copyOnSelection" = true;
       "nix.enableLanguageServer" = true;
       "explorer.confirmDelete" = false;
-      "git.autofetch" = true;
-      "git.autoStash" = true;
-      # "git.signing.key" = "AAF9795E393B4DA0";
-      # "git.userEmail" = "harryprayiv@gmail.com";
-      # "git.userName" = "harryprayiv";
-      "git.enableCommitSigning" = true;
       "explorer.confirmDragAndDrop" = false;
       "editor.minimap.enabled" = false;
       "diffEditor.ignoreTrimWhitespace" = false;

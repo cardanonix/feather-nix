@@ -33,7 +33,7 @@
 in {
   # semi-sensitive data is now encrypted in my secrets folder
   imports = [
-    ../../secrets/git-auth.nix
+    ../../../secrets/git-auth.nix
   ];
 
   home.packages = with pkgs.gitAndTools; [
