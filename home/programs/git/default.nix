@@ -31,6 +31,10 @@
 
   rg = "${pkgs.ripgrep}/bin/rg";
 in {
+  imports = [
+    ../../home/secrets/git-auth.nix
+  ];
+
   home.packages = with pkgs.gitAndTools; [
     diff-so-fancy # git diff with colors
     git-crypt # git files encryption
@@ -67,12 +71,13 @@ in {
       "*.mill-version" # used by metals
       "*.jvmopts" # should be local to every project
     ];
-    signing = {
-      gpgPath = "${pkgs.gnupg}/bin/gpg2";
-      key = "AAF9795E393B4DA0";
-      signByDefault = true;
-    };
-    userEmail = "harryprayiv@gmail.com";
-    userName = "harryprayiv";
+    #   signing = {
+    #     gpgPath = "${pkgs.gnupg}/bin/gpg2";
+    #     key = "AAF9795E393B4DA0";
+    #     signByDefault = true;
+    #   };
+    #   userEmail = "harryprayiv@gmail.com";
+    #   userName = "harryprayiv";
+    # };
   };
 }
