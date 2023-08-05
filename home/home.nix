@@ -9,7 +9,6 @@
   username = "bismuth";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
-
   # workaround to open a URL in a new tab in the specific firefox profile
   work-browser = pkgs.callPackage ./programs/browsers/work.nix {};
 
@@ -114,6 +113,7 @@ in {
     ./scripts
     ./services
     ./themes
+    # ./secrets/bismuth_home.nix
   ];
 
   xdg = {
