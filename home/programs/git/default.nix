@@ -32,7 +32,7 @@
   rg = "${pkgs.ripgrep}/bin/rg";
 in {
   imports = [
-    ../../home/secrets/git-auth.nix
+    ../../secrets/git-auth.nix
   ];
 
   home.packages = with pkgs.gitAndTools; [
