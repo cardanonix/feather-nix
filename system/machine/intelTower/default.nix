@@ -12,34 +12,9 @@ with lib; {
     ../../../home/secrets/bismuth_intelTower.nix
   ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.bismuth = with inputs; {
-  #   isNormalUser = true;
-  #   home = "/home/bismuth";
-  #   uid = 1002;
-  #   description = "Harry Pray IV";
-  #   extraGroups = [
-  #     "docker"
-  #     "networkmanager"
-  #     "wheel"
-  #     "scanner"
-  #     "lp"
-  #     "plugdev"
-  #     "cardano-node"
-  #     "cardano-wallet"
-  #   ];
-  #   shell = pkgs.fish;
-  #   openssh.authorizedKeys.keys = ["ssh-rsa AAAAB3Nz[...] bismuth@intelTower"];
-  # };
-
-  # users.groups.plugdev = {};
-
   nixpkgs.config = {
     allowUnfree = true;
     contentAddressedByDefault = true;
-    permittedInsecurePackages = [
-      "xrdp-0.9.9"
-    ];
   };
 
   # Enable CUPS to print documents for my Brother printer.
@@ -68,13 +43,6 @@ with lib; {
       # extraPools = ["zpool"];
     };
   };
-
-  # networking = {
-  #   hostName = "intelTower"; # Define your hostname.
-  #   hostId = "e097dc6f"; # (for zfs) generated with: `head -c4 /dev/urandom | od -A none -t x4`
-  #   interfaces.eno1.useDHCP = true;
-  #   interfaces.eth0.useDHCP = true;
-  # };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -134,46 +102,6 @@ with lib; {
     enable = true;
     package = pkgs.pulseaudioFull;
   };
-
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac";}
-  ];
-
-  # fileSystems."/home/bismuth/video" = {
-  #   device = "192.168.1.212:/volume2/video";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
-
-  # fileSystems."/home/bismuth/Cardano" = {
-  #   device = "192.168.1.212:/volume2/Cardano";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
-
-  # fileSystems."/home/bismuth/Programming" = {
-  #   device = "192.168.1.212:/volume2/Programming";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
-
-  # fileSystems."/home/bismuth/plutus" = {
-  #   device = "192.168.1.212:/volume2/homes/plutus";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
-
-  # fileSystems."/home/bismuth/music" = {
-  #   device = "192.168.1.212:/volume2/music";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
-
-  # fileSystems."/home/bismuth/shared_photos" = {
-  #   device = "192.168.1.212:/volume2/shared_photos";
-  #   options = ["x-systemd.automount" "noauto"];
-  #   fsType = "nfs";
-  # };
 
   services = {
     avahi = {

@@ -31,6 +31,7 @@
 
   rg = "${pkgs.ripgrep}/bin/rg";
 in {
+  # semi-sensitive data is now encrypted in my secrets folder
   imports = [
     ../../secrets/git-auth.nix
   ];
@@ -71,13 +72,5 @@ in {
       "*.mill-version" # used by metals
       "*.jvmopts" # should be local to every project
     ];
-    #   signing = {
-    #     gpgPath = "${pkgs.gnupg}/bin/gpg2";
-    #     key = "AAF9795E393B4DA0";
-    #     signByDefault = true;
-    #   };
-    #   userEmail = "harryprayiv@gmail.com";
-    #   userName = "harryprayiv";
-    # };
   };
 }
