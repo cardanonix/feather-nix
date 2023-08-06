@@ -265,15 +265,45 @@ calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
 
--- Hue Lighting Junk
-lghtLvl l b   = "hue light " <> l <> " brightness " <> b
-lghtOff l     = "hue light " <> l <> " off"
-lghtOn  l     = "hue light " <> l <> " on"
-blackOut      = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 off && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 off "
 
-darkLights    = "hue light 1 off && hue light 2 off && hue light 5 off && hue light 6 off && hue light 8 off && hue light 9 off && hue light 14 off && hue light 16 off && hue light 17 relax && hue light 17 brightness 28% && hue light 18 off && hue light 19 off && hue light 20 off && hue light 21 off && hue light 3 relax"
-chillLights   = "hue light 3 relax && hue light 14 relax && hue light 17 relax && hue light 8 relax && hue light 5 relax && hue light 6 relax && hue light 9 relax"
-coldLights    = "hue light 3 concentrate && hue light 14 concentrate && hue light 17 concentrate && hue light 8 concentrate && hue light 5 concentrate && hue light 6 pink && hue light 9 concentrate"
+{- Smart Lighting Hotkeys
+
+Lights:
+     1. Window 1
+     2. Corner
+     3. Closet
+     5. TV candle 2
+     6. Bed China Ball
+     7. Chandelier 1
+     8. Dresser Candle 1
+     9. Shelf Box 1
+    10. Chandelier 2
+    12. Desk Light
+    14. Overhead Computers
+    16. Overhead Middle
+    17. Guitars
+    18. Overhead Bed
+    19. TV Candle 1
+    20. Window 2
+    21. TV Candle 3 -}
+
+-- A function to generate hue strings
+buildLightCommand :: [Int] -> String -> String
+buildLightCommand lights command = init $ init $ init $ concatMap (\light -> "hue light " ++ show light ++ " " ++ command ++ " && ") lights
+
+-- Zones
+wholeRoom = [1, 2, 3, 5, 6, 8, 9, 14, 16, 17, 18, 19, 20, 21]
+suRoom = [7, 10, 12]
+
+-- Hue Lighting Cues
+blackOut = buildLightCommand wholeRoom "off"
+
+darkWarm = buildLightCommand [1, 2, 5, 6, 8, 9, 14, 16] "off" ++ " && " ++ buildLightCommand [17] "relax" ++ " && hue light 17 brightness 28%" ++ " && " ++ buildLightCommand [18, 19, 20, 21, 3] "off"
+brighterWarm = buildLightCommand [3, 14, 17, 8, 5, 6, 9] "relax"
+fullWarm = buildLightCommand wholeRoom "relax"
+darkCold = buildLightCommand [1, 2, 5, 6, 8, 9, 14, 16] "off" ++ " && " ++ buildLightCommand [17] "concentrate" ++ " && hue light 17 brightness 28%" ++ " && " ++ buildLightCommand [18, 19, 20, 21, 3] "off"
+brighterCold = buildLightCommand wholeRoom "concentrate" ++ " && hue light 6 pink"
+fullCold = buildLightCommand wholeRoom "concentrate"
 
 screenLocker  = "betterlockscreen -l dim"
 ------------------------------------------------------------------------
@@ -298,10 +328,13 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
     , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
     ] ^++^
-  keySet "Lights"
-    [ key "DarkerWarm"      (0, xF86XK_MonBrightnessDown      ) $ spawn darkLights
-    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp        ) $ spawn chillLights
-    , key "BrighterBlue"    (modm, xF86XK_MonBrightnessUp     ) $ spawn coldLights
+  keySet "Lighting Cues"
+    [ key "DarkWarm"        (0, xF86XK_MonBrightnessDown                  ) $ spawn darkWarm
+    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp                    ) $ spawn brighterWarm
+    , key "FullWarm"        (controlMask, xF86XK_MonBrightnessUp          ) $ spawn fullWarm
+    , key "DarkCold"        (modm, xF86XK_MonBrightnessDown               ) $ spawn darkCold
+    , key "BrighterCold"    (modm,  xF86XK_MonBrightnessUp                ) $ spawn brighterCold
+    , key "FullCold"        (modm .|. controlMask, xF86XK_MonBrightnessUp ) $ spawn fullCold
     ] ^++^    
   keySet "Audio"
     [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
