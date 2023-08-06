@@ -266,46 +266,65 @@ emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
 
 
-{- Smart Lighting Hotkeys
+{- HueSmart Lighting Hotkeys
 
 Lights:
-     1. Window 1
-     2. Corner
-     3. Closet
-     5. TV candle 2
-     6. Bed China Ball
-     7. Chandelier 1
-     8. Dresser Candle 1
-     9. Shelf Box 1
-    10. Chandelier 2
-    12. Desk Light
-    14. Overhead Computers
-    16. Overhead Middle
-    17. Guitars
-    18. Overhead Bed
-    19. TV Candle 1
-    20. Window 2
-    21. TV Candle 3 -}
+     1. Window 1 (rest area)
+     2. Corner  (rest area)
+     3. Closet (work area)
+     5. TV candle 2  (rest area)
+     6. Bed China Ball  (rest area)
+     7. Chandelier 1 (Su)
+     8. Dresser Candle 1 (boundary)
+     9. Shelf Box 1 (rest area)
+    10. Chandelier 2 (Su)
+    12. Desk Light (Su)
+    14. Overhead Computers  (work area)
+    16. Overhead Middle (boundary)
+    17. Guitars (work area)
+    18. Overhead Bed (rest area)
+    19. TV Candle 1 (rest area)
+    20. Window 2 (rest area)
+    21. TV Candle 3 (rest area)
+-}
+
+type LightCommand = String
+type LightZone = [Int]
+
+data HueCommand = HueCommand { lights :: [Int], command :: LightCommand }
 
 -- A function to generate hue strings
-buildLightCommand :: [Int] -> String -> String
-buildLightCommand lights command = init $ init $ init $ concatMap (\light -> "hue light " ++ show light ++ " " ++ command ++ " && ") lights
+buildLightCommand :: HueCommand -> String
+buildLightCommand (HueCommand ls cmd) = unwords $ concatMap (\light -> ["hue light", show light, cmd, "&&"]) ls
+
+-- Combine multiple HueCommands
+combineCommands :: [HueCommand] -> String
+combineCommands = init . init . init . unwords . map buildLightCommand
 
 -- Zones
+wholeRoom, restArea, boundary, workArea :: LightZone
 wholeRoom = [1, 2, 3, 5, 6, 8, 9, 14, 16, 17, 18, 19, 20, 21]
-suRoom = [7, 10, 12]
+restArea = [1, 2, 5, 6, 9, 18, 19, 20, 21] 
+boundary = [8, 16]
+workArea = [3, 14, 17]
 
 -- Hue Lighting Cues
-blackOut = buildLightCommand wholeRoom "off"
+blackOut :: String
+blackOut = combineCommands [HueCommand wholeRoom "off"]
 
-darkWarm = buildLightCommand [1, 2, 5, 6, 8, 9, 14, 16] "off" ++ " && " ++ buildLightCommand [17] "relax" ++ " && hue light 17 brightness 28%" ++ " && " ++ buildLightCommand [18, 19, 20, 21, 3] "off"
-brighterWarm = buildLightCommand [3, 14, 17, 8, 5, 6, 9] "relax"
-fullWarm = buildLightCommand wholeRoom "relax"
-darkCold = buildLightCommand [1, 2, 5, 6, 8, 9, 14, 16] "off" ++ " && " ++ buildLightCommand [17] "concentrate" ++ " && hue light 17 brightness 28%" ++ " && " ++ buildLightCommand [18, 19, 20, 21, 3] "off"
-brighterCold = buildLightCommand wholeRoom "concentrate" ++ " && hue light 6 pink"
-fullCold = buildLightCommand wholeRoom "concentrate"
+darkWarm, brightWarm, fullWarm, darkCold, brightCold, fullCold :: String
+darkWarm = combineCommands [HueCommand restArea "off", HueCommand workArea "relax", HueCommand [17] "brightness 28%", HueCommand [3] "brightness 100%", HueCommand [14] "brightness 10%"]
+brightWarm = combineCommands [HueCommand restArea "off", HueCommand workArea "relax", HueCommand boundary "off", HueCommand [17] "brightness 28%", HueCommand [3] "brightness 100%", HueCommand [14] "brightness 10%"]
+fullWarm = buildLightCommand $ HueCommand wholeRoom "relax"
+darkCold = combineCommands [HueCommand restArea "off", HueCommand workArea "concentrate", HueCommand [17] "brightness 28%", HueCommand [3] "brightness 100%", HueCommand [14] "brightness 10%"]
+brightCold = combineCommands [HueCommand restArea "off", HueCommand workArea "concentrate", HueCommand boundary "off", HueCommand [17] "brightness 28%", HueCommand [3] "brightness 100%", HueCommand [14] "brightness 10%"]
+fullCold = buildLightCommand $ HueCommand wholeRoom "concentrate"
+
+
+
 
 screenLocker  = "betterlockscreen -l dim"
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
@@ -330,10 +349,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Lighting Cues"
     [ key "DarkWarm"        (0, xF86XK_MonBrightnessDown                  ) $ spawn darkWarm
-    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp                    ) $ spawn brighterWarm
+    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp                    ) $ spawn brightWarm
     , key "FullWarm"        (controlMask, xF86XK_MonBrightnessUp          ) $ spawn fullWarm
     , key "DarkCold"        (modm, xF86XK_MonBrightnessDown               ) $ spawn darkCold
-    , key "BrighterCold"    (modm,  xF86XK_MonBrightnessUp                ) $ spawn brighterCold
+    , key "BrighterCold"    (modm,  xF86XK_MonBrightnessUp                ) $ spawn brightCold
     , key "FullCold"        (modm .|. controlMask, xF86XK_MonBrightnessUp ) $ spawn fullCold
     ] ^++^    
   keySet "Audio"
