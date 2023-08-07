@@ -291,15 +291,17 @@ Lights:
 type LightCommand = String
 type LightZone = [Int]
 
-data HueCommand = HueCommand { lights :: [Int], command :: LightCommand }
+data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
 
 -- A function to generate hue strings
 buildLightCommand :: HueCommand -> String
-buildLightCommand (HueCommand ls cmd) = unwords $ concatMap (\light -> ["hue light", show light, cmd, ";"]) ls
+buildLightCommand (HueCommand ls cmds) = concatMap buildCommands cmds
+  where
+    buildCommands cmd = unwords $ concatMap (\light -> ["hue light", show light, cmd, ";"]) ls
 
 -- Combine multiple HueCommands
 combineCommands :: [HueCommand] -> String
-combineCommands = init . unwords . map buildLightCommand
+combineCommands = unwords . map buildLightCommand
 
 -- Zones
 wholeRoom, restArea, boundary, workArea, suRoom:: LightZone
@@ -311,41 +313,40 @@ suRoom = [7, 10, 12]
 
 -- Hue Lighting Cues
 blackOut :: String
-blackOut = combineCommands [HueCommand wholeRoom "off"]
+blackOut = combineCommands   [ HueCommand wholeRoom ["off"]]
 
-darkWarm, brightWarm, fullWarm, darkCold, brightCold, fullCold :: String
-darkWarm = combineCommands   [ HueCommand restArea "off"
-                             , HueCommand workArea "relax"
-                             , HueCommand boundary "off"
-                             , HueCommand [17] "brightness 28%"
-                             , HueCommand [3] "brightness 100%"
-                             , HueCommand [14] "brightness 10%"
+darkWarm = combineCommands   [ HueCommand restArea ["off"]
+                             , HueCommand workArea ["relax"]
+                             , HueCommand boundary ["off"]
+                             , HueCommand [17] ["brightness 28%"]
+                             , HueCommand [2] ["brightness 28%"]
+                             , HueCommand [3] ["brightness 100%"]
+                             , HueCommand [14] ["brightness 10%"]
                              ]
-brightWarm = combineCommands [ HueCommand restArea "relax"
-                             , HueCommand restArea "brightness 50%"
-                             , HueCommand workArea "relax"
-                             , HueCommand boundary "brightness 22%"
-                             , HueCommand [17] "brightness 69%"
-                             , HueCommand [3] "brightness 100%"
-                             , HueCommand [14] "brightness 80%"
+brightWarm = combineCommands [ HueCommand restArea ["relax", "brightness 50%"]
+                             , HueCommand workArea ["relax"]
+                             , HueCommand boundary ["brightness 22%"]
+                             , HueCommand [17] ["brightness 69%"]
+                             , HueCommand [3] ["brightness 100%"]
+                             , HueCommand [14] ["brightness 80%"]
                              ]
-fullWarm = buildLightCommand $ HueCommand wholeRoom "relax"
-darkCold = combineCommands   [ HueCommand restArea "off"
-                             , HueCommand workArea "concentrate"
-                             , HueCommand boundary "off"
-                             , HueCommand [17] "brightness 28%"
-                             , HueCommand [3] "brightness 100%"
-                             , HueCommand [14] "brightness 10%"
+fullWarm = combineCommands   [ HueCommand wholeRoom ["relax"]]
+darkCold = combineCommands   [ HueCommand restArea ["off"]
+                             , HueCommand workArea ["concentrate"]
+                             , HueCommand boundary ["off"]
+                             , HueCommand [2] ["brightness 28%"]
+                             , HueCommand [17] ["brightness 28%"]
+                             , HueCommand [3] ["brightness 100%"]
+                             , HueCommand [14] ["brightness 10%"]
                              ]
-brightCold = combineCommands [ HueCommand restArea "concentrate"
-                             , HueCommand restArea "brightness 50%"
-                             , HueCommand workArea "concentrate"
-                             , HueCommand boundary "brightness 22%"
-                             , HueCommand [17] "brightness 69%"
-                             , HueCommand [3] "brightness 100%"
-                             , HueCommand [14] "brightness 80%"
+brightCold = combineCommands [ HueCommand restArea ["concentrate", "brightness 50%"]
+                             , HueCommand workArea ["concentrate"]
+                             , HueCommand boundary ["brightness 22%"]
+                             , HueCommand [17] ["brightness 69%"]
+                             , HueCommand [3] ["brightness 100%"]
+                             , HueCommand [14] ["brightness 80%"]
                              ]
-fullCold = buildLightCommand $ HueCommand wholeRoom "concentrate"
+fullCold = combineCommands   [ HueCommand wholeRoom ["concentrate"]]
 
 -- Screen Lock 
 screenLocker  = "betterlockscreen -l dim"
