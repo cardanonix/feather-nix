@@ -290,6 +290,7 @@ Lights:
 
 type LightCommand = String
 data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
+
 type LightZone = [Int]
 
 -- A function to generate hue strings
@@ -298,9 +299,9 @@ buildLightCommand (HueCommand ls cmds) = concatMap buildCommands cmds
   where
     buildCommands cmd = unwords $ concatMap (\light -> ["hue light", show light, cmd, ";"]) ls
 
--- Combine multiple HueCommands
-combineCommands :: [HueCommand] -> String
-combineCommands = unwords . map buildLightCommand
+-- Chain multiple HueCommands
+chainCommands :: [HueCommand] -> String
+chainCommands = unwords . map buildLightCommand
 
 -- Zones
 wholeRoom, restArea, boundary, workArea, suRoom:: LightZone
@@ -312,54 +313,68 @@ suRoom = [7, 10, 12]
 
 -- Hue Lighting Cues
 blackOut :: String
-blackOut = combineCommands   [ HueCommand wholeRoom ["off"]]
+blackOut = chainCommands   [ HueCommand wholeRoom ["off"]]
 
-darkWarm = combineCommands   [ HueCommand restArea ["off"]
+darkWarm = chainCommands   [ HueCommand restArea ["off"]
                              , HueCommand boundary ["off"]
-                             , HueCommand [2, 17] ["relax", "brightness 28%"]
-                             , HueCommand [3] ["relax", "brightness 100%"]
-                             , HueCommand [14] ["relax", "brightness 10%"]
+                             , HueCommand [17] [ "on", "brightness  28%", "color 2141" ]
+                             , HueCommand [3] [ "on", "color 2000", "brightness 100%" ]
+                             , HueCommand [14] [ "on", "color 2141", "brightness 10%" ]
                              ]
-brightWarm = combineCommands [ HueCommand restArea ["relax", "brightness 50%"]
-                             , HueCommand boundary ["brightness 22%"]
-                             , HueCommand [17] ["relax", "brightness 69%"]
-                             , HueCommand [3] ["relax", "brightness 100%"]
-                             , HueCommand [14] ["relax", "brightness 80%"]
-                             ]
-fullWarm = combineCommands   [ HueCommand wholeRoom ["relax"]]
-darkCold = combineCommands   [ HueCommand restArea ["off"]
-                             , HueCommand boundary ["off"]
-                             , HueCommand [2, 17]  ["concentrate", "brightness 28%"]
-                             , HueCommand [3]  ["blue", "brightness 100%"]
-                             , HueCommand [14] ["blue", "brightness 10%"]
-                             ]
-brightCold = combineCommands [ HueCommand restArea ["concentrate", "brightness 50%"]
-                             , HueCommand boundary ["brightness 22%"]
-                             , HueCommand [17] ["concentrate", "brightness 69%"]
-                             , HueCommand [3] ["concentrate", "brightness 100%"]
-                             , HueCommand [14] ["concentrate", "brightness 80%"]
-                             ]
-fullCold = combineCommands   [ HueCommand wholeRoom ["concentrate"]]
+brightWarm = chainCommands [ HueCommand restArea ["relax", "brightness 50%" ]
+                             , HueCommand boundary [ "relax", "brightness  22%" ]
+                             , HueCommand [17] [ "on", "color 2141", "brightness 69%" ]
+                             , HueCommand [3] [ "on", "color 2141", "brightness 100%" ]
+                             , HueCommand [14] [ "on", "color 2141", "brightness 80%" ]
+                             ]   
+basque = chainCommands   [ HueCommand [1]  [ "on", "brightness   155", "color 0.4247, 0.3421" ]
+                         , HueCommand [2]  [ "on", "brightness   132", "color 0.4834, 0.3606" ]
+                         , HueCommand [3]  [ "on", "brightness   155", "color 0.4129, 0.3416" ]
+                         , HueCommand [6]  [ "on", "brightness   134", "color 0.414, 0.3905" ]
+                         , HueCommand [8]  [ "on", "brightness   125", "color 0.4129, 0.3416" ]
+                         , HueCommand [5, 9, 14, 16, 18, 19]  [ "on", "brightness   125", "color 0.5106, 0.3739" ]
+                         , HueCommand [17] [ "on", "brightness   156", "color 0.4834, 0.3606" ]
+                         , HueCommand [20] [ "on", "brightness   155", "color 0.413, 0.3415" ]
+                         , HueCommand [21] [ "on", "brightness   156", "color 0.4831, 0.3606" ]
+                         ]
 
-freakOut = combineCommands   [ HueCommand restArea ["red"]
-                             , HueCommand workArea ["green"]
-                             , HueCommand boundary ["blue"]
-                             , HueCommand [2, 17] ["brightness 28%"]
-                             , HueCommand [3] ["brightness 100%"]
-                             , HueCommand [14] ["brightness 45%"]
-                             ]
+fullWarm = chainCommands [ HueCommand wholeRoom ["relax"]]
 
-data LightingCue = DarkWarm | BrightWarm | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | BlackOut deriving (Enum, Bounded, Show)
+darkCold = chainCommands [ HueCommand restArea ["off"]
+                            , HueCommand boundary ["off"]
+                          , HueCommand [17]  ["on", "color 6200", "brightness 28%"]
+                            , HueCommand [3]  ["on", "blue", "brightness 100%"]
+                            , HueCommand [14] ["on", "blue", "brightness 10%"]
+                            ]
+brightCold = chainCommands [ HueCommand restArea [ "on", "color 6500", "brightness 50%" ]
+                             , HueCommand boundary [ "on", "color 6500", "brightness 22%" ]
+                             , HueCommand [17] [ "on", "color 6500", "brightness 69%" ]
+                             , HueCommand [3] ["concentrate"]
+                             , HueCommand [14] [ "on", "color 6500", "brightness 80%" ]
+                             ]
+fullCold = chainCommands   [ HueCommand wholeRoom ["concentrate"]]
+freakOut = chainCommands   [ HueCommand restArea ["on", "blue", "brightness 80%" ]
+                             , HueCommand workArea ["on", "red", "brightness 80%" ]
+                             , HueCommand boundary ["on", "green", "brightness 80%", "blink" ]
+                             , HueCommand [2, 17] [ "on", "brightness  28%" ]
+                             , HueCommand [3] [ "on", "brightness  100%", "blink" ]
+                             , HueCommand [14] [ "on", "brightness  45%" ]
+                             ]
+deskOff = chainCommands      [ HueCommand [17] ["off"]]
+
+data LightingCue = DarkWarm | BrightWarm | Basque | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | DeskOff | BlackOut deriving (Enum, Bounded, Show)
 
 lightingCues :: [X ()]
 lightingCues =
   [ spawn darkWarm
   , spawn brightWarm
+  , spawn basque
   , spawn fullWarm
   , spawn darkCold
   , spawn brightCold
   , spawn fullCold
   , spawn freakOut
+  , spawn deskOff
   , spawn blackOut
   ]
 
@@ -375,8 +390,8 @@ cycleLightCue d = do
   (lightingCues !! newIndex)
   XS.put $ LightCueIndex newIndex
 
-selectLightCue :: Int -> X ()
-selectLightCue idx = do
+runLightCue :: Int -> X ()
+runLightCue idx = do
   let n = length lightingCues
       newIndex = idx `mod` n
   (lightingCues !! newIndex)
@@ -412,12 +427,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
     ] ^++^
   keySet "Lighting Cues"
-    [ key "DarkWarm"          (0, xF86XK_MonBrightnessDown                  ) (selectLightCue 0)
-    , key "BrighterWarm"      (0, xF86XK_MonBrightnessUp                    ) (selectLightCue 1)
-    , key "FullWarm"          (controlMask, xF86XK_MonBrightnessUp          ) (selectLightCue 2)
+    [ key "DarkWarm"          (0, xF86XK_MonBrightnessDown                  ) (runLightCue 0)
+    , key "BrighterWarm"      (0, xF86XK_MonBrightnessUp                    ) (runLightCue 2)
+    , key "FullWarm"          (controlMask, xF86XK_MonBrightnessUp          ) (runLightCue 3)
     , key "Prev Lighting Cue" (modm, xF86XK_MonBrightnessDown               ) prevLightCue
     , key "Next Lighting Cue" (modm,  xF86XK_MonBrightnessUp                ) nextLightCue
-    , key "FullCold"          (modm .|. controlMask, xF86XK_MonBrightnessUp ) (selectLightCue 5)
+    , key "FullCold"          (modm .|. controlMask, xF86XK_MonBrightnessUp ) (runLightCue 6)
     ] ^++^    
   keySet "Audio"
     [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
@@ -440,7 +455,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Calc (Rofi)"     (modm .|. shiftMask  , xK_c       ) $ spawn calcLauncher
     , key "Emojis (Rofi)"   (modm .|. shiftMask  , xK_m       ) $ spawn emojiPicker
     -- , key "Spotlight (Rofi)"(modm .|. shiftMask  , xK_0       ) $ spawn spotlight
-    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker
+    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker >> runLightCue 8
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm                 , xK_space   ) $ sendMessage NextLayout

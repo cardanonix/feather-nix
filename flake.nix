@@ -252,9 +252,6 @@
           inherit system;
           config = {
             allowUnfree = true;
-            permittedInsecurePackages = [
-              "xrdp-0.9.9"
-            ];
           };
         };
       in {
