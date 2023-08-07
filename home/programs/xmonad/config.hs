@@ -289,9 +289,8 @@ Lights:
 -}
 
 type LightCommand = String
-type LightZone = [Int]
-
 data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
+type LightZone = [Int]
 
 -- A function to generate hue strings
 buildLightCommand :: HueCommand -> String
@@ -316,37 +315,76 @@ blackOut :: String
 blackOut = combineCommands   [ HueCommand wholeRoom ["off"]]
 
 darkWarm = combineCommands   [ HueCommand restArea ["off"]
-                             , HueCommand workArea ["relax"]
                              , HueCommand boundary ["off"]
-                             , HueCommand [17] ["brightness 28%"]
-                             , HueCommand [2] ["brightness 28%"]
-                             , HueCommand [3] ["brightness 100%"]
-                             , HueCommand [14] ["brightness 10%"]
+                             , HueCommand [2, 17] ["relax", "brightness 28%"]
+                             , HueCommand [3] ["relax", "brightness 100%"]
+                             , HueCommand [14] ["relax", "brightness 10%"]
                              ]
 brightWarm = combineCommands [ HueCommand restArea ["relax", "brightness 50%"]
-                             , HueCommand workArea ["relax"]
                              , HueCommand boundary ["brightness 22%"]
-                             , HueCommand [17] ["brightness 69%"]
-                             , HueCommand [3] ["brightness 100%"]
-                             , HueCommand [14] ["brightness 80%"]
+                             , HueCommand [17] ["relax", "brightness 69%"]
+                             , HueCommand [3] ["relax", "brightness 100%"]
+                             , HueCommand [14] ["relax", "brightness 80%"]
                              ]
 fullWarm = combineCommands   [ HueCommand wholeRoom ["relax"]]
 darkCold = combineCommands   [ HueCommand restArea ["off"]
-                             , HueCommand workArea ["concentrate"]
                              , HueCommand boundary ["off"]
-                             , HueCommand [2] ["brightness 28%"]
-                             , HueCommand [17] ["brightness 28%"]
-                             , HueCommand [3] ["brightness 100%"]
-                             , HueCommand [14] ["brightness 10%"]
+                             , HueCommand [2, 17]  ["concentrate", "brightness 28%"]
+                             , HueCommand [3]  ["blue", "brightness 100%"]
+                             , HueCommand [14] ["blue", "brightness 10%"]
                              ]
 brightCold = combineCommands [ HueCommand restArea ["concentrate", "brightness 50%"]
-                             , HueCommand workArea ["concentrate"]
                              , HueCommand boundary ["brightness 22%"]
-                             , HueCommand [17] ["brightness 69%"]
-                             , HueCommand [3] ["brightness 100%"]
-                             , HueCommand [14] ["brightness 80%"]
+                             , HueCommand [17] ["concentrate", "brightness 69%"]
+                             , HueCommand [3] ["concentrate", "brightness 100%"]
+                             , HueCommand [14] ["concentrate", "brightness 80%"]
                              ]
 fullCold = combineCommands   [ HueCommand wholeRoom ["concentrate"]]
+
+freakOut = combineCommands   [ HueCommand restArea ["red"]
+                             , HueCommand workArea ["green"]
+                             , HueCommand boundary ["blue"]
+                             , HueCommand [2, 17] ["brightness 28%"]
+                             , HueCommand [3] ["brightness 100%"]
+                             , HueCommand [14] ["brightness 45%"]
+                             ]
+
+data LightingCue = DarkWarm | BrightWarm | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | BlackOut deriving (Enum, Bounded, Show)
+
+lightingCues :: [X ()]
+lightingCues =
+  [ spawn darkWarm
+  , spawn brightWarm
+  , spawn fullWarm
+  , spawn darkCold
+  , spawn brightCold
+  , spawn fullCold
+  , spawn freakOut
+  , spawn blackOut
+  ]
+
+nextLightCue, prevLightCue :: X ()
+nextLightCue = cycleLightCue 1
+prevLightCue = cycleLightCue (-1)
+
+cycleLightCue :: Int -> X ()
+cycleLightCue d = do
+  LightCueIndex idx <- XS.get
+  let n = length lightingCues
+      newIndex = (idx + d) `mod` n
+  (lightingCues !! newIndex)
+  XS.put $ LightCueIndex newIndex
+
+selectLightCue :: Int -> X ()
+selectLightCue idx = do
+  let n = length lightingCues
+      newIndex = idx `mod` n
+  (lightingCues !! newIndex)
+  XS.put $ LightCueIndex newIndex
+
+newtype LightCueState = LightCueIndex Int deriving Show
+instance ExtensionClass LightCueState where
+  initialValue = LightCueIndex 0
 
 -- Screen Lock 
 screenLocker  = "betterlockscreen -l dim"
@@ -374,12 +412,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
     ] ^++^
   keySet "Lighting Cues"
-    [ key "DarkWarm"        (0, xF86XK_MonBrightnessDown                  ) $ spawn darkWarm
-    , key "BrighterWarm"    (0, xF86XK_MonBrightnessUp                    ) $ spawn brightWarm
-    , key "FullWarm"        (controlMask, xF86XK_MonBrightnessUp          ) $ spawn fullWarm
-    , key "DarkCold"        (modm, xF86XK_MonBrightnessDown               ) $ spawn darkCold
-    , key "BrighterCold"    (modm,  xF86XK_MonBrightnessUp                ) $ spawn brightCold
-    , key "FullCold"        (modm .|. controlMask, xF86XK_MonBrightnessUp ) $ spawn fullCold
+    [ key "DarkWarm"          (0, xF86XK_MonBrightnessDown                  ) (selectLightCue 0)
+    , key "BrighterWarm"      (0, xF86XK_MonBrightnessUp                    ) (selectLightCue 1)
+    , key "FullWarm"          (controlMask, xF86XK_MonBrightnessUp          ) (selectLightCue 2)
+    , key "Prev Lighting Cue" (modm, xF86XK_MonBrightnessDown               ) prevLightCue
+    , key "Next Lighting Cue" (modm,  xF86XK_MonBrightnessUp                ) nextLightCue
+    , key "FullCold"          (modm .|. controlMask, xF86XK_MonBrightnessUp ) (selectLightCue 5)
     ] ^++^    
   keySet "Audio"
     [ key "Mute"            (0, xF86XK_AudioMute                   ) $ spawn "amixer -q set Master toggle"
