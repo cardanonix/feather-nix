@@ -46,9 +46,9 @@ The `home.nix` file contains details about all the software I use, but here's a 
 
 | Type           | Name      |
 | :------------- | :----------: |
-| GTK Theme      | [Juno Ocean](https://github.com/EliverLara/Juno) |
-| GTK Icon Theme | [Beauty Line](https://www.gnome-look.org/p/1425426/) |
-| Terminal Font  | [JetBrainsMono](https://www.jetbrains.com/lp/mono/) |
+| GTK Theme      | [Qogir-Dark](https://github.com/vinceliuice/Qogir-theme) |
+| GTK Icon Theme | [Gruvbox](https://github.com/jmattheis/gruvbox-dark-icons-gtk) |
+| Terminal Font  | [FiraMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/) |
 
 ## Cardano Font
 ![Cardano Custom Typeface Building](imgs/screenshotWs/cardano_logo_collection.png)
@@ -73,10 +73,10 @@ Here is an overview of the folders' structure:
 │  ├── overlays
 │  ├── programs
 │  ├── scripts
-│  ├── secrets
 │  ├── services
 │  └── themes
 ├── imgs
+├── secrets
 └── system
    ├── cachix
    ├── cachix.nix
@@ -96,6 +96,7 @@ Here is an overview of the folders' structure:
 ## Install
 
 You can have a look at the available flake outputs before getting started.
+(This won't work because I have my config obfuscated in parts)
 
 ```console
 $ nix flake show github:harryprayiv/nix-config
