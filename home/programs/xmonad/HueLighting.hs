@@ -5,6 +5,10 @@ module HueLighting
   , runLightCue
   ) where
 
+import           XMonad
+import           XMonad.Util.Run                      
+import qualified XMonad.Util.ExtensibleState           as XS
+
 type LightCommand = String
 data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
 
