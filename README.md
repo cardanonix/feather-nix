@@ -1,4 +1,4 @@
-nix-config for 'intelTower'
+my nix-config
 ==========
 
 [![CI Home](https://github.com/harryprayiv/nix-config/workflows/Home/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
