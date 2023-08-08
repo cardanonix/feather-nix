@@ -122,7 +122,6 @@ import qualified XMonad.StackSet                       as W
 import qualified XMonad.Util.NamedWindows              as W
 import qualified XMonad.Util.ExtensibleState           as XS  -- Custom State
 
-
 -- Imports for Polybar --
 import qualified Codec.Binary.UTF8.String              as UTF8
 import qualified Data.Set                              as S
@@ -130,7 +129,6 @@ import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
 import           HueLighting
-
 
 main :: IO ()
 main = mkDbusClient >>= main'
@@ -246,7 +244,6 @@ cycleGaps = do
   sendMessage (setGaps $ myGaps !! idx)
   XS.put $ GapIndex idx
 
-
 myTerminal     = "alacritty"
 
 terminalWithCommand :: String -> String
@@ -265,142 +262,6 @@ playerctl c        = "playerctl --player=spotify,%any " <> c
 calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
-{- 
-
-{- Smart Lighting Hotkeys
-
-Lights:
-     1. Window 1 (rest area)
-     2. Corner  (rest area)
-     3. Closet (work area)
-     5. TV candle 2  (rest area)
-     6. Bed China Ball  (rest area)
-     7. Chandelier 1 (Su)
-     8. Dresser Candle 1 (boundary)
-     9. Shelf Box 1 (rest area)
-    10. Chandelier 2 (Su)
-    12. Desk Light (Su)
-    14. Overhead Computers  (work area)
-    16. Overhead Middle (boundary)
-    17. Guitars (work area)
-    18. Overhead Bed (rest area)
-    19. TV Candle 1 (rest area)
-    20. Window 2 (rest area)
-    21. TV Candle 3 (rest area)
--}
-
-type LightCommand = String
-data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
-
-type LightZone = [Int]
-
--- A function to generate hue strings
-buildLightCommand :: HueCommand -> String
-buildLightCommand (HueCommand ls cmds) = concatMap buildCommands cmds
-  where
-    buildCommands cmd = unwords $ concatMap (\light -> ["hue light", show light, cmd, ";"]) ls
-
--- Chain multiple HueCommands
-chainCommands :: [HueCommand] -> String
-chainCommands = unwords . map buildLightCommand
-
--- Zones
-wholeRoom, restArea, boundary, workArea, suRoom:: LightZone
-wholeRoom = [1, 2, 3, 5, 6, 8, 9, 14, 16, 17, 18, 19, 20, 21]
-restArea = [1, 2, 5, 6, 9, 18, 19, 20, 21] 
-boundary = [8, 16]
-workArea = [3, 14, 17]
-suRoom = [7, 10, 12]
-
--- Hue Lighting Cues
-blackOut :: String
-blackOut = chainCommands   [ HueCommand wholeRoom ["off"]]
-
-darkWarm = chainCommands   [ HueCommand restArea ["off"]
-                             , HueCommand boundary ["off"]
-                             , HueCommand [17] [ "on", "brightness  28%", "color 2141" ]
-                             , HueCommand [3] [ "on", "color 2000", "brightness 100%" ]
-                             , HueCommand [14] [ "on", "color 2141", "brightness 10%" ]
-                             ]
-brightWarm = chainCommands [ HueCommand restArea ["relax", "brightness 50%" ]
-                             , HueCommand boundary [ "relax", "brightness  22%" ]
-                             , HueCommand [17] [ "on", "color 2141", "brightness 69%" ]
-                             , HueCommand [3] [ "on", "color 2141", "brightness 100%" ]
-                             , HueCommand [14] [ "on", "color 2141", "brightness 80%" ]
-                             ]   
-basque = chainCommands   [ HueCommand [1]  [ "on", "brightness   155", "color 0.4247, 0.3421" ]
-                         , HueCommand [2]  [ "on", "brightness   132", "color 0.4834, 0.3606" ]
-                         , HueCommand [3]  [ "on", "brightness   155", "color 0.4129, 0.3416" ]
-                         , HueCommand [6]  [ "on", "brightness   134", "color 0.414, 0.3905" ]
-                         , HueCommand [8]  [ "on", "brightness   125", "color 0.4129, 0.3416" ]
-                         , HueCommand [5, 9, 14, 16, 18, 19]  [ "on", "brightness   125", "color 0.5106, 0.3739" ]
-                         , HueCommand [17] [ "on", "brightness   156", "color 0.4834, 0.3606" ]
-                         , HueCommand [20] [ "on", "brightness   155", "color 0.413, 0.3415" ]
-                         , HueCommand [21] [ "on", "brightness   156", "color 0.4831, 0.3606" ]
-                         ]
-
-fullWarm = chainCommands [ HueCommand wholeRoom ["relax"]]
-
-darkCold = chainCommands [ HueCommand restArea ["off"]
-                            , HueCommand boundary ["off"]
-                          , HueCommand [17]  ["on", "color 6200", "brightness 28%"]
-                            , HueCommand [3]  ["on", "blue", "brightness 100%"]
-                            , HueCommand [14] ["on", "blue", "brightness 10%"]
-                            ]
-brightCold = chainCommands [ HueCommand restArea [ "on", "color 6500", "brightness 50%" ]
-                             , HueCommand boundary [ "on", "color 6500", "brightness 22%" ]
-                             , HueCommand [17] [ "on", "color 6500", "brightness 69%" ]
-                             , HueCommand [3] ["concentrate"]
-                             , HueCommand [14] [ "on", "color 6500", "brightness 80%" ]
-                             ]
-fullCold = chainCommands   [ HueCommand wholeRoom ["concentrate"]]
-freakOut = chainCommands   [ HueCommand restArea ["on", "blue", "brightness 80%" ]
-                             , HueCommand workArea ["on", "red", "brightness 80%" ]
-                             , HueCommand boundary ["on", "green", "brightness 80%", "blink" ]
-                             , HueCommand [2, 17] [ "on", "brightness  28%" ]
-                             , HueCommand [3] [ "on", "brightness  100%", "blink" ]
-                             , HueCommand [14] [ "on", "brightness  45%" ]
-                             ]
-deskOff = chainCommands      [ HueCommand [17] ["off"]]
-
-data LightingCue = DarkWarm | BrightWarm | Basque | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | DeskOff | BlackOut deriving (Enum, Bounded, Show)
-
-lightingCues :: [X ()]
-lightingCues =
-  [ spawn darkWarm
-  , spawn brightWarm
-  , spawn basque
-  , spawn fullWarm
-  , spawn darkCold
-  , spawn brightCold
-  , spawn fullCold
-  , spawn freakOut
-  , spawn deskOff
-  , spawn blackOut
-  ]
-
-nextLightCue, prevLightCue :: X ()
-nextLightCue = cycleLightCue 1
-prevLightCue = cycleLightCue (-1)
-
-cycleLightCue :: Int -> X ()
-cycleLightCue d = do
-  LightCueIndex idx <- XS.get
-  let n = length lightingCues
-      newIndex = (idx + d) `mod` n
-  (lightingCues !! newIndex)
-  XS.put $ LightCueIndex newIndex
-
-runLightCue :: Int -> X ()
-runLightCue idx = do
-  let n = length lightingCues
-      newIndex = idx `mod` n
-  (lightingCues !! newIndex)
-  XS.put $ LightCueIndex newIndex
-
-newtype LightCueState = LightCueIndex Int deriving Show
-instance ExtensionClass LightCueState where
-  initialValue = LightCueIndex 0 -}
 
 -- Screen Lock 
 screenLocker  = "betterlockscreen -l dim"
@@ -455,7 +316,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Apps (Rofi)"     (0, xF86XK_LaunchA                ) $ spawn appLauncher
     , key "Calc (Rofi)"     (modm .|. shiftMask  , xK_c       ) $ spawn calcLauncher
     , key "Emojis (Rofi)"   (modm .|. shiftMask  , xK_m       ) $ spawn emojiPicker
-    -- , key "Spotlight (Rofi)"(modm .|. shiftMask  , xK_0       ) $ spawn spotlight
     , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker >> runLightCue 8
     ] ^++^
   keySet "Layouts"
@@ -480,7 +340,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     -- , key "Spotify"         (modm .|. controlMask,  xK_s      ) $ runScratchpadApp spotify
     , key "Mpv"             (modm .|. controlMask,  xK_m      ) $ safePromptSelection "mpv"
     , key "Gimp"            (modm .|. controlMask,  xK_i      ) $ runScratchpadApp gimp
-    --, key "Kodi"            (modm .|. controlMask,  xK_k      ) $ runScratchpadApp kodi
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
@@ -637,7 +496,6 @@ myLayout =
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
 
-
 -- Defining Rectangles using absolute points (https://gist.github.com/tkf/1343015)
 doFloatAbsRect :: Rational -> Rational -> Rational -> Rational -> ManageHook
 doFloatAbsRect x y width height = do
@@ -662,27 +520,6 @@ doFloatAbsRect x y width height = do
                 w' = if w0 == 0 then w1 else width / (fromIntegral w0)
                 h' = if h0 == 0 then h1 else height / (fromIntegral h0)
   doF ss2ss
-
-------------------------------------------------------------------------
--- Window rules:
-
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- WM_CLASS(STRING) = "brave-browser", "Brave-browser"  
--- WM_CLASS(STRING) = "keepassxc", "KeePassXC"
--- WM_CLASS(STRING) = "discord.com__app", "Brave-browser"
--- WM_CLASS(STRING) = "mstdn.social__home", "Brave-browser"
--- WM_CLASS(STRING) = "tokodon", "tokodon"
--- xprop | grep WM_RESOURCE
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
 
 type AppName      = String
 type AppTitle     = String
@@ -810,7 +647,7 @@ projects =
             }
   , Project { projectName      = mscWs
             , projectDirectory = "~/plutus/workspace/mscWs/"
-            , projectStartHook = Just $ do spawn myTerminal
+            , projectStartHook = Just $ do spawn (terminalWithCommand "cowsay 'how are you today?'")
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/plutus/workspace/musWs/"
