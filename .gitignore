@@ -7,3 +7,4 @@ generated-plutus-scripts
 .unisonHistory
 *.qcow2
 flake.nix.bak
+.DS_Store
