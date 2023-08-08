@@ -129,6 +129,7 @@ import qualified Data.Set                              as S
 import qualified DBus                                  as D
 import qualified DBus.Client                           as D
 import           XMonad.Hooks.DynamicLog
+import           HueLighting
 
 
 main :: IO ()
@@ -264,7 +265,7 @@ playerctl c        = "playerctl --player=spotify,%any " <> c
 calcLauncher = "rofi -show calc -modi calc -no-show-match -no-sort"
 emojiPicker  = "rofi -modi emoji -show emoji -emoji-mode copy"
 --spotlight    = "rofi -modi spotlight -show spotlight -spotlight-mode copy"
-
+{- 
 
 {- Smart Lighting Hotkeys
 
@@ -399,7 +400,7 @@ runLightCue idx = do
 
 newtype LightCueState = LightCueIndex Int deriving Show
 instance ExtensionClass LightCueState where
-  initialValue = LightCueIndex 0
+  initialValue = LightCueIndex 0 -}
 
 -- Screen Lock 
 screenLocker  = "betterlockscreen -l dim"

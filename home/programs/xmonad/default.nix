@@ -62,6 +62,7 @@ in {
         hp.monad-logger
       ];
       config = ./config.hs;
+      libFiles = ./lib/HueLighting.hs;
     };
   };
 }
