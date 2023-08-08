@@ -118,10 +118,6 @@
       #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
       #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     };
-
-    cardano-wallet = {
-      url = "github:input-output-hk/cardano-wallet?rev=3f9055373c272a4d7b1f9f6bacc1df3b6dc906af";
-    };
   };
 
   # Outputs are the public-facing interface to the flake.
@@ -165,9 +161,9 @@
           gnome3 = nixpkgs-gnome3.legacyPackages.${system}.gnome.gnome3;
         };
 
-        # cardanoOverlay = f: p: {
-        #   cardano = inputs.cardano-node.packages.${system}.cardano-node;
-        # };
+        cardanoOverlay = f: p: {
+          cardano = inputs.cardano-node.packages.${system}.cardano-node;
+        };
 
         pkgs = import nixpkgs {
           inherit system;
@@ -175,7 +171,7 @@
           config.allowUnfree = true;
 
           overlays = [
-            # cardanoOverlay
+            cardanoOverlay
             cowsayOverlay
             fishOverlay
             nautilusOverlay
@@ -195,7 +191,7 @@
         };
 
         imports = [
-          #inputs.cardano-node.nixosModules.cardano-node
+          # inputs.cardano-node.nixosModules.cardano-node
           #inputs.cardano-wallet.nixosModules.cardano-wallet
           neovim-flake.nixosModules.${system}.hm
           ./home/home.nix
@@ -260,7 +256,7 @@
           specialArgs = {inherit inputs;};
           modules = [
             inputs.cardano-node.nixosModules.cardano-node
-            inputs.cardano-wallet.nixosModules.cardano-wallet
+            # inputs.cardano-wallet.nixosModules.cardano-wallet
             ./system/machine/intelTower
             ./system/configuration.nix
           ];
