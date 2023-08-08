@@ -11,6 +11,10 @@ let
   #hls = "${pkgs.haskellPackages.haskell-language-server}/bin/haskell-language-server";
   hlint = "${pkgs.hlint}/bin/hlint}";
 in {
+  imports = [
+    ../../../secrets/codium-git-auth.nix
+  ];
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium.overrideAttrs (old: {
