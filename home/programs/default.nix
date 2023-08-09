@@ -74,6 +74,6 @@ in [
   ./towerPkgs
   ./xmonad
   ./vscodium
-  ./yubikey
+  # ./yubikey
   more
 ]
