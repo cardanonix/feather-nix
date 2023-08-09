@@ -24,7 +24,7 @@ let
       node_check # cardano node monitor script
       hue_tools # tools for interacting with hue lights
       mru # repo download
-      quote
+      quote # takes current clipboard contents and adds a ">" before each line break
       #hms               # custom home-manager switcher that considers the current DISPLAY
       #ipad-mirror
     ];

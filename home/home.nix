@@ -69,6 +69,8 @@
     pinentry # a small collection of dialog programs that allow GnuPG to read passphrases and PIN numbers in a secure manner
     spago
 
+    libsForQt5.gwenview # my favorite image viewer (for now)
+
     # Work Stuff
     work-browser
 
