@@ -110,6 +110,7 @@ in {
         "icon.foreground" = "#FFFFFF";
         "statusBarItem.prominentBackground" = "#282a33";
       };
+      "haskell.hlint.ignore" = "[]";
     };
   };
 }
