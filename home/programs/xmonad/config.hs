@@ -473,9 +473,9 @@ myLayout =
      silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      oneBig                  = spacing 2 . gaps (myGaps !! 3) $ OneBig (3/4) (3/4) 
-     tabbed                  = spacing 2 . gaps (myGaps !! 3) $ simpleTabbed
-     resizeTall              = spacing 2 . gaps (myGaps !! 3) $ ResizableTall 1 (3/100) (1/2) []
-     resize2Master           = spacing 2 . gaps (myGaps !! 3) $ ResizableTall 2 (3/100) (1/2) []
+     tabbed                  = spacing 2 . gaps (myGaps !! 3) $ tabbed shrinkText def
+     resizeTall              = spacing gapSize . gaps (head myGaps) $ ResizableTall nmaster (delta) ratio []
+     resize2Master           = spacing gapSize . gaps (head myGaps) $ ResizableTall nmasterTwo (delta) ratio []
 
 
      -- The default number of windows in the master pane
@@ -492,8 +492,8 @@ myLayout =
      delta   = 2/100
 
      -- Per workspace layout
-     webLayout = onWorkspace webWs (tiled_nogap ||| oneBig ||| reflectHoriz tiled_nogap ||| fuller ||| goldenSpiral ||| reflectHoriz  goldenSpiral ||| tiled_spaced ||| reflectHoriz tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
-     mscLayout = onWorkspace mscWs (resize2Master ||| resizeTall ||| tabbed ||| dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
+     webLayout = onWorkspace webWs (resizeTall ||| tiled_nogap ||| oneBig ||| reflectHoriz tiled_nogap ||| fuller ||| goldenSpiral ||| reflectHoriz  goldenSpiral ||| tiled_spaced ||| reflectHoriz tiled_spaced ||| full ||| grid ||| grid_strict_landscape)
+     mscLayout = onWorkspace mscWs (resize2Master ||| resizeTall ||| tabbed ||| resize2Master ||| dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
      musLayout = onWorkspace musWs (fuller ||| oneBig ||| tiled ||| tiled_spaced ||| reflectHoriz tiled_spaced)
      vscLayout = onWorkspace vscWs (resize2Master ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (tiled ||| full ||| column3 ||| goldenSpiral)
