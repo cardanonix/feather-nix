@@ -37,7 +37,6 @@
     jmtpfs # mount mtp devices
     killall # kill processes by name
     libnotify # notify-send command4
-    betterlockscreen # fast lockscreen based on i3lock
     ncdu # disk space info (a better du)
     nfs-utils # utilities for NFS
     ngrok # secure tunneling to localhost
