@@ -96,7 +96,7 @@ brightCold = chainCommands [ HueCommand restArea [ "on", "color 6500", "brightne
                              , HueCommand [3] ["concentrate"]
                              , HueCommand [14] [ "on", "color 6500", "brightness 80%" ]
                              ]
-fullCold = chainCommands   [ HueCommand wholeRoom [ "on", "color 6500", "brightness 100%" ]]
+fullCold = chainCommands   [ HueCommand wholeRoom [ "on", "color 5900", "brightness 100%" ]]
 freakOut = chainCommands   [ HueCommand restArea ["on", "blue", "brightness 80%" ]
                              , HueCommand workArea ["on", "red", "brightness 80%" ]
                              , HueCommand boundary ["on", "green", "brightness 80%", "blink" ]
