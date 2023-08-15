@@ -475,9 +475,9 @@ myLayout =
      dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      oneBig                  = spacing 2 . gaps (myGaps !! 3) $ OneBig (3/4) (3/4) 
      tabber                  = spacing 2 . gaps (myGaps !! 3) $ simpleTabbed
-     resizeTall              = spacing gapSize . gaps (head myGaps) $ ResizableTall nmaster (delta) ratio []
-     resize2Master           = spacing gapSize . gaps (head myGaps) $ ResizableTall nmasterTwo (delta) ratio []
-     devTiles                = spacing 2 . gaps (myGaps !! 3) $ ResizableTall nmasterTwo (delta) 6/7 []
+     resizeTall              = spacing gapSize . gaps (head myGaps) $ ResizableTall 1 (3/100) (4/5) []
+     resize2Master           = spacing gapSize . gaps (head myGaps) $ ResizableTall 2 (3/100) (3/4) []
+     devTiles                = spacing 2 . gaps (myGaps !! 3) $ ResizableTall 2 (3/100) (7/8) []
 
 
      -- The default number of windows in the master pane
