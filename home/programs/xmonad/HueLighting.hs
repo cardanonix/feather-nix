@@ -14,7 +14,6 @@ data HueCommand = HueCommand { lights :: [Int], commands :: [LightCommand] }
 
 type LightZone = [Int]
 
-
 {- Smart Lighting Hotkeys
 
 Lights:
@@ -82,7 +81,8 @@ basque = chainCommands   [ HueCommand [1]  [ "on", "brightness   155", "color 0.
                          , HueCommand [21] [ "on", "brightness   156", "color 0.4831, 0.3606" ]
                          ]
 
-fullWarm = chainCommands [ HueCommand wholeRoom ["relax"]]
+fullWarm = chainCommands   [ HueCommand wholeRoom [ "on", "color 2900", "brightness 100%" ]]
+
 
 darkCold = chainCommands [ HueCommand restArea ["off"]
                             , HueCommand boundary ["off"]
@@ -96,7 +96,7 @@ brightCold = chainCommands [ HueCommand restArea [ "on", "color 6500", "brightne
                              , HueCommand [3] ["concentrate"]
                              , HueCommand [14] [ "on", "color 6500", "brightness 80%" ]
                              ]
-fullCold = chainCommands   [ HueCommand wholeRoom ["concentrate"]]
+fullCold = chainCommands   [ HueCommand wholeRoom [ "on", "color 6500", "brightness 100%" ]]
 freakOut = chainCommands   [ HueCommand restArea ["on", "blue", "brightness 80%" ]
                              , HueCommand workArea ["on", "red", "brightness 80%" ]
                              , HueCommand boundary ["on", "green", "brightness 80%", "blink" ]
