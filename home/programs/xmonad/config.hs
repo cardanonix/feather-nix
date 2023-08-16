@@ -455,7 +455,7 @@ myLayout =
     . scdLayout   
     . spoLayout
     . vmsLayout
-    . secLayout $ (tiled ||| Mirror tiled ||| column3 ||| full)
+    . secLayout $ (devTiles ||| resize2Master ||| resizeTall ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
      grid                    = spacing gapSize . gaps (head myGaps) $ Grid False
