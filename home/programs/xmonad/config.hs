@@ -366,8 +366,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Swap previous"   (modm .|. shiftMask, xK_k         ) $ windows W.swapUp
     , key "Shrink master"   (modm              , xK_h         ) $ sendMessage Shrink
     , key "Expand master"   (modm              , xK_l         ) $ sendMessage Expand
-    , key "Mirror shrink"   (modm              , xK_a         ) $ sendMessage MirrorShrink
-    , key "Mirror grow"     (modm              , xK_z         ) $ sendMessage MirrorExpand
+    , key "Mirror grow"     (modm              , xK_a         ) $ sendMessage MirrorExpand
+    , key "Mirror shrink"   (modm              , xK_z         ) $ sendMessage MirrorShrink
     , key "Switch to tile"  (modm              , xK_t         ) $ withFocused (windows . W.sink)
     , key "Rotate slaves"   (modm .|. shiftMask, xK_Tab       ) rotSlavesUp
     , key "Decrease size"   (modm              , xK_d         ) $ withFocused (keysResizeWindow (-10,-10) (1,1))
