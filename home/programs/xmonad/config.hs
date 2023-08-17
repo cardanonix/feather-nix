@@ -228,7 +228,7 @@ myGaps :: [GapSpec]
 myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all directions
          , [(R,5),(L,5),(U,5),(D,5)]
          , [(R,2),(L,2),(U,2),(D,2)]
-         , [(R,17),(L,17),(U,15),(D,15)]
+         , [(R,15),(L,15),(U,15),(D,15)]
          , [(R,20),(L,20),(U,20),(D,20)]
          , [(R,25),(L,25),(U,25),(D,25)]
          , [(R,30),(L,30),(U,30),(D,30)]
@@ -328,10 +328,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "SpaceDec"        (modm .|. shiftMask   , xK_g       ) $ decScreenWindowSpacing 2 
     , key "BorderSwitch"    (modm                 , xK_b       ) cycleGaps 
     , key "Reset"           (modm .|. shiftMask   , xK_space   ) $ setLayout (XMonad.layoutHook conf)
-    , key "Fullscreen"      (modm                  , xK_f      ) $ sendMessage (Toggle NBFULL)
+    , key "Fullscreen"      (modm                 , xK_f       ) $ sendMessage (Toggle NBFULL)
     ] ^++^
   keySet "Polybar"
-    [ key "Toggle"          (modm              , xK_equal     ) togglePolybar
+    [ key "Toggle"          (modm                 , xK_equal ) toggleStruts
+    , key "Toggle Bottom"   (modm .|. shiftMask   , xK_b     ) toggleBtmStrut
+    , key "Toggle Top"      (modm .|. shiftMask   , xK_u     ) toggleTopStrut
     ] ^++^
   keySet "Projects"
     [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
@@ -347,8 +349,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     ] ^++^
   keySet "Screens" switchScreen ^++^
   keySet "System"
-    [ key "Toggle status bar gap"  (modm .|. shiftMask, xK_b  ) toggleStruts
-    , key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q  ) $ io exitSuccess
+    [ -- key "Toggle status bar gap"  (modm .|. shiftMask, xK_b  ) toggleStruts
+      key "Logout (quit XMonad)"   (modm .|. shiftMask, xK_q  ) $ io exitSuccess
     , key "Restart XMonad"         (modm              , xK_q  ) $ spawn "xmonad --recompile; xmonad --restart"
     , key "Capture entire screen"  (modm          , xK_Print  ) $ spawn "flameshot full -p ~/Pictures/flameshot/"
     , key "Switch keyboard layout" (modm             , xK_F8  ) $ spawn "kls"
@@ -385,11 +387,16 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
   toggleStruts = togglePolybar >> sendMessage ToggleStruts
+  toggleTopPolybar = spawn "polybar-msg -p 1733 cmd toggle &"
+  toggleTopStrut = toggleTopPolybar >> (sendMessage $ ToggleStrut U)
+  toggleBtmPolybar = spawn "polybar-msg -p 1734 cmd toggle &"
+  toggleBtmStrut = toggleBtmPolybar >> (sendMessage $ ToggleStrut D)
   keySet s ks = subtitle s : ks
   key n k a = (k, addName n a)
   action m = if m == shiftMask then "Move to " else "Switch to "
 -- mod-[1..9]: Switch to workspace N | 
 -- mod-shift-[1..9]: Move client to workspace N
+-- mod-ctrl-shift-[1..9]: Copy client to workspace N
   switchWsById =
     [ key (action m <> show i) (m .|. modm, k) (windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
@@ -463,19 +470,19 @@ myLayout =
      grid_strict_landscape   = spacing gapSize . gaps (head myGaps) $ GridRatio grid_landscape False 
      tiled                   = spacing gapSize . gaps (head myGaps) $ Tall nmaster delta golden_ratio
      doubletiled             = spacing gapSize . gaps (head myGaps) $ Tall nmasterTwo delta golden_ratio
-     tiled_nogap             = spacing 0 . gaps (myGaps !! 12) $ Tall nmaster delta golden_ratio
+     tiled_nogap             = spacing 0 . gaps (myGaps !! 13) $ Tall nmaster delta golden_ratio
      tiled_spaced            = spacing 0 . gaps (myGaps !! 3) $ Tall nmaster delta ratio
      column3_og              = spacing gapSize . gaps (head myGaps) $ ThreeColMid 1 (3/100) (1/2)
      video_tile              = spacing gapSize . gaps (head myGaps) $ Mirror (Tall 1 (1/50) (3/5))
      full                    = Full
-     fuller                  = spacing 0 . gaps (myGaps !! 12) $ Full
+     fuller                  = spacing 0 . gaps (myGaps !! 13) $ Full
      column3                 = spacing 2 . gaps (myGaps !! 2) $ ThreeColMid 1 (33/100) (1/2)
      goldenSpiral            = spacing gapSize . gaps (head myGaps) $ spiral golden_ratio
      silverSpiral            = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      dynamicGaps             = spacing gapSize . gaps (head myGaps) $ spiralWithDir East CCW ratio
      oneBig                  = spacing 2 . gaps (myGaps !! 3) $ OneBig (3/4) (3/4) 
      tabber                  = spacing 2 . gaps (myGaps !! 3) $ simpleTabbed
-     resizeTall              = spacing gapSize . gaps (head myGaps) $ ResizableTall 1 (3/100) (4/5) []
+     resizeTall              = spacing gapSize . gaps (head myGaps) $ ResizableTall 1 (3/100) (3/4) []
      resize2Master           = spacing gapSize . gaps (head myGaps) $ ResizableTall 2 (3/100) (3/4) []
      devTiles                = spacing 2 . gaps (myGaps !! 3) $ ResizableTall 2 (3/100) (7/8) []
 
