@@ -331,9 +331,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Fullscreen"      (modm                 , xK_f       ) $ sendMessage (Toggle NBFULL)
     ] ^++^
   keySet "Polybar"
-    [ key "Toggle"          (modm                 , xK_equal ) toggleStruts
-    , key "Toggle Bottom"   (modm .|. shiftMask   , xK_b     ) toggleBtmStrut
-    , key "Toggle Top"      (modm .|. shiftMask   , xK_u     ) toggleTopStrut
+    [ key "Toggle"          (modm                 , xK_equal ) togglePolybar
+    , key "Toggle Bottom"   (modm .|. shiftMask   , xK_b     ) toggleBtmPolybar
+    , key "Toggle Top"      (modm .|. shiftMask   , xK_u     ) toggleTopPolybar
     ] ^++^
   keySet "Projects"
     [ key "Switch prompt"   (0, xF86XK_KbdBrightnessDown      ) $ switchProjectPrompt projectsTheme
@@ -387,9 +387,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
  where
   togglePolybar = spawn "polybar-msg cmd toggle &"
   toggleStruts = togglePolybar >> sendMessage ToggleStruts
-  toggleTopPolybar = spawn "polybar-msg -p 1733 cmd toggle &"
+  toggleTopPolybar = spawn "top_bar=$(xdotool search --name polybar-top getwindowpid) ; polybar-msg -p $top_bar cmd toggle &"
   toggleTopStrut = toggleTopPolybar >> (sendMessage $ ToggleStrut U)
-  toggleBtmPolybar = spawn "polybar-msg -p 1734 cmd toggle &"
+  toggleBtmPolybar = spawn "btm_bar=$(xdotool search --name polybar-bottom getwindowpid) ; polybar-msg -p $btm_bar cmd toggle &"
   toggleBtmStrut = toggleBtmPolybar >> (sendMessage $ ToggleStrut D)
   keySet s ks = subtitle s : ks
   key n k a = (k, addName n a)
