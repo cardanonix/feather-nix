@@ -6,7 +6,7 @@
   ...
 }: let
   purescriptPkgs = with pkgs; [
-    # purescript
+    purescript
     # purenix
     spago
     nodejs
@@ -15,7 +15,6 @@
   ];
 
   hsklPkgs = with pkgs.haskellPackages; [
-    purescript
     purenix
     # spago
     # purescript-bridge_0_15_0_0 #Generate PureScript data types from Haskell data types
