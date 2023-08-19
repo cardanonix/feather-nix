@@ -592,8 +592,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
     [ isInstance calendar                      -?> doCalendarFloat
     , match [ virtbox
             ]                                  -?> tileAbove
-    , match [ keepass
-            , mpv
+    , match [ mpv
             ]                                  -?> tileAbove
     , match [ audacious
             , eog
@@ -604,6 +603,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             ]                                  -?> doCenterFloat
     , match [ btm
             , evince
+            , keepass
             , gimp
             ]                                  -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
@@ -635,7 +635,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, gimp, mpv, virtbox ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, gimp, mpv, keepass, virtbox ]
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -666,7 +666,7 @@ projects =
             }
   , Project { projectName      = mscWs
             , projectDirectory = "~/plutus/workspace/mscWs/"
-            , projectStartHook = Just $ do spawn (terminalWithCommand "cowsay 'how are you today?'")
+            , projectStartHook = Just $ do spawn myTerminal
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/plutus/workspace/musWs/"
@@ -691,18 +691,18 @@ projects =
             , projectStartHook = Just $ do spawn (terminalWithCommand "systemctl status cardano-node")
             }
   , Project { projectName      = devWs
-            , projectDirectory = "~/plutus/workspace/devWs/"
+            , projectDirectory = "~/plutus/workspace/devWs/pelotero/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
   , Project { projectName      = scdWs
-            , projectDirectory = "~/Cardano/git/"
+            , projectDirectory = "~/plutus/workspace/scdWs"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/plutus/workspace/secWs/"
-            , projectStartHook = Just $ do spawn "keepassxc"
+            , projectStartHook = Just $ runScratchpadApp keepass
             }
   , Project { projectName      = vmsWs
             , projectDirectory = "~/plutus/workspace/vmsWs/"
