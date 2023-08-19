@@ -106,8 +106,11 @@ freakOut = chainCommands   [ HueCommand restArea ["on", "blue", "brightness 80%"
                              , HueCommand [14] [ "on", "brightness  45%" ]
                              ]
 deskOff = chainCommands      [ HueCommand [17] ["off"]]
+audrey = chainCommands   [ HueCommand wholeRoom [ "on", "color 0.4729, 0.2024", "brightness 100%" ]
+                              , HueCommand [6] [ "on", "brightness  100%", "blink" ] 
+                              ]
 
-data LightingCue = DarkWarm | BrightWarm | Basque | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | DeskOff | BlackOut deriving (Enum, Bounded, Show)
+data LightingCue = DarkWarm | BrightWarm | Basque | FullWarm | DarkCold | BrightCold | FullCold | FreakOut | Audrey | DeskOff | BlackOut deriving (Enum, Bounded, Show)
 
 lightingCues :: [X ()]
 lightingCues =
@@ -119,6 +122,7 @@ lightingCues =
   , spawn brightCold
   , spawn fullCold
   , spawn freakOut
+  , spawn audrey
   , spawn deskOff
   , spawn blackOut
   ]

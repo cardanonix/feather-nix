@@ -66,7 +66,7 @@
     xautolock # autolock stuff
     srm # a command-line compatible rm(1) which overwrites file contents before unlinking.
     pinentry # a small collection of dialog programs that allow GnuPG to read passphrases and PIN numbers in a secure manner
-    spago
+    # spago
     feh
 
     libsForQt5.gwenview # my favorite image viewer (for now)
