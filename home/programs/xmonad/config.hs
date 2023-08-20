@@ -320,7 +320,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     , key "Apps (Rofi)"     (0, xF86XK_LaunchA                ) $ spawn appLauncher
     , key "Calc (Rofi)"     (modm .|. shiftMask  , xK_c       ) $ spawn calcLauncher
     , key "Emojis (Rofi)"   (modm .|. shiftMask  , xK_m       ) $ spawn emojiPicker
-    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker >> runLightCue 8
+    , key "Lock screen"     (modm .|. controlMask, xK_l       ) $ spawn screenLocker >> runLightCue 9
     ] ^++^
   keySet "Layouts"
     [ key "Next"            (modm                 , xK_space   ) $ sendMessage NextLayout
@@ -676,6 +676,7 @@ projects =
             , projectDirectory = "~/plutus/workspace/vscWs/nix-config.git/intelTower/"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
+                                           spawn (terminalWithCommand "cowsay no way jose!")
             }
   , Project { projectName      = comWs
             , projectDirectory = "~/plutus/workspace/comWs/"
