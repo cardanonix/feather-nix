@@ -65,8 +65,6 @@
     xssproxy # suspends screensaver when watching a video (forward org.freedesktop.ScreenSaver calls to Xss)
     xautolock # autolock stuff
     srm # a command-line compatible rm(1) which overwrites file contents before unlinking.
-    pinentry # a small collection of dialog programs that allow GnuPG to read passphrases and PIN numbers in a secure manner
-    # spago
     feh
 
     libsForQt5.gwenview # my favorite image viewer (for now)
@@ -85,13 +83,6 @@
     nyancat # the famous rainbow cat!
     ponysay # for sweet Audrey
     cowsay # cowsay fortune teller with random images
-
-    #  Security
-    rage # encryption tool for secrets management
-    keepassxc # Security ##
-    gnupg # Security ##
-    ledger-live-desktop # Ledger Nano X Support for NixOS
-    bitwarden-cli # command-line client for the password manager
   ];
 
   gnomePkgs = with pkgs.gnome; [
@@ -115,7 +106,6 @@ in {
     ./scripts
     ./services
     ./themes
-    # ./secrets/bismuth_home.nix
   ];
 
   xdg = {

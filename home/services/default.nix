@@ -15,5 +15,6 @@ in [
   ./redshift
   ./betterlockscreen
   ./udiskie
+  ../../secrets/bismuth_home.nix
   more
 ]
