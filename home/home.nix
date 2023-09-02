@@ -66,7 +66,7 @@
     xautolock # autolock stuff
     srm # a command-line compatible rm(1) which overwrites file contents before unlinking.
     feh
-
+    palemoon-bin
     libsForQt5.gwenview # my favorite image viewer (for now)
 
     # Work Stuff

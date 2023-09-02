@@ -57,6 +57,7 @@ in [
   ./autorandr
   ./browsers/firefox.nix
   ./browsers/brave.nix
+  # ./browsers/palemoon.nix
   ./cardano
   ./dconf
   ./git
