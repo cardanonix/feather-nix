@@ -65,6 +65,7 @@ in {
             jnoortheen.nix-ide
             gruntfuggly.todo-tree
             kamadorueda.alejandra
+            github.copilot
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
             {
@@ -74,12 +75,12 @@ in {
               sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
             }
 
-            {
-              name = "copilot";
-              publisher = "GitHub";
-              version = "1.46.6822";
-              sha256 = "sha256-L71mC0190ZubqNVliu7es4SDsBTGVokePpcNupABI8Q=";
-            }
+            # {
+            #   name = "copilot";
+            #   publisher = "GitHub";
+            #   version = "1.46.6822";
+            #   sha256 = "sha256-L71mC0190ZubqNVliu7es4SDsBTGVokePpcNupABI8Q=";
+            # }
           ]
       );
     userSettings = {
