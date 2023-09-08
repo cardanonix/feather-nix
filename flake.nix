@@ -286,19 +286,13 @@
       inherit (ci) metals metals-updater;
     };
 
-    devShell.${system} = (
-      {
-        inputs,
-        system,
-        ...
-      }: let
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-      in
-        pkgs.mkShell {
-          name = "installation-shell";
-          buildInputs = with pkgs; [wget s-tar];
-        }
-    );
+    devShell.${system} = let
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+    in
+      pkgs.mkShell {
+        name = "install-shell";
+        buildInputs = with pkgs; [wget s-tar];
+      };
 
     checks.${system} = let
       os = mapAttrs (_: c: c.config.system.build.toplevel) nixosConfigurations;
