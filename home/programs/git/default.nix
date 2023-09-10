@@ -32,9 +32,6 @@
   rg = "${pkgs.ripgrep}/bin/rg";
 in {
   # semi-sensitive data is now encrypted in my secrets folder
-  imports = [
-    ../../../secrets/git-auth.nix
-  ];
 
   home.packages = with pkgs.gitAndTools; [
     diff-so-fancy # git diff with colors

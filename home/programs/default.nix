@@ -21,8 +21,6 @@ let
         fileWidgetCommand = "fd --type file --follow"; # FZF_CTRL_T_COMMAND
       };
 
-      gpg.enable = true;
-
       htop = {
         enable = true;
         settings = {
@@ -37,8 +35,6 @@ let
         enable = false;
         plugins = [];
       };
-
-      ssh.enable = true;
 
       zoxide = {
         enable = true;
@@ -75,6 +71,5 @@ in [
   ./towerPkgs
   ./xmonad
   ./vscodium
-  # ./yubikey
   more
 ]

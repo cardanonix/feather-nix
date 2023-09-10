@@ -11,9 +11,7 @@ let
   #hls = "${pkgs.haskellPackages.haskell-language-server}/bin/haskell-language-server";
   hlint = "${pkgs.hlint}/bin/hlint}";
 in {
-  imports = [
-    ../../../secrets/codium-git-auth.nix
-  ];
+  ## confidential info in secrets now
 
   programs.vscode = {
     enable = true;
@@ -98,6 +96,9 @@ in {
       "diffEditor.ignoreTrimWhitespace" = false;
       "window.autoDetectColorScheme" = false;
       # "workbench.statusBar.visible" = false;
+      "[haskell]" = {
+        "editor.defaultFormatter" = "haskell.haskell";
+      };
       "workbench.colorCustomizations" = {
         #ugly right now
         "statusBar.background" = "#282a33";

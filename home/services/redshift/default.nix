@@ -4,9 +4,7 @@
   callPackage,
   ...
 }: {
-  imports = [
-    ../../../secrets/location.nix
-  ];
+  # GPS location hidden in secrets
 
   services.redshift = {
     enable = true;
