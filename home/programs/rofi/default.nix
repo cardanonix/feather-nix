@@ -9,3 +9,6 @@
   # for rofi-emoji to insert emojis directly
   home.packages = [pkgs.xdotool];
 }
+# TODO: rofi-vpn
+# Rofi-based interface to enable VPN connections with NetworkManager
+
