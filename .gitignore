@@ -8,5 +8,4 @@ generated-plutus-scripts
 *.qcow2
 flake.nix.bak
 .DS_Store
-secrets/vpn_udp_ch/*
-
+secrets/vpn/
