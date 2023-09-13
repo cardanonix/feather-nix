@@ -4,8 +4,7 @@
   lib,
   inputs,
   ...
-}:
-with lib; {
+}: {
   imports = [
     ../../.././secrets/bismuth_intelTower.nix
     ./hardware-configuration.nix

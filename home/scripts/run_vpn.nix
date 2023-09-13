@@ -11,7 +11,7 @@ in
   pkgs.writeShellScriptBin "run_vpn" ''
 
     if ${systemctl} is-active "openvpn-${vpn_name}.service" > /dev/null; then
-        # ${kill} ${downloader}
+        ${kill} ${downloader}
         sudo ${sysctl} -w net.ipv6.conf.all.disable_ipv6=0
         sudo ${systemctl} stop "openvpn-${vpn_name}.service"
         echo ATTN: Your IP is now Vulnerable: VPN Stopped
@@ -20,6 +20,6 @@ in
         sudo ${sysctl} -w net.ipv6.conf.all.disable_ipv6=1
         echo Starting VPN...
         sudo ${systemctl} start "openvpn-${vpn_name}.service"
-        # ${downloader}
+        ${downloader}
     fi
   ''

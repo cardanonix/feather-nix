@@ -105,7 +105,6 @@ in {
     ./scripts
     ./services
     ./themes
-    .././secrets/bismuth_home.nix
   ];
 
   xdg = {
