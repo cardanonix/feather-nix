@@ -15,6 +15,5 @@ in [
   ./redshift
   ./betterlockscreen
   ./udiskie
-  ../../secrets/home_secret.nix
   more
 ]
