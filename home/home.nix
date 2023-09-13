@@ -28,7 +28,7 @@
     docker-compose # docker manager
     dive # explore docker layers
     duf # disk usage/free utility
-    exa # a better `ls`
+    eza # a better `ls`
     fd # "find" for files
     glow # terminal markdown viewer
     # gnomecast            # chromecast local files

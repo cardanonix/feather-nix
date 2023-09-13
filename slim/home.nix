@@ -30,7 +30,7 @@
     dive # explore docker layers
     drawio # diagram design
     duf # disk usage/free utility
-    exa # a better `ls`
+    eza # a better `ls`
     fd # "find" for files
     glow # terminal markdown viewer
     gnomecast # chromecast local files
