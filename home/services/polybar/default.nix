@@ -44,7 +44,7 @@
 
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
   openFearandGreed = "${xdgUtils}/bin/xdg-open https\\://alternative.me/crypto/fear-and-greed-index/";
-  openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://infosec.pub/c/cardano@lemmy.world/";
+  openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://infosec.pub/c/cardano/";
 
   mypolybar = pkgs.polybar.override {
     alsaSupport = true;
@@ -64,6 +64,8 @@
   monitorScript = pkgs.callPackage ./scripts/monitor.nix {};
   mprisScript = pkgs.callPackage ./scripts/mpris.nix {};
   networkScript = pkgs.callPackage ./scripts/network.nix {};
+  vpnToggleScript = pkgs.callPackage ../../scripts/run_vpn.nix {inherit pkgs;};
+  vpnStatus = pkgs.callPackage ./scripts/vpnStatus.nix {};
   fgindexScript = pkgs.callPackage ./scripts/fngi.nix {};
   adaScript = pkgs.callPackage ./scripts/ada.nix {};
   cnodeStatusScript = pkgs.callPackage ./scripts/cnodeStatus.nix {};
@@ -122,7 +124,7 @@
     interval = 10800
     format-padding = 1
 
-    format =  <label>
+    format = "%{T3}%{T-}<label>"
 
 
     # ramp-0 = %{F#999}<label>%{F-}
@@ -141,7 +143,7 @@
     label-maxlen = 10
 
     interval = 120
-    format = "%{T7}%{T-} <label>"
+    format = "%{T2}₳%{T-} <label>"
     format-padding = 0
     click-left = ${openCardanoSublemmy}
   '';
@@ -159,6 +161,19 @@
     click-left = "${terminal} --hold -e ${cnodeToggleScript}/bin/node_toggle"
   '';
 
+  vpn = ''
+    [module/vpn]
+    type = custom/script
+
+    exec = ${vpnStatus}/bin/vpn_status
+
+    interval = 4
+    format = "%{T7}<label>"
+    content-foreground = ''${color.lbshade4}
+    format-padding = 0
+    click-left = "${terminal} --hold -e ${vpnToggleScript}/bin/run_vpn"
+  '';
+
   xmonad = ''
     [module/xmonad]
     type = custom/script
@@ -167,7 +182,7 @@
     tail = true
   '';
 
-  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnodeStatus;
+  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnodeStatus + vpn;
 in {
   home.packages = with pkgs; [
     font-awesome # awesome fonts

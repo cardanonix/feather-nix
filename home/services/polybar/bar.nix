@@ -82,7 +82,7 @@
 
     tray-position = center
     modules-left =  cnodeStatus fngi ada cpu temperature memory filesystem
-    modules-right = wired-network  clickable-keyboard pulseaudio powermenu
+    modules-right = wired-network vpn clickable-keyboard pulseaudio powermenu
     enable-ipc = true
   '';
 in
