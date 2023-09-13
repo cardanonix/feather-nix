@@ -21,11 +21,5 @@ in
         echo Starting VPN...
         sudo ${systemctl} start "openvpn-${vpn_name}.service"
         # ${downloader}
-      if ${systemctl} is-active "openvpn-${vpn_name}.service" > /dev/null; then
-          echo ATTN: Your IP is now Hidden
-          echo ** VPN Connected to ${vpn_name} !!**
-      else
-          echo Your IP is Vulnerable: VPN Didn't Launch
-      fi
     fi
   ''
