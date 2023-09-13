@@ -6,6 +6,7 @@ let
   }: let
     gen-ssh-key = pkgs.callPackage ./gen-ssh-key.nix {inherit pkgs;};
     quote = pkgs.callPackage ./quotify.nix {inherit pkgs;};
+    vpn = pkgs.callPackage ./run_vpn.nix {inherit pkgs;};
     hcr = pkgs.callPackage ./changes-report.nix {inherit config pkgs;};
     hms = pkgs.callPackage ./switcher.nix {inherit config pkgs;};
     kls = pkgs.callPackage ./keyboard-layout-switch.nix {inherit pkgs;};
@@ -25,6 +26,7 @@ let
       hue_tools # tools for interacting with hue lights
       mru # repo download
       quote # takes current clipboard contents and adds a ">" before each line break
+      vpn #toggles the vpn
       #hms               # custom home-manager switcher that considers the current DISPLAY
       #ipad-mirror
     ];
