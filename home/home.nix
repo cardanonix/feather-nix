@@ -49,7 +49,6 @@
     pgcli # modern postgres client
     playerctl # music player controller
     prettyping # a nicer ping
-    # protonvpn-gui # official proton vpn client
     pulsemixer # pulseaudio mixer
     ranger # terminal file explorer
     ripgrep # fast grep
@@ -106,7 +105,7 @@ in {
     ./scripts
     ./services
     ./themes
-    ../secrets/bismuth_home.nix
+    .././secrets/bismuth_home.nix
   ];
 
   xdg = {
