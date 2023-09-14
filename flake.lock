@@ -3,11 +3,11 @@
     "CHaP": {
       "flake": false,
       "locked": {
-        "lastModified": 1694647662,
-        "narHash": "sha256-NsUtW5mDu3osqBFVBL1ilq1fPgdFLRLdso6d/nAK7o8=",
+        "lastModified": 1694713278,
+        "narHash": "sha256-c+C/6gcZCD8TcX+08WhLudOEO0QQu6GXdy1GO6ZA190=",
         "owner": "input-output-hk",
         "repo": "cardano-haskell-packages",
-        "rev": "f8d93e57711a7cfe174fb57272cd26f25ac6148d",
+        "rev": "a42bdf2f81eb961f0288d56ab48b9ffc8aca304e",
         "type": "github"
       },
       "original": {
@@ -559,11 +559,11 @@
         "vhs": "vhs"
       },
       "locked": {
-        "lastModified": 1692933851,
-        "narHash": "sha256-TA22HUtv/ELNysC2s7yBOF41kUE2JNnLp6/Nap2GYFw=",
+        "lastModified": 1694679374,
+        "narHash": "sha256-EVDSFQ4PihLCtzjL8abtEU4gGtNDhJ5AGhxsuXArdRU=",
         "owner": "snowfallorg",
         "repo": "cowsay",
-        "rev": "f3543cb8d9389af98d1d647bd20f5b104a1c8331",
+        "rev": "255be0879384547fe5e1a9963c0cab658ac8d853",
         "type": "github"
       },
       "original": {
@@ -804,11 +804,11 @@
         "rust-analyzer-src": "rust-analyzer-src_2"
       },
       "locked": {
-        "lastModified": 1694586081,
-        "narHash": "sha256-DNAohcMcTJNiFJ2hTTS6R+yaqVU+QVzp1uRsz0Ctiac=",
+        "lastModified": 1694672497,
+        "narHash": "sha256-vOW9rupO3zxmRMXNx4K2TXNP8BN3/7rcE4NVQjzw0UI=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "b16b1f21654b9490c662f6fd0a8fe3774a4b1606",
+        "rev": "6cfe8bcc4995a58e04159c301a1d90f3e8582aa1",
         "type": "github"
       },
       "original": {
@@ -1544,11 +1544,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1694642908,
-        "narHash": "sha256-0Opzs/56VW03COlVdoBrHJZGxQ7gzLDEWADnccC8ras=",
+        "lastModified": 1694643239,
+        "narHash": "sha256-pv2k/5FvyirDE8g4TNehzwZ0T4UOMMmqWSQnM/luRtE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b62f549653e97d78392c1e282b8ca76546a86585",
+        "rev": "d9b88b43524db1591fb3d9410a21428198d75d49",
         "type": "github"
       },
       "original": {
@@ -2384,11 +2384,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1694591211,
-        "narHash": "sha256-NPP7XGZH+Q5ey7nE2zGLrBrzKmLYPhj8YgsTSdhH0D4=",
+        "lastModified": 1694710316,
+        "narHash": "sha256-uRh46iIC86D8BD1wCDA5gRrt+hslUXiD0kx/UjnjBcs=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "3ccd87fcdae4732fe33773cefa4375c641a057e7",
+        "rev": "570256327eb6ca6f7bebe8d93af49459092a0c43",
         "type": "github"
       },
       "original": {
@@ -2949,11 +2949,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1694643174,
-        "narHash": "sha256-Vdsmlrsn8USzRSSptIuXLMn/0d4LhcTn0PLY/77MS0M=",
+        "lastModified": 1694691985,
+        "narHash": "sha256-7LqdxQhbEFbFUgSAMUgtYWNzCvf6V/fue2NjhQu+ZUI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "ba37d955b67058510b39c6841e94bf7c6a1fbc26",
+        "rev": "b662b29936b2461d08272623519e275d9f0d2b73",
         "type": "github"
       },
       "original": {
@@ -3396,11 +3396,11 @@
     "rust-analyzer-src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1694553088,
-        "narHash": "sha256-vnPa/OueHI+Dx7NKB34f5SI7Mmz/VSrP+IAoGNKueU0=",
+        "lastModified": 1694635326,
+        "narHash": "sha256-oYA1HZCoxHS1i5qMja1j/kx/UjShCqzQMB6Z3nIHOaI=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "15e13561499dbe90ef07cf37a90c1cedafc53e28",
+        "rev": "089ae47ebe58faf749b952f5d064078c74ea1e29",
         "type": "github"
       },
       "original": {
@@ -3530,11 +3530,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1667153928,
-        "narHash": "sha256-SbXxxrxWzumig4ytez86B9FFkd9zH/qj+SSiMUwY8bI=",
+        "lastModified": 1694679207,
+        "narHash": "sha256-g6lYb6nXMpxYUVRZNRZPZI+L31xWlwF/r/oWZmiSYpo=",
         "owner": "snowfallorg",
         "repo": "lib",
-        "rev": "1ffe7109a0aade9df745432e1f5788cf67a05a3e",
+        "rev": "8df9cb69f2ee4199c2879baaafce4e13864496a7",
         "type": "github"
       },
       "original": {
