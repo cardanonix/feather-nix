@@ -461,7 +461,6 @@ myLayout =
     . devLayout   
     . scdLayout   
     . spoLayout
-    . vmsLayout
     . secLayout $ (devTiles ||| resize2Master ||| resizeTall ||| Mirror tiled ||| column3 ||| full)
    where
      -- default tiling algorithm partitions the screen into two panes
@@ -510,7 +509,6 @@ myLayout =
      scdLayout = onWorkspace scdWs (devTiles ||| resize2Master ||| resizeTall ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      devLayout = onWorkspace devWs (devTiles ||| resize2Master ||| resizeTall ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
-     vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
 
      -- Fullscreen
      fullScreenToggle = mkToggle (single NBFULL)
@@ -600,10 +598,10 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , office
             , pavuctrl
             , scr
+            , keepass
             ]                                  -?> doCenterFloat
     , match [ btm
             , evince
-            , keepass
             , gimp
             ]                                  -?> doFullFloat
     , resource =? "desktop_window"             -?> doIgnore
@@ -649,10 +647,9 @@ spoWs = "spo"
 scdWs = "scd"
 devWs = "dev"
 secWs = "sec"
-vmsWs = "vms"
 
 myWS :: [WorkspaceId]
-myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, scdWs, secWs, vmsWs]
+myWS = [webWs, mscWs, musWs, vscWs, comWs, spoWs, devWs, scdWs, secWs]
 
 ------------------------------------------------------------------------
 -- Dynamic Projects
@@ -697,17 +694,13 @@ projects =
                                            spawn delayTerminal 
             }
   , Project { projectName      = scdWs
-            , projectDirectory = "~/plutus/workspace/scdWs"
+            , projectDirectory = "~/plutus/workspace/scdWs/scraperProto"
             , projectStartHook = Just $ do spawn "codium -n ."
                                            spawn delayTerminal 
             }
   , Project { projectName      = secWs
             , projectDirectory = "~/plutus/workspace/secWs/"
             , projectStartHook = Just $ runScratchpadApp keepass
-            }
-  , Project { projectName      = vmsWs
-            , projectDirectory = "~/plutus/workspace/vmsWs/"
-            , projectStartHook = Just $ runScratchpadApp virtbox
             }
   ]
 
