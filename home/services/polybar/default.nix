@@ -64,7 +64,7 @@
   monitorScript = pkgs.callPackage ./scripts/monitor.nix {};
   mprisScript = pkgs.callPackage ./scripts/mpris.nix {};
   networkScript = pkgs.callPackage ./scripts/network.nix {};
-  vpnToggleScript = pkgs.callPackage ../../scripts/run_vpn.nix {inherit pkgs;};
+  vpnToggleScript = pkgs.callPackage ../../scripts/vpn.nix {inherit pkgs;};
   vpnStatus = pkgs.callPackage ./scripts/vpnStatus.nix {};
   fgindexScript = pkgs.callPackage ./scripts/fngi.nix {};
   adaScript = pkgs.callPackage ./scripts/ada.nix {};
@@ -171,7 +171,7 @@
     format = "%{T7}<label>"
     content-foreground = ''${color.lbshade4}
     format-padding = 0
-    click-left = "${terminal} --hold -e ${vpnToggleScript}/bin/run_vpn"
+    click-left = "${terminal} --hold -e ${vpnToggleScript}/bin/vpn"
   '';
 
   xmonad = ''

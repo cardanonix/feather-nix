@@ -8,10 +8,10 @@
   kill = "${pkgs.killall}/bin/killall";
   downloader = "${pkgs.transmission-gtk}/bin/transmission-gtk";
 in
-  pkgs.writeShellScriptBin "run_vpn" ''
+  pkgs.writeShellScriptBin "vpn" ''
 
     if ${systemctl} is-active "openvpn-${vpn_name}.service" > /dev/null; then
-        ${kill} ${downloader}
+        ${kill} transmission-gtk
         sudo ${sysctl} -w net.ipv6.conf.all.disable_ipv6=0
         sudo ${systemctl} stop "openvpn-${vpn_name}.service"
         echo ATTN: Your IP is now Vulnerable: VPN Stopped
@@ -20,6 +20,5 @@ in
         sudo ${sysctl} -w net.ipv6.conf.all.disable_ipv6=1
         echo Starting VPN...
         sudo ${systemctl} start "openvpn-${vpn_name}.service"
-        ${downloader}
     fi
   ''

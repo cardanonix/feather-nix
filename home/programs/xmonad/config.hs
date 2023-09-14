@@ -507,8 +507,8 @@ myLayout =
      vscLayout = onWorkspace vscWs (devTiles ||| resize2Master ||| resizeTall ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      comLayout = onWorkspace comWs (resize2Master ||| resizeTall ||| tiled ||| full ||| column3 ||| goldenSpiral)
      spoLayout = onWorkspace spoWs (resizeTall ||| devTiles ||| resize2Master ||| oneBig ||| goldenSpiral ||| column3 ||| Mirror tiled_nogap ||| fuller ||| full ||| tiled)
-     scdLayout = onWorkspace scdWs (oneBig ||| dynamicGaps ||| doubletiled ||| Mirror grid_strict_landscape ||| grid_strict_landscape ||| Mirror grid_strict_portrait ||| grid_strict_portrait ||| column3_og ||| tiled_spaced ||| grid ||| fuller ||| Mirror tiled_nogap ||| Mirror tiled ||| tiled_nogap ||| tiled ||| video_tile ||| full  ||| column3 ||| goldenSpiral ||| silverSpiral)
-     devLayout = onWorkspace devWs (devTiles ||| resize2Master ||| oneBig ||| reflectHoriz tiled ||| goldenSpiral ||| full ||| tiled ||| Mirror tiled ||| column3)
+     scdLayout = onWorkspace scdWs (devTiles ||| resize2Master ||| resizeTall ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
+     devLayout = onWorkspace devWs (devTiles ||| resize2Master ||| resizeTall ||| oneBig ||| Mirror tiled_nogap ||| reflectHoriz tiled ||| fuller ||| tiled_nogap ||| goldenSpiral ||| full ||| Mirror tiled ||| column3_og )
      secLayout = onWorkspace secWs (tiled ||| fuller ||| column3) 
      vmsLayout = onWorkspace vmsWs (full ||| tiled ||| fuller ||| column3) 
 
