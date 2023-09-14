@@ -123,4 +123,18 @@ in {
       # "haskell.hlint.ignore" = "[]";
     };
   };
+
+  home.file.".vscode/argv.json" = {
+    force = true;
+    text = ''
+      {
+      	"disable-hardware-acceleration": true,
+      	"enable-crash-reporter": true,
+      	// Unique id used for correlating crash reports sent from this instance.
+      	// Do not edit this value.
+        "crash-reporter-id": "4e77d7bd-2f26-4723-9757-4f86cefd7010"
+        "password-store": "gnome"
+      }
+    '';
+  };
 }
