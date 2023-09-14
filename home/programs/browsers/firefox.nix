@@ -43,7 +43,7 @@
       "browser.search.widget.inNavBar" = true;
 
       "browser.shell.checkDefaultBrowser" = false;
-      "browser.startup.homepage" = "https://prettycoffee.github.io/fluidity/";
+      "browser.startup.homepage" = "https://harryprayiv.github.io/fluidity/";
       "browser.tabs.loadInBackground" = true;
       "browser.urlbar.placeholderName" = "DuckDuckGo";
       "browser.urlbar.showSearchSuggestionsFirst" = false;

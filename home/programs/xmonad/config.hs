@@ -290,7 +290,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Mastodon"        (modm .|. controlMask, xK_t             ) $ spawnOn comWs "brave --app=https://mastodon.social/"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
-    -- , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://prettycoffee.github.io/fluidity/"
+    -- , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://harryprayiv.github.io/fluidity/"
     ] ^++^
   keySet "Lighting Cues"
     [ key "DarkWarm"          (0, xF86XK_MonBrightnessDown                  ) (runLightCue 0)
