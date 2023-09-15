@@ -287,9 +287,20 @@
 
     devShell.${system} = let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
+
+      tui = pkgs.writeShellScriptBin "tui" ''
+        ./switch_TUI
+      '';
+      tti = pkgs.writeShellScriptBin "tti" ''
+        ./switch_TTI
+      '';
+      swiatch = pkgs.writeShellScriptBin "swiatch" ''
+        ./switch
+      '';
     in
       pkgs.mkShell {
-        name = "install-shell";
+        name = "nix-config";
+        packages = with pkgs; [tui tti swiatch];
         buildInputs = with pkgs; [wget s-tar];
       };
 
