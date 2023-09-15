@@ -124,11 +124,11 @@ in {
     };
 
     pointerCursor = {
-      # name = "phinger-cursors";
-      # package = pkgs.phinger-cursors;
-      name = "Bibata-Original-Classic";
-      package = pkgs.bibata-cursors;
-      size = 18;
+      name = "phinger-cursors";
+      package = pkgs.phinger-cursors;
+      # name = "Bibata-Original-Classic";
+      # package = pkgs.bibata-cursors;
+      size = 20;
       gtk.enable = true;
     };
   };
