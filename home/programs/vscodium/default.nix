@@ -64,6 +64,7 @@ in {
             gruntfuggly.todo-tree
             kamadorueda.alejandra
             github.copilot
+            gattytto.phoityne-vscode
             # vscode-org-mode.org-mode
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
