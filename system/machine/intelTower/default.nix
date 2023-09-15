@@ -48,31 +48,6 @@
 
   environment.systemPackages = [inputs.alejandra.defaultPackage.x86_64-linux];
 
-  # environment.systemPackages = with pkgs; [
-  #     # virt-manager
-  #   ];
-
-  # Enable Docker & VirtualBox support.
-  virtualisation = {
-    # docker = {
-    #   enable = true;
-    #   autoPrune = {
-    #     enable = true;
-    #     dates = "weekly";
-    #     storageDriver = "zfs";
-    #   };
-    # };
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    # libvirtd.enable = {
-    #   enable = true;
-    #   storageDriver = "zfs";
-    # };
-  };
-
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 

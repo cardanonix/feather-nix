@@ -4,6 +4,6 @@ let
 in {
   imports = [
     ./cardano-node
-    ./virtmanager
+    ./vm_oci
   ];
 }

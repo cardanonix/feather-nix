@@ -6,7 +6,7 @@
   ...
 }: let
   virtPackages = with pkgs; [
-    virtmanager
+    virt-manager
     qemu
     virt-viewer
     dnsmasq
@@ -22,7 +22,24 @@
 in {
   environment.systemPackages = virtPackages;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    docker = {
+      enable = false;
+      autoPrune = {
+        enable = false;
+        # dates = "weekly";
+      };
+    };
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+
+    libvirtd = {
+      enable = true;
+    };
+  };
 
   users.extraUsers.bismuth.extraGroups = ["libvirtd" "kvm"];
 

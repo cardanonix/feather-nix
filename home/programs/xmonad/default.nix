@@ -9,8 +9,8 @@
     ${pkgs.util-linux}/bin/setterm -blank 0 -powersave off -powerdown 0
     ${pkgs.xorg.xset}/bin/xset s off
     ${pkgs.xcape}/bin/xcape -e "Hyper_L=Tab;Hyper_R=backslash"
-    ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps
   '';
+  ## turned off: ${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps
 
   xrandrOps = ''
     ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-0 --mode 3840x2160 --rate 30.00

@@ -124,9 +124,11 @@ in {
     };
 
     pointerCursor = {
-      name = "phinger-cursors";
-      package = pkgs.phinger-cursors;
-      size = 25;
+      # name = "phinger-cursors";
+      # package = pkgs.phinger-cursors;
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 20;
       gtk.enable = true;
     };
   };
@@ -135,6 +137,7 @@ in {
   systemd.user.startServices = "sd-switch";
 
   xsession.numlock.enable = true;
+  # xsession.capslock.enable = true; found xmonad option for setxkbmap -option ctrl:nocaps
 
   # notifications about home-manager news
   news.display = "silent";
