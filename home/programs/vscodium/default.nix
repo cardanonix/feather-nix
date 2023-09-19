@@ -68,12 +68,12 @@ in {
             # vscode-org-mode.org-mode
           ]
           ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-            {
-              publisher = "mrded";
-              name = "railscasts";
-              version = "0.0.4";
-              sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
-            }
+            # {
+            #   publisher = "mrded";
+            #   name = "railscasts";
+            #   version = "0.0.4";
+            #   sha256 = "sha256-vjfoeRW+rmYlzSuEbYJqg41r03zSfbfuNCfAhHYyjDc=";
+            # }
 
             # {
             #   name = "copilot";
