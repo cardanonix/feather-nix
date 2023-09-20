@@ -15,6 +15,9 @@ in {
 
   programs.vscode = {
     enable = true;
+    # haskell.enable = true;
+    # haskell.hie.enable = true;
+    # haskell.hie.executablePath = -true;
     package = pkgs.vscodium.overrideAttrs (old: {
       buildInputs = old.buildInputs or [] ++ [pkgs.makeWrapper];
       postInstall =
