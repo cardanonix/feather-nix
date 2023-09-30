@@ -224,6 +224,7 @@ newtype GapState = GapIndex Int deriving Show
 instance ExtensionClass GapState where
   initialValue = GapIndex 0
 
+-- toggles between outer gap presets rather than individually control the border
 myGaps :: [GapSpec]
 myGaps = [ [(R,10),(L,10),(U,10),(D,10)] -- you do have to specify all directions
          , [(R,5),(L,5),(U,5),(D,5)]
