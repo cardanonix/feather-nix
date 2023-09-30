@@ -109,7 +109,7 @@
     label-maxlen = 50
 
     interval = 2
-    format =   <label>
+    format =   <label>
     format-padding = 2
   '';
 
