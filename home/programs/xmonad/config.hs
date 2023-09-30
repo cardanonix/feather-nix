@@ -291,7 +291,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} =
     [ key "Mastodon"        (modm .|. controlMask, xK_t             ) $ spawnOn comWs "brave --app=https://mastodon.social/"
     , key "Youtube"         (modm .|. controlMask, xK_y             ) $ spawnOn webWs "brave --app=https://youtube.com/"
     , key "Private Browser" (modm .|. controlMask, xK_p             ) $ spawnOn webWs "brave --incognito"
-    -- , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://harryprayiv.github.io/fluidity/"
+    , key "Home Page w/App" (modm .|. controlMask, xK_a             ) $ spawnOn webWs "brave --app=https://harryprayiv.github.io/fluidity/"
     ] ^++^
   keySet "Lighting Cues"
     [ key "DarkWarm"          (0, xF86XK_MonBrightnessDown                  ) (runLightCue 0)
@@ -559,6 +559,7 @@ eog       = NameApp  "eog"                  "eog"
 evince    = ClassApp "Evince"               "evince"
 gimp      = ClassApp "Gimp"                 "gimp"
 keepass   = ClassApp "KeePassXC"            "keepassxc"
+strawberry  = ClassApp "Strawberry"          "strawberry"
 -- mastodon  = TitleApp "Mastodon"          "tokodon"
 nautilus  = ClassApp "Org.Gnome.Nautilus"   "nautilus"
 office    = ClassApp "libreoffice-draw"     "libreoffice-draw"
@@ -602,6 +603,7 @@ myManageHook = manageApps <+> manageSpawn <+> manageScratchpads
             , keepass
             ]                                  -?> doCenterFloat
     , match [ btm
+            , strawberry
             , evince
             , gimp
             ]                                  -?> doFullFloat
@@ -634,7 +636,7 @@ scratchpadApp app = NS (getAppName app) (getAppCommand app) (isInstance app) def
 
 runScratchpadApp = namedScratchpadAction scratchpads . getAppName
 
-scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, gimp, mpv, keepass, virtbox ]
+scratchpads = scratchpadApp <$> [ audacious, btm, nautilus, scr, gimp, mpv, keepass, virtbox, strawberry ]
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -668,7 +670,7 @@ projects =
             }
   , Project { projectName      = musWs
             , projectDirectory = "~/plutus/workspace/musWs/"
-            , projectStartHook = Just $ do spawn "brave --app=https://music.youtube.com/"
+            , projectStartHook = Just $ do spawn "strawberry"
             }
   , Project { projectName      = vscWs
             , projectDirectory = "~/plutus/workspace/vscWs/nix-config.git/intelTower/"
