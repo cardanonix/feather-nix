@@ -67,6 +67,7 @@
     feh
     palemoon-bin
     libsForQt5.gwenview # my favorite image viewer (for now)
+    screenkey # needed for key capture
 
     # Work Stuff
     work-browser

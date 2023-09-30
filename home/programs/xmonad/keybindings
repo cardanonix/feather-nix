@@ -1,15 +1,17 @@
 M4-<F1> Show Keybindings
 
 >> Applications:
-M4-<F2> Slack
-M4-C-y  Youtube
-M4-C-p  Private Browser
-M4-C-a  Home Page w/App
+M4-C-t Mastodon
+M4-C-y Youtube
+M4-C-p Private Browser
 
->> Lights:
-<XF86MonBrightnessDown>  DarkerWarm
-<XF86MonBrightnessUp>    BrighterWarm
-M4-<XF86MonBrightnessUp> BrighterBlue
+>> Lighting Cues:
+<XF86MonBrightnessDown>    DarkWarm
+<XF86MonBrightnessUp>      BrighterWarm
+C-<XF86MonBrightnessUp>    FullWarm
+M4-<XF86MonBrightnessDown> Prev Lighting Cue
+M4-<XF86MonBrightnessUp>   Next Lighting Cue
+M4-C-<XF86MonBrightnessUp> FullCold
 
 >> Audio:
 <XF86AudioMute>           Mute
@@ -42,7 +44,9 @@ M4-S-<Space> Reset
 M4-f         Fullscreen
 
 >> Polybar:
-M4-= Toggle
+M4-=   Toggle
+M4-S-b Toggle Bottom
+M4-S-u Toggle Top
 
 >> Projects:
 <XF86KbdBrightnessDown> Switch prompt
@@ -52,7 +56,6 @@ M4-= Toggle
 M4-C-g        GuildView
 M4-C-f        Files
 M4-C-r        Screen recorder
-M4-C-s        Spotify
 M4-C-m        Mpv
 M4-C-i        Gimp
 
@@ -65,7 +68,6 @@ M4-r   Switch to S 2
 M4-S-r Move to S 2
 
 >> System:
-M4-S-b     Toggle status bar gap
 M4-S-q     Logout (quit XMonad)
 M4-q       Restart XMonad
 M4-<Print> Capture entire screen
@@ -84,6 +86,8 @@ M4-S-j           Swap next
 M4-S-k           Swap previous
 M4-h             Shrink master
 M4-l             Expand master
+M4-a             Mirror grow
+M4-z             Mirror shrink
 M4-t             Switch to tile
 M4-S-<Tab>       Rotate slaves
 M4-d             Decrease size
@@ -118,9 +122,9 @@ M4-S-C-6       Switch to "spo"
 M4-7           Switch to "dev"
 M4-S-7         Move to "dev"
 M4-S-C-7       Switch to "dev"
-M4-8           Switch to "sec"
-M4-S-8         Move to "sec"
-M4-S-C-8       Switch to "sec"
-M4-9           Switch to "vms"
-M4-S-9         Move to "vms"
-M4-S-C-9       Switch to "vms"
+M4-8           Switch to "scd"
+M4-S-8         Move to "scd"
+M4-S-C-8       Switch to "scd"
+M4-9           Switch to "sec"
+M4-S-9         Move to "sec"
+M4-S-C-9       Switch to "sec"
