@@ -67,6 +67,8 @@ in {
             gruntfuggly.todo-tree
             kamadorueda.alejandra
             github.copilot
+            nwolverson.language-purescript
+            nwolverson.language-purescript
             # gattytto.phoityne-vscode
             # vscode-org-mode.org-mode
           ]
