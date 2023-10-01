@@ -68,7 +68,8 @@
     palemoon-bin
     libsForQt5.gwenview # my favorite image viewer (for now)
     screenkey # needed for key capture
-    strawberry
+    libsForQt5.elisa
+    chrysalis
 
     # Work Stuff
     work-browser

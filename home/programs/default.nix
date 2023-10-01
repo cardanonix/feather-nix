@@ -55,6 +55,7 @@ in [
   ./browsers/brave.nix
   # ./browsers/palemoon.nix
   ./cardano
+  ./chrysalis
   ./dconf
   ./git
   ./fish
