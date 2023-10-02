@@ -1,0 +1,4 @@
+[
+  ./signal.nix
+  # ./spotify.nix
+]

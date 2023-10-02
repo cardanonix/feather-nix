@@ -6,7 +6,7 @@
   inputs,
   ...
 }: let
-  username = "bismuth";
+  username = "water";
   homeDirectory = "/home/${username}";
   configHome = "${homeDirectory}/.config";
   # workaround to open a URL in a new tab in the specific firefox profile
