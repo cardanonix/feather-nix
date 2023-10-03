@@ -1,20 +1,37 @@
 {
-  config,
   pkgs,
+  modulesPath,
   lib,
-  inputs,
   ...
-}:
-with lib; {
+}: {
   imports = [
-    ./xmonad.nix
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
-    # Provide an initial copy of the NixOS channel so that the user
-    # doesn't need to run "nix-channel --update" first.
+    #   <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
+    #   # Provide an initial copy of the NixOS channel so that the user
+    #   # doesn't need to run "nix-channel --update" first.
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
   ];
 
-  # TODO: these are dummy file systems, get the proper one
+  # use the latest Linux kernel
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Needed for https://github.com/NixOS/nixpkgs/issues/58959
+  boot.supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
+
+  # {
+  #   config,
+  #   pkgs,
+  #   lib,
+  #   inputs,
+  #   ...
+  # }:
+  # with lib; {
+  # imports = [
+  #   # ./xmonad.nix
+
+  # ];
+
+  # TODO: populate these from a fresh image
   # fileSystems."/boot" = {
   #   device = "/dev/disk/by-uuid/7BB3-09C5";
   #   fsType = "vfat";
@@ -23,8 +40,14 @@ with lib; {
   #   device = "/dev/disk/by-uuid/0fddb262-13c1-46b1-9a5d-216766f47498";
   #   fsType = "ext4";
   # };
+  #
+  #
+  #  swapDevices =
+  # [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
+  # ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  /*
+     # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.water = with inputs; {
     isNormalUser = true;
     home = "/home/water";
@@ -69,12 +92,6 @@ with lib; {
     interfaces.eno1.useDHCP = true;
   };
 
-  /*
-   swapDevices =
-  [ { device = "/dev/disk/by-uuid/6d522132-d549-414a-84c9-160687b22cac"; }
-  ];
-  */
-
   # Enable sound.
   sound = {
     enable = false;
@@ -104,4 +121,42 @@ with lib; {
       }
     ];
   };
+  */
+
+  # Nix daemon config
+  # nix = with pkgs; {
+  #   # Automate garbage collection
+  #   gc = {
+  #     automatic = true;
+  #     dates = "weekly";
+  #     options = "--delete-older-than 7d";
+  #   };
+  #   # Flakes settings
+  #   package = pkgs.nixUnstable;
+  #   registry.nixpkgs.flake = inputs.nixpkgs;
+  #   settings = {
+  #     # Automate `nix store --optimise`
+  #     auto-optimise-store = true;
+  #     # extra-experimental-features = ["ca-derivations"];
+  #     # experimental-features = ["nix-command" "flakes"];
+  #     # warn-dirty = false;
+  #     # Avoid unwanted garbage collection when using nix-direnv
+  #     keep-outputs = true;
+  #     keep-derivations = true;
+  #     # Required by Cachix to be used as non-root user
+  #     trusted-users = ["root" "water"];
+
+  #     substituters = [
+  #       "https://cache.nixos.org/"
+  #       "https://cache.iog.io/"
+  #       "https://cache.ngi0.nixos.org/"
+  #     ];
+  #     trusted-public-keys = [
+  #       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+  #       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+  #       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+  #       "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+  #     ];
+  #   };
+  # };
 }
