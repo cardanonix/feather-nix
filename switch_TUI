@@ -21,7 +21,6 @@ rebuild_home_iso() {
   # activateHM
 }
 
-
 rebuild_home_edp() {
   nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
   activateHM
@@ -52,26 +51,9 @@ eval_traced_home_uhd() {
 rebuild_system() {
   #nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
   #sudo result/bin/switch-to-configuration switch
-  sudo nixos-rebuild switch --flake .#intelTower --impure
+  sudo nixos-rebuild switch --flake .#plutus_vm --impure
 }
 
-rebuild_intelTower() {
-  sudo nixos-rebuild switch --flake .#intelTower --impure 
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure
-  activateHM 
-}
-
-rebuild_intelTower_withUpdate() {
-  # ./home/scripts/pullrelease.sh
-  nix flake update 
-  sudo nixos-rebuild switch --flake .#intelTower --impure --show-trace
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --impure --show-trace 
-  activateHM 
-}
-
-eval_intelTower() {
-  nix eval --raw .#intelTower --impure
-}
 
 eval_liveISO() {
   NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO -o result"
@@ -82,30 +64,16 @@ eval_liveISO() {
   # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=.#liveISO
 }
 
-
 # was necessary to purge substitutes caches (saving for future use) 
 rebuild_scratchBuild() {
   nix flake update 
-  sudo nixos-rebuild switch --flake .#intelTower --impure --option build-use-substitutes false --show-trace
+  sudo nixos-rebuild switch --flake .#plutus_vm --impure --option build-use-substitutes false --show-trace
   nix build .#homeConfigurations.bismuth-edp.activationPackage --option build-use-substitutes false --show-trace
   activateHM
 }
 
-rebuild_intelNUC() {
-  sudo nixos-rebuild switch --flake .#intelNUC --impure
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
-  activateHM
-}
-
-rebuild_intelNUC_withUpdate() {
-  nix flake update 
-  sudo nixos-rebuild switch --flake .#intelNUC --impure
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace
-  activateHM
-}
-
 rebuild_vm() {
-  sudo nixos-rebuild build-vm --flake .#intelTower --impure
+  sudo nixos-rebuild build-vm --flake .#plutus_vm --impure
 }
 
 restart_X() {
@@ -134,12 +102,7 @@ options=("Rebuild Home (LVM)"
         "Restart X11" 
         "Update fish" 
         "Rebuild System" 
-        "Rebuild IntelTower" 
-        "Rebuild IntelTower with update" 
-        "Evaluate IntelTower" 
         "Evaluate LiveISO"
-        "Rebuild IntelNUC" 
-        "Rebuild IntelNUC with update" 
         "Rebuild Scratch Build" 
         "Collect All Garbage" 
         "Rebuild VM" 
@@ -168,18 +131,8 @@ case $1 in
     fish -c fish_update_completions;;
   "system")
     rebuild_system;;  
-  "intelTower")
-    rebuild_intelTower;;
-  "intelTowerFULL")
-    rebuild_intelTower_withUpdate;;
-  "intelTowerEval")
-    eval_intelTower;;
   "liveISOEval")
     eval_liveISO;;
-  "intelNUC")
-    rebuild_intelNUC;;
-  "intelNUCFULL")  
-    rebuild_intelNUC_withUpdate;;
   "scratchBuild")
     rebuild_scratchBuild;;
   "trashPanda")
@@ -248,36 +201,11 @@ do
             rebuild_system
             break
             ;;
-        "Rebuild IntelTower")
-            echo "Rebuilding IntelTower..."
-            rebuild_intelTower
-            break
-            ;;
-        "Rebuild IntelTower with update")
-            echo "Rebuilding IntelTower with update..."
-            rebuild_intelTower_withUpdate
-            break
-            ;;
-        "Evaluate IntelTower")
-            echo "Evaluating IntelTower..."
-            eval_intelTower
-            break
-            ;;
         "Evaluate LiveISO")
             echo "Evaluating ISO System..."
             eval_liveISO
             break
             ;;            
-        "Rebuild IntelNUC")
-            echo "Rebuilding IntelNUC..."
-            rebuild_intelNUC
-            break
-            ;;
-        "Rebuild IntelNUC with update")
-            echo "Rebuilding IntelNUC with update..."
-            rebuild_intelNUC_withUpdate
-            break
-            ;;
         "Rebuild Scratch Build")
             echo "Rebuilding Scratch Build..."
             rebuild_scratchBuild
