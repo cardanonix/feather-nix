@@ -90,7 +90,6 @@
     eog # image viewer
     evince # pdf reader
     gucharmap # gnome character map (for font creation)
-    audacious
     # file manager overlay
     #nautilus # file manager
     pkgs.nautilus-gtk3

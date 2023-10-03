@@ -21,6 +21,9 @@ let
         fileWidgetCommand = "fd --type file --follow"; # FZF_CTRL_T_COMMAND
       };
 
+      gpg.enable = true;
+      ssh.enable = true;
+
       htop = {
         enable = true;
         settings = {

@@ -15,6 +15,13 @@ rebuild_home_lvm() {
   activateHM
 }
 
+rebuild_home_iso() {
+  nix eval --raw .#homeConfigurations.iso-home.activationPackage --impure
+  # nix build .#homeConfigurations.iso-home.activationPackage --show-trace --impure
+  # activateHM
+}
+
+
 rebuild_home_edp() {
   nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
   activateHM
@@ -66,6 +73,10 @@ eval_intelTower() {
   nix eval --raw .#intelTower --impure
 }
 
+eval_liveISO() {
+  nix eval --raw .#liveISO --impure
+}
+
 
 # was necessary to purge substitutes caches (saving for future use) 
 rebuild_scratchBuild() {
@@ -107,7 +118,8 @@ collect_ALL_garbage() {
 
 PS3='Please enter your choice: '
 
-options=("Rebuild Home (LVM)" 
+options=("Rebuild Home (LVM)"
+        "Rebuild Home (ISO)" 
         "Rebuild Home (EDP)" 
         "Evaluate Home (EDP)" 
         "Evaluate Home (EDP) with trace" 
@@ -120,6 +132,7 @@ options=("Rebuild Home (LVM)"
         "Rebuild IntelTower" 
         "Rebuild IntelTower with update" 
         "Evaluate IntelTower" 
+        "Evaluate LiveISO"
         "Rebuild IntelNUC" 
         "Rebuild IntelNUC with update" 
         "Rebuild Scratch Build" 
@@ -130,6 +143,8 @@ options=("Rebuild Home (LVM)"
 case $1 in
   "lvm")
     rebuild_home_lvm;;
+  "iso")
+    rebuild_home_iso;;
   "edp")
     rebuild_home_edp;;
   "edpEval")
@@ -154,6 +169,8 @@ case $1 in
     rebuild_intelTower_withUpdate;;
   "intelTowerEval")
     eval_intelTower;;
+  "liveISOEval")
+    eval_liveISO;;
   "intelNUC")
     rebuild_intelNUC;;
   "intelNUCFULL")  
@@ -165,7 +182,7 @@ case $1 in
   "vm")
     rebuild_vm;;
   *)
-    echo "expected 'lvm/edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
+    echo "expected 'iso/lvm/edp/edpEval/edptEval' , 'uhd/uhdEval/udhtEval' , 'intelTower/intelTowerFULL/intelTowerEval/scratchBuild' , 'intelNUC/intelNUCFULL' , 'trashPanda' , , 'restart-x', 'update-fish', 'system' , or 'vm'";;
 esac
 
 select opt in "${options[@]}"
@@ -174,6 +191,11 @@ do
         "Rebuild Home (LVM)")
             echo "Rebuilding Home (LVM)..."
             rebuild_home_lvm
+            break
+            ;;
+        "Rebuild Home (ISO)")
+            echo "Rebuilding Home (ISO)..."
+            rebuild_home_iso
             break
             ;;
         "Rebuild Home (EDP)")
@@ -236,6 +258,11 @@ do
             eval_intelTower
             break
             ;;
+        "Evaluate LiveISO")
+            echo "Evaluating ISO System..."
+            eval_liveISO
+            break
+            ;;            
         "Rebuild IntelNUC")
             echo "Rebuilding IntelNUC..."
             rebuild_intelNUC

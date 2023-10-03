@@ -43,8 +43,6 @@
   );
 
   openGithub = "${xdgUtils}/bin/xdg-open https\\://github.com/notifications";
-  openFearandGreed = "${xdgUtils}/bin/xdg-open https\\://alternative.me/crypto/fear-and-greed-index/";
-  openCardanoSublemmy = "${xdgUtils}/bin/xdg-open https\\://infosec.pub/c/cardano/";
 
   mypolybar = pkgs.polybar.override {
     alsaSupport = true;
@@ -66,10 +64,6 @@
   networkScript = pkgs.callPackage ./scripts/network.nix {};
   vpnToggleScript = pkgs.callPackage ../../scripts/vpn.nix {inherit pkgs;};
   vpnStatus = pkgs.callPackage ./scripts/vpnStatus.nix {};
-  fgindexScript = pkgs.callPackage ./scripts/fngi.nix {};
-  adaScript = pkgs.callPackage ./scripts/ada.nix {};
-  cnodeStatusScript = pkgs.callPackage ./scripts/cnodeStatus.nix {};
-  cnodeToggleScript = pkgs.callPackage ../../scripts/node_toggle.nix {inherit inputs pkgs config;};
 
   bctl = ''
     [module/bctl]
@@ -113,54 +107,6 @@
     format-padding = 2
   '';
 
-  fngi = ''
-    [module/fngi]
-    type = custom/script
-
-    exec = ${fgindexScript}/bin/fngi
-
-    label-maxlen = 20
-
-    interval = 10800
-    format-padding = 1
-
-    format = "%{T3}%{T-}<label>"
-
-
-    # ramp-0 = %{F#999}<label>%{F-}
-    # ramp-1 = %{F#900}<label>%{F-}
-    # ramp-50 = %{F#F00}<label>%{F-}
-    click-left = ${openFearandGreed}
-  '';
-
-  ada = ''
-    [module/ada]
-    type = custom/script
-
-    exec = ${adaScript}/bin/ada
-
-
-    label-maxlen = 10
-
-    interval = 120
-    format = "%{T2}₳%{T-} <label>"
-    format-padding = 0
-    click-left = ${openCardanoSublemmy}
-  '';
-
-  cnodeStatus = ''
-    [module/cnodeStatus]
-    type = custom/script
-
-    exec = ${cnodeStatusScript}/bin/cnodeStatus
-
-    interval = 4
-    format = "%{T7}<label>"
-    content-foreground = ''${color.lbshade4}
-    format-padding = 0
-    click-left = "${terminal} --hold -e ${cnodeToggleScript}/bin/node_toggle"
-  '';
-
   vpn = ''
     [module/vpn]
     type = custom/script
@@ -182,13 +128,12 @@
     tail = true
   '';
 
-  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + fngi + ada + cnodeStatus + vpn;
+  customMods = mainBar + bctl + cal + github + keyboard + mpris + xmonad + vpn;
 in {
   home.packages = with pkgs; [
     font-awesome # awesome fonts
     material-design-icons # fonts with glyphs
     xfce.orage # lightweight calendar
-    # inputs.cardano-node.packages.x86_64-linux.cardano-node
   ];
 
   services.polybar = {

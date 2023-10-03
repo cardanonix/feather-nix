@@ -227,8 +227,23 @@
             ];
           }
         );
+        mkISO = {ultraHD ? false}: (
+          home-manager.lib.homeManagerConfiguration rec {
+            inherit pkgs;
+
+            extraSpecialArgs = {
+              inherit ultraHD inputs;
+              addons = nur.repos.rycee.firefox-addons;
+            };
+            modules = [
+              (import ./system/machine/liveIso/home/home.nix)
+              neovim-flake.nixosModules.${system}.hm
+            ];
+          }
+        );
       in {
         vm-home = mkSlim {ultraHD = false;};
+        iso-home = mkISO {ultraHD = false;};
         bismuth-edp = mkHome {ultraHD = false;};
         bismuth-uhd = mkHome {ultraHD = true;};
       }
@@ -276,6 +291,13 @@
             inputs.cardano-node.nixosModules.cardano-node
             ./system/machine/plutus_vm
             ./system/configuration.nix
+          ];
+        };
+        liveISO = nixosSystem {
+          inherit lib pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./system/machine/liveIso
           ];
         };
       }

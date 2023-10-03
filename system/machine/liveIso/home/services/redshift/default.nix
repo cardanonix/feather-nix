@@ -18,5 +18,8 @@
       night = 2600;
     };
     provider = "manual";
+
+    latitude = 42.4363258;
+    longitude = -71.0801245;
   };
 }
