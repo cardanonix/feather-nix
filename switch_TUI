@@ -74,7 +74,9 @@ eval_intelTower() {
 }
 
 eval_liveISO() {
-  nix eval --raw .#liveISO --impure
+  # nix eval --raw .#liveISO --impure
+  nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./system/machine/liveISO
+  # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=.#liveISO
 }
 
 

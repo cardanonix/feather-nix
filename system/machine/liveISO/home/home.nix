@@ -116,7 +116,7 @@ in {
 
   home = {
     inherit username homeDirectory;
-    stateVersion = "22.11";
+    stateVersion = "23.05";
 
     packages = defaultPkgs ++ gnomePkgs;
 
