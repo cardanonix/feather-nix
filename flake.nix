@@ -265,25 +265,6 @@
           };
         };
       in {
-        intelTower = nixosSystem {
-          inherit lib pkgs system;
-          specialArgs = {inherit inputs;};
-          modules = [
-            inputs.cardano-node.nixosModules.cardano-node
-            # inputs.cardano-wallet.nixosModules.cardano-wallet
-            ./system/machine/intelTower
-            ./system/configuration.nix
-          ];
-        };
-        intelNUC = nixosSystem {
-          inherit lib inputs pkgs system;
-          specialArgs = {inherit inputs;};
-          modules = [
-            inputs.cardano-node.nixosModules.cardano-node
-            ./system/machine/intelNUC
-            ./system/configuration.nix
-          ];
-        };
         plutus_vm = nixosSystem {
           inherit lib pkgs system;
           specialArgs = {inherit inputs;};
@@ -313,16 +294,10 @@
       tui = pkgs.writeShellScriptBin "tui" ''
         ./switch_TUI
       '';
-      tti = pkgs.writeShellScriptBin "tti" ''
-        ./switch_TTI
-      '';
-      swiatch = pkgs.writeShellScriptBin "swiatch" ''
-        ./switch
-      '';
     in
       pkgs.mkShell {
         name = "nix-config";
-        packages = with pkgs; [tui tti swiatch];
+        packages = with pkgs; [tui];
         buildInputs = with pkgs; [wget s-tar];
       };
 
