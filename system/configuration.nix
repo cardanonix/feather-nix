@@ -97,5 +97,5 @@ in {
   };
 
   system.copySystemConfiguration = true;
-  system.stateVersion = "22.11"; # LEAVE AS-IS (unless fresh install)
+  system.stateVersion = "23.05"; # LEAVE AS-IS (unless fresh install)
 }

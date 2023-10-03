@@ -3,12 +3,11 @@
   pkgs,
   ...
 }: let
-  version = "iso-23.05";
+  version = "iso-20.11";
 in {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
-    # ./xmonad.nix
   ];
 
   boot.supportedFilesystems = ["zfs"];
@@ -27,19 +26,21 @@ in {
 
   programs.adb.enable = true;
   programs.bash.enableCompletion = true;
-
-  programs.fish.enable = true;
-  programs.zsh.enable = true;
-
+  programs.mosh.enable = true;
+  programs.tmux.enable = true;
+  programs.tmux.shortcut = "a";
+  programs.tmux.terminal = "screen-256color";
+  programs.tmux.clock24 = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
-  programs.gnupg.agent.pinentryFlavor = "tty";
-  # console.font = "Lat2-Terminus16";
-  console.keyMap = "us";
-  # console.defaultLocale = "fr_FR.UTF-8";
 
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "fr";
+  };
+  # defaultLocale = "fr_FR.UTF-8";
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
@@ -50,24 +51,11 @@ in {
     htop
     vim
     networkmanager
-    alacritty
-    vim
-    wget
-    bc
-    brave
-    git-crypt
-    firejail
-    dnsutils
-    screen
-    jq
-    srm
-    gparted
-    zip
   ];
-  users.users.water = {
+
+  users.extraUsers.alex = {
     isNormalUser = true;
-    password = "water";
-    shell = pkgs.fish;
+    password = "alex";
     extraGroups = [
       "wheel"
       "adbusers"
@@ -75,18 +63,17 @@ in {
       "networkmanager"
     ];
   };
+
   isoImage.makeUsbBootable = true;
   isoImage.makeEfiBootable = true;
   isoImage.includeSystemBuildDependencies = true; # offline install
   isoImage.storeContents = with pkgs; [
+    tmux
+    mosh
     git
     gnupg
     unzip
     htop
     vim
-    git-crypt
-    wget
-    zip
-    jq
   ];
 }

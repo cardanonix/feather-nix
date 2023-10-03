@@ -37,8 +37,8 @@ build_ci_home() {
 
 build_ci_system() {
   # nix build .#nixosConfigurations.plutus_vm.config.system.build.toplevel --impure --show-trace
-  nix build .#nixosConfigurations.liveISO.config.system.build.toplevel --impure --show-trace
-  # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./system/machine/liveISO/default.nix
+  # nix build .#nixosConfigurations.liveISO.config.system.build.toplevel --impure --show-trace
+  nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./system/machine/liveISO/default.nix --impure --show-trace
 }
 
 fresh_install() {
