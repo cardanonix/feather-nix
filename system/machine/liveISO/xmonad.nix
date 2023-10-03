@@ -19,8 +19,6 @@
     xserver = {
       enable = true;
 
-      # desktopManager.wallpaper = "../../../imgs/wallpapers/longboat01_yanoi_plutus.JPG";
-
       extraLayouts.us-custom = {
         description = "US layout with custom hyper keys";
         languages = ["eng"];
@@ -54,17 +52,5 @@
     };
   };
 
-  #hardware.bluetooth = {
-  #  enable = true;
-  #  hsphfpd.enable = true;
-  #  settings = {
-  #    General = {
-  #      Enable = "Source,Sink,Media,Socket";
-  #    };
-  # };
-  #};
-
-  #services.blueman.enable = true;
-  #systemd.services.upower.enable = true; # TODO: isn't this also covered on line 8?
   systemd.user.services.telephony_client.enable = false;
 }
