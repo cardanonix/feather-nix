@@ -1,11 +1,11 @@
-my nix-config
+stripped-down configs
 ==========
 
 [![CI Home](https://github.com/harryprayiv/nix-config/workflows/Home/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
 [![CI System](https://github.com/harryprayiv/nix-config/workflows/NixOS/badge.svg)](https://github.com/harryprayiv/nix-config/actions)
 
-My current evolving NixOS dev environment with full configuration files, home-manager, neovim, etc. 
-This config really won't 
+My current evolving NixOS lightweight dev environments with full configuration files, home-manager, neovim, etc. 
+
 ## Programs
 
 The `home.nix` file contains details about all the software I use, but here's a shout-out to the ones I use the most and that are customized to my needs.
