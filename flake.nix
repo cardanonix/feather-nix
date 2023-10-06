@@ -122,21 +122,19 @@
     inherit (inputs.nixpkgs.lib) mapAttrs;
     inherit inputs;
     system = "x86_64-linux";
-
-    ci = with inputs system; (
-      let
-        pkgs = import nixpkgs {
-          config.allowUnfree = true;
-
-          overlays = [
-            neovim-flake.overlays.${system}.default
-          ];
-        };
-      in {
-        metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix {};
-        metals-updater = pkgs.callPackage ./home/programs/neovim-ide/update-metals.nix {};
-      }
-    );
+    # ci = with inputs system; (
+    #   let
+    #     pkgs = import nixpkgs {
+    #       config.allowUnfree = true;
+    #       overlays = [
+    #         neovim-flake.overlays.${system}.default
+    #       ];
+    #     };
+    #   in {
+    #     metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix {};
+    #     metals-updater = pkgs.callPackage ../system/machine/plutus_vm/home/programs/neovim-ide/update-metals.nix {};
+    #   }
+    # );
   in rec
   {
     homeConfigurations = with inputs; (
@@ -175,9 +173,9 @@
             nurpkgs.overlay
             neovim-flake.overlays.${system}.default
             (f: p: {tex2nix = tex2nix.defaultPackage.${system};})
-            ((import ./home/overlays/md-toc) {inherit (inputs) gh-md-toc;})
-            (import ./home/overlays/ranger)
-            (import ./home/overlays/nautilus)
+            ((import ./system/machine/plutus_vm/home/overlays/md-toc) {inherit (inputs) gh-md-toc;})
+            (import ./system/machine/plutus_vm/home/overlays/ranger)
+            (import ./system/machine/plutus_vm/home/overlays/nautilus)
           ];
         };
 
@@ -197,7 +195,7 @@
             modules = [
               # inputs.cardano-node.nixosModules.cardano-node
               #inputs.cardano-wallet.nixosModules.cardano-wallet
-              (import ./slim/home.nix)
+              (import ./system/machine/plutus_vm/home/home.nix)
               neovim-flake.nixosModules.${system}.hm
             ];
           }
@@ -238,12 +236,19 @@
           };
         };
       in {
+        rockPi = nixosSystem {
+          inherit lib pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.cardano-node.nixosModules.cardano-node
+            ./system/machine/rockPi/sd-image.nix
+          ];
+        };
         plutus_vm = nixosSystem {
           inherit lib pkgs system;
           specialArgs = {inherit inputs;};
           modules = [
             inputs.cardano-node.nixosModules.cardano-node
-            ./system/machine/plutus_vm
             ./system/machine/plutus_vm/configuration.nix
           ];
         };
@@ -254,27 +259,17 @@
             ./system/machine/liveISO/configuration.nix
           ];
         };
-        rockPi = nixosSystem {
-          inherit lib pkgs system;
-          specialArgs = {inherit inputs;};
-          modules = [
-            inputs.cardano-node.nixosModules.cardano-node
-            ./system/machine/rockPi/sd-image.nix
-          ];
-        };
       }
     );
 
-    packages.${system} = {
-      inherit (ci) metals metals-updater;
-    };
+    # packages.${system} = {
+    # };
 
     devShell.${system} = let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-
-      tui = pkgs.writeShellScriptBin "tui" ''
-        ./switch_TUI
-      '';
+      # tui = pkgs.writeShellScriptBin "tui" ''
+      #   ./switch_TUI
+      # '';
     in
       pkgs.mkShell {
         name = "nix-config";
