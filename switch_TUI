@@ -49,14 +49,33 @@ eval_traced_home_uhd() {
 }
 
 rebuild_system() {
+  #nix build .#nixosConfigurations.plutus-vm.config.system.build.toplevel
+  #sudo result/bin/switch-to-configuration switch
+  sudo nixos-rebuild switch --flake .#plutus_vm --impure
+  NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO/configuration.nix -o result"
+
+}
+
+rebuild_system() {
   #nix build .#nixosConfigurations.intelTower.config.system.build.toplevel
   #sudo result/bin/switch-to-configuration switch
   sudo nixos-rebuild switch --flake .#plutus_vm --impure
+  NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO/configuration.nix -o result"
+
 }
 
 
 eval_liveISO() {
   NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO/configuration.nix -o result"
+  # dd if=result/iso/*.iso of=/dev/sdX status=progress
+  # sync
+  # nix eval --raw .#liveISO --impure
+  # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=./system/machine/liveISO
+  # nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=.#liveISO
+}
+
+eval_plutusVM() {
+  nix build .#nixosConfigurations.plutus_vm.config.system.build.toplevel  
   # dd if=result/iso/*.iso of=/dev/sdX status=progress
   # sync
   # nix eval --raw .#liveISO --impure
