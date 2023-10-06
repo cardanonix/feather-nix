@@ -93,7 +93,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #IOG Cardano-Haskell-Packages
     CHaP = {
       url = "github:input-output-hk/cardano-haskell-packages?ref=repo";
       flake = false;
@@ -112,29 +111,13 @@
 
     cardano-node = {
       url = "github:input-output-hk/cardano-node?rev=d2d90b48c5577b4412d5c9c9968b55f8ab4b9767";
-      #TODO: how do I build the configuration bundle instead of just the executable inside of my config?
-      #https://github.com/input-output-hk/cardano-node/blob/master/doc/getting-started/building-the-node-using-nix.md
     };
   };
 
-  # Outputs are the public-facing interface to the flake.
   outputs = inputs: let
     inherit (inputs.nixpkgs.lib) mapAttrs;
     inherit inputs;
     system = "x86_64-linux";
-    # ci = with inputs system; (
-    #   let
-    #     pkgs = import nixpkgs {
-    #       config.allowUnfree = true;
-    #       overlays = [
-    #         neovim-flake.overlays.${system}.default
-    #       ];
-    #     };
-    #   in {
-    #     metals = pkgs.callPackage ./home/programs/neovim-ide/metals.nix {};
-    #     metals-updater = pkgs.callPackage ../system/machine/plutus_vm/home/programs/neovim-ide/update-metals.nix {};
-    #   }
-    # );
   in rec
   {
     homeConfigurations = with inputs; (
@@ -253,7 +236,7 @@
           ];
         };
         liveISO = nixosSystem {
-          inherit lib pkgs system;
+          inherit lib system;
           specialArgs = {inherit inputs;};
           modules = [
             ./system/machine/liveISO/configuration.nix
@@ -261,10 +244,6 @@
         };
       }
     );
-
-    # packages.${system} = {
-    # };
-
     devShell.${system} = let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       # tui = pkgs.writeShellScriptBin "tui" ''
