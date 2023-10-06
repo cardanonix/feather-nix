@@ -22,16 +22,16 @@ rebuild_home_iso() {
 }
 
 rebuild_home_edp() {
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
+  nix build .#homeConfigurations.vm-home.activationPackage --show-trace --impure
   activateHM
 }
 
 eval_home_edp() {
-  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --impure
+  nix eval --raw .#homeConfigurations.vm-home.activationPackage --impure
 }
 
 eval_traced_home_edp() {
-  nix eval --raw .#homeConfigurations.bismuth-edp.activationPackage --show-trace --impure
+  nix eval --raw .#homeConfigurations.vm-home.activationPackage --show-trace --impure
 }
 
 rebuild_home_uhd() {
@@ -56,7 +56,7 @@ rebuild_system() {
 
 
 eval_liveISO() {
-  NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO -o result"
+  NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./system/machine/liveISO/configuration.nix -o result"
   # dd if=result/iso/*.iso of=/dev/sdX status=progress
   # sync
   # nix eval --raw .#liveISO --impure
@@ -68,7 +68,7 @@ eval_liveISO() {
 rebuild_scratchBuild() {
   nix flake update 
   sudo nixos-rebuild switch --flake .#plutus_vm --impure --option build-use-substitutes false --show-trace
-  nix build .#homeConfigurations.bismuth-edp.activationPackage --option build-use-substitutes false --show-trace
+  nix build .#homeConfigurations.vm-home.activationPackage --option build-use-substitutes false --show-trace
   activateHM
 }
 

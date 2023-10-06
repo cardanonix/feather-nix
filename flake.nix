@@ -40,9 +40,6 @@
 
     neovim-flake = {
       url = github:Cardano-on-Nix/neovim-flake;
-      # neovim-flake pushes its binaries to the cache using its own nixpkgs version
-      # if we instead use ours, we'd be rebuilding all plugins from scratch
-      #inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Fish shell
@@ -189,30 +186,6 @@
           nurpkgs = pkgs;
         };
 
-        imports = [
-          # inputs.cardano-node.nixosModules.cardano-node
-          #inputs.cardano-wallet.nixosModules.cardano-wallet
-          neovim-flake.nixosModules.${system}.hm
-          ./home/home.nix
-        ];
-
-        # imports = [
-        #   neovim-flake.nixosModules.${system}.hm
-        #   ./home/slim/home.nix
-        # ];
-
-        mkHome = {ultraHD ? false}: (
-          home-manager.lib.homeManagerConfiguration rec {
-            inherit pkgs;
-
-            extraSpecialArgs = {
-              inherit ultraHD inputs;
-              addons = nur.repos.rycee.firefox-addons;
-            };
-            modules = [{inherit imports;}];
-          }
-        );
-
         mkSlim = {ultraHD ? false}: (
           home-manager.lib.homeManagerConfiguration rec {
             inherit pkgs;
@@ -222,6 +195,8 @@
               addons = nur.repos.rycee.firefox-addons;
             };
             modules = [
+              # inputs.cardano-node.nixosModules.cardano-node
+              #inputs.cardano-wallet.nixosModules.cardano-wallet
               (import ./slim/home.nix)
               neovim-flake.nixosModules.${system}.hm
             ];
@@ -236,7 +211,7 @@
               addons = nur.repos.rycee.firefox-addons;
             };
             modules = [
-              (import ./system/machine/liveIso/home/home.nix)
+              (import ./system/machine/liveISO/home/home.nix)
               neovim-flake.nixosModules.${system}.hm
             ];
           }
@@ -244,8 +219,6 @@
       in {
         vm-home = mkSlim {ultraHD = false;};
         iso-home = mkISO {ultraHD = false;};
-        bismuth-edp = mkHome {ultraHD = false;};
-        bismuth-uhd = mkHome {ultraHD = true;};
       }
     );
     nixosConfigurations = (
@@ -271,14 +244,14 @@
           modules = [
             inputs.cardano-node.nixosModules.cardano-node
             ./system/machine/plutus_vm
-            ./system/configuration.nix
+            ./system/machine/plutus_vm/configuration.nix
           ];
         };
         liveISO = nixosSystem {
           inherit lib pkgs system;
           specialArgs = {inherit inputs;};
           modules = [
-            ./system/machine/liveIso
+            ./system/machine/liveISO/configuration.nix
           ];
         };
         rockPi = nixosSystem {
