@@ -281,6 +281,14 @@
             ./system/machine/liveIso
           ];
         };
+        rockPi = nixosSystem {
+          inherit lib pkgs system;
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.cardano-node.nixosModules.cardano-node
+            ./system/machine/rockPi/sd-image.nix
+          ];
+        };
       }
     );
 

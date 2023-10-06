@@ -3,10 +3,10 @@
   pkgs,
   ...
 }: let
-  version = "iso-20.11";
+  version = "iso-23.05";
 in {
   imports = [
-    <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
+    <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
   ];
 
