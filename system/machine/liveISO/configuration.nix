@@ -44,12 +44,15 @@ in {
     enableSSHSupport = true;
   };
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "fr";
-  };
-  # defaultLocale = "fr_FR.UTF-8";
-  time.timeZone = "Europe/Paris";
+  # console = {
+  #   font = "Lat2-Terminus16";
+  #   keyMap = "fr";
+  # };
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Set your time zone.
+  time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
     git
